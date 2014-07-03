@@ -167,7 +167,7 @@
 	
 	function alerta($msj,$url){
 		echo'
-	<link href="'.base_url().'css/default.css" rel="stylesheet" type="text/css" />
+		<link href="'.base_url().'css/default.css" rel="stylesheet" type="text/css" />
 		<link href="'.base_url().'css/component.css" rel="stylesheet" type="text/css" />
         <link href="'.base_url().'css/kendo.common.min.css" rel="stylesheet" type="text/css" />
         <link href="'.base_url().'css/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />

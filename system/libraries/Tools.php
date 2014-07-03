@@ -19,7 +19,7 @@ class CI_Tools {
 	}
 
 	
-	function pantalla ($vista) 
+	/*function pantalla ($vista) 
 	{
 		$data['nick']=$this->session->userdata('usuario');
 		$data['nombre']=$this->session->userdata('nombre');
@@ -27,7 +27,7 @@ class CI_Tools {
 	 	$this->load->view('encabezado',$data);
 	 	$this->load->view($vista);	
 	 	$this->load->view('piePagina');
-	}
+	}*/
 
 
 }
