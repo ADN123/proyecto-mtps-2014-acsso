@@ -27,7 +27,8 @@ class Sessiones extends CI_Controller {
 		}else{
 		//echo"Sistema Bloqueado";
 		$this->load->view('encabezadoLogin.php'); 
-		$this->load->view('lock.php'); 
+		/*$this->load->view('lock.php'); */
+		$this->load->view('login.php'); 
 		$this->load->view('piePagina.php');		
 
 		
