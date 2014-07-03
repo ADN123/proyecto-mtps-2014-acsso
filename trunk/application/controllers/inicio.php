@@ -20,18 +20,7 @@ class Inicio extends CI_Controller
 
 	{	$data=$this->seguridad_model->sexoUsuario($this->session->userdata('id_usuario'));
 		$data=$data[0];
-	 	$this->pantalla('home',$data);
+	 	pantalla('home',$data);
 	}
-	
-	function pantalla ($vista,$data) 
-	{
-		$data['nick']=$this->session->userdata('usuario');
-		$data['nombre']=$this->session->userdata('nombre');
-		$data['menus']=$this->seguridad_model->buscar_menus($this->session->userdata('id_usuario'));
-	 	$this->load->view('encabezado',$data);
-	 	$this->load->view($vista);	
-	 	$this->load->view('piePagina');
-	}
-
 }
 ?>
