@@ -21,13 +21,13 @@ class Sessiones extends CI_Controller {
 	{
 		$in=$this->verificar();
 		if($in<=3){
-			$this->load->view('encabezadoLogin.php'); 
+			$this->load->view('encabezado.php'); 
 			$this->load->view('login.php'); 
 			$this->load->view('piePagina.php');		
 		}
 		else {
 			//echo"Sistema Bloqueado";
-			$this->load->view('encabezadoLogin.php'); 
+			$this->load->view('encabezado.php'); 
 			$this->load->view('lock.php'); 
 			$this->load->view('piePagina.php');		
 		}
