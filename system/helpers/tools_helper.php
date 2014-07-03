@@ -167,38 +167,47 @@
 	
 	function alerta($msj,$url){
 		echo'
-		<link href="'.base_url().'css/default.css" rel="stylesheet" type="text/css" />
-		<link href="'.base_url().'css/component.css" rel="stylesheet" type="text/css" />
-        <link href="'.base_url().'css/kendo.common.min.css" rel="stylesheet" type="text/css" />
-        <link href="'.base_url().'css/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="'.base_url().'css/kendo.dataviz.bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="'.base_url().'css/tooltipster.css" rel="stylesheet" type="text/css" />
-		<link href="'.base_url().'css/alertify.core.css" rel="stylesheet" />
-		<link href="'.base_url().'css/alertify.default.css" rel="stylesheet" />
-        <link href="'.base_url().'css/style-base.css" rel="stylesheet" type="text/css" />
-        <script src="'.base_url().'js/jquery-1.8.2.js"></script>
-        <!--<script src="'.base_url().'js/jquery-ui-1.9.0.custom.js"></script>-->
-		<script src="'.base_url().'js/classie.js"></script>
-        <script src="'.base_url().'js/kendo.all.min.js" type="text/javascript"></script>
-        <script src="'.base_url().'js/jquery.tooltipster.js" type="text/javascript"></script>
-        <script src="'.base_url().'js/jquery.leanModal.min.js" type="text/javascript"></script>
-        <script src="'.base_url().'js/waypoints.min.js"></script>
-        <script src="'.base_url().'js/alertify.js" type="text/javascript"></script>
-		<script language="JavaScript" type="text/javascript">
-		
-				var pagina="'.base_url().$url.'"
-				function redireccionar() 
-				{
-				alertify.alert("'.$msj.'");
-				setTimeout("partB()",2000)
-				} 
-				function partB() 
-				{
-				location.href=pagina
-				} 
-				setTimeout ("redireccionar()",1000);			
-		</script>';
-		
+			<!DOCTYPE html>
+			<html lang="es">
+			<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+				<link href="'.base_url().'css/style.default.css" rel="stylesheet">
+				<script src="'.base_url().'js/jquery-1.10.2.min.js"></script>
+				<script src="'.base_url().'js/jquery-migrate-1.2.1.min.js"></script>
+				<script src="'.base_url().'js/bootstrap.min.js"></script>
+				<script src="'.base_url().'js/modernizr.min.js"></script>
+				<script src="'.base_url().'js/retina.min.js"></script>
+				<script src="'.base_url().'js/custom.js"></script>
+			</head>
+			<body style="background: #FFF;">
+				<button style="display:none" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-static"></button>
+				<div class="modal fade bs-example-modal-static" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" aria-hidden="true">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Error al intentar ingresar al sitio</h4>
+						</div>
+						<div class="modal-body">
+							El usuario y contraseña no coiciden.
+						</div>
+					</div>
+				  </div>
+				</div>
+				<script language="JavaScript" type="text/javascript">
+					var pagina="'.base_url().$url.'"
+					function redireccionar() {
+						$(".btn").click();
+						setTimeout("partB()",3000)
+					} 
+					function partB() {
+						location.href=pagina
+					} 
+					setTimeout ("redireccionar()",1000);
+				</script>
+			</body>
+			</html>
+			';
 		}	
 
 
