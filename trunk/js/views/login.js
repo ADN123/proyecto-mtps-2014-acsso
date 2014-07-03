@@ -5,6 +5,5 @@ $(document).ready(function() {
 			alertify.alert('Por favor ingrese un usuario y una clave.');
 			return false;
 		}
-	 
 	});
 });
