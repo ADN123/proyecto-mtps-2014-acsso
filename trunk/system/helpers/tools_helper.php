@@ -54,6 +54,15 @@
 		$CI->load->view('menu_derecha');	
 	 	$CI->load->view('piePagina');
 	}
+	
+	function pantalla_error() 
+	{
+		$CI =& get_instance();
+		
+		$CI->load->view('encabezado');
+	 	$CI->load->view('error_404');
+	 	$CI->load->view('piePagina');
+	}
 
 	function ir_a($url){
 		echo'<script language="JavaScript" type="text/javascript">
