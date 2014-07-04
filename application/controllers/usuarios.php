@@ -16,7 +16,7 @@ class Usuarios extends CI_Controller
 	
 	function index()
 	{
-		$this->roles();
+		ir_a("index.php/usuarios/roles");
   	}
 	
 	/*
@@ -29,7 +29,7 @@ class Usuarios extends CI_Controller
 	*/
 	function roles($estado_transaccion=NULL,$accion=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),78); /*Verificacion de permiso para administrara roles*/
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol); /*Verificacion de permiso para administrara roles*/
 		
 		if($data['id_permiso']==3) {
 			switch($data['id_permiso']) { /*Busqueda de informacion a mostrar en la pantalla segun el nivel del usuario logueado*/
@@ -50,7 +50,7 @@ class Usuarios extends CI_Controller
 				$data['accion']="actualiza";
 			if($accion==2)
 				$data['accion']="guarda";
-			pantalla('usuarios/roles',$data);	
+			pantalla('usuarios/roles',$data,Dcontrol_rol);	
 		}
 		else {
 			echo 'No tiene permisos para acceder';
@@ -67,7 +67,7 @@ class Usuarios extends CI_Controller
 	*/
 	function datos_de_rol($id_rol=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),78); /*Verificacion de permiso para administrara roles*/
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol); /*Verificacion de permiso para administrara roles*/
 		
 		if($data['id_permiso']==3) {
 			switch($data['id_permiso']) { /*Busqueda de informacion a mostrar en la pantalla segun el nivel del usuario logueado*/
@@ -104,7 +104,7 @@ class Usuarios extends CI_Controller
 	*/
 	function guardar_rol()
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),78);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol);
 		
 		if($data['id_permiso']==3) {
 			$this->db->trans_start();
@@ -198,7 +198,7 @@ class Usuarios extends CI_Controller
 	*/
 	function actualizar_rol() 
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),78);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol);
 		
 		if($data['id_permiso']==3) {
 			$this->db->trans_start();
@@ -295,7 +295,7 @@ class Usuarios extends CI_Controller
 	*/
 	function eliminar_rol($id_rol=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),78);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol);
 		
 		if($data['id_permiso']==3) {
 			$this->db->trans_start();
@@ -320,7 +320,7 @@ class Usuarios extends CI_Controller
 	*/
 	function usuario($estado_transaccion=NULL,$accion=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),79); /*Verificacion de permiso para administrara usuarios*/
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario); /*Verificacion de permiso para administrara usuarios*/
 		
 		if($data['id_permiso']==3) {
 			switch($data['id_permiso']) { /*Busqueda de informacion a mostrar en la pantalla segun el nivel del usuario logueado*/
@@ -341,7 +341,7 @@ class Usuarios extends CI_Controller
 				$data['accion']="actualiza";
 			if($accion==2)
 				$data['accion']="guarda";
-			pantalla('usuarios/usuarios',$data);	
+			pantalla('usuarios/usuarios',$data,Dcontrol_usuario);	
 		}
 		else {
 			echo 'No tiene permisos para acceder';
@@ -358,7 +358,7 @@ class Usuarios extends CI_Controller
 	*/
 	function datos_de_usuario($id_usuario=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),79); /*Verificacion de permiso para administrara usuarios*/
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario); /*Verificacion de permiso para administrara usuarios*/
 		
 		if($data['id_permiso']==3) {
 			switch($data['id_permiso']) { /*Busqueda de informacion a mostrar en la pantalla segun el nivel del usuario logueado*/
@@ -398,7 +398,7 @@ class Usuarios extends CI_Controller
 	*/
 	function buscar_info_adicional_usuario()
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),79); /*Verificacion de permiso para crear solicitudes*/
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario); /*Verificacion de permiso para crear solicitudes*/
 		
 		if($data['id_permiso']==3) {
 			$id_empleado=$this->input->post('id_empleado');
@@ -429,7 +429,7 @@ class Usuarios extends CI_Controller
 	*/
 	function guardar_usuario()
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),79);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario);
 		
 		if($data['id_permiso']==3) {
 			$this->db->trans_start();
@@ -485,7 +485,7 @@ class Usuarios extends CI_Controller
 	*/
 	function actualizar_usuario()
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),79);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario);
 		
 		if($data['id_permiso']==3) {
 			$this->db->trans_start();
@@ -530,7 +530,7 @@ class Usuarios extends CI_Controller
 	*/
 	function eliminar_usuario($id_usuario=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),79);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario);
 		
 		if($data['id_permiso']==3) {
 			$this->db->trans_start();
