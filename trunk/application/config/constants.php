@@ -51,6 +51,9 @@ define('Dacreditacion_comite', 94);
 define('Dverificacion', 95);
 define('Dprogramar_visita_2', 96);
 define('Dcontrol_visita', 97);
+define('Dusuario', 98);
+define('Dcontrol_rol', 99);
+define('Dcontrol_usuario', 100);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

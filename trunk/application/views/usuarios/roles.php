@@ -5,58 +5,56 @@
 		estado_incorrecto='Error al intentar <?php echo $accion?>r el rol: No se pudo conectar al servidor. Porfavor vuelva a intentarlo.';
 	<?php }?>
 </script>
-<section>
-    <h2>Control de Roles</h2>
-</section>
-<button type="button" id="nuevo_rol1" class="button tam-1">Nuevo Rol</button>
-<a id="nuevo_rol2" rel="leanModal" href="#ventana"></a>
-<table  class="grid">
-<colgroup>
-	<col />
-	<col />
-	<col style="width:100px"/>
-</colgroup>
-<thead>
-  <tr>
-    <th>Nombre del Rol</th>
-    <th>Descripción de Rol</th>
-    <th>Opción</th>
-  </tr>
- </thead>
- <tbody>
-<?php
-	foreach ($roles as $val) {
-?>
-  <tr>
-    <td><?php echo ucwords($val['nombre_rol'])?></td>
-    <td><?php echo $val['descripcion_rol']?></td>
-    <td>
-    	<a class="modificar_rol" title="Modificar Rol" rel="leanModal" href="#ventana" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_editar.png"/></a>
-    	<a class="eliminar_rol" title="Eliminar Rol" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_borrar.png"/></a>
-	</td>
-  </tr>
-<?php } ?>
-</tbody>
-</table>
-<div id="ventana" style="height:600px">
-    <div id='signup-header'>
-        <h2 id="titulo-ventana"></h2>
-        <a class="modal_close"></a>
-    </div>
-    <div id='contenido-ventana'>
-    </div>
+<div class="col-sm-12">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+        <div class="panel-btns">
+        	<a href="#" class="minimize">−</a>
+        </div><!-- panel-btns -->
+        	<h3 class="panel-title">Tabla de Roles</h3>
+        </div>
+        <div class="panel-body">
+            <button type="button" id="nuevo_rol" data-toggle="modal" data-target=".bs-example-modal-static2" class="btn btn-primary">Nuevo Rol</button>
+            <br /><br />
+            <div class="table-responsive">
+                <table class="table">
+                <colgroup>
+                    <col />
+                    <col />
+                    <col style="width:100px"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Nombre del Rol</th>
+                    <th>Descripción de Rol</th>
+                    <th>Opción</th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                <?php
+                    foreach ($roles as $val) {
+                ?>
+                  <tr>
+                    <td><?php echo ucwords($val['nombre_rol'])?></td>
+                    <td><?php echo $val['descripcion_rol']?></td>
+                    <td>
+                        <a class="modificar_rol" title="Modificar Rol" rel="leanModal" href="#ventana" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_editar.png"/></a>
+                        <a class="eliminar_rol" title="Eliminar Rol" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_borrar.png"/></a>
+                    </td>
+                  </tr>
+                <?php } ?>
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- panel -->
 </div>
 <script language="javascript" >
 	$(document).ready(function(){
-		$("#nuevo_rol1").click(function(){
-			$("#nuevo_rol2").click();
-		});
-		$("#nuevo_rol2").click(function(){
+		$("#nuevo_rol").click(function(){
 			$("#titulo-ventana").html("Nuevo Rol");
 			$('#contenido-ventana').load(base_url()+'index.php/usuarios/datos_de_rol');
-			return false;
 		});
-
 		$(".modificar_rol").click(function(){
 			id=$(this).data("id_rol");
 			nom=$(this).data("nombre_rol");
