@@ -1,6 +1,5 @@
- </div><!-- contentpanel -->
-    
-  </div><!-- mainpanel -->
+	</div><!-- contentpanel -->
+</div><!-- mainpanel -->
 <div class="rightpanel">
 	<!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified">

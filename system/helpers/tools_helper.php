@@ -47,10 +47,11 @@
 		$data['nombre']=$CI->session->userdata('nombre');
 		$data['menus']=$CI->seguridad_model->buscar_menus($CI->session->userdata('id_usuario'));
 
-		$CI->load->view('encabezado');
-		$CI->load->view('menu_izquierda',$data);
+		$CI->load->view('encabezado',$data);
+		$CI->load->view('menu_izquierda');
+		$CI->load->view('menu_central');
 	 	$CI->load->view($vista);
-		$CI->load->view('menu_derecha',$data);	
+		$CI->load->view('menu_derecha');	
 	 	$CI->load->view('piePagina');
 	}
 
