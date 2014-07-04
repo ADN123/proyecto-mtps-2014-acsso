@@ -8,13 +8,7 @@
     <title>Bracket Responsive Bootstrap3 Admin</title>
     
     <link href="<?php echo base_url()?>css/style.default.css" rel="stylesheet">
-    
-    <script src="<?php echo base_url()?>js/jquery-1.10.2.min.js"></script>
-    <script src="<?php echo base_url()?>js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="<?php echo base_url()?>js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url()?>js/modernizr.min.js"></script>
-    <script src="<?php echo base_url()?>js/retina.min.js"></script>
-    <script src="<?php echo base_url()?>js/custom.js"></script>
+  	<link href="<?php echo base_url()?>css/jquery.datatables.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
