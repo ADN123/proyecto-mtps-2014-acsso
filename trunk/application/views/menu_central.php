@@ -198,14 +198,15 @@
     </div><!-- headerbar -->
     
     <div class="pageheader">
-      <h2><i class="<?php echo $menu_actual['img_modulo'] ?>"></i> <?php echo $menu_actual['nombre_modulo'] ?> <span><?php echo $menu_actual['descripcion_modulo'] ?></span></h2>
+      <h2><i class="<?php if($menu_actual['img_modulo_padre']!="") echo $menu_actual['img_modulo_padre']; else echo $menu_actual['img_modulo'] ?>"></i> <?php echo $menu_actual['nombre_modulo'] ?> <span><?php echo $menu_actual['descripcion_modulo'] ?></span></h2>
       <div class="breadcrumb-wrapper">
         <span class="label">Tu estás aquí:</span>
         <ol class="breadcrumb">
           <?php
           	if($menu_actual['nombre_modulo_padre']!="") {
+				$url_padre=explode("/",$menu_actual['url_modulo_padre']);
           ?>
-				<li><a href="<?php echo base_url().'index.php/'.$menu_actual['url_modulo_padre'] ?>"><?php echo $menu_actual['nombre_modulo_padre'] ?></a></li>
+				<li><a href="<?php echo base_url().'index.php/'.$url_padre[0] ?>"><?php echo $menu_actual['nombre_modulo_padre'] ?></a></li>
           <?php
 		   	}
           ?>	

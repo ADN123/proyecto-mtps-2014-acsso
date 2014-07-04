@@ -36,13 +36,21 @@
 					$titu='<span>'.$m[nombre_modulo].'</span>';
 					$desc=$m[descripcion_modulo];
 					$child='';
+					$band=false;
 					foreach($menus as $sm){
+						$class2='';
 						if($sm[dependencia]==$m[id_modulo]) {
+							if($menu_actual['id_modulo']==$sm[id_modulo]) {
+								$band=true;
+								$class2='class="active"';
+							}
 							$class='nav-parent';
 							$href='#';
-							$child.='<li><a href="'.base_url().'index.php/'.$sm[url_modulo].'"><i class="'.$sm[img_modulo].'"></i> '.$sm[nombre_modulo].'</a></li>';
+							$child.='<li '.$class2.'><a href="'.base_url().'index.php/'.$sm[url_modulo].'"><i class="'.$sm[img_modulo].'"></i> '.$sm[nombre_modulo].'</a></li>';
 						}
 					}
+					if($menu_actual['id_modulo']==$m[id_modulo] || $band)
+						$class=$class.' active';
 					if($class!='') 
 						$class='class="'.$class.'"';
 					if($child!='') 
