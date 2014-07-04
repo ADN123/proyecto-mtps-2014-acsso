@@ -1,4 +1,5 @@
 // JavaScript Document
+$('body').addClass("signin");
 $(document).ready(function() {
 	$('#entrar').click(function entrar() {
 		if (document.form1.user.value=="" || document.form1.pass.value=="") { 

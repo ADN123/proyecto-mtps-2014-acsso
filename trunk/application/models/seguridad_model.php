@@ -104,7 +104,7 @@ class Seguridad_model extends CI_Model {
 					INNER JOIN org_rol_modulo_permiso ON org_rol_modulo_permiso.id_rol = org_rol.id_rol
 					INNER JOIN org_modulo ON org_modulo.id_modulo = org_rol_modulo_permiso.id_modulo
 					LEFT JOIN org_modulo AS m2 ON m2.id_modulo = org_modulo.dependencia
-					WHERE org_usuario_rol.id_usuario=".$id." AND org_modulo.id_sistema=5 AND org_rol_modulo_permiso.estado=1
+					WHERE org_usuario_rol.id_usuario=".$id." AND org_modulo.id_sistema=6 AND org_rol_modulo_permiso.estado=1
 					ORDER BY m2.id_modulo, org_modulo.orden";
 		$query=$this->db->query($sentencia);
 		
@@ -129,7 +129,7 @@ class Seguridad_model extends CI_Model {
 		}
 		
 		if($query->num_rows>0) {
-			return $new_menu;
+			return $result;
 		}
 		else {
 			return 0;
@@ -166,6 +166,16 @@ class Seguridad_model extends CI_Model {
 				'id_usuario' => 0
 			);
 		}
+	}
+	
+	function descripcion_menu($id_modulo) 
+	{
+		$sentencia="SELECT padre.nombre_modulo AS nombre_modulo_padre, org_modulo.url_modulo AS url_modulo_padre, org_modulo.nombre_modulo, org_modulo.url_modulo, org_modulo.img_modulo, org_modulo.descripcion_modulo
+					FROM org_modulo
+					LEFT JOIN org_modulo AS padre ON padre.id_modulo = org_modulo.dependencia
+					WHERE org_modulo.id_modulo=".$id_modulo."";
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
 	}
 }
 ?>
