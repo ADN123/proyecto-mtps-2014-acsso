@@ -40,13 +40,14 @@
  */
 	
 
-	function pantalla($vista, $data=NULL) 
+	function pantalla($vista, $data=NULL, $id_modulo=Dinicio) 
 	{
 		$CI =& get_instance();
 		$data['nick']=$CI->session->userdata('usuario');
 		$data['nombre']=$CI->session->userdata('nombre');
 		$data['menus']=$CI->seguridad_model->buscar_menus($CI->session->userdata('id_usuario'));
-
+		$data['menu_actual']=$CI->seguridad_model->descripcion_menu($id_modulo);
+		
 		$CI->load->view('encabezado',$data);
 		$CI->load->view('menu_izquierda');
 		$CI->load->view('menu_central');

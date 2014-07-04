@@ -170,7 +170,7 @@ class Seguridad_model extends CI_Model {
 	
 	function descripcion_menu($id_modulo) 
 	{
-		$sentencia="SELECT padre.nombre_modulo AS nombre_modulo_padre, org_modulo.url_modulo AS url_modulo_padre, org_modulo.nombre_modulo, org_modulo.url_modulo, org_modulo.img_modulo, org_modulo.descripcion_modulo
+		$sentencia="SELECT padre.id_modulo AS id_modulo_padre, padre.img_modulo AS img_modulo_padre, padre.nombre_modulo AS nombre_modulo_padre, org_modulo.url_modulo AS url_modulo_padre, org_modulo.id_modulo, org_modulo.nombre_modulo, org_modulo.url_modulo, org_modulo.img_modulo, org_modulo.descripcion_modulo
 					FROM org_modulo
 					LEFT JOIN org_modulo AS padre ON padre.id_modulo = org_modulo.dependencia
 					WHERE org_modulo.id_modulo=".$id_modulo."";
