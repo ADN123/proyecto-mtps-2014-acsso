@@ -35,16 +35,10 @@
 </form>
 <script>
 	$(document).ready(function() {
-		$(".treeview").kendoTreeView();
-		$(".treeview li").hover(function(){
-			
-		});
-		$("#nombre_rol").validacion({
-			lonMin: 5
-		});
-		$("#descripcion_rol").validacion({
-			req: false,
-			lonMin: 10
+		$("#formu select").chosen({
+			'width': '150px',
+			'white-space': 'nowrap',
+			'placeholder': 'sadfasdf'
 		});
 	});
 </script>

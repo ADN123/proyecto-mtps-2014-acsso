@@ -27,9 +27,7 @@ class Sessiones extends CI_Controller {
 		}
 		else {
 			//echo"Sistema Bloqueado";
-			$this->load->view('encabezado.php'); 
 			$this->load->view('lock.php'); 
-			$this->load->view('piePagina.php');		
 		}
 	}
 	
@@ -46,11 +44,13 @@ class Sessiones extends CI_Controller {
 		$in=$this->verificar();
 		if ($in<=3) {				
 			$login =$this->input->post('user');
-			$clave =$this->input->post('pass');			
+			$clave =$this->input->post('pass');
+			
 			$v=$this->seguridad_model->consultar_usuario($login,$clave);  //Verificación en base de datos
-		
+			
 			if($v['id_usuario']==0) {
-					alerta("Datos Incorrectos",'index.php/sessiones');
+				setcookie('hora', time() + 15* 60, time() + 15* 60);
+				alerta("Datos Incorrectos",'index.php/sessiones');
 			}
 			else {
 				$this->session->set_userdata('nombre', $v['nombre_completo']);
