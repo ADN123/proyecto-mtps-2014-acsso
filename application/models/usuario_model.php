@@ -92,7 +92,7 @@ class Usuario_model extends CI_Model {
  						$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
 					if($opciones_modulo>=4) 
  						$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
-					$result.='<select class="oculto select_rol" name="permiso[]" style="height: 16px; float: right; padding: 0px;"><option value=""></option>'.$op.'</select>';
+					$result.='<select class="oculto select_rol" name="permiso[]"><option value=""></option>'.$op.'</select>';
 				}	
 				
 				if($query2->num_rows>0)
@@ -155,7 +155,7 @@ class Usuario_model extends CI_Model {
 							$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
 						if($opciones_modulo>=4) 
 							$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
-						$result.='<select class="oculto select_rol" name="permiso[]" style="height: 16px; float: right; padding: 0px;"><option value=""></option>'.$op.'</select>';
+						$result.='<select class="oculto select_rol" name="permiso[]"><option value=""></option>'.$op.'</select>';
 					}
 					
 					if($query3->num_rows>0)
@@ -204,7 +204,7 @@ class Usuario_model extends CI_Model {
 							$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
 						if($opciones_modulo>=4) 
 							$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
-						$result.='<select class="oculto select_rol" name="permiso[]" style="height: 16px; float: right; padding: 0px;"><option value=""></option>'.$op.'</select>';
+						$result.='<select class="oculto select_rol" name="permiso[]"><option value=""></option>'.$op.'</select>';
 						$result.=' </li>';				
 					}
 					if($query3->num_rows>0)
