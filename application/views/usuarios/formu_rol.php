@@ -12,6 +12,18 @@
 		$label="Actualizar";
 	}
 ?>
+<style>
+	i.jstree-icon.jstree-themeicon.disabled.jstree-themeicon-custom {
+		display: none;
+	}
+	select, .chosen-container {
+		position: absolute;
+		left: 340px;
+	}
+	.jstree-default .jstree-anchor {
+		height: 35px;
+	}
+</style>
 <form name="formu" id="formu" style="max-width: 600px;" method="post" action="<?php echo base_url()?>index.php/usuarios/<?=$dir?>">
   	<input type="hidden" id="id_rol" name="id_rol" value="<?=$id_rol?>"/>
 	<fieldset>      
@@ -27,7 +39,9 @@
     </fieldset>
     <fieldset>      
         <legend align='left'>Información del Sistema</legend>
-        <?=$menu?>
+        <div id="html1">
+        	<?=$menu?>
+       	</div>
   	</fieldset>
     <p style='text-align: center;'>
         <button type="submit" id="aprobar" class="button tam-1 boton_validador" name="aprobar"><?=$label?></button>
@@ -40,5 +54,6 @@
 			'white-space': 'nowrap',
 			'placeholder': 'sadfasdf'
 		});
+		$('#html1').jstree();
 	});
 </script>
