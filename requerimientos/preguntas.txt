@@ -1,0 +1,3 @@
+hacen programación de visitas (calendario)?
+hacen programación de espacio para capacitaciones?
+Si un empleado no asiste a la capacitacion el dia que le tocaba, como se reprograma su capacitacion
