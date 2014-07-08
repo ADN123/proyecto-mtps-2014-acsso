@@ -19,22 +19,18 @@ class Usuario_model extends CI_Model {
 			$id_mod[]=$val['id_modulo'];
 			$id_per[]=$val['id_permiso'];
 		}
-		$sentencia="SELECT id_sistema, nombre_sistema FROM org_sistema WHERE id_sistema=5";
+		$sentencia="SELECT id_sistema, nombre_sistema FROM org_sistema WHERE id_sistema=6";
 		$query0=$this->db->query($sentencia);
 		$m0=(array)$query0->result_array();
 		$result='';
 		foreach($m0 as $val0) { 
 			$id_sistema=$val0['id_sistema'];
 			$nombre_sistema=$val0['nombre_sistema'];
-			if($id_sistema==5)
-				$result.='<ul class="treeview" style="max-width: 600px; width: 100%; margin: 0 auto;"><li data-expanded="true">'.$nombre_sistema;
-			else
-				$result.='<ul class="treeview" style="max-width: 600px; width: 100%; margin: 0 auto;"><li data-expanded="false">'.$nombre_sistema;
+			$result.='<ul>';
 			$sentencia="SELECT id_modulo, nombre_modulo, descripcion_modulo, opciones_modulo FROM org_modulo where (dependencia IS NULL OR dependencia = 0) AND id_modulo<>71 AND id_sistema=".$id_sistema." ORDER BY orden";
 			$query1=$this->db->query($sentencia);
 			$m1=(array)$query1->result_array();
 			
-			$result.='<ul>';
 			foreach($m1 as $val1) { 
 				$id_modulo=$val1['id_modulo'];
 				$nombre_modulo=$val1['nombre_modulo'];
@@ -46,13 +42,13 @@ class Usuario_model extends CI_Model {
 				$m2=(array)$query2->result_array();
 				
 				if($query2->num_rows>0) {
-					$expanded="false";
+					$expanded="";
 					for($i=0;$i<count($id_mod);$i++) {
 						$ancestros=$this->buscar_padre_permisos_rol($id_mod[$i]);
 						if($id_modulo==$ancestros['padre'] || $id_modulo==$ancestros['abuelo'] || $id_modulo==$ancestros['bisabuelo'])
-							$expanded="true";
+							$expanded="nav-parent";
 					}
-					$result.='<li data-expanded="'.$expanded.'" title="'.$descripcion_modulo.'"> '.$nombre_modulo;
+					$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
 				}
 				else {
 					$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
@@ -115,7 +111,7 @@ class Usuario_model extends CI_Model {
 							if($id_modulo==$ancestros['padre'] || $id_modulo==$ancestros['abuelo'] || $id_modulo==$ancestros['bisabuelo'])
 								$expanded="true";
 						}
-						$result.='<li data-expanded="'.$expanded.'" title="'.$descripcion_modulo.'"> '.$nombre_modulo;
+						$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
 					}
 					else {
 						$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
@@ -215,7 +211,7 @@ class Usuario_model extends CI_Model {
 					$result.=' </ul>';
 				$result.=' </li>';
 			}
-			$result.=' </ul></li></ul>';
+			$result.='</ul>';
 		}
 		return $result;
 	}
