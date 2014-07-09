@@ -1,3 +1,23 @@
-hacen programación de visitas (calendario)?
-hacen programación de espacio para capacitaciones?
-Si un empleado no asiste a la capacitacion el dia que le tocaba, como se reprograma su capacitacion
+1 - hacen programación de visitas (calendario)?
+2 - hacen programación de espacio para capacitaciones?
+3 - Si un empleado no asiste a la capacitacion el dia que le tocaba, como se reprograma su capacitacion
+
+Respuestas:
+1- Si las programaciones son semanales y mensuales, en el requerimiento se ha 
+considerado también la fecha y la hora de la programación de la visita
+
+2- Si, se programan capacitaciones, (la oficina central solamente tiene una sala de capacitaciones, con 
+capacidad para 35 participantes y se pueden impartir de L a V, una por la mañana), considerado
+en el requerimiento.
+
+3 - Si pasa esto, se le debe reporgramar la capacitación, después que el lugar de trabajo justifique su 
+ausencia.
+
+--------------------------------
+
+nota: El sistema debe generar un cierre de operaciones mensual, con el fin de evitar el registro de 
+promociones, capacitaciones, acreditaciones y verificaciones, hasta una fecha estipulada (fecha de cierre)
+
+
+
+favor verificar si los cambios son satisfactorios para ustedes en los requerimientos
