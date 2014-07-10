@@ -16,7 +16,7 @@
 	i.jstree-icon.jstree-themeicon.disabled.jstree-themeicon-custom {
 		display: none;
 	}
-	select, .chosen-container {
+	#formu .chosen-container {
 		position: absolute;
 		left: 340px;
 	}
@@ -24,18 +24,22 @@
 		height: 35px;
 	}
 </style>
-<form name="formu" id="formu" style="max-width: 600px;" method="post" action="<?php echo base_url()?>index.php/usuarios/<?=$dir?>">
+<form name="formu" id="formu" class="form-horizontal" style="max-width: 600px;" method="post" action="<?php echo base_url()?>index.php/usuarios/<?=$dir?>">
   	<input type="hidden" id="id_rol" name="id_rol" value="<?=$id_rol?>"/>
-	<fieldset>      
+	<fieldset class="mb15">      
         <legend align='left'>Información del Rol</legend>
-        <p>
-            <label for="nombre_rol" id="lnombre_rol">Nombre del rol </label>
-            <input type="text" tabindex="1" id="nombre_rol" name="nombre_rol" value="<?=$nombre_rol?>" class="tam-3"/>
-        </p>
-        <p>
-            <label for="descripcion_rol" id="ldescripcion_rol" class="label_textarea">Descripción </label>
-            <textarea class="tam-4" id="descripcion_rol" tabindex="2" name="descripcion_rol"><?=$descripcion_rol?></textarea>
-        </p>
+          	<div class="form-group">
+                <label for="nombre_rol" class="col-sm-3 control-label">Nombre del rol <span class="asterisk">*</span></label>
+                <div class="col-sm-8">
+                    <input required type="text" tabindex="1" id="nombre_rol" title="Your name is required!" name="nombre_rol" value="<?=$nombre_rol?>" class="form-control input-sm"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion_rol" class="col-sm-3 control-label">Descripción <span class="asterisk">*</span></label>
+                <div class="col-sm-8">
+                	<textarea required class="form-control" id="descripcion_rol" tabindex="2" name="descripcion_rol"><?=$descripcion_rol?></textarea>
+               	</div>
+          	</div>
     </fieldset>
     <fieldset>      
         <legend align='left'>Información del Sistema</legend>
@@ -54,6 +58,14 @@
 			'white-space': 'nowrap',
 			'placeholder': 'sadfasdf'
 		});
-		$('#html1').jstree();
+		/*$('#html1').jstree();*/
+		$("#formu").validate({
+			highlight: function(element) {
+			  	$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			success: function(element) {
+			  	$(element).closest('.form-group').removeClass('has-error');
+			}
+		});
 	});
 </script>
