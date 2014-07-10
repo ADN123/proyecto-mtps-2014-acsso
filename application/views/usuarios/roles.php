@@ -38,8 +38,8 @@
                     <td><?php echo ucwords($val['nombre_rol'])?></td>
                     <td><?php echo $val['descripcion_rol']?></td>
                     <td>
-                        <a class="modificar_rol" title="Modificar Rol" rel="leanModal" href="#ventana" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_editar.png"/></a>
-                        <a class="eliminar_rol" title="Eliminar Rol" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_borrar.png"/></a>
+                        <a href="" class="modificar_rol" title="Modificar Rol" data-toggle="modal" data-target=".bs-example-modal-static2" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_editar.png"/></a>
+                        <a href="" class="eliminar_rol" title="Eliminar Rol" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_borrar.png"/></a>
                     </td>
                   </tr>
                 <?php } ?>
@@ -60,7 +60,6 @@
 			nom=$(this).data("nombre_rol");
 			$("#titulo-ventana").html("Modificar Rol - "+nom);
 			$('#contenido-ventana').load(base_url()+'index.php/usuarios/datos_de_rol/'+id);
-			return false;
 		});
 		$(".eliminar_rol").click(function(){
 			id=$(this).data("id_rol");
