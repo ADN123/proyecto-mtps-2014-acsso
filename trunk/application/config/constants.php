@@ -37,23 +37,25 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
-define('Dinicio', 84);
-define('Dreportes', 85);
-define('Dreportes_comites', 86);
-define('Dpromocion_comites', 87);
-define('Ddatos_generales', 88);
-define('Dingreso_promocion', 89);
-define('Dprogramar_visita_1', 90);
-define('Dacreditacion', 91);
-define('Dprogramar_capacitacion', 92);
-define('Dcontrol_asistencia', 93);
-define('Dacreditacion_comite', 94);
-define('Dverificacion', 95);
-define('Dprogramar_visita_2', 96);
-define('Dcontrol_visita', 97);
-define('Dusuario', 98);
-define('Dcontrol_rol', 99);
-define('Dcontrol_usuario', 100);
+define('Dinicio', 								84);
+define('Dreportes', 							85);
+define('Dreportes_comites', 					86);
+define('Dpromocion_comites', 					87);
+define('Ddatos_generales', 						88);
+define('Dingreso_promocion', 					89);
+define('Dprogramar_visita_1', 					90);
+define('Dacreditacion', 						91);
+define('Dprogramar_capacitacion', 				92);
+define('Dcontrol_asistencia', 					93);
+define('Dacreditacion_comite', 					94);
+define('Dverificacion', 						95);
+define('Dprogramar_visita_2', 					96);
+define('Dcontrol_visita', 						97);
+define('Dusuario', 								98);
+define('Dcontrol_rol', 							99);
+define('Dcontrol_usuario', 						100);
+define('Dlugares_trabajo', 						101);
+define('Dparticipantes', 						102);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

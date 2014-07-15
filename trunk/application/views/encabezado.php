@@ -37,6 +37,7 @@
     <!--<script src="<?php echo base_url();?>js/dashboard.js"></script>-->
     <script src="<?php echo base_url();?>js/jquery.validate.min.js"></script>
     <script src="<?php echo base_url();?>js/funciones.js"></script>
+    <script src="<?php echo base_url();?>js/bootstrap-wizard.min.js"></script>
     <script type="text/javascript">
 		function base_url() {
 			return "<?php echo base_url()?>";
@@ -69,6 +70,9 @@
 			resize: none !important;
 		}
 		/*fin textarea*/
+		.leftpanel-collapsed .nav-bracket li a {
+			padding: 12.5px;
+		}
 	</style>
 </head>
 
