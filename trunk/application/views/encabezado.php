@@ -11,6 +11,7 @@
     
     <link href="<?php echo base_url();?>css/style.default.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/jquery.datatables.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>css/fullcalendar.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/style.min.css" rel="stylesheet">
       
     <script src="<?php echo base_url();?>js/jquery-1.10.2.min.js"></script>
@@ -22,6 +23,9 @@
     <script src="<?php echo base_url();?>js/toggles.min.js"></script>
     <script src="<?php echo base_url();?>js/retina.min.js"></script>
     <script src="<?php echo base_url();?>js/jquery.cookies.js"></script>
+    
+	<script src="<?php echo base_url();?>js/fullcalendar.min.js"></script>
+    <script src="<?php echo base_url();?>js/jquery.ui.touch-punch.min.js"></script>
     
     <script src="<?php echo base_url();?>js/flot/flot.min.js"></script>
     <script src="<?php echo base_url();?>js/flot/flot.resize.min.js"></script>
