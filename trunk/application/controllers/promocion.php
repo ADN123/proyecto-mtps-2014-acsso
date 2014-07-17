@@ -34,7 +34,7 @@ class Promocion extends CI_Controller
 	function general($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{	
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Ddatos_generales); 
-		if($data['id_permiso']!=NULL) {
+		if($data['id_permiso']==3) {
 			$data['clasificacion']=$this->promocion_model->mostrar_clasificacion();
 			$data['sector']=$this->promocion_model->mostrar_sector();
 			$data['institucion']=$this->promocion_model->mostrar_institucion(1);
@@ -57,8 +57,8 @@ class Promocion extends CI_Controller
 	*/
 	function guardar_promocion()
 	{
-		$data['permiso']=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Ddatos_generales);
-		if($data['permiso']!=NULL){
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Ddatos_generales);
+		if($data['id_permiso']==3){
 			$this->db->trans_start();
 			
 			$nombre_institucion=$this->input->post('nombre_institucion');
@@ -103,8 +103,8 @@ class Promocion extends CI_Controller
 	*/
 	function eliminar_institucion($id_institucion=NULL)
 	{
-		$data['permiso']=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Ddatos_generales);
-		if($data['permiso']!=NULL){
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Ddatos_generales);
+		if($data['id_permiso']==3){
 			$this->db->trans_start();
 			
 			$fecha_modificacion=date('Y-m-d H:i:s');
@@ -137,7 +137,7 @@ class Promocion extends CI_Controller
 	function lugares_trabajo($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{	
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dlugares_trabajo); 
-		if($data['id_permiso']!=NULL) {
+		if($data['id_permiso']==3) {
 			$data['institucion']=$this->promocion_model->mostrar_institucion(1);
 			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
 			$data['municipio']=$this->promocion_model->mostrar_municipio();
@@ -160,8 +160,8 @@ class Promocion extends CI_Controller
 	*/
 	function guardar_lugar_trabajo()
 	{
-		$data['permiso']=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dlugares_trabajo);
-		if($data['permiso']!=NULL){
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dlugares_trabajo);
+		if($data['id_permiso']==3){
 			$this->db->trans_start();
 			
 			$id_institucion=$this->input->post('id_institucion');
@@ -214,8 +214,8 @@ class Promocion extends CI_Controller
 	*/
 	function eliminar_lugar_trabajo($id_institucion=NULL)
 	{
-		$data['permiso']=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dlugares_trabajo);
-		if($data['permiso']!=NULL){
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dlugares_trabajo);
+		if($data['id_permiso']==3){
 			$this->db->trans_start();
 			
 			$fecha_modificacion=date('Y-m-d H:i:s');
@@ -237,10 +237,18 @@ class Promocion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: lugares_trabajo_empresa
+	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 15/07/2014
+	*	Observaciones: Ninguna.
+	*/
 	function lugares_trabajo_empresa($id_institucion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dlugares_trabajo); 
-		if($data['id_permiso']!=NULL) {
+		if($data['id_permiso']==3) {
 			$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_empresa($id_institucion);
 			$this->load->view('promocion/lugares_trabajo_empresa',$data);
 		}
@@ -249,24 +257,77 @@ class Promocion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: programa
+	*	Objetivo: Carga la vista que contiene el formulario de ingreso de programacion de visitas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
 	function programa($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']!=NULL) {
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
-				case 1:
-				case 2:
-					pantalla_error();
-					break;
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;
 				case 4:
 					$id_seccion=$this->transporte_model->consultar_seccion_usuario($this->session->userdata('nr'));
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion']);
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}
 			pantalla('promocion/programacion',$data,Dprogramar_visita_1);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: institucion_visita
+	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function institucion_visita($id_empleado=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']!=NULL) {
+			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
+			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
+			$data['institucion']=$this->promocion_model->institucion_visita($dep);
+			$this->load->view('promocion/institucion_visita',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: lugares_trabajo_institucion_visita
+	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Esta funcion permite filtrar si se desea que un lugar de trabajo no puede tener dos visitas activas.
+	*/
+	function lugares_trabajo_institucion_visita($id_empleado=NULL,$id_institucion=NULL,$vacio=1)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']!=NULL) {
+			$mostrar_todos=FALSE;
+			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
+			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
+			$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$mostrar_todos);
+			$data['vacio']=$vacio;
+			$this->load->view('promocion/lugares_trabajo_empresa_visita',$data);
 		}
 		else {
 			pantalla_error();

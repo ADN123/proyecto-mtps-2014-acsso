@@ -1,12 +1,13 @@
 <?php
 
 class Promocion_model extends CI_Model {
-    //constructor de la clase
+	
+	/*Secciones que no pertenecen a San Salvador*/
+	public $secciones=array(52,53,54,55,56,57,58,59,60,61,64,65,66); 
+	
     function __construct() 
 	{
-        //LLamar al constructor del Modelo
-        parent::__construct();
-	
+		parent::__construct();
     }
 	
 	function mostrar_clasificacion() 
@@ -35,6 +36,7 @@ class Promocion_model extends CI_Model {
 	
 	function mostrar_institucion($estado=NULL) 
 	{
+		$where="";
 		if($estado!=NULL)
 			$where="WHERE estado=1";
 		$sentencia="SELECT id_institucion AS id, nombre_institucion AS nombre FROM sac_institucion ".$where;
@@ -93,9 +95,108 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function mostrar_tecnicos()
+	function mostrar_tecnicos($id_seccion=NULL,$ss=NULL)
 	{
+		$where="";
+		if($id_seccion!=NULL && $ss!=NULL) {
+			if($ss==1) 
+				for($i=0;$i<count($this->secciones);$i++)
+				 	$where.=" AND id_seccion<>".$this->secciones[$i];
+			else
+				$where.=" AND id_seccion=".$id_seccion;
+		}
+		$sentencia="SELECT id_empleado AS id, nombre FROM tcm_empleado 
+					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 	
+	public function ubicacion_departamento($id_seccion)
+	{	
+		switch($id_seccion){
+			case 52:
+				$id_departamento=1;
+				break;
+			case 53:
+				$id_departamento=9;
+				break;
+			case 54:
+				$id_departamento=4;
+				break;
+			case 55:
+				$id_departamento=7;
+				break;
+			case 56:
+				$id_departamento=5;
+				break;
+			case 57:
+				$id_departamento=14;
+				break;
+			case 58:
+				$id_departamento=13;
+				break;
+			case 59:
+				$id_departamento=10;
+				break;
+			case 60:
+				$id_departamento=3;
+				break;
+			case 61:
+				$id_departamento=11;
+				break;
+			case 64:
+				$id_departamento=8;
+				break;
+			case 65:
+				$id_departamento=12;
+				break;
+			case 66:
+				$id_departamento=2;
+				break;
+			default:
+				$id_departamento=6;
+		}
+		return $id_departamento;
+	}
+	
+	function institucion_visita($id_departamento)
+	{
+		$sentencia="SELECT DISTINCT sac_institucion.id_institucion AS id, sac_institucion.nombre_institucion AS nombre
+					FROM sac_institucion
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
+					WHERE sac_institucion.estado=1 AND org_departamento.id_departamento=".$id_departamento;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function lugares_trabajo_institucion_visita($id_departamento,$id_institucion=NULL,$mostrar_todos=FALSE)
+	{
+		$where="";
+		if($id_institucion!=NULL)
+			$where.="AND sac_lugar_trabajo.id_institucion=".$id_institucion." ";
+		if(!$mostrar_todos)
+			$where.="AND (sac_programacion_visita.estado_programacion<>1 OR sac_programacion_visita.estado_programacion IS NULL) ";
+		
+		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, sac_lugar_trabajo.nombre_lugar AS nombre
+					FROM sac_institucion
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
+					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					WHERE sac_lugar_trabajo.estado=1 AND org_departamento.id_departamento=".$id_departamento." ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function es_san_salvador($id_seccion)
+	{	
+		if(in_array($id_seccion,$this->secciones)){
+			return false;
+		}else{
+			return true;
+		}
 	}
 }
 ?>
