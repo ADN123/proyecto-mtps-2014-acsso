@@ -1,197 +1,174 @@
-<div class="row">
-        <div class="col-md-3">
-          <div class="panel panel-default panel-dark panel-alt">
-            <div class="panel-heading">
-              <h4 class="panel-title">Draggable Events</h4>
-            </div>
-            <div class="panel-body">
-              <div id='external-events'>
-                <div class='external-event'>My Event 1</div>
-                <div class='external-event'>My Event 2</div>
-                <div class='external-event'>My Event 3</div>
-                <div class='external-event'>My Event 4</div>
-                <div class='external-event'>My Event 5</div>
-              </div>
-            </div>
-          </div>
-        </div><!-- col-md-3 -->
-        <div class="col-md-9">
-          <div id="calendar"></div>
-        </div><!-- col-md-9 -->
-      </div>
+<div class="col-md-6">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+        <div class="panel-btns">
+        	<a href="#" class="minimize">−</a>
+        </div><!-- panel-btns -->
+        	<h3 class="panel-title">Datos de la visita</h3>
+        </div>
+        <div class="panel-body">
+  			<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_programacion">                
+                <div class="form-group">
+                    <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
+                    <div class="col-sm-7">
+                        <select class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]">
+                            <option value=""></option>
+                            <?php
+                                foreach($tecnico as $val) {
+                                    echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="cont-institucion">
+                    <label for="id_institucion" class="col-sm-3 control-label">Institución <span class="asterisk">*</span></label>
+                    <div class="col-sm-7">
+                        <select class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" disabled="disabled">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                
+               	<div class="form-group" id="cont-lugar-trabajo">
+                    <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
+                    <div class="col-sm-7">
+                        <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" disabled="disabled">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                
+               	<div class="form-group" id="cont-lugar-trabajo">
+                    <label for="fecha_visita" class="col-sm-3 control-label">Fecha de visita <span class="asterisk">*</span></label>
+                    <div class="col-sm-4">
+                    	<div class="input-group">
+                            <input type="text" class="form-control" id="fecha_visita" name="fecha_visita" readonly="readonly">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      	</div>
+                    </div>
+                </div>
+                
+               	<div class="form-group" id="cont-lugar-trabajo">
+                    <label for="hora_visita" class="col-sm-3 control-label">Hora de visita <span class="asterisk">*</span></label>
+                    <div class="col-sm-4">
+                    	<div class="input-group">
+                            <div class="bootstrap-timepicker"><input id="timepicker" type="text" class="form-control" readonly="readonly"/></div>
+                     		<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                    	</div>
+                    </div>
+                </div>
+                
+                <ul class="pager wizard">
+                    <li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+                    <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
+                </ul>
+            </form>
+      	</div>
+   	</div>
+</div>
+<div class="col-md-6">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+        <div class="panel-btns">
+        	<a href="#" class="minimize">−</a>
+        </div><!-- panel-btns -->
+        	<h3 class="panel-title">Calendario de actividades</h3>
+        </div>
+        <div class="panel-body panel-body-nopadding">
+  			<div id="calendar"></div>
+      	</div>
+   	</div>
+</div>
 <script>
-jQuery(document).ready(function() {
-	
-	
-		/* initialize the external events
-		-----------------------------------------------------------------*/
-		
-		var date = new Date();
+	$(document).ready(function() {
+		var date = new Date('2014-7-13 13:34:12');
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
 		
-		jQuery('#external-events div.external-event').each(function() {
-		
-			// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-			// it doesn't need to have a start or end
-			<?php
-				$fecha = date('c');
-				$nuevafecha = strtotime ( '+1 hour' , strtotime ( $fecha ) ) ;
-			
-			?>
-			var eventObject = {
-				title: $.trim($(this).text()), // use the element's text as the event title
-				url: "http://www.as.com"
-			};
-			
-			// store the Event Object in the DOM element so we can get to it later
-			jQuery(this).data('eventObject', eventObject);
-			
-			// make the event draggable using jQuery UI
-			jQuery(this).draggable({
-				zIndex: 999,
-				revert: true,      // will cause the event to go back to its
-				revertDuration: 0  //  original position after the drag
-			});
-			
+		$('#id_empleado').change(function(){
+			id=$(this).val();
+			$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);
+			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/0/0/0');
 		});
-	
-	
-		/* initialize the calendar
-		-----------------------------------------------------------------*/
 		
-		jQuery('#calendar').fullCalendar({
+		$('#fecha_visita').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
+		$('#timepicker').timepicker({defaultTIme: false});
+		
+		$('#calendar').fullCalendar({
 			header: {
-				left: 'prev,next today',
+				right: 'today prev,next',
 				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
+				left: ''
 			},
-			defaultView: 'agendaWeek',
-			editable: true,
-			eventDurationEditable: true,
-			eventStartEditable: true,
-			droppable: true, // this allows things to be dropped onto the calendar !!!
-			selectHelper: true,
-			slotMinutes: 60,
-			selectable: true,
-			minTime : 7,
-			maxTime : 18,
-			firstDay : 1,
-			allDaySlot : false,
-			columnFormat:'ddd d/M',       
-			titleFormat : "MMM d[ yyyy]{ '&#8212;'[MMM] dd 'del' yyyy}",
-			weekends: false,
-			defaultEventMinutes : 60,        
 			buttonText: {
 				today : 'Hoy',
 				month: 'Mes',
 				agendaWeek: 'Semana',
 				agendaDay: 'Día'
-			},		
+			},
+			monthNamesShort : ['Enero' , 'Febrero' , 'Marzo' , 'Abril' , 'Mayo' , 'Junio' , 'Julio' , 'Agosto' , 'Septiembre' , 'Octubre' , 'Noviembre' , 'Diciembre' ],
+			dayNamesShort : ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],   
+			titleFormat : "MMM yyyy",  
+			columnFormat:'ddd',  
+			timeFormat: 'h:mm tt  - h:mm tt \n',  
+			
+			defaultView: 'month',
+			editable: false,
+			eventDurationEditable: false,
+			eventStartEditable: false,
+			droppable: false,
+			selectHelper: false,
+			slotMinutes: 60,
+			selectable: false,
+			minTime : 7,
+			maxTime : 18,
+			firstDay : 1,
+			allDaySlot : false,
+			weekends: false,
+			defaultEventMinutes : 60,  
+          	dragOpacity: "0.5",		
 			slotEventOverlap: false,	
 			unselectAuto: false,
-			weekMode : false,
-			monthNamesShort : ['Enero' , 'Febrero' , 'Marzo' , 'Abril' , 'Mayo' , 'Junio' , 'Julio' ,
-						'Agosto' , 'Septiembre' , 'Octubre' , 'Noviembre' , 'Diciembre' ],
-			dayNamesShort : ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+			weekMode : false,  
 			
-			dayClick: function(date, view) {
-				$('#calendar').fullCalendar('changeView', 'agendaDay');
-				$('#calendar').fullCalendar('gotoDate', date);
-			},
-			
-			events: [
+			/*events: [
 				{
+					id: 1,
 					title: 'All Day Event',
 					start: new Date(y, m, 1)
 				},
 				{
-					title: 'Long Event',
-					start: new Date(y, m, d-5),
-					end: new Date(y, m, d-2)
+					id: 2,
+					title: 'Long  Event',
+					start: new Date(y, m, d-5)
 				},
 				{
-					id: 1,
+					id: 3,
 					title: 'Repeating Event333333333333',
-					start: new Date(y, m, d, 16, 0),
+					start: new Date(y, m, d),
 					allDay: false
 				},
 				{
-					id: 999,
+					id: 4,
 					title: 'Repeating Event22222222',
-					start: new Date(y, m, d+1, 16, 0),
-					allDay: false
+					start: new Date(y, m, d+1)
 				},
 				{
-					title: 'Meeting ',
-					start: new Date(y, m, d, 10, 30),
-					allDay: false
-				},
-				{
-					title: 'Lunch',
-					start: new Date(y, m, d, 12, 0),
-					end: new Date(y, m, d, 14, 0),
-					allDay: false
-				},
-				{
-					title: 'Birthday Party2',
-					start: new Date(y, m, d+1, 10, 0),
-					end: new Date(y, m, d+1, 11, 0),
-					allDay: false
-
-				},
-				{
+					id: 5,
 					title: 'Click for Google',
-					start: new Date(y, m, 28),
-					end: new Date(y, m, 29),
-					url: 'http://google.com/'
+					start: new Date(y, m, 28)
 				}
-			],
+			],*/
 			
+			dayClick: function(date, view) {
+				alert('dayClick');
+			},
 			eventClick: function(event, jsEvent){
-              		if (confirm('Esta seguro de eliminar? Esta accion no se podra deshacer')) {
-                		$('#calendar').fullCalendar( 'removeEvents', event.id);
-						return false;
-              		}
-					else {
-                		return false;
-              		}
-          	},
-			
-			timeFormat: 'h:mm t{ - h:mm t} ',
-          	dragOpacity: "0.5",
-			
-			drop: function(date, allDay) { // this function is called when something is dropped
-			
-				// retrieve the dropped element's stored Event Object
-				var originalEventObject = jQuery(this).data('eventObject');
-				
-				// we need to copy it, so that multiple events don't have a reference to the same object
-				var copiedEventObject = $.extend({}, originalEventObject);
-				
-				// assign it the date that was reported
-				copiedEventObject.start = date;
-				copiedEventObject.allDay = allDay;
-								
-				// render the event on the calendar
-				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-				jQuery('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-				
-				jQuery(this).remove();
-				
-			},
-			eventDragStop: function( event, jsEvent, ui, view ) { 
-				//alert(event.end);
-				return false;
-			},
-			eventResizeStop: function(event, delta, revertFunc) {
-		
-				alert(2);
-		
-			}
+				alert('eventClick');
+          	}
 		});
-        
-		
 	});
 </script>
