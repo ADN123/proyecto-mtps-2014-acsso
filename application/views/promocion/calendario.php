@@ -13,7 +13,7 @@
 			agendaDay: 'Día'
 		},
 		monthNamesShort : ['Enero' , 'Febrero' , 'Marzo' , 'Abril' , 'Mayo' , 'Junio' , 'Julio' , 'Agosto' , 'Septiembre' , 'Octubre' , 'Noviembre' , 'Diciembre' ],
-		dayNamesShort : ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],   
+		dayNamesShort : ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],  
 		titleFormat : "MMM yyyy",  
 		columnFormat:'ddd',  
 		timeFormat: 'h:mm tt  - h:mm tt \n',  
@@ -52,7 +52,8 @@
 		
 		dayClick: function(date, view) {
 		},
-		eventClick: function(event, jsEvent){						 
+		eventClick: function(event, jsEvent){	
+			fecha_actual=event.id;			 
 			modal("Programación del día",base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);
 		}
 	});

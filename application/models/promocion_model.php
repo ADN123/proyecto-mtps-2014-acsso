@@ -240,15 +240,25 @@ class Promocion_model extends CI_Model {
 	function calendario_dia($id_empleado,$fecha)
 	{	
 		$sentencia="SELECT
+					id_programacion_visita AS id,
 					sac_lugar_trabajo.nombre_lugar AS titulo,
 					sac_institucion.nombre_institucion AS titulo2,
-					fecha_visita AS fecha
+					fecha_visita AS fecha,
+					DATE_FORMAT(hora_visita,'%h:%i %p') AS hora,
+					DATE_FORMAT(hora_visita,'%H:%i') AS hora_m,
+					estado_programacion AS estado
 					FROM sac_programacion_visita
 					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					WHERE id_empleado=".$id_empleado." AND fecha_visita='".$fecha."'";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
+	}
+	
+	function eliminar_programacion($id_programacion_visita)
+	{
+		$sentencia="DELETE FROM sac_programacion_visita WHERE id_programacion_visita=".$id_programacion_visita;
+		$this->db->query($sentencia);
 	}
 }
 ?>
