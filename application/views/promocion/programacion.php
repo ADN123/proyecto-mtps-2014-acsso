@@ -1,3 +1,31 @@
+<?php
+	$objeto='el registro de <strong>programación</strong>';
+	switch($accion_transaccion) {
+		case 1: 
+			$accion_transaccion="guarda";
+			break;
+		case 2: 
+			$accion_transaccion="actualiza";
+			break;
+		case 3: 
+			$accion_transaccion="elimina";
+			break;
+	}
+	if($estado_transaccion==1) {
+		$class='success';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente! Si deseas crear el registro de promoción de un lugar de trabajo <a href="'.base_url().'index.php/promocion/ingreso" class="alert-link">aquí</a>.';
+	}
+	else {
+		$class='danger';
+		$mensaje='<span class="glyphicon glyphicon-exclamation-sign"></span> Error al intentar <strong>'.$accion_transaccion.'r</strong> '.$objeto.': Se perdió la señal de la red. Porfavor vuelva a intentarlo.';
+	}
+	if($estado_transaccion!="" && $estado_transaccion!=NULL) {	
+?>
+        <div class="alert alert-<?php echo $class?>">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <?php echo $mensaje?>
+        </div>
+<?php } ?>
 <div class="col-md-6">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -169,6 +197,25 @@
 			eventClick: function(event, jsEvent){
 				alert('eventClick');
           	}
+		});
+		
+		$("#formu").submit(function(){
+			$.ajax({
+				async:	true, 
+				url:	base_url()+"index.php/promocion/comprobar_programacion/1",
+				dataType:"json",
+				type: "POST",
+				data: $(this).serialize(),
+				success: function(data) {
+				var json=data;
+					if(Number(json['resultado'])==1) {
+						document.getElementById("formu").submit();
+					}
+				},
+				error:function(data) {
+				}
+			});			
+			return false;
 		});
 	});
 </script>
