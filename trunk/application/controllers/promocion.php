@@ -444,5 +444,22 @@ class Promocion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function eliminar_programacion($id_programacion_visita=NULL) 
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$this->promocion_model->eliminar_programacion($id_programacion_visita);
+			$json =array(
+					'resultado'=>1
+				);
+		}
+		else {
+			$json =array(
+					'resultado'=>0
+				);
+		}
+		echo json_encode($json);
+	}
 }
 ?>

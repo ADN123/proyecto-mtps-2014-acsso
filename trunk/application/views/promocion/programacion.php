@@ -139,7 +139,7 @@
 				agendaDay: 'Día'
 			},
 			monthNamesShort : ['Enero' , 'Febrero' , 'Marzo' , 'Abril' , 'Mayo' , 'Junio' , 'Julio' , 'Agosto' , 'Septiembre' , 'Octubre' , 'Noviembre' , 'Diciembre' ],
-			dayNamesShort : ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],   
+			dayNamesShort : ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],   
 			titleFormat : "MMM yyyy",  
 			columnFormat:'ddd',  
 			timeFormat: 'h:mm tt  - h:mm tt \n',  
@@ -211,11 +211,11 @@
 						document.getElementById("formu").submit();
 					}
 					else {
-						alerta_rapida('Error en el ingreso de programación!', 'El técnico ya tiene una visita en el día y hora ingresados');
+						alerta_rapida('Error en el ingreso de programación!', 'El técnico ya tiene una visita en el día y hora ingresados', 'danger');
 					}
 				},
 				error:function(data) {
-					alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red');
+					alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
 				}
 			});			
 			return false;
