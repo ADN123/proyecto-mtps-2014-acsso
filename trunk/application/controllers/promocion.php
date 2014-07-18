@@ -281,6 +281,8 @@ class Promocion extends CI_Controller
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
 			pantalla('promocion/programacion',$data,Dprogramar_visita_1);
 		}
 		else {
@@ -299,7 +301,7 @@ class Promocion extends CI_Controller
 	function institucion_visita($id_empleado=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']!=NULL) {
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
 			$data['institucion']=$this->promocion_model->institucion_visita($dep);
@@ -321,13 +323,87 @@ class Promocion extends CI_Controller
 	function lugares_trabajo_institucion_visita($id_empleado=NULL,$id_institucion=NULL,$vacio=1)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']!=NULL) {
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			$mostrar_todos=FALSE;
 			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
 			$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$mostrar_todos);
 			$data['vacio']=$vacio;
 			$this->load->view('promocion/lugares_trabajo_empresa_visita',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: comprobar_programacion
+	*	Objetivo: Verifica que el tecnico seleccionado no tenga una visita preveiamente programada en el dia y hora seleccionados
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function comprobar_programacion($estado_programacion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$id_empleado=$this->input->post('id_empleado');
+			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
+			$fecha_visita=$this->input->post('fecha_visita');
+			$hora_visita=$this->input->post('hour').':'.$this->input->post('minute').':00 '.$this->input->post('meridian');
+			$hora_visita=date("H:i:s", strtotime($hora_visita));
+			
+			$formuInfo = array(
+				'id_empleado'=>$id_empleado,
+				'id_lugar_trabajo'=>$id_lugar_trabajo,
+				'fecha_visita'=>$fecha_visita,
+				'hora_visita'=>$hora_visita,
+				'estado_programacion'=>$estado_programacion
+			);
+			
+			$json =array(
+				'resultado'=>$this->promocion_model->comprobar_programacion($formuInfo)
+			);
+		}
+		else {
+			$json =array(
+				'resultado'=>0
+			);
+		}
+		echo json_encode($json);
+	}
+	
+	function guardar_programacion()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$id_empleado=$this->input->post('id_empleado');
+			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
+			$fec=str_replace("/","-",$this->input->post('fecha_visita'));
+			$fecha_visita=date("Y-m-d", strtotime($fec));
+			$hora_visita=$this->input->post('hour').':'.$this->input->post('minute').':00 '.$this->input->post('meridian');
+			$hora_visita=date("H:i:s", strtotime($hora_visita));
+			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
+			$fecha_creacion=date('Y-m-d H:i:s');
+			$id_usuario_crea=$this->session->userdata('id_usuario');
+			
+			$formuInfo = array(
+				'id_empleado'=>$id_empleado,
+				'id_lugar_trabajo'=>$id_lugar_trabajo,
+				'fecha_visita'=>$fecha_visita,
+				'hora_visita'=>$hora_visita,
+				'hora_visita_final'=>$hora_visita_final,
+				'fecha_creacion'=>$fecha_creacion,
+				'id_usuario_crea'=>$id_usuario_crea
+			);
+			$this->promocion_model->guardar_programacion($formuInfo);
+			
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/promocion/programa/1/".$tr);
 		}
 		else {
 			pantalla_error();

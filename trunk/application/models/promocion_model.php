@@ -198,5 +198,31 @@ class Promocion_model extends CI_Model {
 			return true;
 		}
 	}
+	
+	function comprobar_programacion($formuInfo)
+	{
+		extract($formuInfo);
+		$where="";
+		if($estado_programacion!=NULL && $estado_programacion!="")
+			$where.=" AND estado_programacion=".$estado_programacion;
+		$sentencia="SELECT Count(*) AS total FROM sac_programacion_visita
+					WHERE id_empleado=".$id_empleado." AND fecha_visita like '".$fecha_visita."' AND hora_visita >= '".$hora_visita."' AND hora_visita <= '".$hora_visita_final."' ".$where;
+		$query=$this->db->query($sentencia);
+		$val=(array)$query->row();
+		if($val['total']==0)
+			return 1;
+		else
+			return 0;
+	}
+	
+	function guardar_programacion($formuInfo)
+	{
+		extract($formuInfo);		
+		$sentencia="INSERT INTO sac_programacion_visita
+					(id_empleado, id_lugar_trabajo, fecha_visita, hora_visita, fecha_creacion, id_usuario_crea) 
+					VALUES 
+					($id_empleado, $id_lugar_trabajo, '$fecha_visita', '$hora_visita', '$fecha_creacion', $id_usuario_crea)";
+		$this->db->query($sentencia);
+	}
 }
 ?>
