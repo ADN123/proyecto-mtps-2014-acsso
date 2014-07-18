@@ -59,8 +59,8 @@ jQuery(document).ready(function() {
 			maxTime : 18,
 			firstDay : 1,
 			allDaySlot : false,
-			columnFormat:'ddd d',       
-			titleFormat : "MMM yyyy",
+			columnFormat:'ddd d/M',       
+           	titleFormat : "MMM d[ yyyy]{ '&#8212;'[MMM] dd 'del' yyyy}",
 			weekends: false,
 			defaultEventMinutes : 60,        
 			buttonText: {

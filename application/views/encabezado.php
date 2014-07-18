@@ -14,6 +14,7 @@
     <link href="<?php echo base_url();?>css/fullcalendar.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/style.min.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>css/jquery.gritter.css" rel="stylesheet">
       
     <script src="<?php echo base_url();?>js/jquery-1.10.2.min.js"></script>
     <script src="<?php echo base_url();?>js/jquery-migrate-1.2.1.min.js"></script>
@@ -36,6 +37,8 @@
     
     <script src="<?php echo base_url();?>js/jquery.datatables.min.js"></script>
     <script src="<?php echo base_url();?>js/chosen.jquery.min.js"></script>
+    
+    <script src="<?php echo base_url();?>js/jquery.gritter.min.js"></script>
     
     <script src="<?php echo base_url();?>js/custom.js"></script>
     

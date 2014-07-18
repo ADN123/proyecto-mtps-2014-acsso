@@ -104,7 +104,7 @@
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Calendario de actividades</h3>
         </div>
-        <div class="panel-body panel-body-nopadding">
+        <div class="panel-body panel-body-nopadding" id="cont-calendario">
   			<div id="calendar"></div>
       	</div>
    	</div>
@@ -120,6 +120,7 @@
 			id=$(this).val();
 			$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);
 			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/0/0/0');
+			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+id);
 		});
 		
 		$('#fecha_visita').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
@@ -192,10 +193,8 @@
 			],*/
 			
 			dayClick: function(date, view) {
-				alert('dayClick');
 			},
 			eventClick: function(event, jsEvent){
-				alert('eventClick');
           	}
 		});
 		
@@ -211,8 +210,12 @@
 					if(Number(json['resultado'])==1) {
 						document.getElementById("formu").submit();
 					}
+					else {
+						alerta_rapida('Error en el ingreso de programación!', 'El técnico ya tiene una visita en el día y hora ingresados');
+					}
 				},
 				error:function(data) {
+					alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red');
 				}
 			});			
 			return false;

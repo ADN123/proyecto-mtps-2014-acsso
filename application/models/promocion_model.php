@@ -224,5 +224,31 @@ class Promocion_model extends CI_Model {
 					($id_empleado, $id_lugar_trabajo, '$fecha_visita', '$hora_visita', '$fecha_creacion', $id_usuario_crea)";
 		$this->db->query($sentencia);
 	}
+	
+	function calendario($id_empleado)
+	{	
+		$sentencia="SELECT
+					CONCAT_WS(' ','N° visitas: ',COUNT(*)) AS titulo,
+					fecha_visita AS fecha
+					FROM sac_programacion_visita
+					WHERE id_empleado=".$id_empleado." AND fecha_visita>='".date('Y-m-d')."'
+					GROUP BY fecha_visita";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function calendario_dia($id_empleado,$fecha)
+	{	
+		$sentencia="SELECT
+					sac_lugar_trabajo.nombre_lugar AS titulo,
+					sac_institucion.nombre_institucion AS titulo2,
+					fecha_visita AS fecha
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE id_empleado=".$id_empleado." AND fecha_visita='".$fecha."'";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 }
 ?>

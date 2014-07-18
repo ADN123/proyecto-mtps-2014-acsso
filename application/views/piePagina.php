@@ -1,4 +1,5 @@
-<div class="modal fade bs-example-modal-static2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" aria-hidden="true">
+<button id="boton-modal" style="display:none;" data-toggle="modal" data-target="#modal-modal"></button>
+<div class="modal fade" id="modal-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -9,8 +10,8 @@
     </div>
   </div>
 </div>
+
 <button id="boton-confirmacion" style="display:none;" data-toggle="modal" data-target="#modal-confirmacion"></button>
-<!-- Modal -->
 <div class="modal fade" id="modal-confirmacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -24,9 +25,10 @@
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
         <a href="#" id="myModalLink" class="btn btn-primary">Aceptar</a>
       </div>
-    </div><!-- modal-content -->
-  </div><!-- modal-dialog -->
-</div><!-- modal -->
+    </div>
+  </div>
+</div>
+
 </section>
 </body>
 </html>
