@@ -16,3 +16,19 @@ function confirmacion(titulo, mensaje, url)
 	$("#myModalLink").attr("href",url);
 	$('#boton-confirmacion').click();
 }
+function alerta_rapida(titulo, mensaje)
+{
+	$.gritter.add({
+		title: titulo,
+		text: mensaje,
+      	class_name: 'growl-danger',
+		sticky: true,
+		time: ''
+	 });
+}
+function modal(titulo, url)
+{
+	$("#titulo-ventana").html(titulo);
+	$('#contenido-ventana').load(url);
+	$("#boton-modal").click();
+}

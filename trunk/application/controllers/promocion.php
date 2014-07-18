@@ -350,15 +350,18 @@ class Promocion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			$id_empleado=$this->input->post('id_empleado');
 			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
-			$fecha_visita=$this->input->post('fecha_visita');
+			$fec=str_replace("/","-",$this->input->post('fecha_visita'));
+			$fecha_visita=date("Y-m-d", strtotime($fec));
 			$hora_visita=$this->input->post('hour').':'.$this->input->post('minute').':00 '.$this->input->post('meridian');
 			$hora_visita=date("H:i:s", strtotime($hora_visita));
+			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
 			
 			$formuInfo = array(
 				'id_empleado'=>$id_empleado,
 				'id_lugar_trabajo'=>$id_lugar_trabajo,
 				'fecha_visita'=>$fecha_visita,
 				'hora_visita'=>$hora_visita,
+				'hora_visita_final'=>$hora_visita_final,
 				'estado_programacion'=>$estado_programacion
 			);
 			
@@ -404,6 +407,38 @@ class Promocion extends CI_Controller
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/promocion/programa/1/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: calendario
+	*	Objetivo: Muestra el calendario mensual de las visitas programadas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function calendario($id_empleado=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$data['visita']=$this->promocion_model->calendario($id_empleado);
+			$this->load->view('promocion/calendario',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function calendario_dia($id_empleado=NULL,$fecha)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		  	$data['visita']=$this->promocion_model->calendario_dia($id_empleado, $fecha);
+			$this->load->view('promocion/calendario_dia',$data);
 		}
 		else {
 			pantalla_error();
