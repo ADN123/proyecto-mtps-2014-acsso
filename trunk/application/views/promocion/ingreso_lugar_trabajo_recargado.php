@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label for="id_institucion" class="col-sm-3 control-label">Institución <span class="asterisk">*</span></label>
                 <div class="col-sm-7">
-                    <select class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]">
+                    <select class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" required="required">
                         <option value=""></option>
                         <?php
                             foreach($institucion as $val) {
@@ -38,7 +38,7 @@
             <div class="form-group">
                 <label for="id_tipo_lugar_trabajo" class="col-sm-3 control-label">Tipo de lugar de trabajo <span class="asterisk">*</span></label>
                 <div class="col-sm-4">
-                    <select class="form-control" name="id_tipo_lugar_trabajo" id="id_tipo_lugar_trabajo" data-placeholder="[Seleccione..]">
+                    <select class="form-control" name="id_tipo_lugar_trabajo" id="id_tipo_lugar_trabajo" data-placeholder="[Seleccione..]" required="required">
                         <option value=""></option>
                         <?php
                             foreach($tipo_lugar_trabajo as $val) {
@@ -55,21 +55,21 @@
             <div class="form-group">
                 <label for="nombre_lugar" class="col-sm-3 control-label">Nombre lugar de trabajo <span class="asterisk">*</span></label>
                 <div class="col-sm-7">
-                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" value="<?php echo $lugar_trabajo['nombre']?>"/>
+                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" value="<?php echo $lugar_trabajo['nombre']?>" required="required"/>
                 </div>
             </div>
             
             <div class="form-group">
                 <label for="direccion_lugar" class="col-sm-3 control-label">Dirección <span class="asterisk">*</span></label>
                 <div class="col-sm-7">
-                    <textarea required class="form-control" id="direccion_lugar" tabindex="2" name="direccion_lugar"><?php echo $lugar_trabajo['direccion_lugar']?></textarea>
+                    <textarea class="form-control" id="direccion_lugar" tabindex="2" name="direccion_lugar" required="required"><?php echo $lugar_trabajo['direccion_lugar']?></textarea>
                 </div>
             </div>
             
             <div class="form-group">
                 <label for="id_municipio" class="col-sm-3 control-label">Municipio <span class="asterisk">*</span></label>
                 <div class="col-sm-6">
-                    <select class="form-control" name="id_municipio" id="id_municipio" data-placeholder="[Seleccione..]">
+                    <select class="form-control" name="id_municipio" id="id_municipio" data-placeholder="[Seleccione..]" required="required">
                         <option value=""></option>
                         <?php
                             foreach($municipio as $val) {

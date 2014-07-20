@@ -53,7 +53,7 @@ class Usuarios extends CI_Controller
 			pantalla('usuarios/roles',$data,Dcontrol_rol);	
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -90,7 +90,7 @@ class Usuarios extends CI_Controller
 			$this->load->view('usuarios/formu_rol',$data);	
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -184,7 +184,7 @@ class Usuarios extends CI_Controller
 			ir_a('index.php/usuarios/roles/'.$tr.'/2');
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -281,7 +281,7 @@ class Usuarios extends CI_Controller
 			ir_a('index.php/usuarios/roles/'.$tr.'/1');
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -306,7 +306,7 @@ class Usuarios extends CI_Controller
 			ir_a('index.php/usuarios/roles/'.$tr.'/0');
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -344,7 +344,7 @@ class Usuarios extends CI_Controller
 			pantalla('usuarios/usuarios',$data,Dcontrol_usuario);	
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 		
@@ -384,7 +384,7 @@ class Usuarios extends CI_Controller
 			$this->load->view('usuarios/formu_usuario',$data);	
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -471,7 +471,7 @@ class Usuarios extends CI_Controller
 			ir_a('index.php/usuarios/usuario/'.$tr.'/2');
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -516,7 +516,7 @@ class Usuarios extends CI_Controller
 			ir_a('index.php/usuarios/usuario/'.$tr.'/1');
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
 	}
 	
@@ -542,8 +542,16 @@ class Usuarios extends CI_Controller
 			ir_a('index.php/usuarios/usuario/'.$tr.'/0');
 		}
 		else {
-			echo 'No tiene permisos para acceder';
+			pantalla_error();
 		}
+	}
+	
+	function buscar()
+	{
+		$buscar=$this->input->post('buscar');
+		$data['buscar']=$buscar;
+		$data['resultados']=$this->usuario_model->realizar_busqueda($this->session->userdata('id_usuario'),$buscar); 
+		pantalla('resultados_busqueda',$data);
 	}
 }
 ?>

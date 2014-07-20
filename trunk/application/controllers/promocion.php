@@ -1,7 +1,8 @@
 <?php
 class Promocion extends CI_Controller
 {
-	public $mostrar_todos="FALSE";
+	/* Incluir(TRUE)/No incluir(FALSE) los lugares de trabajo que ya tienen una visita programada en la lista de lugares de trabajo que se pueden asignar*/
+	public $mostrar_todos="FALSE"; 
 	
     function Promocion()
 	{
@@ -498,19 +499,26 @@ class Promocion extends CI_Controller
 			$hora_visita=date("H:i:s", strtotime($hora_visita));
 			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
 			
-			$formuInfo = array(
-				'id_programacion_visita'=>$id_programacion_visita,
-				'id_empleado'=>$id_empleado,
-				'id_lugar_trabajo'=>$id_lugar_trabajo,
-				'fecha_visita'=>$fecha_visita,
-				'hora_visita'=>$hora_visita,
-				'hora_visita_final'=>$hora_visita_final,
-				'estado_programacion'=>$estado_programacion
-			);
-			
-			$json =array(
-				'resultado'=>$this->promocion_model->comprobar_programacion($formuInfo)
-			);
+			if($id_empleado!="" && $id_lugar_trabajo!="" && $fecha_visita!="" && $hora_visita!="" && $hora_visita_final!="") {		
+				$formuInfo = array(
+					'id_programacion_visita'=>$id_programacion_visita,
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_visita'=>$fecha_visita,
+					'hora_visita'=>$hora_visita,
+					'hora_visita_final'=>$hora_visita_final,
+					'estado_programacion'=>$estado_programacion
+				);
+				
+				$json =array(
+					'resultado'=>$this->promocion_model->comprobar_programacion($formuInfo)
+				);
+			}
+			else {
+				$json =array(
+					'resultado'=>0
+				);
+			}
 		}
 		else {
 			$json =array(

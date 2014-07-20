@@ -54,14 +54,14 @@
                           	<div class="form-group">
                             	<label for="nombre_institucion" class="col-sm-3 control-label">Nombre de la institución <span class="asterisk">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="nombre_institucion" id="nombre_institucion" class="form-control" />
+                                    <input type="text" name="nombre_institucion" id="nombre_institucion" class="form-control" required="required"/>
                                 </div>
                             </div>
                           
                             <div class="form-group">
                                 <label for="nit_empleador" class="col-sm-3 control-label">NIT del empleador <span class="asterisk">*</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" name="nit_empleador" id="nit_empleador" class="form-control" />
+                                    <input type="text" name="nit_empleador" id="nit_empleador" class="form-control" required="required"/>
                                 </div>
                             </div>
                             <div class="form-group">

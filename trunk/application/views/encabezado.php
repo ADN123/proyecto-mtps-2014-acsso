@@ -55,8 +55,8 @@
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
+    <script src="<?php echo base_url();?>js/html5shiv.js"></script>
+    <script src="<?php echo base_url();?>js/respond.min.js"></script>
     <![endif]-->
 	<style>
 		/*scrollbar*/
@@ -98,6 +98,28 @@
 		}
 		.fc-widget-content {
 			border: 1px solid #ccc;
+		}
+		.fc-event {
+			cursor: pointer;
+		}
+		#calendar_dia .fc-agenda-slots td div {
+			height: 45px;
+		}
+		#calendar_dia .fc-event-vert .ui-resizable-s {
+			top: 3px;
+			right: 5px;
+			left: initial;
+			width: 45px !important;
+			height: 14px !important;
+			z-index: 1000;
+			cursor: default;
+		}
+		#calendar_dia a {
+			color: #FFF;
+			text-decoration: none;
+		}
+		#calendar_dia a.fc-event, #calendar_dia .fc-event-draggable {
+			cursor: default; 
 		}
 	</style>
 </head>

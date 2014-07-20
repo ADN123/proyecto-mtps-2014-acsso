@@ -231,7 +231,9 @@ class Promocion_model extends CI_Model {
 		if($id_programacion_visita!=NULL && $id_programacion_visita!="")
 			$where.=" AND id_programacion_visita<>".$id_programacion_visita;
 		$sentencia="SELECT Count(*) AS total FROM sac_programacion_visita
-					WHERE id_empleado=".$id_empleado." AND fecha_visita like '".$fecha_visita."' AND hora_visita >= '".$hora_visita."' AND hora_visita < '".$hora_visita_final."' ".$where;
+					WHERE id_empleado=".$id_empleado." AND fecha_visita like '".$fecha_visita."' 
+					AND ((hora_visita >= '".$hora_visita."' AND hora_visita < '".$hora_visita_final."') OR (hora_visita_final > '".$hora_visita."' AND hora_visita_final <= '".$hora_visita_final."'))
+					".$where;
 		$query=$this->db->query($sentencia);
 		$val=(array)$query->row();
 		if($val['total']==0)
@@ -244,9 +246,9 @@ class Promocion_model extends CI_Model {
 	{
 		extract($formuInfo);		
 		$sentencia="INSERT INTO sac_programacion_visita
-					(id_empleado, id_lugar_trabajo, fecha_visita, hora_visita, fecha_creacion, id_usuario_crea) 
+					(id_empleado, id_lugar_trabajo, fecha_visita, hora_visita, hora_visita_final, fecha_creacion, id_usuario_crea) 
 					VALUES 
-					($id_empleado, $id_lugar_trabajo, '$fecha_visita', '$hora_visita', '$fecha_creacion', $id_usuario_crea)";
+					($id_empleado, $id_lugar_trabajo, '$fecha_visita', '$hora_visita', '$hora_visita_final', '$fecha_creacion', $id_usuario_crea)";
 		$this->db->query($sentencia);
 	}
 	
@@ -270,6 +272,7 @@ class Promocion_model extends CI_Model {
 					sac_institucion.nombre_institucion AS titulo2,
 					fecha_visita AS fecha,
 					DATE_FORMAT(hora_visita,'%h:%i %p') AS hora,
+					DATE_FORMAT(hora_visita_final,'%h:%i %p') AS hora_final,
 					DATE_FORMAT(hora_visita,'%H:%i') AS hora_m,
 					estado_programacion AS estado
 					FROM sac_programacion_visita
@@ -310,7 +313,7 @@ class Promocion_model extends CI_Model {
 	{
 		extract($formuInfo);		
 		$sentencia="UPDATE sac_programacion_visita SET
-					id_empleado=$id_empleado, id_lugar_trabajo=$id_lugar_trabajo, fecha_visita='$fecha_visita', hora_visita='$hora_visita', fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica
+					id_empleado=$id_empleado, id_lugar_trabajo=$id_lugar_trabajo, fecha_visita='$fecha_visita', hora_visita='$hora_visita', hora_visita_final='$hora_visita_final', fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica
 					WHERE id_programacion_visita=".$id_programacion_visita;
 		$this->db->query($sentencia);
 	}
