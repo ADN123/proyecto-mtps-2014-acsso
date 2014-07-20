@@ -8,6 +8,9 @@
 	ul li small, small strong {
 		font-size: 14px !important;
 	}
+	.widget-messaging ul li {
+		border-top: 1px solid #eee !important;
+	}
 </style>
 <div class="col-md-3"></div>
 <div class="col-md-6">
@@ -30,8 +33,8 @@
                 		<a href="<?php echo base_url()."index.php/".$val['url'] ?>">
                             <li>
                                 <small class="pull-left"><span class="glyphicon glyphicon-share"></span></small>
-                                <h4 class="sender"><?php echo str_ireplace($buscar,"<strong>".$buscar."</strong>",($val['padre']." - ".$val['nombre'])) ?></h4>
-                                <small><?php echo str_ireplace($buscar,"<strong>".$buscar."</strong>",$val['descripcion']) ?></small>
+                                <h4 class="sender"><?php echo $val['padre']." - ".$val['nombre'] ?></h4>
+                                <small><?php echo $val['descripcion'] ?></small>
                             </li>
                         </a>
                 <?php

@@ -5,7 +5,7 @@
       <a class="menutoggle"><i class="fa fa-bars"></i></a>
       
       <form class="searchform" action="<?php echo base_url()."index.php/usuarios/buscar"?>" method="post">
-        <input type="text" class="form-control" name="buscar" placeholder="Buscar..." />
+        <input type="text" class="form-control" name="buscar" placeholder="Buscar..." autocomplete="off" value="<?php echo $buscar ?>"/>
       </form>
       
       <div class="header-right">

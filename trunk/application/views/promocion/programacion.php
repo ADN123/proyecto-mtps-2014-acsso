@@ -39,7 +39,7 @@ include(base_url."index.php/promocion/calendario_dia");
         	<h3 class="panel-title">Datos de la visita</h3>
         </div>
         <div class="panel-body">
-  			<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_programacion">                
+  			<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_programacion" autocomplete="off">                
                 <div class="form-group">
                     <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
                     <div class="col-sm-7">
