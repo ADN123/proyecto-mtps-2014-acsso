@@ -655,5 +655,18 @@ class Promocion extends CI_Controller
 		}
 		echo json_encode($json);
 	}
+	
+	function ingreso($accion_transaccion=NULL,$estado_transaccion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dingreso_promocion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('promocion/ingreso_promocion',$data,Dingreso_promocion);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>

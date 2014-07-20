@@ -24,7 +24,7 @@
     	</div>
     	<div class="panel-body">
         	<ul>
-				<li><?php echo count($resultados)." resultado(s) encontrado(s) en la búsqueda de '<strong>".$buscar."</strong>'" ?></li>
+				<li><?php echo "<strong>".count($resultados)."</strong> resultado(s) encontrado(s) en la búsqueda de '<strong>".$buscar."</strong>'" ?></li>
       		</ul>
             <ul>
             	<?php
