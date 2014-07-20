@@ -36,7 +36,7 @@
         	<h3 class="panel-title">Datos de la institución</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
-        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_promocion">
+        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_promocion" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">

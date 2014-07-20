@@ -36,7 +36,7 @@
         	<h3 class="panel-title">Datos del lugar de trabajo</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
-        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_lugar_trabajo">
+        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_lugar_trabajo" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">
