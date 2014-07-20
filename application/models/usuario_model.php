@@ -504,5 +504,24 @@ class Usuario_model extends CI_Model {
 		$sentencia="UPDATE org_usuario SET password='$password' where id_usuario='$id_usuario'";
 		$this->db->query($sentencia);
 	}
+	
+	function realizar_busqueda($id_usuario,$buscar)
+	{
+		$sentencia="SELECT DISTINCT
+					m2.nombre_modulo AS padre,
+					org_modulo.nombre_modulo AS nombre,
+					org_modulo.descripcion_modulo AS descripcion,
+					org_modulo.url_modulo AS url
+					FROM org_rol
+					INNER JOIN org_usuario_rol ON org_rol.id_rol = org_usuario_rol.id_rol
+					INNER JOIN org_rol_modulo_permiso ON org_rol_modulo_permiso.id_rol = org_rol.id_rol
+					INNER JOIN org_modulo ON org_modulo.id_modulo = org_rol_modulo_permiso.id_modulo
+					INNER JOIN org_modulo AS m2 ON m2.id_modulo = org_modulo.dependencia
+					WHERE org_usuario_rol.id_usuario=".$id_usuario." AND org_modulo.id_sistema=6 AND org_rol_modulo_permiso.estado=1
+					AND (m2.nombre_modulo like '%".$buscar."%' OR org_modulo.nombre_modulo like '%".$buscar."%' OR org_modulo.descripcion_modulo like '%".$buscar."%' OR org_modulo.url_modulo like '%".$buscar."%')
+					ORDER BY m2.orden, org_modulo.orden";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 }
 ?>

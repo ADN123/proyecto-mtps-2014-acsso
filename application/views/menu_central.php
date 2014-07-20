@@ -4,8 +4,8 @@
       
       <a class="menutoggle"><i class="fa fa-bars"></i></a>
       
-      <form class="searchform" action="http://themepixels.com/demo/webpage/bracket/index.html" method="post">
-        <input type="text" class="form-control" name="keyword" placeholder="Buscar..." />
+      <form class="searchform" action="<?php echo base_url()."index.php/usuarios/buscar"?>" method="post">
+        <input type="text" class="form-control" name="buscar" placeholder="Buscar..." />
       </form>
       
       <div class="header-right">

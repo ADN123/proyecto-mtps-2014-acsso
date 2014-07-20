@@ -10,6 +10,15 @@ $(document).ready(function(){
 		'white-space': 'nowrap'
 	});
 	
+	$("#formu").validate({
+		highlight: function(element) {
+			$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+		},
+		success: function(element) {
+			$(element).closest('.form-group').removeClass('has-error');
+		}
+	});
+	
 	$(".ayuda").click(function(){
 		var id=Number($(this).data("ayuda"));
 		var mensaje="";
@@ -113,6 +122,7 @@ function ajax_json(url, mensaje_correcto, mensaje_incorrecto, data) {
 				alerta_rapida(bueno_titu, bueno_men, 'success');
 				if($("#calendar_dia").length!=0) {
 					$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+$("#id_empleado").val());
+					$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+$("#id_empleado").val());
 					modal("Programación del día",base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+fecha_actual);
 				}
 			}

@@ -1,21 +1,3 @@
-<style>
-	#calendar_dia .fc-agenda-slots td div {
-		height: 45px;
-	}
-	#calendar_dia .fc-event-vert .ui-resizable-s {
-		top: 3px;
-		right: 5px;
-		left: initial;
-		width: 45px !important;
-		height: 14px !important;
-		z-index: 1000;
-		cursor: default;
-	}
-	#calendar_dia a {
-		color: #FFF;
-		text-decoration: none;
-	}
-</style>
 <div id="calendar_dia" class="fc-ltr">
 	<table class="fc-header" style="width:100%; display: none;">
     	<tbody>
@@ -73,7 +55,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -108,7 +90,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -143,7 +125,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -178,7 +160,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -213,7 +195,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -248,7 +230,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -283,7 +265,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -318,7 +300,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -353,7 +335,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -388,7 +370,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -413,7 +395,7 @@
 											?>
                                                         <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
-                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
+                                                                <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                                             <div class="ui-resizable-handle ui-resizable-s">
                                                                 <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
