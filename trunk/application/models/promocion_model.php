@@ -34,14 +34,28 @@ class Promocion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
-	function mostrar_institucion($estado=NULL) 
+	function actualizar_promocion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_institucion SET
+					nombre_institucion='$nombre_institucion', nit_empleador='$nit_empleador', nombre_representante='$nombre_representante', id_clasificacion=$id_clasificacion, id_sector=$id_sector, sindicato='$sindicato', fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_institucion=".$id_institucion;
+		$this->db->query($sentencia);
+	}
+	
+	function mostrar_institucion($estado=NULL, $id_institucion=NULL) 
 	{
 		$where="";
 		if($estado!=NULL)
-			$where="WHERE estado=1";
-		$sentencia="SELECT id_institucion AS id, nombre_institucion AS nombre FROM sac_institucion ".$where;
+			$where.=" AND estado=".$estado;
+		if($id_institucion!=NULL)
+			$where.=" AND id_institucion=".$id_institucion;
+		$sentencia="SELECT id_institucion, id_institucion AS id, nombre_institucion AS nombre, id_clasificacion, id_sector, nit_empleador, nombre_representante, sindicato FROM sac_institucion WHERE TRUE ".$where;
 		$query=$this->db->query($sentencia);
-		return (array)$query->result_array();
+		if($id_institucion!=NULL)
+			return (array)$query->row();
+		else
+			return (array)$query->result_array();
 	}
 	
 	function eliminar_institucion($formuInfo) 
@@ -85,14 +99,20 @@ class Promocion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
-	function lugares_trabajo_empresa($id_institucion=NULL)
+	function lugares_trabajo_empresa($id_institucion=NULL,$id_lugar_trabajo=NULL)
 	{
 		if($id_institucion!=NULL)
 			$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE estado=1 AND id_institucion=".$id_institucion;
 		else
-			$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE estado=1";
+			if($id_lugar_trabajo!=NULL)
+				$sentencia="SELECT id_lugar_trabajo, id_lugar_trabajo AS id, nombre_lugar AS nombre, id_institucion,id_tipo_lugar_trabajo, id_municipio, direccion_lugar, nombre_contacto, telefono, correo, total_hombres, total_mujeres  FROM sac_lugar_trabajo WHERE estado=1 AND id_lugar_trabajo=".$id_lugar_trabajo;
+			else
+				$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE estado=1";
 		$query=$this->db->query($sentencia);
-		return (array)$query->result_array();
+		if($id_lugar_trabajo!=NULL)
+			return (array)$query->row();
+		else
+			return (array)$query->result_array();
 	}
 	
 	function mostrar_tecnicos($id_seccion=NULL,$ss=NULL)
@@ -171,14 +191,17 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function lugares_trabajo_institucion_visita($id_departamento,$id_institucion=NULL,$mostrar_todos=FALSE)
+	function lugares_trabajo_institucion_visita($id_departamento,$id_institucion=NULL,$mostrar_todos="FALSE",$id_lugar_trabajo=NULL)
 	{
 		$where="";
 		if($id_institucion!=NULL)
 			$where.="AND sac_lugar_trabajo.id_institucion=".$id_institucion." ";
-		if(!$mostrar_todos)
-			$where.="AND (sac_programacion_visita.estado_programacion<>1 OR sac_programacion_visita.estado_programacion IS NULL) ";
-		
+		if($mostrar_todos=="FALSE") {
+			$where.="AND (sac_programacion_visita.estado_programacion<>1 OR sac_programacion_visita.estado_programacion IS NULL";
+			if($id_lugar_trabajo!=NULL)
+				$where.=" OR sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
+			$where.=") ";
+		}
 		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, sac_lugar_trabajo.nombre_lugar AS nombre
 					FROM sac_institucion
 					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
@@ -205,8 +228,10 @@ class Promocion_model extends CI_Model {
 		$where="";
 		if($estado_programacion!=NULL && $estado_programacion!="")
 			$where.=" AND estado_programacion=".$estado_programacion;
+		if($id_programacion_visita!=NULL && $id_programacion_visita!="")
+			$where.=" AND id_programacion_visita<>".$id_programacion_visita;
 		$sentencia="SELECT Count(*) AS total FROM sac_programacion_visita
-					WHERE id_empleado=".$id_empleado." AND fecha_visita like '".$fecha_visita."' AND hora_visita >= '".$hora_visita."' AND hora_visita <= '".$hora_visita_final."' ".$where;
+					WHERE id_empleado=".$id_empleado." AND fecha_visita like '".$fecha_visita."' AND hora_visita >= '".$hora_visita."' AND hora_visita < '".$hora_visita_final."' ".$where;
 		$query=$this->db->query($sentencia);
 		$val=(array)$query->row();
 		if($val['total']==0)
@@ -258,6 +283,35 @@ class Promocion_model extends CI_Model {
 	function eliminar_programacion($id_programacion_visita)
 	{
 		$sentencia="DELETE FROM sac_programacion_visita WHERE id_programacion_visita=".$id_programacion_visita;
+		$this->db->query($sentencia);
+	}
+	
+	function actualizar_lugar_trabajo($formuInfo)
+	{
+		extract($formuInfo);		
+		$sentencia="UPDATE sac_lugar_trabajo SET
+					id_institucion=$id_institucion, id_tipo_lugar_trabajo=$id_tipo_lugar_trabajo, nombre_lugar='$nombre_lugar', direccion_lugar='$direccion_lugar', id_municipio=$id_municipio, nombre_contacto='$nombre_contacto', telefono='$telefono', correo='$correo', total_hombres=$total_hombres, total_mujeres=$total_mujeres, fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_lugar_trabajo=".$id_lugar_trabajo;
+		$this->db->query($sentencia);
+	}
+	
+	function buscar_programacion($id_programacion_visita)
+	{
+		$sentencia="SELECT sac_programacion_visita.id_programacion_visita, sac_institucion.id_institucion, sac_programacion_visita.id_lugar_trabajo, id_empleado, DATE_FORMAT(fecha_visita,'%d/%m/%Y') AS fecha_visita, DATE_FORMAT(hora_visita,'%h:%i %p') AS hora_visita 
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE id_programacion_visita=".$id_programacion_visita;
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
+	}
+	
+	function actualizar_programacion($formuInfo)
+	{
+		extract($formuInfo);		
+		$sentencia="UPDATE sac_programacion_visita SET
+					id_empleado=$id_empleado, id_lugar_trabajo=$id_lugar_trabajo, fecha_visita='$fecha_visita', hora_visita='$hora_visita', fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica
+					WHERE id_programacion_visita=".$id_programacion_visita;
 		$this->db->query($sentencia);
 	}
 }

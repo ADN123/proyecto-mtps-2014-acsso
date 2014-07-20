@@ -30,7 +30,8 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="minimize">−</a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="3" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Datos del lugar de trabajo</h3>
         </div>
@@ -158,7 +159,8 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="minimize">−</a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="4" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title" id="titulo-tabla">Lugares de trabajo registrados</h3>
         </div>
@@ -202,6 +204,10 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
+		$("#limpiar").click(function(){
+			$("#formu").load(base_url()+"index.php/promocion/lugares_trabajo_recargado");
+			$('#contenido-tabla').load(base_url()+'index.php/promocion/lugares_trabajo_empresa/0');
+		});
 		$('#id_institucion').change(function(){
 			id=$(this).val();
 			$('#contenido-tabla').load(base_url()+'index.php/promocion/lugares_trabajo_empresa/'+id);

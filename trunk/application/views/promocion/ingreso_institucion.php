@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente! Si deseas agregar lugares de trabajo a una empresa presiona <a href="'.base_url().'index.php/promocion/lugares_trabajo" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente! Si deseas agregar lugares de trabajo a una institución presiona <a href="'.base_url().'index.php/promocion/lugares_trabajo" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';
@@ -30,7 +30,8 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="minimize">−</a>
+            <a href="#" class="tooltips ayuda" data-ayuda="1" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Datos de la institución</h3>
         </div>
@@ -122,7 +123,7 @@
                     
                     <ul class="pager wizard">
                         <li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
-                        <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
+                        <li><button class="btn btn-warning" type="button" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
               		</ul>
                     
             	</div><!-- #basicWizard -->
@@ -134,7 +135,8 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="minimize">−</a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="2" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title" id="titulo-tabla">Instituciones registradas</h3>
         </div>
@@ -183,13 +185,18 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});
-		
+		$("#limpiar").click(function(){
+			$("#formu").load(base_url()+"index.php/promocion/general_recargado");
+		});
+		$(".edit-row").click(function(){
+			$("#formu").load(base_url()+"index.php/promocion/general_recargado/"+$(this).data("id"));
+			return false;
+		});
 		$('.delete-row').click(function(){
 			var id=$(this).data("id");
 			var titulo="Alerta";
 			var mensaje="Realmente desea eliminar este registro? No podrá revertir los cambios.";
 			var url=base_url()+"index.php/promocion/eliminar_institucion/"+id;
-		  	
 			confirmacion(titulo, mensaje, url);
 			return false;
 		});	

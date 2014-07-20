@@ -87,6 +87,18 @@
 		 	background-color: inherit !important; 
 		 	opacity: 1; 
 		}
+		.table {
+			background: #fcfcfc;
+			-moz-box-shadow: 0 3px 0 rgba(12,12,12,0.1);
+			-webkit-box-shadow: 0 3px 0 rgba(12,12,12,0.1);
+			box-shadow: 0 3px 0 rgba(12,12,12,0.1);
+		}
+		.table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+			border-color: #ccc;
+		}
+		.fc-widget-content {
+			border: 1px solid #ccc;
+		}
 	</style>
 </head>
 

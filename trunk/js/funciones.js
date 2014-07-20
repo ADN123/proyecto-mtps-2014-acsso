@@ -9,6 +9,36 @@ $(document).ready(function(){
 		'min-width': '100px',
 		'white-space': 'nowrap'
 	});
+	
+	$(".ayuda").click(function(){
+		var id=Number($(this).data("ayuda"));
+		var mensaje="";
+		switch(id) {
+			case 1:
+				mensaje='Formulario de ingreso de instituciones';
+				break;
+			case 2:
+				mensaje='Lista de instituciones';
+				break;
+			case 3:
+				mensaje='Formulario de ingreso de lugares de trabajo';
+				break;
+			case 4:
+				mensaje='Lista de lugares de trabajo';
+				break;
+			case 5:
+				mensaje='Formulario de asignaciones';
+				break;
+			case 6:
+				mensaje='Calendarización de asignaciones de un técnico';
+				break;
+			case 7:
+				mensaje='Lista de roles de usuarios';
+				break;
+		}
+		alerta("Ayuda", mensaje);
+		return false;
+	});
 });
 function confirmacion(titulo, mensaje, url, ajax, tipo)
 {
@@ -22,6 +52,20 @@ function confirmacion(titulo, mensaje, url, ajax, tipo)
 	}
 	else
 		$("#myModalLink").attr("href",url);
+	
+	$("#myModalLink,#myModalCancel").removeAttr("style");
+	$("#myModalAccept").attr("style","display:none");
+	
+	$('#boton-confirmacion').click();
+}
+function alerta(titulo, mensaje)
+{
+	$("#myModalLabel").html(titulo);
+	$("#myModalBody").html(mensaje);
+	
+	$("#myModalLink,#myModalCancel").attr("style","display:none");
+	$("#myModalAccept").removeAttr("style");
+	
 	$('#boton-confirmacion').click();
 }
 function alerta_rapida(titulo, mensaje, tipo)

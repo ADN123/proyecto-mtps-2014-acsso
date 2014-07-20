@@ -25,12 +25,16 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <?php echo $mensaje?>
         </div>
-<?php } ?>
+<?php } 
+
+include(base_url."index.php/promocion/calendario_dia");
+?>
 <div class="col-md-6">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="minimize">−</a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="5" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Datos de la visita</h3>
         </div>
@@ -100,7 +104,8 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="minimize">−</a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="6" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Calendario de actividades</h3>
         </div>
@@ -110,6 +115,7 @@
    	</div>
 </div>
 <script>
+	var id_lugar_trabajo="";
 	$(document).ready(function() {
 		var date = new Date('2014-7-13 13:34:12');
 		var d = date.getDate();
@@ -162,42 +168,11 @@
 			slotEventOverlap: false,	
 			unselectAuto: false,
 			weekMode : false,  
-			
-			/*events: [
-				{
-					id: 1,
-					title: 'All Day Event',
-					start: new Date(y, m, 1)
-				},
-				{
-					id: 2,
-					title: 'Long  Event',
-					start: new Date(y, m, d-5)
-				},
-				{
-					id: 3,
-					title: 'Repeating Event333333333333',
-					start: new Date(y, m, d),
-					allDay: false
-				},
-				{
-					id: 4,
-					title: 'Repeating Event22222222',
-					start: new Date(y, m, d+1)
-				},
-				{
-					id: 5,
-					title: 'Click for Google',
-					start: new Date(y, m, 28)
-				}
-			],*/
-			
 			dayClick: function(date, view) {
 			},
 			eventClick: function(event, jsEvent){
           	}
 		});
-		
 		$("#formu").submit(function(){
 			$.ajax({
 				async:	true, 
@@ -219,6 +194,10 @@
 				}
 			});			
 			return false;
+		});
+		$("#limpiar").click(function(){
+			$("#formu").load(base_url()+"index.php/promocion/programa_recargado");
+			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/0');
 		});
 	});
 </script>
