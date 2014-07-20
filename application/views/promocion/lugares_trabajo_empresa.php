@@ -20,13 +20,11 @@
 		$('.table').dataTable({
 			"sPaginationType": "full_numbers"
 		});
-		
 		$("select").chosen({
 			'width': '100%',
 			'min-width': '100px',
 			'white-space': 'nowrap'
 		});
-		
 		$('.delete-row').click(function(){
 		  	var id=$(this).data("id");
 			var titulo="Alerta";
@@ -36,5 +34,9 @@
 			confirmacion(titulo, mensaje, url);
 			return false;
 		});	
+		$(".edit-row").click(function(){
+			$("#formu").load(base_url()+"index.php/promocion/lugares_trabajo_recargado/"+$(this).data("id"));
+			return false;
+		});
 	});
 </script>

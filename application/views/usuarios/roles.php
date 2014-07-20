@@ -9,7 +9,8 @@
     <div class="panel panel-danger">
         <div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="minimize">−</a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="7" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Tabla de Roles</h3>
         </div>

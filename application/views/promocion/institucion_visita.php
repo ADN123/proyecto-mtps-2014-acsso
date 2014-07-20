@@ -11,8 +11,9 @@
 </div>
 <script>
 	$('#id_institucion').change(function(){
-		id=$(this).val();
-		$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/'+$('#id_empleado').val()+'/'+id);
+		var id=$(this).val();
+		//alert(id_lugar_trabajo);
+		$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/'+$('#id_empleado').val()+'/'+id+'/'+id_lugar_trabajo);
 	});
 	$("select").chosen({
 		'width': '100%',

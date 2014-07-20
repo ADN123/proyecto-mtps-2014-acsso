@@ -1,7 +1,8 @@
 <?php
 class Promocion extends CI_Controller
 {
-    
+	public $mostrar_todos="FALSE";
+	
     function Promocion()
 	{
         parent::__construct();
@@ -48,6 +49,29 @@ class Promocion extends CI_Controller
 	}
 	
 	/*
+	*	Nombre: general_recargado
+	*	Objetivo: Funcion que recarga el formulario para editarlo o limpiarlo 
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 19/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function general_recargado($id_institucion=NULL)
+	{	
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Ddatos_generales); 
+		if($data['id_permiso']==3) {
+			$data['clasificacion']=$this->promocion_model->mostrar_clasificacion();
+			$data['sector']=$this->promocion_model->mostrar_sector();
+			if($id_institucion!=NULL)
+				$data['institucion']=$this->promocion_model->mostrar_institucion(1,$id_institucion);
+			$this->load->view('promocion/ingreso_institucion_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
 	*	Nombre: guardar_promocion
 	*	Objetivo: Guarda el formulario de ingreso de una institucion
 	*	Hecha por: Leonel
@@ -61,6 +85,7 @@ class Promocion extends CI_Controller
 		if($data['id_permiso']==3){
 			$this->db->trans_start();
 			
+			$id_institucion=$this->input->post('id_institucion');
 			$nombre_institucion=$this->input->post('nombre_institucion');
 			$nit_empleador=$this->input->post('nit_empleador');
 			
@@ -69,24 +94,46 @@ class Promocion extends CI_Controller
 			$id_sector=($this->input->post('id_sector')=='')?'NULL':$this->input->post('id_sector');
 			$sindicato=$this->input->post('sindicato');
 			
-			$fecha_creacion=date('Y-m-d H:i:s');
-			$id_usuario_crea=$this->session->userdata('id_usuario');
-			
-			$formuInfo = array(
-				'nombre_institucion'=>$nombre_institucion,
-				'nit_empleador'=>$nit_empleador,
-				'nombre_representante'=>$nombre_representante,
-				'id_clasificacion'=>$id_clasificacion,
-				'id_sector'=>$id_sector,
-				'sindicato'=>$sindicato,
-				'fecha_creacion'=>$fecha_creacion,
-				'id_usuario_crea'=>$id_usuario_crea,
-			);
-			$this->promocion_model->guardar_promocion($formuInfo);
+			if($id_institucion=="") {
+				$fecha_creacion=date('Y-m-d H:i:s');
+				$id_usuario_crea=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'nombre_institucion'=>$nombre_institucion,
+					'nit_empleador'=>$nit_empleador,
+					'nombre_representante'=>$nombre_representante,
+					'id_clasificacion'=>$id_clasificacion,
+					'id_sector'=>$id_sector,
+					'sindicato'=>$sindicato,
+					'fecha_creacion'=>$fecha_creacion,
+					'id_usuario_crea'=>$id_usuario_crea,
+				);
+				$this->promocion_model->guardar_promocion($formuInfo);
+				$tipo=1;
+			}
+			else {
+				$sindicato=($this->input->post('sindicato')=='')?'0':$this->input->post('sindicato');
+				$fecha_modificacion=date('Y-m-d H:i:s');
+				$id_usuario_modifica=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_institucion'=>$id_institucion,
+					'nombre_institucion'=>$nombre_institucion,
+					'nit_empleador'=>$nit_empleador,
+					'nombre_representante'=>$nombre_representante,
+					'id_clasificacion'=>$id_clasificacion,
+					'id_sector'=>$id_sector,
+					'sindicato'=>$sindicato,
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica,
+				);
+				$this->promocion_model->actualizar_promocion($formuInfo);
+				$tipo=2;
+			}
 			
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a("index.php/promocion/general/1/".$tr);
+			ir_a("index.php/promocion/general/".$tipo."/".$tr);
 		}
 		else {
 			pantalla_error();
@@ -151,6 +198,30 @@ class Promocion extends CI_Controller
 	}
 	
 	/*
+	*	Nombre: lugares_trabajo_recargado
+	*	Objetivo: Funcion que recarga el formulario para editarlo o limpiarlo 
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 19/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function lugares_trabajo_recargado($id_lugar_trabajo=NULL)
+	{	
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dlugares_trabajo); 
+		if($data['id_permiso']==3) {
+			$data['institucion']=$this->promocion_model->mostrar_institucion(1);
+			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
+			$data['municipio']=$this->promocion_model->mostrar_municipio();
+			if($id_lugar_trabajo!=NULL)
+				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_empresa(NULL,$id_lugar_trabajo);
+			$this->load->view('promocion/ingreso_lugar_trabajo_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
 	*	Nombre: guardar_lugar_trabajo
 	*	Objetivo: Guarda el formulario de ingreso de un lugar de trabajo
 	*	Hecha por: Leonel
@@ -164,6 +235,7 @@ class Promocion extends CI_Controller
 		if($data['id_permiso']==3){
 			$this->db->trans_start();
 			
+			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
 			$id_institucion=$this->input->post('id_institucion');
 			$id_tipo_lugar_trabajo=$this->input->post('id_tipo_lugar_trabajo');
 			$nombre_lugar=$this->input->post('nombre_lugar');
@@ -176,28 +248,53 @@ class Promocion extends CI_Controller
 			$total_hombres=($this->input->post('total_hombres')=="")?0:$this->input->post('total_hombres');
 			$total_mujeres=($this->input->post('total_mujeres')=="")?0:$this->input->post('total_mujeres');
 			
-			$fecha_creacion=date('Y-m-d H:i:s');
-			$id_usuario_crea=$this->session->userdata('id_usuario');
-			
-			$formuInfo = array(
-				'id_institucion'=>$id_institucion,
-				'id_tipo_lugar_trabajo'=>$id_tipo_lugar_trabajo,
-				'nombre_lugar'=>$nombre_lugar,
-				'direccion_lugar'=>$direccion_lugar,
-				'id_municipio'=>$id_municipio,
-				'nombre_contacto'=>$nombre_contacto,
-				'telefono'=>$telefono,
-				'correo'=>$correo,
-				'total_hombres'=>$total_hombres,
-				'total_mujeres'=>$total_mujeres,
-				'fecha_creacion'=>$fecha_creacion,
-				'id_usuario_crea'=>$id_usuario_crea,
-			);
-			$this->promocion_model->guardar_lugar_trabajo($formuInfo);
-			
+			if($id_lugar_trabajo=="") {
+				$fecha_creacion=date('Y-m-d H:i:s');
+				$id_usuario_crea=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_institucion'=>$id_institucion,
+					'id_tipo_lugar_trabajo'=>$id_tipo_lugar_trabajo,
+					'nombre_lugar'=>$nombre_lugar,
+					'direccion_lugar'=>$direccion_lugar,
+					'id_municipio'=>$id_municipio,
+					'nombre_contacto'=>$nombre_contacto,
+					'telefono'=>$telefono,
+					'correo'=>$correo,
+					'total_hombres'=>$total_hombres,
+					'total_mujeres'=>$total_mujeres,
+					'fecha_creacion'=>$fecha_creacion,
+					'id_usuario_crea'=>$id_usuario_crea,
+				);
+				$this->promocion_model->guardar_lugar_trabajo($formuInfo);
+				$tipo=1;
+			}
+			else {
+				$fecha_modificacion=date('Y-m-d H:i:s');
+				$id_usuario_modifica=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'id_institucion'=>$id_institucion,
+					'id_tipo_lugar_trabajo'=>$id_tipo_lugar_trabajo,
+					'nombre_lugar'=>$nombre_lugar,
+					'direccion_lugar'=>$direccion_lugar,
+					'id_municipio'=>$id_municipio,
+					'nombre_contacto'=>$nombre_contacto,
+					'telefono'=>$telefono,
+					'correo'=>$correo,
+					'total_hombres'=>$total_hombres,
+					'total_mujeres'=>$total_mujeres,
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica,
+				);
+				$this->promocion_model->actualizar_lugar_trabajo($formuInfo);
+				$tipo=2;
+			}
+				
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a("index.php/promocion/lugares_trabajo/1/".$tr);
+			ir_a("index.php/promocion/lugares_trabajo/".$tipo."/".$tr);
 		}
 		else {
 			pantalla_error();
@@ -291,6 +388,47 @@ class Promocion extends CI_Controller
 	}
 	
 	/*
+	*	Nombre: programa_recargado
+	*	Objetivo: Carga la vista que contiene el formulario de ingreso de programacion de visitas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function programa_recargado($id_programacion_visita=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			switch($data['id_permiso']) {
+				case 3:
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					break;
+				case 4:
+					$id_seccion=$this->transporte_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+					break;
+			}
+			if($id_programacion_visita!=NULL) {
+				$data['programacion']=$this->promocion_model->buscar_programacion($id_programacion_visita);
+				$data['idpv']=$id_programacion_visita;
+				$info=$this->seguridad_model->info_empleado($data['programacion']['id_empleado'], "id_seccion");
+				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
+				$data['institucion']=$this->promocion_model->institucion_visita($dep);
+				
+				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$data['programacion']['id_institucion'],$this->mostrar_todos,$data['programacion']['id_lugar_trabajo']);
+			}
+			
+			$this->load->view('promocion/programacion_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
 	*	Nombre: institucion_visita
 	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
 	*	Hecha por: Leonel
@@ -320,14 +458,17 @@ class Promocion extends CI_Controller
 	*	Última Modificación: 17/07/2014
 	*	Observaciones: Esta funcion permite filtrar si se desea que un lugar de trabajo no puede tener dos visitas activas.
 	*/
-	function lugares_trabajo_institucion_visita($id_empleado=NULL,$id_institucion=NULL,$vacio=1)
+	function lugares_trabajo_institucion_visita($id_empleado=NULL,$id_institucion=NULL,$id_lugar_trabajo=NULL,$vacio=1)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			$mostrar_todos=FALSE;
 			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
-			$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$mostrar_todos);
+			if($id_lugar_trabajo!="undefined" && $id_lugar_trabajo!="" && $id_lugar_trabajo!=NULL && $id_lugar_trabajo!=0)
+				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos,$id_lugar_trabajo);
+			else {
+				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos);
+			}
 			$data['vacio']=$vacio;
 			$this->load->view('promocion/lugares_trabajo_empresa_visita',$data);
 		}
@@ -348,6 +489,7 @@ class Promocion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$id_programacion_visita=$this->input->post('id_programacion_visita');
 			$id_empleado=$this->input->post('id_empleado');
 			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
 			$fec=str_replace("/","-",$this->input->post('fecha_visita'));
@@ -357,6 +499,7 @@ class Promocion extends CI_Controller
 			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
 			
 			$formuInfo = array(
+				'id_programacion_visita'=>$id_programacion_visita,
 				'id_empleado'=>$id_empleado,
 				'id_lugar_trabajo'=>$id_lugar_trabajo,
 				'fecha_visita'=>$fecha_visita,
@@ -377,12 +520,21 @@ class Promocion extends CI_Controller
 		echo json_encode($json);
 	}
 	
+	/*
+	*	Nombre: guardar_programacion
+	*	Objetivo: Guarda el registro de asignacion de visita a una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
 	function guardar_programacion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1);
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
+			$id_programacion_visita=$this->input->post('id_programacion_visita');
 			$id_empleado=$this->input->post('id_empleado');
 			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
 			$fec=str_replace("/","-",$this->input->post('fecha_visita'));
@@ -390,20 +542,38 @@ class Promocion extends CI_Controller
 			$hora_visita=$this->input->post('hour').':'.$this->input->post('minute').':00 '.$this->input->post('meridian');
 			$hora_visita=date("H:i:s", strtotime($hora_visita));
 			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
-			$fecha_creacion=date('Y-m-d H:i:s');
-			$id_usuario_crea=$this->session->userdata('id_usuario');
 			
-			$formuInfo = array(
-				'id_empleado'=>$id_empleado,
-				'id_lugar_trabajo'=>$id_lugar_trabajo,
-				'fecha_visita'=>$fecha_visita,
-				'hora_visita'=>$hora_visita,
-				'hora_visita_final'=>$hora_visita_final,
-				'fecha_creacion'=>$fecha_creacion,
-				'id_usuario_crea'=>$id_usuario_crea
-			);
-			$this->promocion_model->guardar_programacion($formuInfo);
-			
+			if($id_programacion_visita=="") {
+				$fecha_creacion=date('Y-m-d H:i:s');
+				$id_usuario_crea=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_visita'=>$fecha_visita,
+					'hora_visita'=>$hora_visita,
+					'hora_visita_final'=>$hora_visita_final,
+					'fecha_creacion'=>$fecha_creacion,
+					'id_usuario_crea'=>$id_usuario_crea
+				);
+				$this->promocion_model->guardar_programacion($formuInfo);
+			}
+			else {
+				$fecha_modificacion=date('Y-m-d H:i:s');
+				$id_usuario_modifica=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_programacion_visita'=>$id_programacion_visita,
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_visita'=>$fecha_visita,
+					'hora_visita'=>$hora_visita,
+					'hora_visita_final'=>$hora_visita_final,
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica
+				);
+				$this->promocion_model->actualizar_programacion($formuInfo);
+			}
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/promocion/programa/1/".$tr);
@@ -433,6 +603,14 @@ class Promocion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: calendario_dia
+	*	Objetivo: Muestra el calendario diario de las visitas programadas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
 	function calendario_dia($id_empleado=NULL,$fecha)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
@@ -445,6 +623,14 @@ class Promocion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: eliminar_programacion
+	*	Objetivo: Elimina un registro de visita
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
 	function eliminar_programacion($id_programacion_visita=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
