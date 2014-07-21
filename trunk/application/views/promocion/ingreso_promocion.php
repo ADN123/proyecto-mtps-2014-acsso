@@ -286,10 +286,13 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});
+		$("#id_lugar_trabajo").chance(function(){
+			var id=$(this).val();
+			alert(id);
+		});
 		$("#limpiar").click(function(){
 			$("#formu").load(base_url()+"index.php/promocion/ingreso_recargado");
 		});
-		
 		$('#fecha_promocion').datepicker({beforeShowDay: $.datepicker.noWeekends, maxDate: '0D'});
 		$('#timepicker,#timepicker2').timepicker({defaultTIme: false});
 	});
