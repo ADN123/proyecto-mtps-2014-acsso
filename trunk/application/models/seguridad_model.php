@@ -135,9 +135,14 @@ class Seguridad_model extends CI_Model {
 		return (array)$query->row();
 	}
 	
-	function info_empleado($id_empleado, $select="*")
+	function info_empleado($id_empleado=NULL, $select="*", $id_usuario=NULL)
 	{
-		$sentencia="SELECT ".$select." FROM tcm_empleado WHERE id_empleado=".$id_empleado;
+		$where="";
+		if($id_empleado!=NULL)
+			$where.=" AND id_empleado=".$id_empleado;
+		if($id_usuario!=NULL)
+			$where.=" AND id_usuario=".$id_usuario;
+		$sentencia="SELECT ".$select." FROM tcm_empleado WHERE TRUE ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->row();
 	}

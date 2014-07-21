@@ -56,6 +56,7 @@ define('Dcontrol_rol', 							99);
 define('Dcontrol_usuario', 						100);
 define('Dlugares_trabajo', 						101);
 define('Dparticipantes', 						102);
+define('Dasignaciones', 						103);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

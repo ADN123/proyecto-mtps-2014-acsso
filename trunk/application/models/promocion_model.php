@@ -317,5 +317,31 @@ class Promocion_model extends CI_Model {
 					WHERE id_programacion_visita=".$id_programacion_visita;
 		$this->db->query($sentencia);
 	}
+	
+	function fecha_letras($fecha=NULL,$formato="mysql")
+	{
+		$dias = array('Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
+		$meses = array('','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+		if($fecha==NULL) {
+			$fecha=date('Y-m-d');
+			$formato="mysql";
+		}
+		switch($formato){
+			case "mysql":
+				$fec=explode("-",$fecha);
+				$dia=$fec[2];
+				$mes=$fec[1];
+				$anio=$fec[0];
+				break;
+			default:
+				$fec=explode("/",$fecha);
+				$dia=$fec[0];
+				$mes=$fec[1];
+				$anio=$fec[2];
+				break;
+		}
+		
+		return $dias[date('w', strtotime($fecha))]." ".$dia." de ".$meses[date('n', strtotime($fecha))]." de ".$anio;
+	}
 }
 ?>
