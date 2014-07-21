@@ -39,10 +39,16 @@ $(document).ready(function(){
 				mensaje='Formulario de asignaciones';
 				break;
 			case 6:
-				mensaje='Calendarización de asignaciones de un técnico';
+				mensaje='Calendarización mensual de asignaciones de un técnico';
 				break;
 			case 7:
 				mensaje='Lista de roles de usuarios';
+				break;
+			case 8:
+				mensaje='';
+				break;
+			case 9:
+				mensaje='Calendarización diaria de asignaciones de un técnico';
 				break;
 		}
 		alerta("Ayuda", mensaje);

@@ -668,5 +668,25 @@ class Promocion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function ver_asignaciones()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			switch($data['id_permiso']) {
+				case 3:
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					//$data['visita_mensual']=$this->promocion_model->calendario($info['id_empleado']);
+					$data['visita_mensual']=$this->promocion_model->calendario(2);
+					break;
+				case 4:
+					break;
+			}
+			pantalla('promocion/asignaciones',$data,Dasignaciones);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>
