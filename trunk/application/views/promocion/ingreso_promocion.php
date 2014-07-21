@@ -1,5 +1,5 @@
 <?php
-	$objeto='la <strong>promoción</strong> del lugar de trabajo';
+	$objeto='el ingreso de <strong>promoción</strong>';
 	switch($accion_transaccion) {
 		case 1: 
 			$accion_transaccion="guarda";
@@ -54,9 +54,25 @@
                       	</div>
                       
                   		<div class="tab-pane" id="ptab1">
-							<div class="form-group">
+							<?php if($id_permiso==3) {?>	
+                                <div class="form-group">
+                                    <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" required="required">
+                                            <option value=""></option>
+                                            <?php
+                                                foreach($tecnico as $val) {
+                                                    echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                          	<?php } ?>
+                            
+							<div class="form-group" id="cont-institucion">
                                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" required="required">
                                         <option value=""></option>
                                         <?php
@@ -129,14 +145,14 @@
                 			<div class="form-group">
                    				<label for="nombre_representante" class="col-sm-3 control-label">Nombre del representante legal <span class="asterisk">*</span></label>
                         		<div class="col-sm-6">
-                            		<input type="text" name="nombre_representante" id="nombre_representante" class="form-control" />
+                            		<input type="text" name="nombre_representante" id="nombre_representante" class="form-control" required/>
                         		</div>
                     		</div>
                    	
                           	<div class="form-group">
                             	<label for="id_clasificacion" class="col-sm-3 control-label">Clasificación CIIU <span class="asterisk">*</span></label>
                             	<div class="col-sm-4">
-                              		<select class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]">
+                              		<select class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]" required>
                                 		<option value=""></option>
                                         <?php
 											foreach($clasificacion as $val) {
@@ -150,7 +166,7 @@
                           	<div class="form-group">
                             	<label for="id_sector" class="col-sm-3 control-label">Sector <span class="asterisk">*</span></label>
                             	<div class="col-sm-4">
-                              		<select class="form-control" name="id_sector" id="id_sector" data-placeholder="[Seleccione..]">
+                              		<select class="form-control" name="id_sector" id="id_sector" data-placeholder="[Seleccione..]" required>
                                     	<option value=""></option>
                                         <?php
 											foreach($sector as $val) {
@@ -165,7 +181,7 @@
                             	<label class="col-sm-3 control-label">Posee sindicato</label>
                                 <div class="col-sm-4" style="margin-top: 7px;">
                                     <div class="ckbox ckbox-default">
-                                        <input type="checkbox" value="1" name="sindicato" id="sindicato" />
+                                        <input type="checkbox" value="1" name="sindicato" id="sindicato"  />
                                         <label for="sindicato">Sí</label>
                                     </div>
                                	</div>
@@ -217,35 +233,35 @@
                             <div class="form-group">
                                 <label for="nombre_contacto" class="col-sm-3 control-label">Nombre contacto <span class="asterisk">*</span></label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nombre_contacto" id="nombre_contacto" class="form-control" />
+                                    <input type="text" name="nombre_contacto" id="nombre_contacto" class="form-control" required />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="telefono" class="col-sm-3 control-label">Teléfono contacto <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
-                                    <input type="tel" name="telefono" id="telefono" class="form-control" />
+                                    <input type="tel" name="telefono" id="telefono" class="form-control" required/>
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="correo" class="col-sm-3 control-label">Correo contacto <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="email" name="correo" id="correo" class="form-control" />
+                                    <input type="email" name="correo" id="correo" class="form-control" required />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="total_hombres" class="col-sm-3 control-label">Total hombres <span class="asterisk">*</span></label>
                                 <div class="col-sm-1">
-                                    <input type="number" name="total_hombres" id="total_hombres" class="form-control" />
+                                    <input type="number" name="total_hombres" id="total_hombres" class="form-control" required />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="total_mujeres" class="col-sm-3 control-label">Total Mujeres <span class="asterisk">*</span></label>
                                 <div class="col-sm-1">
-                                    <input type="number" name="total_mujeres" id="total_mujeres" class="form-control" />
+                                    <input type="number" name="total_mujeres" id="total_mujeres" class="form-control" required />
                                 </div>
                             </div>
                       	</div>
@@ -286,12 +302,24 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});
-		$("#id_lugar_trabajo").chance(function(){
+		
+		$('#id_empleado').change(function(){
+			id=$(this).val();
+			$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id+"/1");
+			$("#ptab2").load(base_url()+"index.php/promocion/ingreso_promocion_institucion_recargado/0");
+			$("#ptab3").load(base_url()+"index.php/promocion/ingreso_promocion_lugar_trabajo_recargado/0");
+		});
+		
+		$("#id_lugar_trabajo").change(function(){
 			var id=$(this).val();
-			alert(id);
+			var ids=id.split('***');
+			$("#ptab2").load(base_url()+"index.php/promocion/ingreso_promocion_institucion_recargado/"+ids[1]);
+			$("#ptab3").load(base_url()+"index.php/promocion/ingreso_promocion_lugar_trabajo_recargado/"+ids[2]);
 		});
 		$("#limpiar").click(function(){
-			$("#formu").load(base_url()+"index.php/promocion/ingreso_recargado");
+			$("#ptab1").load(base_url()+"index.php/promocion/ingreso_promocion_recargado");
+			$("#ptab2").load(base_url()+"index.php/promocion/ingreso_promocion_institucion_recargado/0");
+			$("#ptab3").load(base_url()+"index.php/promocion/ingreso_promocion_lugar_trabajo_recargado/0");
 		});
 		$('#fecha_promocion').datepicker({beforeShowDay: $.datepicker.noWeekends, maxDate: '0D'});
 		$('#timepicker,#timepicker2').timepicker({defaultTIme: false});
