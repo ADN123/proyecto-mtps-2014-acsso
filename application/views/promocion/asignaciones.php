@@ -1,3 +1,8 @@
+<style>
+	#a1 {height: 450px !important;}
+	#a2 {height: 444px !important;}
+	#calendar_dia .ui-resizable-s, .editar-programacion, .eliminar-programacion {display: none !important;}
+</style>
 <div class="col-md-6">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -5,10 +10,29 @@
         	<a href="#" class="tooltips ayuda" data-ayuda="6" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title">Calendario mensual de actividades</h3>
+        	<h3 class="panel-title">Calendario mensual de actividades </h3>
         </div>
-        <div class="panel-body panel-body-nopadding" id="cont-calendario">
-  			<div id="calendar"></div>
+        <div class="panel-body">
+			<?php if($id_permiso==3) {?>	
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
+                        <div class="col-sm-7">
+                            <select class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]">
+                                <option value=""></option>
+                                <?php
+                                    foreach($tecnico as $val) {
+                                        echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </form>	 
+            <?php } ?>
+            <div id="cont-calendario">
+  				<div id="calendar"></div>
+            </div>
       	</div>
    	</div>
 </div>
@@ -21,7 +45,7 @@
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Calendario diario de actividades</h3>
         </div>
-        <div class="panel-body" id="cont-calendario">
+        <div class="panel-body" id="cont-calendario-dia">
   			<div id="calendar_dia" class="fc-ltr">
                 <table class="fc-header" style="width:100%; display: none;">
                     <tbody>
@@ -49,13 +73,13 @@
                             <tbody>
                                 <tr class="fc-first fc-last">
                                     <th class="fc-agenda-axis fc-widget-header fc-first">&nbsp;</th>
-                                    <td class="fc-col0 fc-thu fc-widget-content fc-state-highlight fc-today"><div style="height: 450px;"><div class="fc-day-content"><div style="position:relative">&nbsp;</div></div></div></td>
+                                    <td class="fc-col0 fc-thu fc-widget-content fc-state-highlight fc-today"><div id="a1" style="height: 450px;"><div class="fc-day-content"><div style="position:relative">&nbsp;</div></div></div></td>
                                     <td class="fc-agenda-gutter fc-widget-content fc-last" style="width: 7px;">&nbsp;</td>
                                 </tr>
                             </tbody>
                         </table>
                         <div style="position: absolute; z-index: 2; left: 0px; width: 100%; top: 40px;">
-                            <div style="position: absolute; width: 100%; overflow-x: auto; overflow-y: auto; height: 444px;">
+                            <div style="position: absolute; width: 100%; overflow-x: auto; overflow-y: auto; height: 444px;" id="a2">
                                 <div style="position:relative;width:100%;overflow: hidden;">
                                     <div class="fc-event-container" style="position:absolute;z-index:8;top:0;left:0">
                                     </div>
@@ -449,6 +473,12 @@
    	</div>
 </div>
 <script>
+	$('#id_empleado').change(function(){
+		id=$(this).val();
+		$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+id+'/1');
+		$('#cont-calendario-dia').load(base_url()+'index.php/promocion/calendario_dia/0/0');
+	});
+	
 	$('#calendar').fullCalendar({
 		header: {
 			right: 'today prev,next',
@@ -502,8 +532,12 @@
 		dayClick: function(date, view) {
 		},
 		eventClick: function(event, jsEvent){	
-			fecha_actual=event.id;			 
-			modal("Programación del día",base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);
+			fecha_actual=event.id;	
+			 <?php if($id_permiso==4) {?>		 
+				$('#cont-calendario-dia').load(base_url()+'index.php/promocion/calendario_dia/<?php echo $id_empleado?>/'+event.id);
+			 <?php } else {?>		 
+				$('#cont-calendario-dia').load(base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);
+			 <?php } ?>
 		}
 	});
 </script>

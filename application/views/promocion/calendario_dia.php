@@ -14,20 +14,28 @@
             	<thead>
                 	<tr class="fc-first fc-last">
                     	<th class="fc-agenda-axis fc-widget-header fc-first" style="width: 50px;">&nbsp;</th>
-                        <th class="fc-thu fc-col0 fc-widget-header">Jueves 17 de Julio de 2014</th>
+                        <th class="fc-thu fc-col0 fc-widget-header">
+							<?php 
+								$fecha=date('Y-m-d');
+								foreach($visita as $val) {
+									$fecha=$val['fecha'];
+								}
+                                echo $this->promocion_model->fecha_letras($fecha);
+                            ?>
+                        </th>
                         <th class="fc-agenda-gutter fc-widget-header fc-last" style="width: 7px;">&nbsp;</th>
                  	</tr>
              	</thead>
                 <tbody>
                     <tr class="fc-first fc-last">
                         <th class="fc-agenda-axis fc-widget-header fc-first">&nbsp;</th>
-                        <td class="fc-col0 fc-thu fc-widget-content fc-state-highlight fc-today"><div style="height: 350px;"><div class="fc-day-content"><div style="position:relative">&nbsp;</div></div></div></td>
+                        <td class="fc-col0 fc-thu fc-widget-content fc-state-highlight fc-today"><div id="a1" style="height: 350px;"><div class="fc-day-content"><div style="position:relative">&nbsp;</div></div></div></td>
                         <td class="fc-agenda-gutter fc-widget-content fc-last" style="width: 7px;">&nbsp;</td>
                     </tr>
                 </tbody>
             </table>
             <div style="position: absolute; z-index: 2; left: 0px; width: 100%; top: 40px;">
-                <div style="position: absolute; width: 100%; overflow-x: auto; overflow-y: auto; height: 344px;">
+                <div style="position: absolute; width: 100%; overflow-x: auto; overflow-y: auto; height: 344px;" id="a2">
                     <div style="position:relative;width:100%;overflow: hidden;">
                         <div class="fc-event-container" style="position:absolute;z-index:8;top:0;left:0">
                         </div>
