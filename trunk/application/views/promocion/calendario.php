@@ -53,8 +53,13 @@
 		dayClick: function(date, view) {
 		},
 		eventClick: function(event, jsEvent){	
-			fecha_actual=event.id;			 
-			modal("Programación del día",base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);
+			fecha_actual=event.id;		
+			<?php if($como_mostrar==0) {?>		 
+				modal("Programación del día",base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);
+			 <?php } else {?>		 
+				$('#cont-calendario-dia').load(base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);
+			 <?php } ?>
+			
 		}
 	});
 </script>

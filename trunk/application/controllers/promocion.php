@@ -599,10 +599,11 @@ class Promocion extends CI_Controller
 	*	Última Modificación: 17/07/2014
 	*	Observaciones: Ninguna.
 	*/
-	function calendario($id_empleado=NULL)
+	function calendario($id_empleado=NULL,$como_mostrar=0)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$data['como_mostrar']=$como_mostrar;
 			$data['visita']=$this->promocion_model->calendario($id_empleado);
 			$this->load->view('promocion/calendario',$data);
 		}
@@ -675,11 +676,13 @@ class Promocion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
 				case 3:
-					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
-					//$data['visita_mensual']=$this->promocion_model->calendario($info['id_empleado']);
-					$data['visita_mensual']=$this->promocion_model->calendario(2);
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;
 				case 4:
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					$data['visita_mensual']=$this->promocion_model->calendario($info['id_empleado']);
+					$data['visita']=$this->promocion_model->calendario_dia($info['id_empleado'], date('Y-m-d'));
+					$data['id_empleado']=$info['id_empleado'];
 					break;
 			}
 			pantalla('promocion/asignaciones',$data,Dasignaciones);
