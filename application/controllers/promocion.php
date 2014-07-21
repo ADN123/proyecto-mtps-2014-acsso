@@ -437,14 +437,20 @@ class Promocion extends CI_Controller
 	*	Última Modificación: 17/07/2014
 	*	Observaciones: Ninguna.
 	*/
-	function institucion_visita($id_empleado=NULL)
+	function institucion_visita($id_empleado=NULL,$estado=0)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
-			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
-			$data['institucion']=$this->promocion_model->institucion_visita($dep);
-			$this->load->view('promocion/institucion_visita',$data);
+			if($estado==0) {
+				$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
+				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
+				$data['institucion']=$this->promocion_model->institucion_visita($dep);
+				$this->load->view('promocion/institucion_visita',$data);
+			}
+			else {
+				$data['institucion']=$this->promocion_model->insticion_lugar_trabajo($id_empleado,date('Y-m-d'));
+				$this->load->view('promocion/institucion_visita2',$data);
+			}
 		}
 		else {
 			pantalla_error();
@@ -663,12 +669,7 @@ class Promocion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
 				case 3:
-					//$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
-					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
-					//$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'));
-					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo(2,date('Y-m-d'));
-					//$data['id_empleado']=$info['id_empleado'];
-					$data['id_empleado']=2;
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;
 				case 4:
 					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
@@ -701,6 +702,126 @@ class Promocion extends CI_Controller
 					break;
 			}
 			pantalla('promocion/asignaciones',$data,Dasignaciones);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function ingreso_promocion_recargado()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			switch($data['id_permiso']) {
+				case 3:
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					break;
+				case 4:
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'));
+					$data['id_empleado']=$info['id_empleado'];
+					break;
+			}
+			$this->load->view('promocion/ingreso_promocion_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function ingreso_promocion_institucion_recargado($id_institucion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$data['institucion']=$this->promocion_model->mostrar_institucion(1, $id_institucion);
+			$data['clasificacion']=$this->promocion_model->mostrar_clasificacion();
+			$data['sector']=$this->promocion_model->mostrar_sector();
+			$this->load->view('promocion/ingreso_promocion_institucion_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function ingreso_promocion_lugar_trabajo_recargado($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_empresa(NULL,$id_lugar_trabajo);
+			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
+			$data['municipio']=$this->promocion_model->mostrar_municipio();
+			$this->load->view('promocion/ingreso_promocion_lugar_trabajo_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function guardar_ingreso_promocion()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$this->db->trans_start();
+			
+			$id_institucion=$this->input->post('id_institucion');
+			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');			
+			
+			$nombre_institucion=$this->input->post('nombre_institucion');
+			$nit_empleador=$this->input->post('nit_empleador');
+			$nombre_representante=$this->input->post('nombre_representante');
+			$id_clasificacion=($this->input->post('id_clasificacion')=='')?'NULL':$this->input->post('id_clasificacion');
+			$id_sector=($this->input->post('id_sector')=='')?'NULL':$this->input->post('id_sector');
+			$sindicato=($this->input->post('sindicato')=='')?'0':$this->input->post('sindicato');
+			
+			$id_institucion=$this->input->post('id_institucion');
+			$id_tipo_lugar_trabajo=$this->input->post('id_tipo_lugar_trabajo');
+			$nombre_lugar=$this->input->post('nombre_lugar');
+			$direccion_lugar=$this->input->post('direccion_lugar');
+			$id_municipio=$this->input->post('id_municipio');
+			
+			$nombre_contacto=$this->input->post('nombre_contacto');
+			$telefono=$this->input->post('telefono');
+			$correo=$this->input->post('correo');
+			$total_hombres=($this->input->post('total_hombres')=="")?0:$this->input->post('total_hombres');
+			$total_mujeres=($this->input->post('total_mujeres')=="")?0:$this->input->post('total_mujeres');
+			
+			$fecha_modificacion=date('Y-m-d H:i:s');
+			$id_usuario_modifica=$this->session->userdata('id_usuario');
+			
+			$formuInfo = array(
+				'id_institucion'=>$id_institucion,
+				'nombre_institucion'=>$nombre_institucion,
+				'nit_empleador'=>$nit_empleador,
+				'nombre_representante'=>$nombre_representante,
+				'id_clasificacion'=>$id_clasificacion,
+				'id_sector'=>$id_sector,
+				'sindicato'=>$sindicato,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica,
+			);
+			$this->promocion_model->actualizar_promocion($formuInfo);
+			
+			$formuInfo = array(
+				'id_lugar_trabajo'=>$id_lugar_trabajo,
+				'id_institucion'=>$id_institucion,
+				'id_tipo_lugar_trabajo'=>$id_tipo_lugar_trabajo,
+				'nombre_lugar'=>$nombre_lugar,
+				'direccion_lugar'=>$direccion_lugar,
+				'id_municipio'=>$id_municipio,
+				'nombre_contacto'=>$nombre_contacto,
+				'telefono'=>$telefono,
+				'correo'=>$correo,
+				'total_hombres'=>$total_hombres,
+				'total_mujeres'=>$total_mujeres,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica,
+			);
+			$this->promocion_model->actualizar_lugar_trabajo($formuInfo);
+			
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/promocion/programa/1/".$tr);
+			
 		}
 		else {
 			pantalla_error();
