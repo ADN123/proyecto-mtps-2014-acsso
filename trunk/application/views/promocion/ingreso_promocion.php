@@ -98,7 +98,7 @@
                                 <label for="hora_inicio" class="col-sm-3 control-label">Hora de inicio <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <div class="bootstrap-timepicker"><input id="timepicker" type="text" class="form-control" readonly="readonly" required="required"/></div>
+                                        <div class="bootstrap-timepicker"><input id="timepicker" name="hora_inicio" type="text" class="form-control" readonly="readonly" required="required"/></div>
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                                 <label for="hora_final" class="col-sm-3 control-label">Hora de finalización <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <div class="bootstrap-timepicker"><input id="timepicker2" type="text" class="form-control" readonly="readonly" required="required"/></div>
+                                        <div class="bootstrap-timepicker"><input id="timepicker2" name="hora_final" type="text" class="form-control" readonly="readonly" required="required"/></div>
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                     </div>
                                 </div>
