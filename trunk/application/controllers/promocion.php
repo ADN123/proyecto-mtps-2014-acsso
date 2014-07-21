@@ -661,6 +661,21 @@ class Promocion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dingreso_promocion); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			switch($data['id_permiso']) {
+				case 3:
+					//$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					//$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'));
+					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo(2,date('Y-m-d'));
+					//$data['id_empleado']=$info['id_empleado'];
+					$data['id_empleado']=2;
+					break;
+				case 4:
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'));
+					$data['id_empleado']=$info['id_empleado'];
+					break;
+			}
 			$data['estado_transaccion']=$estado_transaccion;
 			$data['accion_transaccion']=$accion_transaccion;
 			pantalla('promocion/ingreso_promocion',$data,Dingreso_promocion);

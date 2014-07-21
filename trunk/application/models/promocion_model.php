@@ -343,5 +343,18 @@ class Promocion_model extends CI_Model {
 		
 		return $dias[date('w', strtotime($fecha))]." ".$dia." de ".$meses[date('n', strtotime($fecha))]." de ".$anio;
 	}
+	
+	function insticion_lugar_trabajo($id_empleado,$fecha,$estado=1)
+	{
+		$sentencia="SELECT
+					CONCAT_WS('***',id_programacion_visita,sac_lugar_trabajo.id_institucion,sac_programacion_visita.id_lugar_trabajo) AS id,
+					CONCAT_WS(' - ',sac_institucion.nombre_institucion,sac_lugar_trabajo.nombre_lugar) AS nombre
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE id_empleado=".$id_empleado." AND fecha_visita<='".$fecha."' AND estado_programacion=".$estado;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 }
 ?>

@@ -60,7 +60,7 @@
                                     <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" required="required">
                                         <option value=""></option>
                                         <?php
-                                            foreach($lugar_trabajo as $val) {
+                                            foreach($insticion_lugar_trabajo as $val) {
                                                 echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
                                             }
                                         ?>
