@@ -22,4 +22,7 @@ promociones, capacitaciones, acreditaciones y verificaciones, hasta una fecha es
 
 favor verificar si los cambios son satisfactorios para ustedes en los requerimientos
 
-Preguntar si no sería necesario guardar si trabaja con quimicos o no
+
+4 - Cuál es el horario en que visitan a las instituciones?
+5 - Cuánto tiempo dura la visita?
+6 - Siempre en la programacion de visitas, programan visitas a horas en punto (ej.:2:00pm) o puede ser a cualquier hora (ej.: 2:25pm)
