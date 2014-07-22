@@ -863,5 +863,68 @@ class Promocion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function promociones()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_promociones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			
+			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
+			$data['municipio']=$this->promocion_model->mostrar_municipio();
+			pantalla('promocion/promociones',$data,Dreportes_promociones);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function resultados($fecha_iniciale=NULL,$fecha_finale=NULL,$reportee=NULL,$exportacione=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_promociones); 
+		if($data['id_permiso']==3) {
+			if($fecha_inicial==NULL) {
+				$fec=str_replace("/","-",$this->input->post('fecha_inicial'));
+				$fecha_inicial=date("Y-m-d", strtotime($fec));
+			}
+			else {
+				$fecha_inicial=date("Y-m-d", strtotime($fecha_iniciale));
+			}
+			if($fecha_finale==NULL) {
+				$fec=str_replace("/","-",$this->input->post('fecha_final'));
+				$fecha_final=date("Y-m-d", strtotime($fec));
+			}
+			else {
+				$fecha_final=date("Y-m-d", strtotime($fecha_finale));
+			}
+			if($reportee==NULL)
+				$reporte=$this->input->post('radio');
+			else
+				$reporte=$reportee;
+			if($exportacione==NULL)
+				$data['exportacion']=$this->input->post('radio2');
+			else
+				$data['exportacion']=$exportacione;
+			switch($reporte) {
+				case 1:
+					$data['info']=$this->promocion_model->resultados_instituciones($fecha_inicial,$fecha_final);
+					$data['nombre']="Instituciones ".date('d-m-Y hisa');
+					$this->load->view('promocion/resultados_instituciones',$data);
+					break;
+				case 2:
+					$data['info']=$this->promocion_model->resultados_tecnicos($fecha_inicial,$fecha_final);
+					$data['nombre']="Técnicos ".date('d-m-Y hisa');
+					$this->load->view('promocion/resultados_tecnicos',$data);
+					break;
+				case 3:
+					$data['info']=$this->promocion_model->resultados_sectores($fecha_inicial,$fecha_final);
+					$data['nombre']="Sectores ".date('d-m-Y hisa');
+					$this->load->view('promocion/resultados_sectores',$data);
+					break;
+			}
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>
