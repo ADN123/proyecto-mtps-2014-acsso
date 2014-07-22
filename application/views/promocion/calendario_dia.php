@@ -48,11 +48,16 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													$fecha=$val['fecha'];
 													if($val['hora_m']>='07:00' && $val['hora_m']<'08:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -61,14 +66,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -84,10 +95,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='08:00' && $val['hora_m']<'09:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -96,14 +112,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -119,10 +141,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='09:00' && $val['hora_m']<'10:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -131,14 +158,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -154,10 +187,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='10:00' && $val['hora_m']<'11:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -166,14 +204,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -189,10 +233,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='11:00' && $val['hora_m']<'12:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -201,14 +250,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -224,10 +279,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='12:00' && $val['hora_m']<'13:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -236,14 +296,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -259,10 +325,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='13:00' && $val['hora_m']<'14:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -271,14 +342,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -294,10 +371,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='14:00' && $val['hora_m']<'15:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -306,14 +388,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -329,10 +417,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='15:00' && $val['hora_m']<'16:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -341,14 +434,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -364,10 +463,15 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='16:00' && $val['hora_m']<'17:00'){
 														switch($val['estado']) {
 															case 1:
 																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
@@ -376,14 +480,20 @@
 																$estado="";
 														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
@@ -399,16 +509,37 @@
                                         	<?php
 												$i=1;
 												foreach($visita as $val) {
+													$class='';
 													if($val['hora_m']>='17:00' && $val['hora_m']<'18:00'){
+														switch($val['estado']) {
+															case 1:
+																$estado="Promoción de institción";
+																break;
+															case 2:
+																$estado="Visita realizada";
+																$class='visitados';
+																break;
+															case 3:
+																$estado="Verificación de cumplimiento";
+																break;
+															default:
+																$estado="";
+														}
 											?>
-                                                        <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                        <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                             <div class="fc-event-inner">
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
-                                                            <div class="ui-resizable-handle ui-resizable-s">
-                                                                <a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                <a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                          	<?php
+														if($val['estado']!=2) {
+											?>
+                                           					<div class="ui-resizable-handle ui-resizable-s">
+                                                               	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                                              	<a title="Eliminar" class="eliminar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </div>
+                                         	<?php
+														}
+											?>
                                                         </div>
                                             <?php
 													}
