@@ -53,6 +53,12 @@ $(document).ready(function(){
 			case 10:
 				mensaje='Formulario de ingreso de promocion de una institución';
 				break;
+			case 11:
+				mensaje='Filtros aplicables para especificar una búsqueda';
+				break;
+			case 12:
+				mensaje='Resultado en pantalla de una consulta';
+				break;
 		}
 		alerta("Ayuda", mensaje);
 		return false;

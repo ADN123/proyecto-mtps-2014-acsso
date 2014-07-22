@@ -27,4 +27,6 @@ favor verificar si los cambios son satisfactorios para ustedes en los requerimie
 5 - Cuánto tiempo dura la visita?
 6 - Siempre en la programacion de visitas, programan visitas a horas en punto (ej.:2:00pm) o puede ser a cualquier hora (ej.: 2:25pm)
 7 - Qué pasa si una técnico no logra visitar una institución asignada? y si la institción ya no existe o no la encuentra?
-
+8 - Desde dónde hasta dónde hay que introducir la clasificación CIIU? A partir de qué nivel hay que tomarlas en cuenta?
+9 - Cuál va a ser el diseño de los reportes?
+10 - Cómo saber qué empleado es técnico educador?  Según cargo nominal, funcional o por sección?
