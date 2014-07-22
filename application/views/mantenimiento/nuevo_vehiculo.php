@@ -1,6 +1,6 @@
 <script>
 	estado_transaccion='<?php echo $estado_transaccion?>';
-	estado_correcto='Se ha registrado un nuevo vehículo exitosamente.';
+	estado_correcto='Se ha registrado un nuevo vehículo éxitosamente.';
 	estado_incorrecto='Error al registrar un nuevo vehículo: No se pudo conectar al servidor. Porfavor vuelva a intentarlo.';
 </script>
 <section>

@@ -104,7 +104,7 @@ function modal(titulo, url)
 }
 function ajax_json(url, mensaje_correcto, mensaje_incorrecto, data) {
 	if(typeof(mensaje_correcto) == "undefined") {
-		var men_cor="La petición se ha completado exitosamente!*** ";
+		var men_cor="La petición se ha completado éxitosamente!*** ";
 	}
 	else {
 		var men_cor=""+mensaje_correcto+"";

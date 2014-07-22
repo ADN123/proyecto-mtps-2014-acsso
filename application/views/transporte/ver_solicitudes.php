@@ -1,6 +1,6 @@
 <script>
 	estado_transaccion='<?php echo $estado_transaccion?>';
-	estado_correcto='La solicitud se ha eliminado exitosamente.';
+	estado_correcto='La solicitud se ha eliminado éxitosamente.';
 	estado_incorrecto='Error al intentar eliminar la solicitud: No se pudo conectar al servidor. Porfavor vuelva a intentarlo.';
 </script>
 <section>
