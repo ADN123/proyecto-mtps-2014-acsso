@@ -39,7 +39,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('Dinicio', 								84);
 define('Dreportes', 							85);
-define('Dreportes_comites', 					86);
+define('Dreportes_promociones',					86);
 define('Dpromocion_comites', 					87);
 define('Ddatos_generales', 						88);
 define('Dingreso_promocion', 					89);

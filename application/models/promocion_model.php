@@ -258,7 +258,7 @@ class Promocion_model extends CI_Model {
 					CONCAT_WS(' ','N° visitas: ',COUNT(*)) AS titulo,
 					fecha_visita AS fecha
 					FROM sac_programacion_visita
-					WHERE id_empleado=".$id_empleado." AND fecha_visita>='".date('Y-m-d')."'
+					WHERE id_empleado=".$id_empleado." AND fecha_visita>='".date('Y-m-01')."'
 					GROUP BY fecha_visita";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
@@ -374,6 +374,64 @@ class Promocion_model extends CI_Model {
 					VALUES 
 					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones','$fecha_creacion',$id_usuario_crea)";
 		$this->db->query($sentencia);
+	}
+	
+	function resultados_instituciones($fecha_inicial,$fecha_final)
+	{
+		$sentencia="SELECT
+					LOWER(CONCAT_WS(', ',org_departamento.departamento,org_municipio.municipio)) AS ubicacion,
+					CONCAT_WS(' - ',sac_institucion.nombre_institucion,sac_lugar_trabajo.nombre_lugar) AS institucion,
+					sac_sector_institucion.nombre_sector,
+					sac_lugar_trabajo.total_hombres,
+					sac_lugar_trabajo.total_mujeres,
+					sac_institucion.sindicato,
+					tcm_empleado.nombre
+					FROM
+					sac_institucion
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
+					INNER JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
+					INNER JOIN sac_sector_institucion ON sac_institucion.id_sector = sac_sector_institucion.id_sector
+					INNER JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
+					WHERE sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function resultados_tecnicos($fecha_inicial,$fecha_final)
+	{
+		$sentencia="SELECT
+					tcm_empleado.seccion,
+					tcm_empleado.id_seccion,
+					tcm_empleado.nombre,
+					(COUNT(*)-1) AS total
+					FROM
+					tcm_empleado
+					LEFT JOIN sac_programacion_visita ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
+					LEFT JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
+					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') AND (sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final' OR sac_promocion.fecha_promocion IS NULL)
+					GROUP BY tcm_empleado.id_empleado, tcm_empleado.nombre";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function resultados_sectores($fecha_inicial,$fecha_final)
+	{
+		$sentencia="SELECT
+					sac_clasificacion_institucion.nombre_clasificacion AS nombre,
+					COUNT(*) AS total
+					FROM
+					sac_clasificacion_institucion
+					INNER JOIN sac_institucion ON sac_institucion.id_clasificacion = sac_clasificacion_institucion.id_clasificacion
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
+					WHERE sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
+					GROUP BY sac_clasificacion_institucion.nombre_clasificacion";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
 	}
 }
 ?>

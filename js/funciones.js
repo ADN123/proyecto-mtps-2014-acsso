@@ -163,7 +163,7 @@ function ajax_html(url, objeto, mensaje_incorrecto, data) {
 		data: data,
 		success: function(data) {
 			var json=data;
-			$(objeto).html(json);
+			objeto.html(json);
 		},
 		error:function(data) {
 			alerta_rapida(malo_titu, 'Se ha perdido la conexión a la red', 'danger');
