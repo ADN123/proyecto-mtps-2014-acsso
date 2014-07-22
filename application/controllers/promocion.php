@@ -761,18 +761,19 @@ class Promocion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			/*$this->db->trans_start();
+			$this->db->trans_start();
 			
 			$ids=explode("***",$this->input->post('id_lugar_trabajo'));
-			$fecha_promocion=$this->input->post('fecha_promocion');
+			$id_programacion_visita=$ids[0];
+			$id_institucion=$ids[1];
+			$id_lugar_trabajo=$ids[2];	
+			
+			$fec=str_replace("/","-",$this->input->post('fecha_promocion'));
+			$fecha_promocion=date("Y-m-d", strtotime($fec));
 			$hora_inicio=$this->input->post('hora_inicio');
 			$hora_final=$this->input->post('hora_final');
 			$nombre_recibio=$this->input->post('nombre_recibio');
-			$observaciones=$this->input->post('observaciones');
-			
-			$id_programacion_visita=$ids[0];
-			$id_institucion=$ids[1];
-			$id_lugar_trabajo=$ids[2];			
+			$observaciones=$this->input->post('observaciones');		
 			
 			$nombre_institucion=$this->input->post('nombre_institucion');
 			$nit_empleador=$this->input->post('nit_empleador');
@@ -781,7 +782,6 @@ class Promocion extends CI_Controller
 			$id_sector=($this->input->post('id_sector')=='')?'NULL':$this->input->post('id_sector');
 			$sindicato=($this->input->post('sindicato')=='')?'0':$this->input->post('sindicato');
 			
-			$id_institucion=$this->input->post('id_institucion');
 			$id_tipo_lugar_trabajo=$this->input->post('id_tipo_lugar_trabajo');
 			$nombre_lugar=$this->input->post('nombre_lugar');
 			$direccion_lugar=$this->input->post('direccion_lugar');
@@ -797,6 +797,14 @@ class Promocion extends CI_Controller
 			$id_usuario_crea=$this->session->userdata('id_usuario');
 			$fecha_modificacion=date('Y-m-d H:i:s');
 			$id_usuario_modifica=$this->session->userdata('id_usuario');
+			
+			$formuInfo = array(
+				'id_programacion_visita'=>$id_programacion_visita,
+				'estado_programacion'=>2,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica
+			);
+			$this->promocion_model->actualizar_estado_programacion($formuInfo);
 			
 			$formuInfo = array(
 				'id_programacion_visita'=>$id_programacion_visita,
@@ -842,8 +850,7 @@ class Promocion extends CI_Controller
 			
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a("index.php/promocion/ingreso/1/".$tr);*/
-			
+			ir_a("index.php/promocion/ingreso/1/".$tr);
 		}
 		else {
 			pantalla_error();

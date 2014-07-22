@@ -1,5 +1,5 @@
 <?php
-	$objeto='el ingreso de <strong>promoción</strong>';
+	$objeto='el ingreso de la <strong>promoción</strong>';
 	switch($accion_transaccion) {
 		case 1: 
 			$accion_transaccion="guarda";
@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente! Si deseas agregar lugares de trabajo a una institución presiona <a href="'.base_url().'index.php/promocion/lugares_trabajo" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente!';
 	}
 	else {
 		$class='danger';
@@ -32,7 +32,7 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-            <a href="#" class="tooltips ayuda" data-ayuda="1" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+            <a href="#" class="tooltips ayuda" data-ayuda="10" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Datos de la promoción</h3>

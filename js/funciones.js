@@ -50,6 +50,9 @@ $(document).ready(function(){
 			case 9:
 				mensaje='Calendarización diaria de asignaciones de un técnico';
 				break;
+			case 10:
+				mensaje='Formulario de ingreso de promocion de una institución';
+				break;
 		}
 		alerta("Ayuda", mensaje);
 		return false;

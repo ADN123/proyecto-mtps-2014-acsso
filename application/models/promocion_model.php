@@ -356,5 +356,24 @@ class Promocion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
+	
+	function actualizar_estado_programacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_programacion_visita SET
+					estado_programacion=$estado_programacion, fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica
+					WHERE id_programacion_visita=".$id_programacion_visita;
+		$this->db->query($sentencia);
+	}
+	
+	function guardar_ingreso_promocion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="INSERT INTO sac_promocion 
+					(id_programacion_visita,fecha_promocion,hora_inicio,hora_final,nombre_recibio,observaciones,fecha_creacion,id_usuario_crea)
+					VALUES 
+					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones','$fecha_creacion',$id_usuario_crea)";
+		$this->db->query($sentencia);
+	}
 }
 ?>
