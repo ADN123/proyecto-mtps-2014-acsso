@@ -30,3 +30,9 @@ favor verificar si los cambios son satisfactorios para ustedes en los requerimie
 8 - Desde dónde hasta dónde hay que introducir la clasificación CIIU? A partir de qué nivel hay que tomarlas en cuenta?
 9 - Cuál va a ser el diseño de los reportes?
 10 - Cómo saber qué empleado es técnico educador?  Según cargo nominal, funcional o por sección?
+
+
+Cambiar "institucion" por "establecimiento"
+Cambiar "informacion basica" por "informacion general"
+Cambiar "informacion adicional" por "informacion complementaria"
+Cambiar "promocion de institucion" por "visita programada"
