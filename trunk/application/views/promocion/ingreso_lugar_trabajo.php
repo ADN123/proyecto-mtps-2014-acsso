@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente! Si deseas asignar un técnico a un lugar de trabajo presiona <a href="'.base_url().'index.php/promocion/programa" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas asignar un técnico a un lugar de trabajo presiona <a href="'.base_url().'index.php/promocion/programa" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';

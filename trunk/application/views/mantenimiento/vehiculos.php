@@ -1,6 +1,6 @@
 <script>
 	estado_transaccion='<?php echo $estado_transaccion?>';
-	estado_correcto='La asignación de vehículo/motorista se ha realizado exitosamente.';
+	estado_correcto='La asignación de vehículo/motorista se ha realizado éxitosamente.';
 	estado_incorrecto='Error al intentar asignar vehículo/motorista: No se pudo conectar al servidor. Porfavor vuelva a intentarlo.';
 </script>
 <section>

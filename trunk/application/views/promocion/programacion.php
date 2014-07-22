@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente! Si deseas crear el registro de promoción de un lugar de trabajo <a href="'.base_url().'index.php/promocion/ingreso" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas crear el registro de promoción de un lugar de trabajo <a href="'.base_url().'index.php/promocion/ingreso" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';
@@ -176,7 +176,7 @@ include(base_url."index.php/promocion/calendario_dia");
 		$("#formu").submit(function(){
 			$.ajax({
 				async:	true, 
-				url:	base_url()+"index.php/promocion/comprobar_programacion/1",
+				url:	base_url()+"index.php/promocion/comprobar_programacion",
 				dataType:"json",
 				type: "POST",
 				data: $(this).serialize(),

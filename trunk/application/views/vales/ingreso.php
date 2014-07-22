@@ -1,6 +1,6 @@
 <script>
 	estado_transaccion='<?php echo $estado_transaccion?>';
-	estado_correcto='El registro de vales se ha almacenado exitosamente.';
+	estado_correcto='El registro de vales se ha almacenado éxitosamente.';
 	estado_incorrecto='Error al intentar guardar el registro de vales: No se pudo conectar al servidor. Porfavor vuelva a intentarlo.';
 </script>
 <script src="<?php echo base_url()?>js/views/ingreso_vales.js" type="text/javascript"></script>

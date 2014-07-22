@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> exitosamente! Si deseas agregar lugares de trabajo a una institución presiona <a href="'.base_url().'index.php/promocion/lugares_trabajo" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas agregar lugares de trabajo a una institución presiona <a href="'.base_url().'index.php/promocion/lugares_trabajo" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';

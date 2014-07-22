@@ -3,7 +3,7 @@
 <script>
 	estado_transaccion='<?php echo $estado_transaccion?>';
 	<?php if($accion!="") {?>
-	estado_correcto='La solicitud se ha <?php echo $accion?>do exitosamente.';
+	estado_correcto='La solicitud se ha <?php echo $accion?>do éxitosamente.';
 	estado_incorrecto='Error al intentar <?php echo $accion?>r la solicitud: No se pudo conectar al servidor. Porfavor vuelva a intentarlo.';
 	<?php }?>
 </script>

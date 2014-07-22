@@ -1,7 +1,7 @@
 <script>
 	var permiso=<?php echo $id_permiso?>;
 	estado_transaccion='<?php echo $estado_transaccion?>';
-	estado_correcto='La solicitud se ha almacenado exitosamente.';
+	estado_correcto='La solicitud se ha almacenado éxitosamente.';
 	estado_incorrecto='Error al intentar guardar la solicitud: No se pudo conectar al servidor. Porfavor vuelva a intentarlo.';
 	<?php if($solicitud['id_solicitud_transporte']!="") {?>
 		id='<?php echo $solicitud['id_empleado_solicitante'];?>';
