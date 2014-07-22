@@ -202,7 +202,7 @@ class Promocion_model extends CI_Model {
 				$where.=" OR sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
 			$where.=") ";
 		}
-		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, sac_lugar_trabajo.nombre_lugar AS nombre
+		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, sac_lugar_trabajo.nombre_lugar AS nombre
 					FROM sac_institucion
 					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
