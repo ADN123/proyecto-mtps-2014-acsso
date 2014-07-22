@@ -121,6 +121,10 @@
 		#calendar_dia a.fc-event, #calendar_dia .fc-event-draggable {
 			cursor: default; 
 		}
+		#calendar_dia .visitados {
+			background-color: #5cb85c !important;
+			border: 1px solid #5cb85c !important;
+		}
 	</style>
 </head>
 

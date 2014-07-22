@@ -634,7 +634,14 @@ class Promocion extends CI_Controller
 			$this->load->view('promocion/calendario_dia',$data);
 		}
 		else {
-			pantalla_error();
+			$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+			if($data['id_permiso']==3 || $data['id_permiso']==4) {
+				$data['visita']=$this->promocion_model->calendario_dia($id_empleado, $fecha);
+				$this->load->view('promocion/calendario_dia',$data);
+			}
+			else {
+				pantalla_error();
+			}
 		}
 	}
 	

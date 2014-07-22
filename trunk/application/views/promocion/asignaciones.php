@@ -92,12 +92,17 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                $fecha=$val['fecha'];
+													$class='';
+													 $fecha=$val['fecha'];
                                                                 if($val['hora_m']>='07:00' && $val['hora_m']<'08:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -105,7 +110,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -128,11 +133,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='08:00' && $val['hora_m']<'09:00'){
+													$class='';
+													 if($val['hora_m']>='08:00' && $val['hora_m']<'09:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -140,7 +150,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -163,11 +173,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='09:00' && $val['hora_m']<'10:00'){
+													$class='';
+													 if($val['hora_m']>='09:00' && $val['hora_m']<'10:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -175,7 +190,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -198,11 +213,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='10:00' && $val['hora_m']<'11:00'){
+													$class='';
+													 if($val['hora_m']>='10:00' && $val['hora_m']<'11:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -210,7 +230,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -233,11 +253,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='11:00' && $val['hora_m']<'12:00'){
+													$class='';
+													 if($val['hora_m']>='11:00' && $val['hora_m']<'12:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -245,7 +270,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -268,11 +293,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='12:00' && $val['hora_m']<'13:00'){
+													$class='';
+													 if($val['hora_m']>='12:00' && $val['hora_m']<'13:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -280,7 +310,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -303,11 +333,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='13:00' && $val['hora_m']<'14:00'){
+													$class='';
+													 if($val['hora_m']>='13:00' && $val['hora_m']<'14:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -315,7 +350,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -338,11 +373,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='14:00' && $val['hora_m']<'15:00'){
+													$class='';
+													 if($val['hora_m']>='14:00' && $val['hora_m']<'15:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -350,7 +390,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -373,11 +413,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='15:00' && $val['hora_m']<'16:00'){
+													$class='';
+													 if($val['hora_m']>='15:00' && $val['hora_m']<'16:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -385,7 +430,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -408,11 +453,16 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='16:00' && $val['hora_m']<'17:00'){
+													$class='';
+													 if($val['hora_m']>='16:00' && $val['hora_m']<'17:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
                                                                             $estado="Promoción de institción";
                                                                             break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
@@ -420,7 +470,7 @@
                                                                             $estado="";
                                                                     }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
@@ -443,9 +493,24 @@
                                                         <?php
                                                             $i=1;
                                                             foreach($visita as $val) {
-                                                                if($val['hora_m']>='17:00' && $val['hora_m']<'18:00'){
+													$class='';
+													 if($val['hora_m']>='17:00' && $val['hora_m']<'18:00'){
+                                                                    switch($val['estado']) {
+                                                                        case 1:
+                                                                            $estado="Promoción de institción";
+                                                                            break;
+																		case 2:
+																			$estado="Visita realizada";
+																$class='visitados';
+																break;
+                                                                        case 3:
+                                                                            $estado="Verificación de cumplimiento";
+                                                                            break;
+                                                                        default:
+                                                                            $estado="";
+                                                                    }
                                                         ?>
-                                                                    <div class="fc-event fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
+                                                                    <div class="fc-event <?php echo $class ?> fc-event-vert fc-event-draggable fc-event-start fc-event-end ui-draggable ui-resizable" style="position: absolute; top: 0; left: 0; width: 100%; height: 45px;">
                                                                         <div class="fc-event-inner">
                                                                             <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                                         </div>
