@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-4">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
@@ -11,18 +11,18 @@
   			<form name="formu" id="formu" class="form-horizontal" autocomplete="off">                
 				<div class="form-group">
                     <label for="fecha_inicial" class="col-sm-4 control-label">Fecha inicio</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                     	<div class="input-group">
-                            <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" readonly="readonly">
+                            <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" value="<?php echo date('01/m/Y')?>" readonly="readonly">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                       	</div>
                     </div>
                 </div>            
 				<div class="form-group">
                     <label for="fecha_final" class="col-sm-4 control-label">Fecha final</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                     	<div class="input-group">
-                            <input type="text" class="form-control" id="fecha_final" name="fecha_final" readonly="readonly">
+                            <input type="text" class="form-control" id="fecha_final" name="fecha_final" value="<?php echo date('d/m/Y')?>" readonly="readonly">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                       	</div>
                     </div>
@@ -37,11 +37,11 @@
                 	<div class="col-md-8">
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="1" id="ins" checked />
-                        	<label for="ins">Instituciones</label>
+                        	<label for="ins">Establecimientos</label>
                       	</div>
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="2" id="tec" />
-                        	<label for="tec">Técnicos Educadores</label>
+                        	<label for="tec">Técnicos educadores</label>
                       	</div>
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="3" id="sec" />
@@ -80,7 +80,7 @@
       	</div>
    	</div>
 </div>
-<div class="col-md-9">
+<div class="col-md-8">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">

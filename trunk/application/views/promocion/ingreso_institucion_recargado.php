@@ -7,8 +7,8 @@
 		}
 	?>               
     <ul class="nav nav-pills nav-justified">
-        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información Básica</a></li>
-        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información Adicional</a></li>
+        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
+        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información Complementaria</a></li>
     </ul>
       
     <div class="tab-content">
@@ -19,9 +19,9 @@
       
         <div class="tab-pane" id="ptab1">
             <div class="form-group">
-                <label for="nombre_institucion" class="col-sm-3 control-label">Nombre de la institución <span class="asterisk">*</span></label>
+                <label for="nombre_institucion" class="col-sm-3 control-label">Nombre del establecimiento <span class="asterisk">*</span></label>
                 <div class="col-sm-8">
-                    <input type="text" data-req="true" data-tip="var" data-min="5" name="nombre_institucion" id="nombre_institucion" class="form-control" value="<?php echo $institucion['nombre'] ?>" />
+                    <input type="text" data-req="true" data-tip="x" data-min="5" name="nombre_institucion" id="nombre_institucion" class="form-control" value="<?php echo $institucion['nombre'] ?>" />
                 </div>
             </div>
           

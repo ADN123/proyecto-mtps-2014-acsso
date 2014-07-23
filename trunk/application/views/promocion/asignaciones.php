@@ -97,7 +97,7 @@
                                                                 if($val['hora_m']>='07:00' && $val['hora_m']<'08:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -137,7 +137,7 @@
 													 if($val['hora_m']>='08:00' && $val['hora_m']<'09:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -177,7 +177,7 @@
 													 if($val['hora_m']>='09:00' && $val['hora_m']<'10:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -217,7 +217,7 @@
 													 if($val['hora_m']>='10:00' && $val['hora_m']<'11:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -257,7 +257,7 @@
 													 if($val['hora_m']>='11:00' && $val['hora_m']<'12:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -297,7 +297,7 @@
 													 if($val['hora_m']>='12:00' && $val['hora_m']<'13:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -337,7 +337,7 @@
 													 if($val['hora_m']>='13:00' && $val['hora_m']<'14:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -377,7 +377,7 @@
 													 if($val['hora_m']>='14:00' && $val['hora_m']<'15:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -417,7 +417,7 @@
 													 if($val['hora_m']>='15:00' && $val['hora_m']<'16:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -457,7 +457,7 @@
 													 if($val['hora_m']>='16:00' && $val['hora_m']<'17:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
@@ -497,7 +497,7 @@
 													 if($val['hora_m']>='17:00' && $val['hora_m']<'18:00'){
                                                                     switch($val['estado']) {
                                                                         case 1:
-                                                                            $estado="Promoción de institción";
+                                                                            $estado="visita programada";
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";

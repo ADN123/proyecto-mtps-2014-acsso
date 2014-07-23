@@ -22,7 +22,7 @@ $(document).ready(function(){
 			var vmin=$(elemento).data("min");
 			var vmax=$(elemento).data("max");
 			var patt2;
-			
+
 			if($(elemento).attr("class")=="form-control") {
 				
 				$(padr).removeClass('has-error');
@@ -58,7 +58,7 @@ $(document).ready(function(){
 							patt2=/^([0][1-9]|[12][0-9]|3[01])(\/|-)([0][1-9]|[1][0-2])\2(\d{4})$/i;
 							break;
 						default: /*caracteres alfanumericos*/
-							patt2=/^([0-9|.|,|a-z|\' '|ñ|á-ú]*)$/i;
+							patt2=/^([0-9|#|"|'|\/|\-|°|.|,|a-z|\' '|ñ|á-ú]*)$/i;
 					}
 					if(!patt2.test(val)){
 						$(padr).addClass('has-error');
@@ -138,7 +138,7 @@ $(document).ready(function(){
 				mensaje='Calendarización diaria de asignaciones de un técnico';
 				break;
 			case 10:
-				mensaje='Formulario de ingreso de promocion de una institución';
+				mensaje='Formulario de ingreso de promocion de un establecimiento';
 				break;
 			case 11:
 				mensaje='Filtros aplicables para especificar una búsqueda';
