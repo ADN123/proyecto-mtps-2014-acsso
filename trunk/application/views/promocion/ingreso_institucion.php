@@ -61,7 +61,7 @@
                             <div class="form-group">
                                 <label for="nit_empleador" class="col-sm-3 control-label">NIT del empleador <span class="asterisk">*</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" data-req="true" data-tip="nit" name="nit_empleador" id="nit_empleador" class="form-control"/>
+                                    <input type="text" data-req="true" data-tip="nit" name="nit_empleador" id="nit_empleador" class="form-control" placeholder="#### - ###### - ### - #" maxlength="17"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -82,7 +82,7 @@
                           	<div class="form-group">
                             	<label for="id_clasificacion" class="col-sm-3 control-label">Clasificación CIIU</label>
                             	<div class="col-sm-4">
-                              		<select data-req="true" class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]">
+                              		<select class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]">
                                 		<option value=""></option>
                                         <?php
 											foreach($clasificacion as $val) {

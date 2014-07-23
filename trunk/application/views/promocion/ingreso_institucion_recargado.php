@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="nit_empleador" class="col-sm-3 control-label">NIT del empleador <span class="asterisk">*</span></label>
                 <div class="col-sm-5">
-                    <input type="text" data-req="true" data-tip="nit" name="nit_empleador" id="nit_empleador" class="form-control" value="<?php echo $institucion['nit_empleador'] ?>" />
+                    <input type="text" data-req="true" data-tip="nit" name="nit_empleador" id="nit_empleador" class="form-control" value="<?php echo $institucion['nit_empleador'] ?>"  placeholder="#### - ###### - ### - #" maxlength="17"/>
                 </div>
             </div>
             <div class="form-group">
