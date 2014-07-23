@@ -379,13 +379,15 @@ class Promocion_model extends CI_Model {
 	function resultados_instituciones($fecha_inicial,$fecha_final)
 	{
 		$sentencia="SELECT
+					sac_promocion.id_promocion,
 					LOWER(CONCAT_WS(', ',org_departamento.departamento,org_municipio.municipio)) AS ubicacion,
 					CONCAT_WS(' - ',sac_institucion.nombre_institucion,sac_lugar_trabajo.nombre_lugar) AS institucion,
 					sac_sector_institucion.nombre_sector,
 					sac_lugar_trabajo.total_hombres,
 					sac_lugar_trabajo.total_mujeres,
 					sac_institucion.sindicato,
-					tcm_empleado.nombre
+					tcm_empleado.nombre,
+					DATE_FORMAT(sac_promocion.fecha_promocion, '%d/%m/%y') AS fecha
 					FROM
 					sac_institucion
 					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
