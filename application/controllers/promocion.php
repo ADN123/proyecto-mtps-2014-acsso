@@ -13,7 +13,6 @@ class Promocion extends CI_Controller
 		$this->load->helper('form');
 		$this->load->model('seguridad_model');
 		$this->load->model('promocion_model');
-		$this->load->model('transporte_model');
 		
 		if(!$this->session->userdata('id_usuario')){
 		 	redirect('index.php/sessiones');
@@ -372,7 +371,7 @@ class Promocion extends CI_Controller
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;
 				case 4:
-					$id_seccion=$this->transporte_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
 					else
@@ -405,7 +404,7 @@ class Promocion extends CI_Controller
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;
 				case 4:
-					$id_seccion=$this->transporte_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
 					else

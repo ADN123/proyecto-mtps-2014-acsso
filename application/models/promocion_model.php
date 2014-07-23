@@ -197,7 +197,8 @@ class Promocion_model extends CI_Model {
 		if($id_institucion!=NULL)
 			$where.="AND sac_lugar_trabajo.id_institucion=".$id_institucion." ";
 		if($mostrar_todos=="FALSE") {
-			$where.="AND (sac_programacion_visita.estado_programacion<>1 OR sac_programacion_visita.estado_programacion IS NULL";
+			/*$where.="AND (sac_programacion_visita.estado_programacion<>1 OR sac_programacion_visita.estado_programacion IS NULL";*/
+			$where.="AND (sac_programacion_visita.estado_programacion IS NULL";
 			if($id_lugar_trabajo!=NULL)
 				$where.=" OR sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
 			$where.=") ";
@@ -432,6 +433,36 @@ class Promocion_model extends CI_Model {
 					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
 					WHERE sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
 					GROUP BY sac_clasificacion_institucion.nombre_clasificacion";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function consultas_promociones($select=array('*'),$where=array())
+	{	
+		$sel='';
+		for($i=0;$i<count($select);$i++) {
+			if($i>0)
+				$sel.=', ';
+			$sel.=$select[$i];
+		}
+		$whe='';
+		for($i=0;$i<count($where);$i++) {
+			if($i>0)
+				$whe.=' ';
+			$whe.=$where[$i];
+		}
+		$sentencia="SELECT ".$sel."
+					FROM sac_institucion
+					LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					LEFT JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					LEFT JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
+					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					LEFT JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
+					LEFT JOIN sac_sector_institucion ON sac_institucion.id_sector = sac_sector_institucion.id_sector
+					LEFT JOIN sac_clasificacion_institucion ON sac_institucion.id_clasificacion = sac_clasificacion_institucion.id_clasificacion
+					LEFT JOIN sac_tipo_lugar_trabajo ON sac_lugar_trabajo.id_tipo_lugar_trabajo = sac_tipo_lugar_trabajo.id_tipo_lugar_trabajo
+					LEFT JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
+					WHERE TRUE ".$whe;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
