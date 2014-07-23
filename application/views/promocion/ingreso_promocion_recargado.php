@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
         <div class="col-sm-4">
-            <select class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
+            <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
                 <option value=""></option>
                 <?php
                     foreach($tecnico as $val) {
@@ -17,7 +17,7 @@
 <div class="form-group" id="cont-institucion">
     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
     <div class="col-sm-4">
-        <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
+        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
             <option value=""></option>
             <?php
                 foreach($insticion_lugar_trabajo as $val) {
@@ -32,7 +32,7 @@
     <label for="fecha_promocion" class="col-sm-3 control-label">Fecha de promoción <span class="asterisk">*</span></label>
     <div class="col-sm-2">
         <div class="input-group">
-            <input type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" readonly="readonly" >
+            <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" readonly="readonly" >
             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
         </div>
     </div>
@@ -42,7 +42,7 @@
     <label for="hora_inicio" class="col-sm-3 control-label">Hora de inicio <span class="asterisk">*</span></label>
     <div class="col-sm-2">
         <div class="input-group">
-            <div class="bootstrap-timepicker"><input id="timepicker" name="hora_inicio" type="text" class="form-control" readonly="readonly" /></div>
+            <div class="bootstrap-timepicker"><input data-req="true" id="timepicker" name="hora_inicio" type="text" class="form-control" readonly="readonly" /></div>
             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
     </div>
@@ -52,7 +52,7 @@
     <label for="hora_final" class="col-sm-3 control-label">Hora de finalización <span class="asterisk">*</span></label>
     <div class="col-sm-2">
         <div class="input-group">
-            <div class="bootstrap-timepicker"><input id="timepicker2" name="hora_final" type="text" class="form-control" readonly="readonly" /></div>
+            <div class="bootstrap-timepicker"><input data-req="true" id="timepicker2" name="hora_final" type="text" class="form-control" readonly="readonly" /></div>
             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
     </div>
@@ -61,14 +61,14 @@
 <div class="form-group">
     <label for="nombre_recibio" class="col-sm-3 control-label">Persona que atendió <span class="asterisk">*</span></label>
     <div class="col-sm-6">
-        <input type="text" name="nombre_recibio" id="nombre_recibio" class="form-control"/>
+        <input data-req="true" data-tip="var" data-min="5" type="text" name="nombre_recibio" id="nombre_recibio" class="form-control"/>
     </div>
 </div>
 
 <div class="form-group">
-    <label for="observaciones" class="col-sm-3 control-label">Observaciones <span class="asterisk">*</span></label>
+    <label for="observaciones" class="col-sm-3 control-label">Observaciones </label>
     <div class="col-sm-7">
-        <textarea class="form-control" id="observaciones" name="observaciones" ></textarea>
+        <textarea data-tip="x" data-min="10" class="form-control" id="observaciones" name="observaciones" ></textarea>
     </div>
 </div>
 <script language="javascript" >

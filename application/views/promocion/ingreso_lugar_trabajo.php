@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label for="id_institucion" class="col-sm-3 control-label">Institución <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <select class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" >
+                                    <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
                                             foreach($institucion as $val) {
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <label for="id_tipo_lugar_trabajo" class="col-sm-3 control-label">Tipo de lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" name="id_tipo_lugar_trabajo" id="id_tipo_lugar_trabajo" data-placeholder="[Seleccione..]" >
+                                    <select data-req="true" class="form-control" name="id_tipo_lugar_trabajo" id="id_tipo_lugar_trabajo" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
                                             foreach($tipo_lugar_trabajo as $val) {
@@ -82,21 +82,21 @@
                             <div class="form-group">
                                 <label for="nombre_lugar" class="col-sm-3 control-label">Nombre lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" />
+                                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" data-req="true" data-tip="var" data-min="5" />
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="direccion_lugar" class="col-sm-3 control-label">Dirección <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <textarea class="form-control" id="direccion_lugar" tabindex="2" name="direccion_lugar" ></textarea>
+                                    <textarea data-req="true" data-tip="x" data-min="10" class="form-control" id="direccion_lugar" tabindex="2" name="direccion_lugar" ></textarea>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="id_municipio" class="col-sm-3 control-label">Municipio <span class="asterisk">*</span></label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="id_municipio" id="id_municipio" data-placeholder="[Seleccione..]" >
+                                    <select data-req="true" class="form-control" name="id_municipio" id="id_municipio" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
                                             foreach($municipio as $val) {
@@ -117,29 +117,29 @@
                         	
                         	<div class="form-group">
                                 <label for="telefono" class="col-sm-3 control-label">Teléfono contacto</label>
-                                <div class="col-sm-7">
-                                    <input type="tel" name="telefono" id="telefono" class="form-control" />
+                                <div class="col-sm-3">
+                                    <input type="tel" name="telefono" id="telefono" class="form-control" data-tip="tel" placeholder="#### ####"  maxlength="8" />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="correo" class="col-sm-3 control-label">Correo contacto</label>
                                 <div class="col-sm-7">
-                                    <input type="email" name="correo" id="correo" class="form-control" />
+                                    <input type="text" name="correo" id="correo" class="form-control" data-tip="cor" />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="total_hombres" class="col-sm-3 control-label">Total hombres</label>
                                 <div class="col-sm-2">
-                                    <input type="number" name="total_hombres" id="total_hombres" class="form-control" />
+                                    <input type="number" name="total_hombres" id="total_hombres" class="form-control" data-tip="int" data-min="0"/>
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="total_mujeres" class="col-sm-3 control-label">Total Mujeres</label>
                                 <div class="col-sm-2">
-                                    <input type="number" name="total_mujeres" id="total_mujeres" class="form-control" />
+                                    <input type="number" name="total_mujeres" id="total_mujeres" class="form-control" data-tip="int" data-min="0" />
                                 </div>
                             </div>
                         </div>

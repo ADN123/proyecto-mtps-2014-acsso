@@ -43,7 +43,7 @@ include(base_url."index.php/promocion/calendario_dia");
                 <div class="form-group">
                     <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
                     <div class="col-sm-7">
-                        <select class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
+                        <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
                             <option value=""></option>
                             <?php
                                 foreach($tecnico as $val) {
@@ -76,7 +76,7 @@ include(base_url."index.php/promocion/calendario_dia");
                     <label for="fecha_visita" class="col-sm-3 control-label">Fecha de visita <span class="asterisk">*</span></label>
                     <div class="col-sm-4">
                     	<div class="input-group">
-                            <input type="text" class="form-control" id="fecha_visita" name="fecha_visita" readonly="readonly" >
+                            <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_visita" name="fecha_visita" readonly="readonly" >
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                       	</div>
                     </div>
@@ -86,7 +86,7 @@ include(base_url."index.php/promocion/calendario_dia");
                     <label for="hora_visita" class="col-sm-3 control-label">Hora de visita <span class="asterisk">*</span></label>
                     <div class="col-sm-4">
                     	<div class="input-group">
-                            <div class="bootstrap-timepicker"><input id="timepicker" type="text" class="form-control" readonly="readonly" /></div>
+                            <div class="bootstrap-timepicker"><input data-req="true" id="timepicker" type="text" class="form-control" readonly="readonly" /></div>
                      		<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                     	</div>
                     </div>
@@ -174,25 +174,26 @@ include(base_url."index.php/promocion/calendario_dia");
           	}
 		});
 		$("#formu").submit(function(){
-			$.ajax({
-				async:	true, 
-				url:	base_url()+"index.php/promocion/comprobar_programacion",
-				dataType:"json",
-				type: "POST",
-				data: $(this).serialize(),
-				success: function(data) {
-				var json=data;
-					if(Number(json['resultado'])==1) {
-						document.getElementById("formu").submit();
+			if($("#id_empleado").val()!="" && $("#id_lugar_trabajo").val()!="" && $("#fecha_visita").val()!="" && $("#timepicker").val()!="")
+				$.ajax({
+					async:	true, 
+					url:	base_url()+"index.php/promocion/comprobar_programacion",
+					dataType:"json",
+					type: "POST",
+					data: $(this).serialize(),
+					success: function(data) {
+					var json=data;
+						if(Number(json['resultado'])==1) {
+							document.getElementById("formu").submit();
+						}
+						else {
+							alerta_rapida('Error en el ingreso de programación!', 'El técnico ya tiene una visita en el día y hora ingresados', 'danger');
+						}
+					},
+					error:function(data) {
+						alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
 					}
-					else {
-						alerta_rapida('Error en el ingreso de programación!', 'El técnico ya tiene una visita en el día y hora ingresados', 'danger');
-					}
-				},
-				error:function(data) {
-					alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
-				}
-			});			
+				});			
 			return false;
 		});
 		$("#limpiar").click(function(){

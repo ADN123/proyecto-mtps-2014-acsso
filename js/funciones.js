@@ -25,17 +25,16 @@ $(document).ready(function(){
 			
 			if($(elemento).attr("class")=="form-control") {
 				
+				$(padr).removeClass('has-error');
+				
 				if(vreq=="true" || vreq=="TRUE" || vreq=="1") {
 					if(val=="") {
 						$(padr).addClass('has-error');
 						band=false;
 					}
-					else {
-						$(padr).removeClass('has-error');
-					}
 				}
 				
-				if(tipo!="" && tipo!="undefinided" && tipo!=null) {
+				if(tipo!="" && tipo!="undefinided" && tipo!=null && val!="") {
 					switch(tipo) {
 						case 'var': /*letras*/
 							patt2=/^([a-z|\' '|ñ|á-ú]*)$/i;
@@ -47,7 +46,7 @@ $(document).ready(function(){
 							patt2=/^[0-9]*([.]?[0-9]{1,2})?$/i;
 							break;
 						case 'tel': /*telefono*/
-							patt2=/^[2|6|7]{1}[0-9]{3}-[0-9]{4}$/i;
+							patt2=/^[2|6|7]{1}[0-9]{3}[0-9]{4}$/i;
 							break;
 						case 'nit': /*nit*/
 							patt2=/^[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}$/i;
@@ -67,7 +66,7 @@ $(document).ready(function(){
 					}
 				}
 				
-				if(vmin!="" && vmin!="undefinided" && vmin!=null) {
+				if(vmin!="" && vmin!="undefinided" && vmin!=null && val!="") {
 					if(tipo=='int' || tipo=='flo'){
 						if(Number(val) < Number(vmin)) {
 							$(padr).addClass('has-error');
@@ -83,7 +82,7 @@ $(document).ready(function(){
 					}
 				}
 				
-				if(vmax!="" && vmax!="undefinided" && vmax!=null) {
+				if(vmax!="" && vmax!="undefinided" && vmax!=null && val!="") {
 					if(tipo=='int' || tipo=='flo'){
 						if(Number(val) > Number(vmax)) {
 							$(padr).addClass('has-error');

@@ -1,6 +1,6 @@
 <label for="id_institucion" class="col-sm-3 control-label">Institución <span class="asterisk">*</span></label>
 <div class="col-sm-7">
-    <select class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]">
+    <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]">
         <option value=""></option>
         <?php
 			foreach($institucion as $val) {

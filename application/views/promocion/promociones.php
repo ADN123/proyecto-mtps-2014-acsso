@@ -41,7 +41,7 @@
                       	</div>
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="2" id="tec" />
-                        	<label for="tec">Técnicos</label>
+                        	<label for="tec">Técnicos Educadores</label>
                       	</div>
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="3" id="sec" />

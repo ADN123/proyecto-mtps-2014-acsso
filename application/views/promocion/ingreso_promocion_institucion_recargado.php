@@ -1,27 +1,27 @@
 <div class="form-group">
     <label for="nombre_institucion" class="col-sm-3 control-label">Nombre de la institución <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <input type="text" name="nombre_institucion" id="nombre_institucion" class="form-control" value="<?php echo $institucion['nombre'] ?>"/>
+        <input data-req="true" data-tip="var" data-min="5" type="text" name="nombre_institucion" id="nombre_institucion" class="form-control" value="<?php echo $institucion['nombre'] ?>"/>
     </div>
 </div>
 
 <div class="form-group">
     <label for="nit_empleador" class="col-sm-3 control-label">NIT del empleador <span class="asterisk">*</span></label>
     <div class="col-sm-3">
-        <input type="text" name="nit_empleador" id="nit_empleador" class="form-control" value="<?php echo $institucion['nit_empleador'] ?>"/>
+        <input data-req="true" data-tip="nit" type="text" name="nit_empleador" id="nit_empleador" class="form-control" value="<?php echo $institucion['nit_empleador'] ?>"/>
     </div>
 </div>
 <div class="form-group">
     <label for="nombre_representante" class="col-sm-3 control-label">Nombre del representante legal <span class="asterisk">*</span></label>
     <div class="col-sm-6">
-        <input type="text" name="nombre_representante" id="nombre_representante" class="form-control" value="<?php echo $institucion['nombre_representante'] ?>"/>
+        <input data-req="true" data-tip="var" data-min="5" type="text" name="nombre_representante" id="nombre_representante" class="form-control" value="<?php echo $institucion['nombre_representante'] ?>"/>
     </div>
 </div>
 
 <div class="form-group">
     <label for="id_clasificacion" class="col-sm-3 control-label">Clasificación CIIU <span class="asterisk">*</span></label>
     <div class="col-sm-4">
-        <select class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]">
+        <select data-req="true" class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]">
             <option value=""></option>
             <?php
                 foreach($clasificacion as $val) {
@@ -38,7 +38,7 @@
 <div class="form-group">
     <label for="id_sector" class="col-sm-3 control-label">Sector <span class="asterisk">*</span></label>
     <div class="col-sm-4">
-        <select class="form-control" name="id_sector" id="id_sector" data-placeholder="[Seleccione..]">
+        <select data-req="true" class="form-control" name="id_sector" id="id_sector" data-placeholder="[Seleccione..]">
             <option value=""></option>
             <?php
                 foreach($sector as $val) {
