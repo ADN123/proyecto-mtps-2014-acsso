@@ -9,12 +9,12 @@
                   		</div>
                   		<div class="col-xs-8">
                     		<small class="stat-label">promociones realizadas</small>
-                    		<h1><?php echo $total_promociones[0]['total']?></h1>
+                    		<h1><?php echo $total_promociones[0]['total1']?></h1>
                   		</div>
                 	</div><!-- row -->
                 	<div class="mb15"></div>
                 	<small class="stat-label">% del total de promociones asignadas</small>
-                	<h4><?php echo number_format(($total_promociones[0]['total']/$total_programaciones[0]['total']*100), 2)."%" ?></h4>
+                	<h4><?php echo number_format($total_promociones[0]['total2'], 2)."%" ?></h4>
               	</div><!-- stat -->
 			</div><!-- panel-heading -->
 		</div><!-- panel -->
