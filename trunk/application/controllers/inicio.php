@@ -33,29 +33,22 @@ class Inicio extends CI_Controller
 		if($data['id_permiso']!=NULL) {
 			switch($data['id_permiso']) {
 				case 3:
-					$select=array("COUNT(id_promocion) AS total");
+					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(sac_programacion_visita.id_programacion_visita)*100) AS total2");
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select);
+			
+					$select=array("COUNT(sac_lugar_trabajo.id_lugar_trabajo) AS total");
+					$where=array("AND sac_programacion_visita.id_programacion_visita IS NULL");
+					$data['total_sin_programaciones']=$this->promocion_model->consultas_promociones($select,$where);
 					
-					$select=array("COUNT(sac_programacion_visita.id_programacion_visita) AS total");
-					$data['total_programaciones']=$this->promocion_model->consultas_promociones($select);
+					$select=array("COUNT(sac_lugar_trabajo.id_lugar_trabajo) AS total");
+					$data['total_lugares_trabajo']=$this->promocion_model->consultas_promociones($select);
 					break;
 				case 4:
-					$select=array("COUNT(id_promocion) AS total");
+					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(sac_programacion_visita.id_programacion_visita)*100) AS total2");
 					$where=array("AND tcm_empleado.id_usuario=".$this->session->userdata('id_usuario'));
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select,$where);
-					
-					$select=array("COUNT(sac_programacion_visita.id_programacion_visita) AS total");
-					$where=array("AND tcm_empleado.id_usuario=".$this->session->userdata('id_usuario'));
-					$data['total_programaciones']=$this->promocion_model->consultas_promociones($select);
 					break;
 			}
-			
-			$select=array("COUNT(sac_lugar_trabajo.id_lugar_trabajo) AS total");
-			$where=array("AND sac_programacion_visita.id_programacion_visita IS NULL");
-			$data['total_sin_programaciones']=$this->promocion_model->consultas_promociones($select,$where);
-			
-			$select=array("COUNT(sac_lugar_trabajo.id_lugar_trabajo) AS total");
-			$data['total_lugares_trabajo']=$this->promocion_model->consultas_promociones($select);
 			pantalla('home',$data,Dinicio);
 		}
 		else {
