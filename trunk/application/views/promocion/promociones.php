@@ -1,5 +1,5 @@
 <div class="col-md-4">
-	<div class="panel panel-primary">
+	<div class="panel panel-warning">
 		<div class="panel-heading">
         <div class="panel-btns">
         	<a href="#" class="tooltips ayuda" data-ayuda="11" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
@@ -81,7 +81,7 @@
    	</div>
 </div>
 <div class="col-md-8">
-	<div class="panel panel-primary">
+	<div class="panel panel-warning">
 		<div class="panel-heading">
         <div class="panel-btns">
         	<a href="#" class="tooltips ayuda" data-ayuda="12" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>

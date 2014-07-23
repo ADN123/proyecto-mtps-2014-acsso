@@ -7,6 +7,40 @@ class Seguridad_model extends CI_Model {
         parent::__construct();
     }
 	
+	function consultar_seccion_usuario($nr=0)
+	{
+		
+		$sentencia="SELECT id_empleado FROM sir_empleado WHERE nr like '".$nr."'";
+		$query=$this->db->query($sentencia);
+		
+		$datos=(array)$query->row();
+				
+		$sentencia="SELECT
+			sir_empleado_informacion_laboral.id_empleado_informacion_laboral,
+			sir_empleado_informacion_laboral.id_empleado,
+			sir_empleado_informacion_laboral.id_seccion,
+			sir_empleado_informacion_laboral.fecha_inicio
+			FROM sir_empleado_informacion_laboral
+			WHERE sir_empleado_informacion_laboral.id_empleado=".$datos['id_empleado']."
+			GROUP BY sir_empleado_informacion_laboral.id_empleado_informacion_laboral
+			HAVING sir_empleado_informacion_laboral.fecha_inicio >= ALL(SELECT
+					sir_empleado_informacion_laboral.fecha_inicio
+					FROM sir_empleado_informacion_laboral
+					WHERE sir_empleado_informacion_laboral.id_empleado=".$datos['id_empleado']."
+					GROUP BY sir_empleado_informacion_laboral.id_empleado,sir_empleado_informacion_laboral.fecha_inicio) 
+		";
+		$query=$this->db->query($sentencia);
+		
+		if($query->num_rows>0) {
+			return (array)$query->row();
+		}
+		else {
+			return array(
+				'id_nivel_1' => 0
+			);
+		}
+	}
+	
 	function consultar_usuario($login,$clave)
 	{
 		$sentencia="SELECT id_usuario, usuario, nombre_completo, NR , id_seccion, sexo
