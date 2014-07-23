@@ -43,7 +43,7 @@
                     
                     <ul class="nav nav-pills nav-justified">
                         <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información de la Promoción</a></li>
-                        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información de la institución</a></li>
+                        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información del establecimiento</a></li>
                         <li><a href="#ptab3" data-toggle="tab"><span>Paso 3:</span> Información del lugar de trabajo</a></li>
                     </ul>
                       
@@ -88,7 +88,7 @@
                                 <label for="fecha_promocion" class="col-sm-3 control-label">Fecha de promoción <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <input data-req="true" data-tip="fec"type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" readonly="readonly" >
+                                        <input data-req="true" data-tip="fec"type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" value="<?php echo date('d/m/Y')?>" readonly="readonly" >
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
                                 </div>
@@ -130,9 +130,9 @@
               			</div>
                 		<div class="tab-pane" id="ptab2">
                         	<div class="form-group">
-                            	<label for="nombre_institucion" class="col-sm-3 control-label">Nombre de la institución <span class="asterisk">*</span></label>
+                            	<label for="nombre_institucion" class="col-sm-3 control-label">Nombre del establecimiento <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <input data-req="true" data-tip="var" data-min="5" type="text" name="nombre_institucion" id="nombre_institucion" class="form-control"/>
+                                    <input data-req="true" data-tip="x" data-min="5" type="text" name="nombre_institucion" id="nombre_institucion" class="form-control"/>
                                 </div>
                             </div>
                           

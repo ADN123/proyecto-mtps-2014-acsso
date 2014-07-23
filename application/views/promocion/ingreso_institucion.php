@@ -1,5 +1,5 @@
 <?php
-	$objeto='la <strong>institución</strong>';
+	$objeto='el <strong>establecimiento</strong>';
 	switch($accion_transaccion) {
 		case 1: 
 			$accion_transaccion="guarda";
@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas agregar lugares de trabajo a una institución presiona <a href="'.base_url().'index.php/promocion/lugares_trabajo" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas agregar lugares de trabajo a un establecimiento presiona <a href="'.base_url().'index.php/promocion/lugares_trabajo" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';
@@ -33,15 +33,15 @@
             <a href="#" class="tooltips ayuda" data-ayuda="1" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title">Datos de la institución</h3>
+        	<h3 class="panel-title">Datos del establecimiento</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
         	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_promocion" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">
-                        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información Básica</a></li>
-                        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información Adicional</a></li>
+                        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
+                        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información Complementaria</a></li>
                     </ul>
                       
                     <div class="tab-content">
@@ -52,9 +52,9 @@
                       
                   		<div class="tab-pane" id="ptab1">
                           	<div class="form-group">
-                            	<label for="nombre_institucion" class="col-sm-3 control-label">Nombre de la institución <span class="asterisk">*</span></label>
+                            	<label for="nombre_institucion" class="col-sm-3 control-label">Nombre del establecimiento <span class="asterisk">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="text" data-req="true" data-tip="var" data-min="5" name="nombre_institucion" id="nombre_institucion" class="form-control"/>
+                                    <input type="text" data-req="true" data-tip="x" data-min="5" name="nombre_institucion" id="nombre_institucion" class="form-control"/>
                                 </div>
                             </div>
                           
@@ -138,14 +138,14 @@
         	<a href="#" class="tooltips ayuda" data-ayuda="2" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title" id="titulo-tabla">Instituciones registradas</h3>
+        	<h3 class="panel-title" id="titulo-tabla">Establecimiento registrados</h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
         	<div class="table-responsive">
           		<table class="table table-hover mb30">
             		<thead>
               			<tr>
-                            <th>Nombre institución</th>
+                            <th>Nombre establecimiento</th>
                             <th style="width:100px">Acción</th>
               			</tr>
             		</thead>

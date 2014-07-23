@@ -7,8 +7,8 @@
 		}
 	?>  
     <ul class="nav nav-pills nav-justified">
-        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información Básica</a></li>
-        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información Adicional</a></li>
+        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
+        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información Complementaria</a></li>
     </ul>
       
     <div class="tab-content">
@@ -19,7 +19,7 @@
       
         <div class="tab-pane" id="ptab1">
             <div class="form-group">
-                <label for="id_institucion" class="col-sm-3 control-label">Institución <span class="asterisk">*</span></label>
+                <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
                 <div class="col-sm-7">
                     <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" >
                         <option value=""></option>

@@ -29,12 +29,12 @@
 							<img src="<?php echo base_url()?>images/is-document.png" alt="" />
 						</div>
 						<div class="col-xs-8">
-							<small class="stat-label">% instituciones sin visita programada</small>
+							<small class="stat-label">% establecimientos sin visita programada</small>
 							<h1>54.40%</h1>
 						</div>
 					</div><!-- row -->
 					<div class="mb15"></div>
-                    <small class="stat-label">Total de instituciones</small>
+                    <small class="stat-label">Total de establecimientos</small>
 					<h4>01:80:22</h4>
               	</div><!-- stat -->
 			</div><!-- panel-heading -->

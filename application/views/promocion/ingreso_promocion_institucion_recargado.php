@@ -1,7 +1,7 @@
 <div class="form-group">
-    <label for="nombre_institucion" class="col-sm-3 control-label">Nombre de la institución <span class="asterisk">*</span></label>
+    <label for="nombre_institucion" class="col-sm-3 control-label">Nombre del establecimiento <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <input data-req="true" data-tip="var" data-min="5" type="text" name="nombre_institucion" id="nombre_institucion" class="form-control" value="<?php echo $institucion['nombre'] ?>"/>
+        <input data-req="true" data-tip="x" data-min="5" type="text" name="nombre_institucion" id="nombre_institucion" class="form-control" value="<?php echo $institucion['nombre'] ?>"/>
     </div>
 </div>
 

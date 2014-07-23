@@ -23,9 +23,9 @@
 </div>
 
 <div class="form-group" id="cont-institucion">
-    <label for="id_institucion" class="col-sm-3 control-label">Institución <span class="asterisk">*</span></label>
+    <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" >
+        <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" <?php if($programacion['id_institucion']=="") echo 'disabled="disabled"' ?> >
             <option value=""></option>
             <?php
                 foreach($institucion as $val) {
@@ -42,7 +42,7 @@
 <div class="form-group" id="cont-lugar-trabajo">
     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
+        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($programacion['id_lugar_trabajo']=="") echo 'disabled="disabled"' ?> >
             <option value=""></option>
             <?php
                 foreach($lugar_trabajo as $val) {
@@ -60,7 +60,7 @@
     <label for="fecha_visita" class="col-sm-3 control-label">Fecha de visita <span class="asterisk">*</span></label>
     <div class="col-sm-4">
         <div class="input-group">
-            <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_visita" name="fecha_visita" value="<?php echo $programacion['fecha_visita'];?>" readonly />
+            <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_visita" name="fecha_visita" value="<?php if($programacion['fecha_visita']!="")echo $programacion['fecha_visita']; else echo date('d/m/Y');?>" readonly />
             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
         </div>
     </div>
