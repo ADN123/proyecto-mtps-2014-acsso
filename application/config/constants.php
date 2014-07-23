@@ -37,26 +37,26 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
-define('Dinicio', 								84);
-define('Dreportes', 							85);
-define('Dreportes_promociones',					86);
-define('Dpromocion_comites', 					87);
-define('Ddatos_generales', 						88);
-define('Dingreso_promocion', 					89);
-define('Dprogramar_visita_1', 					90);
-define('Dacreditacion', 						91);
-define('Dprogramar_capacitacion', 				92);
-define('Dcontrol_asistencia', 					93);
-define('Dacreditacion_comite', 					94);
-define('Dverificacion', 						95);
-define('Dprogramar_visita_2', 					96);
-define('Dcontrol_visita', 						97);
-define('Dusuario', 								98);
-define('Dcontrol_rol', 							99);
-define('Dcontrol_usuario', 						100);
-define('Dlugares_trabajo', 						101);
-define('Dparticipantes', 						102);
-define('Dasignaciones', 						103);
+define('Dinicio', 								90);
+define('Dreportes', 							91);
+define('Dreportes_promociones',					92);
+define('Dpromocion_comites', 					93);
+define('Ddatos_generales', 						94);
+define('Dingreso_promocion', 					95);
+define('Dprogramar_visita_1', 					96);
+define('Dacreditacion', 						97);
+define('Dprogramar_capacitacion', 				98);
+define('Dcontrol_asistencia', 					99);
+define('Dacreditacion_comite', 					100);
+define('Dverificacion', 						101);
+define('Dprogramar_visita_2', 					102);
+define('Dcontrol_visita', 						103);
+define('Dusuario', 								104);
+define('Dcontrol_rol', 							105);
+define('Dcontrol_usuario', 						106);
+define('Dlugares_trabajo', 						107);
+define('Dparticipantes', 						108);
+define('Dasignaciones', 						109);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

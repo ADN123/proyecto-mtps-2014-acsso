@@ -61,7 +61,7 @@ class Seguridad_model extends CI_Model {
 					INNER JOIN org_rol_modulo_permiso ON org_rol_modulo_permiso.id_rol = org_rol.id_rol
 					INNER JOIN org_modulo ON org_modulo.id_modulo = org_rol_modulo_permiso.id_modulo
 					LEFT JOIN org_modulo AS m2 ON m2.id_modulo = org_modulo.dependencia
-					WHERE org_usuario_rol.id_usuario=".$id." AND org_modulo.id_sistema=6 AND org_rol_modulo_permiso.estado=1
+					WHERE org_usuario_rol.id_usuario=".$id." AND org_modulo.id_sistema=7 AND org_rol_modulo_permiso.estado=1
 					ORDER BY m2.id_modulo, org_modulo.orden";
 		$query=$this->db->query($sentencia);
 		

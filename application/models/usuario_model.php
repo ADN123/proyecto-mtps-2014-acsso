@@ -19,7 +19,7 @@ class Usuario_model extends CI_Model {
 			$id_mod[]=$val['id_modulo'];
 			$id_per[]=$val['id_permiso'];
 		}
-		$sentencia="SELECT id_sistema, nombre_sistema FROM org_sistema WHERE id_sistema=6";
+		$sentencia="SELECT id_sistema, nombre_sistema FROM org_sistema WHERE id_sistema=7";
 		$query0=$this->db->query($sentencia);
 		$m0=(array)$query0->result_array();
 		$result='';
@@ -27,7 +27,7 @@ class Usuario_model extends CI_Model {
 			$id_sistema=$val0['id_sistema'];
 			$nombre_sistema=$val0['nombre_sistema'];
 			$result.='<ul>';
-			$sentencia="SELECT id_modulo, nombre_modulo, descripcion_modulo, opciones_modulo FROM org_modulo where (dependencia IS NULL OR dependencia = 0) AND id_modulo<>71 AND id_sistema=".$id_sistema." ORDER BY orden";
+			$sentencia="SELECT id_modulo, nombre_modulo, descripcion_modulo, opciones_modulo FROM org_modulo where (dependencia IS NULL OR dependencia = 0) AND id_modulo<>77 AND id_sistema=".$id_sistema." ORDER BY orden";
 			$query1=$this->db->query($sentencia);
 			$m1=(array)$query1->result_array();
 			
@@ -422,7 +422,7 @@ class Usuario_model extends CI_Model {
 					INNER JOIN org_usuario_rol AS ur ON ur.id_usuario=e.id_usuario
 					INNER JOIN org_rol AS r ON r.id_rol=ur.id_rol
 					INNER JOIN org_rol_modulo_permiso AS rm ON rm.id_rol=r.id_rol AND (rm.id_permiso>=2 AND rm.id_modulo='".$id_modulo."') AND rm.id_permiso<>3
-					INNER JOIN org_modulo AS m ON m.id_modulo=rm.id_modulo AND m.id_sistema=5
+					INNER JOIN org_modulo AS m ON m.id_modulo=rm.id_modulo AND m.id_sistema=7
 					INNER JOIN	
 						(SELECT e.id_seccion
 						FROM tcm_empleado AS e
@@ -441,7 +441,7 @@ class Usuario_model extends CI_Model {
 						INNER JOIN org_usuario_rol AS ur ON ur.id_usuario=e.id_usuario
 						INNER JOIN org_rol AS r ON r.id_rol=ur.id_rol
 						INNER JOIN org_rol_modulo_permiso AS rm ON rm.id_rol=r.id_rol AND (rm.id_permiso=4 AND rm.id_modulo='".$id_modulo."') AND rm.id_permiso<>3
-						INNER JOIN org_modulo AS m ON m.id_modulo=rm.id_modulo AND m.id_sistema=5
+						INNER JOIN org_modulo AS m ON m.id_modulo=rm.id_modulo AND m.id_sistema=7
 						INNER JOIN	
 							(SELECT e.id_seccion
 							FROM tcm_empleado AS e
@@ -460,7 +460,7 @@ class Usuario_model extends CI_Model {
 							INNER JOIN org_usuario_rol AS ur ON ur.id_usuario=e.id_usuario
 							INNER JOIN org_rol AS r ON r.id_rol=ur.id_rol
 							INNER JOIN org_rol_modulo_permiso AS rm ON rm.id_rol=r.id_rol AND rm.id_permiso=3 AND rm.id_modulo='".$id_modulo."'
-							INNER JOIN org_modulo AS m ON m.id_modulo=rm.id_modulo AND m.id_sistema=5
+							INNER JOIN org_modulo AS m ON m.id_modulo=rm.id_modulo AND m.id_sistema=7
 							INNER JOIN	
 								(SELECT e.id_seccion
 								FROM tcm_empleado AS e
@@ -517,7 +517,7 @@ class Usuario_model extends CI_Model {
 					INNER JOIN org_rol_modulo_permiso ON org_rol_modulo_permiso.id_rol = org_rol.id_rol
 					INNER JOIN org_modulo ON org_modulo.id_modulo = org_rol_modulo_permiso.id_modulo
 					INNER JOIN org_modulo AS m2 ON m2.id_modulo = org_modulo.dependencia
-					WHERE org_usuario_rol.id_usuario=".$id_usuario." AND org_modulo.id_sistema=6 AND org_rol_modulo_permiso.estado=1
+					WHERE org_usuario_rol.id_usuario=".$id_usuario." AND org_modulo.id_sistema=7 AND org_rol_modulo_permiso.estado=1
 					AND (m2.nombre_modulo like '%".$buscar."%' OR org_modulo.nombre_modulo like '%".$buscar."%' OR org_modulo.descripcion_modulo like '%".$buscar."%' OR org_modulo.url_modulo like '%".$buscar."%')
 					ORDER BY m2.orden, org_modulo.orden";
 		$query=$this->db->query($sentencia);
