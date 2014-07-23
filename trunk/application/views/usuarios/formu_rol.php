@@ -31,13 +31,13 @@
           	<div class="form-group">
                 <label for="nombre_rol" class="col-sm-3 control-label">Nombre del rol <span class="asterisk">*</span></label>
                 <div class="col-sm-8">
-                    <input required type="text" tabindex="1" id="nombre_rol" title="Your name is required!" name="nombre_rol" value="<?=$nombre_rol?>" class="form-control input-sm"/>
+                    <input type="text" tabindex="1" id="nombre_rol" title="Your name is required!" name="nombre_rol" value="<?=$nombre_rol?>" class="form-control input-sm"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="descripcion_rol" class="col-sm-3 control-label">Descripción <span class="asterisk">*</span></label>
                 <div class="col-sm-8">
-                	<textarea required class="form-control" id="descripcion_rol" tabindex="2" name="descripcion_rol"><?=$descripcion_rol?></textarea>
+                	<textarea class="form-control" id="descripcion_rol" tabindex="2" name="descripcion_rol"><?=$descripcion_rol?></textarea>
                	</div>
           	</div>
     </fieldset>

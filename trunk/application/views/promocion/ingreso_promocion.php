@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
                                     <div class="col-sm-4">
-                                        <select class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" required="required">
+                                        <select class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
                                             <option value=""></option>
                                             <?php
                                                 foreach($tecnico as $val) {
@@ -73,7 +73,7 @@
 							<div class="form-group" id="cont-institucion">
                                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" required="required">
+                                    <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
                                             foreach($insticion_lugar_trabajo as $val) {
@@ -88,7 +88,7 @@
                                 <label for="fecha_promocion" class="col-sm-3 control-label">Fecha de promoción <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" readonly="readonly" required="required">
+                                        <input type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" readonly="readonly" >
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                 <label for="hora_inicio" class="col-sm-3 control-label">Hora de inicio <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <div class="bootstrap-timepicker"><input id="timepicker" name="hora_inicio" type="text" class="form-control" readonly="readonly" required="required"/></div>
+                                        <div class="bootstrap-timepicker"><input id="timepicker" name="hora_inicio" type="text" class="form-control" readonly="readonly" /></div>
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                                 <label for="hora_final" class="col-sm-3 control-label">Hora de finalización <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <div class="bootstrap-timepicker"><input id="timepicker2" name="hora_final" type="text" class="form-control" readonly="readonly" required="required"/></div>
+                                        <div class="bootstrap-timepicker"><input id="timepicker2" name="hora_final" type="text" class="form-control" readonly="readonly" /></div>
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                     </div>
                                 </div>
@@ -117,14 +117,14 @@
                             <div class="form-group">
                             	<label for="nombre_recibio" class="col-sm-3 control-label">Persona que atendió <span class="asterisk">*</span></label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nombre_recibio" id="nombre_recibio" class="form-control" required/>
+                                    <input type="text" name="nombre_recibio" id="nombre_recibio" class="form-control"/>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="observaciones" class="col-sm-3 control-label">Observaciones <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <textarea class="form-control" id="observaciones" name="observaciones" required="required"></textarea>
+                                    <textarea class="form-control" id="observaciones" name="observaciones" ></textarea>
                                 </div>
                             </div>
               			</div>
@@ -132,27 +132,27 @@
                         	<div class="form-group">
                             	<label for="nombre_institucion" class="col-sm-3 control-label">Nombre de la institución <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="nombre_institucion" id="nombre_institucion" class="form-control" required/>
+                                    <input type="text" name="nombre_institucion" id="nombre_institucion" class="form-control"/>
                                 </div>
                             </div>
                           
                             <div class="form-group">
                                 <label for="nit_empleador" class="col-sm-3 control-label">NIT del empleador <span class="asterisk">*</span></label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="nit_empleador" id="nit_empleador" class="form-control" required/>
+                                    <input type="text" name="nit_empleador" id="nit_empleador" class="form-control"/>
                                 </div>
                             </div>
                 			<div class="form-group">
                    				<label for="nombre_representante" class="col-sm-3 control-label">Nombre del representante legal <span class="asterisk">*</span></label>
                         		<div class="col-sm-6">
-                            		<input type="text" name="nombre_representante" id="nombre_representante" class="form-control" required/>
+                            		<input type="text" name="nombre_representante" id="nombre_representante" class="form-control"/>
                         		</div>
                     		</div>
                    	
                           	<div class="form-group">
                             	<label for="id_clasificacion" class="col-sm-3 control-label">Clasificación CIIU <span class="asterisk">*</span></label>
                             	<div class="col-sm-4">
-                              		<select class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]" required>
+                              		<select class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]">
                                 		<option value=""></option>
                                         <?php
 											foreach($clasificacion as $val) {
@@ -166,7 +166,7 @@
                           	<div class="form-group">
                             	<label for="id_sector" class="col-sm-3 control-label">Sector <span class="asterisk">*</span></label>
                             	<div class="col-sm-4">
-                              		<select class="form-control" name="id_sector" id="id_sector" data-placeholder="[Seleccione..]" required>
+                              		<select class="form-control" name="id_sector" id="id_sector" data-placeholder="[Seleccione..]">
                                     	<option value=""></option>
                                         <?php
 											foreach($sector as $val) {
@@ -191,7 +191,7 @@
                       		<div class="form-group">
                                 <label for="id_tipo_lugar_trabajo" class="col-sm-3 control-label">Tipo de lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" name="id_tipo_lugar_trabajo" id="id_tipo_lugar_trabajo" data-placeholder="[Seleccione..]" required="required">
+                                    <select class="form-control" name="id_tipo_lugar_trabajo" id="id_tipo_lugar_trabajo" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
                                             foreach($tipo_lugar_trabajo as $val) {
@@ -205,21 +205,21 @@
                             <div class="form-group">
                                 <label for="nombre_lugar" class="col-sm-3 control-label">Nombre lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" required="required"/>
+                                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" />
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="direccion_lugar" class="col-sm-3 control-label">Dirección <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <textarea class="form-control" id="direccion_lugar" tabindex="2" name="direccion_lugar" required="required"></textarea>
+                                    <textarea class="form-control" id="direccion_lugar" tabindex="2" name="direccion_lugar" ></textarea>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="id_municipio" class="col-sm-3 control-label">Municipio <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" name="id_municipio" id="id_municipio" data-placeholder="[Seleccione..]" required="required">
+                                    <select class="form-control" name="id_municipio" id="id_municipio" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
                                             foreach($municipio as $val) {
@@ -233,35 +233,35 @@
                             <div class="form-group">
                                 <label for="nombre_contacto" class="col-sm-3 control-label">Nombre contacto <span class="asterisk">*</span></label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nombre_contacto" id="nombre_contacto" class="form-control" required />
+                                    <input type="text" name="nombre_contacto" id="nombre_contacto" class="form-control" />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="telefono" class="col-sm-3 control-label">Teléfono contacto <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
-                                    <input type="tel" name="telefono" id="telefono" class="form-control" required/>
+                                    <input type="tel" name="telefono" id="telefono" class="form-control"/>
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="correo" class="col-sm-3 control-label">Correo contacto <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="email" name="correo" id="correo" class="form-control" required />
+                                    <input type="email" name="correo" id="correo" class="form-control" />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="total_hombres" class="col-sm-3 control-label">Total hombres <span class="asterisk">*</span></label>
                                 <div class="col-sm-1">
-                                    <input type="number" name="total_hombres" id="total_hombres" class="form-control" required />
+                                    <input type="number" name="total_hombres" id="total_hombres" class="form-control" />
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="total_mujeres" class="col-sm-3 control-label">Total Mujeres <span class="asterisk">*</span></label>
                                 <div class="col-sm-1">
-                                    <input type="number" name="total_mujeres" id="total_mujeres" class="form-control" required />
+                                    <input type="number" name="total_mujeres" id="total_mujeres" class="form-control" />
                                 </div>
                             </div>
                       	</div>

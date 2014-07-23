@@ -1,4 +1,5 @@
 var fecha_actual;
+var band=true;
 $(document).ready(function(){
 	$('.table').dataTable({
 		"sPaginationType": "full_numbers"
@@ -10,13 +11,100 @@ $(document).ready(function(){
 		'white-space': 'nowrap'
 	});
 	
-	$("#formu").validate({
-		highlight: function(element) {
-			$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-		},
-		success: function(element) {
-			$(element).closest('.form-group').removeClass('has-error');
-		}
+	$("#formu").submit(function(){
+		band=true;
+		$('#formu input, #formu select, #formu textarea').each(function(indice, elemento) {
+			var val=$(elemento).val();
+			var padr=$(elemento).parents('.form-group');
+			
+			var vreq=$(elemento).data("req");
+			var tipo=$(elemento).data("tip");
+			var vmin=$(elemento).data("min");
+			var vmax=$(elemento).data("max");
+			var patt2;
+			
+			if($(elemento).attr("class")=="form-control") {
+				
+				if(vreq=="true" || vreq=="TRUE" || vreq=="1") {
+					if(val=="") {
+						$(padr).addClass('has-error');
+						band=false;
+					}
+					else {
+						$(padr).removeClass('has-error');
+					}
+				}
+				
+				if(tipo!="" && tipo!="undefinided" && tipo!=null) {
+					switch(tipo) {
+						case 'var': /*letras*/
+							patt2=/^([a-z|\' '|ñ|á-ú]*)$/i;
+							break;
+						case 'int': /*numeros enteros*/
+							patt2=/^[0-9]*$/i;
+							break;
+						case 'flo': /*numeros flotantes*/
+							patt2=/^[0-9]*([.]?[0-9]{1,2})?$/i;
+							break;
+						case 'tel': /*telefono*/
+							patt2=/^[2|6|7]{1}[0-9]{3}-[0-9]{4}$/i;
+							break;
+						case 'nit': /*nit*/
+							patt2=/^[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}$/i;
+							break;
+						case 'cor': /*correo*/
+							patt2=/(^(\w+([\.]\w+)*[\@]{1}\w+([\.]\w+)?[\.]{1}\w{2,3})|^)$/i;
+							break;
+						case 'fec': /*fecha*/
+							patt2=/^([0][1-9]|[12][0-9]|3[01])(\/|-)([0][1-9]|[1][0-2])\2(\d{4})$/i;
+							break;
+						default: /*caracteres alfanumericos*/
+							patt2=/^([0-9|.|,|a-z|\' '|ñ|á-ú]*)$/i;
+					}
+					if(!patt2.test(val)){
+						$(padr).addClass('has-error');
+						band=false;
+					}
+				}
+				
+				if(vmin!="" && vmin!="undefinided" && vmin!=null) {
+					if(tipo=='int' || tipo=='flo'){
+						if(Number(val) < Number(vmin)) {
+							$(padr).addClass('has-error');
+							band=false;
+						}
+					}
+					else {
+						if(Number(val.length) < Number(vmin)) {
+							$(padr).addClass('has-error');
+							band=false;
+						}
+						
+					}
+				}
+				
+				if(vmax!="" && vmax!="undefinided" && vmax!=null) {
+					if(tipo=='int' || tipo=='flo'){
+						if(Number(val) > Number(vmax)) {
+							$(padr).addClass('has-error');
+							band=false;
+						}
+					}
+					else {
+						if(Number(val.length) > Number(vmax)) {
+							$(padr).addClass('has-error');
+							band=false;
+						}
+						
+					}
+				}
+				
+			}
+		});
+		if(band)
+			document.getElementById("formu").submit();
+		else
+			return false;
 	});
 	
 	$(".ayuda").click(function(){
