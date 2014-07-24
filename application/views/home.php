@@ -89,7 +89,7 @@
                                     <div class="progress progress-sm">
                                         <div style="width: <?php echo number_format(($val['total']/$total*100),2)?>%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-<?php echo $css?>"></div>
                                     </div>
-							<?
+							<?php
 								$i++;
 								}
 							?>
