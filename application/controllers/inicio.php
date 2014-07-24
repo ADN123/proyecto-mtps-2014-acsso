@@ -33,19 +33,23 @@ class Inicio extends CI_Controller
 		if($data['id_permiso']!=NULL) {
 			switch($data['id_permiso']) {
 				case 3:
-					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(sac_programacion_visita.id_programacion_visita)*100) AS total2");
+					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(id_programacion_visita)*100) AS total2");
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select);
 			
-					$select=array("COUNT(sac_lugar_trabajo.id_lugar_trabajo) AS total");
-					$where=array("AND sac_programacion_visita.id_programacion_visita IS NULL");
+					$select=array("COUNT(id_lugar_trabajo) AS total");
+					$where=array("AND id_programacion_visita IS NULL");
 					$data['total_sin_programaciones']=$this->promocion_model->consultas_promociones($select,$where);
 					
-					$select=array("COUNT(sac_lugar_trabajo.id_lugar_trabajo) AS total");
+					$select=array("COUNT(id_lugar_trabajo) AS total");
 					$data['total_lugares_trabajo']=$this->promocion_model->consultas_promociones($select);
+					
+					$data['total_promociones_departamento']=$this->promocion_model->consultas_promociones_departamentos();
+					$data['total_promociones_clasificacion']=$this->promocion_model->total_promociones_clasificacion();
+					$data['total_promociones_sector']=$this->promocion_model->consultas_promociones_sector();
 					break;
 				case 4:
-					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(sac_programacion_visita.id_programacion_visita)*100) AS total2");
-					$where=array("AND tcm_empleado.id_usuario=".$this->session->userdata('id_usuario'));
+					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(id_programacion_visita)*100) AS total2");
+					$where=array("AND id_usuario=".$this->session->userdata('id_usuario'));
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select,$where);
 					break;
 			}

@@ -437,7 +437,7 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function consultas_promociones($select=array('*'),$where=array())
+	function consultas_promociones($select=array('*'),$where=array(),$group=array(),$order=array())
 	{	
 		$sel='';
 		for($i=0;$i<count($select);$i++) {
@@ -451,18 +451,94 @@ class Promocion_model extends CI_Model {
 				$whe.=' ';
 			$whe.=$where[$i];
 		}
-		$sentencia="SELECT ".$sel."
-					FROM sac_institucion
-					LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
-					LEFT JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
-					LEFT JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
-					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
-					LEFT JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
-					LEFT JOIN sac_sector_institucion ON sac_institucion.id_sector = sac_sector_institucion.id_sector
-					LEFT JOIN sac_clasificacion_institucion ON sac_institucion.id_clasificacion = sac_clasificacion_institucion.id_clasificacion
-					LEFT JOIN sac_tipo_lugar_trabajo ON sac_lugar_trabajo.id_tipo_lugar_trabajo = sac_tipo_lugar_trabajo.id_tipo_lugar_trabajo
-					LEFT JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
-					WHERE TRUE ".$whe;
+		$gro='';
+		for($i=0;$i<count($group);$i++) {
+			if($i>0)
+				$gro.=', ';
+			else
+				$gro.='GROUP BY ';
+			$gro.=$group[$i];
+		}
+		$ord='';
+		for($i=0;$i<count($order);$i++) {
+			if($i>0)
+				$ord.=', ';
+			else
+				$gro.='ORDER BY ';
+			$ord.=$order[$i];
+		}
+		$sentencia="SELECT ".$sel." FROM sac_resultado_promocion WHERE TRUE ".$whe." ".$gro." ".$ord;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function consultas_promociones_departamentos()
+	{
+		$sentencia="SELECT 
+					CASE org_departamento.id_departamento
+						WHEN 1 THEN 'AHU' 
+						WHEN 2 THEN 'ANA'
+						WHEN 3 THEN 'SON'
+						WHEN 4 THEN 'CHA' 
+						WHEN 5 THEN 'LIB'
+						WHEN 6 THEN 'SS'
+						WHEN 7 THEN 'CUS' 
+						WHEN 8 THEN 'PAZ'
+						WHEN 9 THEN 'CAB'
+						WHEN 10 THEN 'SV' 
+						WHEN 11 THEN 'USU'
+						WHEN 12 THEN 'MIG'
+						WHEN 13 THEN 'MOR' 
+						WHEN 14 THEN 'UNI' 
+					END AS codigo,
+					CASE org_departamento.id_departamento
+						WHEN 1 THEN 'AH' 
+						WHEN 2 THEN 'SA'
+						WHEN 3 THEN 'SO'
+						WHEN 4 THEN 'CH' 
+						WHEN 5 THEN 'LL'
+						WHEN 6 THEN 'SS'
+						WHEN 7 THEN 'CU' 
+						WHEN 8 THEN 'LP'
+						WHEN 9 THEN 'CA'
+						WHEN 10 THEN 'SV' 
+						WHEN 11 THEN 'US'
+						WHEN 12 THEN 'SM'
+						WHEN 13 THEN 'MO' 
+						WHEN 14 THEN 'LU' 
+					END AS codigo2,
+					COUNT(id_promocion) AS total
+					FROM org_departamento
+					LEFT JOIN sac_resultado_promocion ON org_departamento.id_departamento=sac_resultado_promocion.id_departamento
+					WHERE org_departamento.id_departamento<15
+					GROUP BY org_departamento.departamento
+					ORDER BY org_departamento.departamento";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function total_promociones_clasificacion()
+	{
+		$sentencia="SELECT 
+					sac_clasificacion_institucion.nombre_clasificacion,
+					COUNT(id_promocion) AS total
+					FROM sac_clasificacion_institucion
+					INNER JOIN sac_resultado_promocion ON sac_clasificacion_institucion.id_clasificacion=sac_resultado_promocion.id_clasificacion
+					GROUP BY sac_clasificacion_institucion.nombre_clasificacion
+					ORDER BY COUNT(id_promocion) DESC LIMIT 0,5";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function consultas_promociones_sector()
+	{
+		$sentencia="SELECT 
+					sac_sector_institucion.nombre_sector,
+					COUNT(id_promocion) AS total
+					FROM sac_sector_institucion
+					INNER JOIN sac_resultado_promocion ON sac_sector_institucion.id_sector=sac_resultado_promocion.id_sector
+					GROUP BY sac_sector_institucion.nombre_sector
+					ORDER BY sac_sector_institucion.nombre_sector";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}

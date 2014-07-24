@@ -151,6 +151,14 @@ $(document).ready(function(){
 		return false;
 	});
 });
+function showTooltip(x, y, contents) {
+	jQuery('<div id="tooltip" class="tooltipflot">' + contents + '</div>').css( {
+		position: 'absolute',
+		display: 'none',
+		top: y + 5,
+		left: x + 5
+	}).appendTo("body").fadeIn(200);
+}
 function confirmacion(titulo, mensaje, url, ajax, tipo)
 {
 	$("#myModalLabel").html(titulo);
