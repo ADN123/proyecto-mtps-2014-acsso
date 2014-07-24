@@ -32,6 +32,11 @@
     
     <script src="<?php echo base_url();?>js/flot/flot.min.js"></script>
     <script src="<?php echo base_url();?>js/flot/flot.resize.min.js"></script>
+    
+    <script src="<?php echo base_url();?>js/flot/flot.symbol.min.js"></script>
+	<script src="<?php echo base_url();?>js/flot/flot.crosshair.min.js"></script>
+    <script src="<?php echo base_url();?>js/flot/flot.categories.min.js"></script>
+    <script src="<?php echo base_url();?>js/flot/flot.pie.min.js"></script>
     <script src="<?php echo base_url();?>js/morris.min.js"></script>
     <script src="<?php echo base_url();?>js/raphael-2.1.0.min.js"></script>
     
