@@ -81,7 +81,7 @@
                    	
                           	<div class="form-group">
                             	<label for="id_clasificacion" class="col-sm-3 control-label">Clasificación CIIU</label>
-                            	<div class="col-sm-4">
+                            	<div class="col-sm-8">
                               		<select class="form-control" name="id_clasificacion" id="id_clasificacion" data-placeholder="[Seleccione..]">
                                 		<option value=""></option>
                                         <?php

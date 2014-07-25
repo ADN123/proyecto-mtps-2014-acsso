@@ -12,7 +12,7 @@ class Promocion_model extends CI_Model {
 	
 	function mostrar_clasificacion() 
 	{
-		$sentencia="SELECT id_clasificacion AS id, nombre_clasificacion AS nombre FROM sac_clasificacion_institucion";
+		$sentencia="SELECT id_clasificacion AS id, nombre_clasificacion AS nombre FROM sac_clasificacion_institucion WHERE LENGTH(codigo_clasificacion)=7";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -184,6 +184,7 @@ class Promocion_model extends CI_Model {
 		$sentencia="SELECT DISTINCT sac_institucion.id_institucion AS id, sac_institucion.nombre_institucion AS nombre
 					FROM sac_institucion
 					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
 					WHERE sac_institucion.estado=1 AND org_departamento.id_departamento=".$id_departamento;
