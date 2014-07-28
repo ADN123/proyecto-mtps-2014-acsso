@@ -32,5 +32,78 @@ class Acreditacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function tipo_representacion()
+	{
+		$sentencia="SELECT id_tipo_representacion AS id, nombre_tipo_representacion AS nombre FROM sac_tipo_representacion";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function tipo_inscripcion()
+	{
+		$sentencia="SELECT id_tipo_inscripcion AS id, nombre AS nombre FROM sac_tipo_inscripcion";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function guardar_participante($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="INSERT INTO sac_empleado_institucion
+					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea) 
+					VALUES 
+					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea)";
+		$this->db->query($sentencia);
+	}
+	
+	function empleados_lugar_trabajo($id_lugar_trabajo=NULL)
+	{
+		$where="";
+		if($id_lugar_trabajo!=NULL)
+			$where=" AND id_lugar_trabajo=".$id_lugar_trabajo;
+		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
+		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function eliminar_participante($formuInfo) 
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_empleado_institucion SET estado_empleado=0, fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica WHERE id_empleado_institucion=".$id_empleado_institucion;
+		$this->db->query($sentencia);
+	}
+	
+	function empleado_institucion($id_empleado_institucion)
+	{
+		$sentencia="SELECT
+					id_empleado_institucion,
+					id_lugar_trabajo,
+					id_tipo_inscripcion,
+					nombre_empleado,
+					cargo_empleado,
+					dui_empleado,
+					id_tipo_representacion
+					FROM sac_empleado_institucion
+					WHERE id_empleado_institucion=".$id_empleado_institucion;
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
+	}
+	
+	function actualizar_participante($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_empleado_institucion SET
+		 			id_lugar_trabajo=$id_lugar_trabajo, 
+		 			id_tipo_representacion=$id_tipo_representacion, 
+		 			id_tipo_inscripcion=$id_tipo_inscripcion, 
+		 			nombre_empleado='$nombre_empleado', 
+		 			dui_empleado='$dui_empleado', 
+		 			cargo_empleado='$cargo_empleado',
+					fecha_modificacion='$fecha_modificacion', 
+					id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_empleado_institucion=".$id_empleado_institucion;
+		$this->db->query($sentencia);
+	}
 }
 ?>
