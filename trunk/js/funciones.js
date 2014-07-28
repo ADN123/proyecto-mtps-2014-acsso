@@ -48,6 +48,9 @@ $(document).ready(function(){
 						case 'tel': /*telefono*/
 							patt2=/^[2|6|7]{1}[0-9]{3}[0-9]{4}$/i;
 							break;
+						case 'dui': /*dui*/
+							patt2=/^[0-9]{8}-[0-9]{1}$/i;
+							break;
 						case 'nit': /*nit*/
 							patt2=/^[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}$/i;
 							break;
@@ -145,6 +148,12 @@ $(document).ready(function(){
 				break;
 			case 12:
 				mensaje='Resultado en pantalla de una consulta';
+				break;
+			case 13:
+				mensaje='Formulario de ingreso de empleados participantes';
+				break;
+			case 14:
+				mensaje='Lista de empleados participantes';
 				break;
 		}
 		alerta("Ayuda", mensaje);
