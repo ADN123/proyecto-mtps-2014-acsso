@@ -16,7 +16,9 @@ $(document).ready(function(){
 	$("select").chosen({
 		'width': '100%',
 		'min-width': '100px',
-		'white-space': 'nowrap'
+		'white-space': 'nowrap',
+		no_results_text: "Sin resultados!",
+		max_selected_options: 2
 	});
 	
 	$("#formu").submit(function(){
@@ -36,7 +38,7 @@ $(document).ready(function(){
 				$(padr).removeClass('has-error');
 				
 				if(vreq=="true" || vreq=="TRUE" || vreq=="1") {
-					if(val=="") {
+					if(val=="" || val==null) {
 						$(padr).addClass('has-error');
 						band=false;
 					}

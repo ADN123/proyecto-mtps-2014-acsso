@@ -72,6 +72,20 @@
                             </div>
                             
                             <div class="form-group">
+                                <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <span class="asterisk">*</span></label>
+                                <div class="col-sm-7">
+                                    <select data-req="true" multiple class="form-control" name="id_empleado[]" id="id_empleado" data-placeholder="[Seleccione..]" >
+                                        <option value=""></option>
+                                        <?php
+                                            foreach($tecnico as $val) {
+                                                echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
                               	<label class="col-sm-3 control-label">Lugar</label>
                               	<div class="col-sm-7 control-label">
                                 	<div class="toggle toggle-default"></div>
@@ -156,6 +170,7 @@
 		$("#agregar-empleado").click(function(){
 			modal("Empleados por lugar de trabajo",base_url()+'index.php/acreditacion/mostrar_lugares_trabajo');
 		});
+		$("#id_empleado").bind("chosen:maxselected", function () { alerta_rapida("Error en la selección de técnicos", "Sólo puede seleccionar 2 técnicos como máximo", "danger")}); 
 		
 		var t=$('#empleados').DataTable();
 		$('#agregar_empleado').click(function() {

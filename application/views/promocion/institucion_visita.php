@@ -18,6 +18,7 @@
 	$("select").chosen({
 		'width': '100%',
 		'min-width': '100px',
-		'white-space': 'nowrap'
+		'white-space': 'nowrap',
+		no_results_text: "Sin resultados!"
 	});
 </script>
