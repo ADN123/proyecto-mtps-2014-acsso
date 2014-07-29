@@ -1,5 +1,5 @@
 <?php
-	$objeto='el <strong>empleado participante</strong>';
+	$objeto='la <strong>programación de capacitación</strong>';
 	switch($accion_transaccion) {
 		case 1: 
 			$accion_transaccion="guarda";
@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas programar una capacitación presiona <a href="'.base_url().'index.php/acreditacion/capacitacion" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas registrar la asistencia de una capacitación presiona <a href="'.base_url().'index.php/acreditacion/programa" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';
@@ -30,17 +30,18 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="tooltips ayuda" data-ayuda="13" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="15" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title">Datos del empleado</h3>
+        	<h3 class="panel-title">Datos de la capacitación</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
-        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_participantes" autocomplete="off">
+        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_lugar_trabajo" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">
                         <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
+                        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información de Empleados</a></li>
                     </ul>
                       
                     <div class="tab-content">
@@ -50,10 +51,38 @@
                       	</div>
                       
                   		<div class="tab-pane" id="ptab1">
+                        	<div class="form-group">
+                                <label for="fecha_visita" class="col-sm-3 control-label">Fecha <span class="asterisk">*</span></label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_visita" name="fecha_visita" value="<?php echo date('d/m/Y')?>" readonly >
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="hora_visita" class="col-sm-3 control-label">Hora <span class="asterisk">*</span></label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <div class="bootstrap-timepicker"><input data-req="true" id="timepicker" type="text" class="form-control" readonly /></div>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                              	<label class="col-sm-3 control-label">Lugar</label>
+                              	<div class="col-sm-7 control-label">
+                                	<div class="toggle toggle-default"></div>
+                                    <input style="display:none" type="checkbox" name="int" id="int" checked>
+                              	</div>
+                            </div>
+                            
                             <div class="form-group">
                                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
+                                    <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" disabled>
                                         <option value=""></option>
                                         <?php
                                             foreach($insticion_lugar_trabajo as $val) {
@@ -64,54 +93,19 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="id_tipo_representacion" class="col-sm-3 control-label">Representación <span class="asterisk">*</span></label>
-                                <div class="col-sm-4">
-                                    <select data-req="true" class="form-control" name="id_tipo_representacion" id="id_tipo_representacion" data-placeholder="[Seleccione..]" >
-                                        <option value=""></option>
-                                        <?php
-                                            foreach($tipo_representacion as $val) {
-                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="nombre_empleado" class="col-sm-3 control-label">Nombre <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <input type="text" name="nombre_empleado" id="nombre_empleado" class="form-control" data-req="true" data-tip="var" data-min="5" />
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="dui_empleado" class="col-sm-3 control-label">DUI <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <input type="text" name="dui_empleado" id="dui_empleado" class="form-control" data-req="true" data-tip="dui" placeholder="######## - #" maxlength="10"/>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="cargo_empleado" class="col-sm-3 control-label">Cargo <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <input type="text" name="cargo_empleado" id="cargo_empleado" class="form-control" data-req="true" data-tip="var" data-min="5" />
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="id_tipo_inscripcion" class="col-sm-3 control-label">Tipo de inscripción <span class="asterisk">*</span></label>
-                                <div class="col-sm-6">
-                                    <select data-req="true" class="form-control" name="id_tipo_inscripcion" id="id_tipo_inscripcion" data-placeholder="[Seleccione..]" >
-                                        <option value=""></option>
-                                        <?php
-                                            foreach($tipo_inscripcion as $val) {
-                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
+                        </div>
+                		<div class="tab-pane" id="ptab2">
+                                <a class="btn btn-default" id="agregar-empleado">Agregar Empleado</a>
+                                <table id="empleados" class="table table-hover mb30">
+                                    <thead>
+                                        <tr>
+                                            <th class="all">Nombre del empleado</th>
+                                            <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                         </div>
                    	</div><!-- tab-content -->
                     
@@ -129,16 +123,16 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
-        	<a href="#" class="tooltips ayuda" data-ayuda="14" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#" class="tooltips ayuda" data-ayuda="16" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title" id="titulo-tabla">Empleados registrados</h3>
+        	<h3 class="panel-title" id="titulo-tabla">Capacitaciones registradas</h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
           		<table class="table table-hover mb30">
             		<thead>
               			<tr>
-                            <th class="all">Nombre del empleado</th>
+                            <th class="all">Nombre lugar de trabajo</th>
                             <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
               			</tr>
             		</thead>
@@ -150,6 +144,38 @@
 </div>
 <script language="javascript" >
 	$(document).ready(function(){	
+		$('.toggle').toggles({
+			on: true,
+			text: {
+				on:"INTERNO",
+				off:"EXTERNO"
+			},
+			checkbox:$('#int')
+		});
+		
+		$("#agregar-empleado").click(function(){
+			modal("Empleados por lugar de trabajo",base_url()+'index.php/acreditacion/mostrar_lugares_trabajo');
+		});
+		
+		var t=$('#empleados').DataTable();
+		$('#agregar_empleado').click(function() {
+			t.row.add([
+				'.1',
+				'<input type="text">'
+			]).draw();
+		});
+		
+		$("#int").change(function(){
+			if(!$(this).is(':checked')) {
+				$("#id_lugar_trabajo").attr("disabled",false);
+				$("#id_lugar_trabajo").trigger("chosen:updated");
+			}
+			else {
+				$("#id_lugar_trabajo").val("");
+				$("#id_lugar_trabajo").attr("disabled",true);
+				$("#id_lugar_trabajo").trigger("chosen:updated");
+			}
+		});
 	  	$('#progressWizard').bootstrapWizard({
 			'nextSelector': '.next',
 			'previousSelector': '.previous',
@@ -172,13 +198,11 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
+		$('#fecha_visita').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
+		$('#timepicker').timepicker({defaultTIme: false});
 		$("#limpiar").click(function(){
-			$("#formu").load(base_url()+"index.php/acreditacion/participantes_recargado");
-			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/0');
-		});
-		$('#id_lugar_trabajo').change(function(){
-			id=$(this).val();
-			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
+			$("#formu").load(base_url()+"index.php/acreditacion/lugares_trabajo_recargado");
+			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/lugares_trabajo_empresa/0');
 		});
 	});
 </script>

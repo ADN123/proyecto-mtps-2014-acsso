@@ -181,5 +181,23 @@ class Acreditacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function capacitacion($accion_transaccion=NULL, $estado_transaccion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {		
+			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();	
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('acreditacion/capacitacion',$data,Dprogramar_capacitacion);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function mostrar_lugares_trabajo()
+	{
+	}
 }
 ?>

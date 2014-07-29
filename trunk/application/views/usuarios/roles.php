@@ -17,7 +17,6 @@
         <div class="panel-body">
             <button type="button" id="nuevo_rol" data-toggle="modal" data-target=".bs-example-modal-static2" class="btn btn-primary">Nuevo Rol</button>
             <br /><br />
-            <div class="table-responsive">
                 <table class="table">
                 <colgroup>
                     <col />
@@ -26,9 +25,9 @@
                 </colgroup>
                 <thead>
                   <tr>
-                    <th>Nombre del Rol</th>
-                    <th>Descripción de Rol</th>
-                    <th>Opción</th>
+                    <th class="all" >Nombre del Rol</th>
+                    <th class="desktop tablet-l" >Descripción de Rol</th>
+                    <th class="desktop tablet-l tablet-p" >Opción</th>
                   </tr>
                  </thead>
                  <tbody>
@@ -39,14 +38,13 @@
                     <td><?php echo ucwords($val['nombre_rol'])?></td>
                     <td><?php echo $val['descripcion_rol']?></td>
                     <td>
-                        <a href="" class="modificar_rol" title="Modificar Rol" data-toggle="modal" data-target=".bs-example-modal-static2" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_editar.png"/></a>
-                        <a href="" class="eliminar_rol" title="Eliminar Rol" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_borrar.png"/></a>
+                        <a href="" class="modificar_rol" onClick="editar(<?php echo $val['id_rol']?>);return false;" title="Modificar Rol" data-toggle="modal" data-target=".bs-example-modal-static2" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_editar.png"/></a>
+                        <a href="" class="eliminar_rol" onClick="eliminar(<?php echo $val['id_rol']?>);return false;" title="Eliminar Rol" data-id_rol="<?php echo $val['id_rol']?>" data-nombre_rol="<?php echo ucwords($val['nombre_rol'])?>"><img src="<?php echo base_url()?>img/rol_borrar.png"/></a>
                     </td>
                   </tr>
                 <?php } ?>
                 </tbody>
                 </table>
-            </div>
         </div>
     </div><!-- panel -->
 </div>
@@ -56,7 +54,7 @@
 			$("#titulo-ventana").html("Nuevo Rol");
 			$('#contenido-ventana').load(base_url()+'index.php/usuarios/datos_de_rol');
 		});
-		$(".modificar_rol").click(function(){
+		/*$(".modificar_rol").click(function(){
 			id=$(this).data("id_rol");
 			nom=$(this).data("nombre_rol");
 			$("#titulo-ventana").html("Modificar Rol - "+nom);
@@ -72,6 +70,19 @@
 					return false;
 				}
 			});
-		});
+		});*/
 	});
+	function editar(id){
+		$("#titulo-ventana").html("Modificar Rol");
+		$('#contenido-ventana').load(base_url()+'index.php/usuarios/datos_de_rol/'+id);
+	}
+	function eliminar(id){
+		alertify.confirm("Realmente desea eliminar este rol? Este cambio no lo podrá revertir.", function (e) {
+			if (e) {
+				$('#contenido-ventana').load(base_url()+'index.php/usuarios/eliminar_rol/'+id);
+			} else {
+				return false;
+			}
+		});
+	}
 </script>

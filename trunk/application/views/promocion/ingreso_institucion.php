@@ -141,23 +141,21 @@
         	<h3 class="panel-title" id="titulo-tabla">Establecimiento registrados</h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
-        	<div class="table-responsive">
           		<table class="table table-hover mb30">
             		<thead>
               			<tr>
-                            <th>Nombre establecimiento</th>
-                            <th style="width:100px">Acción</th>
+                            <th class="all">Nombre establecimiento</th>
+                            <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
               			</tr>
             		</thead>
             		<tbody>
                     	<?php
 							foreach($institucion as $val) {
-								echo '<tr><td>'.$val['nombre'].'</td><td><a href="#" class="edit-row" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" data-id="'.$val['id'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
+								echo '<tr><td>'.$val['nombre'].'</td><td><a href="#" onClick="editar('.$val['id'].');return false;" class="edit-row" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onClick="eliminar('.$val['id'].');return false;" class="delete-row" data-id="'.$val['id'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
 							}
 						?>
             		</tbody>
           		</table>
-          	</div><!-- table-responsive -->
         </div>
   	</div>
 </div>
@@ -188,7 +186,7 @@
 		$("#limpiar").click(function(){
 			$("#formu").load(base_url()+"index.php/promocion/general_recargado");
 		});
-		$(".edit-row").click(function(){
+		/*$(".edit-row").click(function(){
 			$("#formu").load(base_url()+"index.php/promocion/general_recargado/"+$(this).data("id"));
 			return false;
 		});
@@ -199,6 +197,17 @@
 			var url=base_url()+"index.php/promocion/eliminar_institucion/"+id;
 			confirmacion(titulo, mensaje, url);
 			return false;
-		});		
+		});*/		
 	});
+	function editar(id){
+		$("#formu").load(base_url()+"index.php/promocion/general_recargado/"+id);
+		return false;
+	};
+	function eliminar(id){
+		var titulo="Alerta";
+		var mensaje="Realmente desea eliminar este registro? No podrá revertir los cambios.";
+		var url=base_url()+"index.php/promocion/eliminar_institucion/"+id;
+		confirmacion(titulo, mensaje, url);
+		return false;
+	}	
 </script>
