@@ -165,18 +165,16 @@
         	<h3 class="panel-title" id="titulo-tabla">Lugares de trabajo registrados</h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
-        	<div class="table-responsive">
           		<table class="table table-hover mb30">
             		<thead>
               			<tr>
-                            <th>Nombre lugar de trabajo</th>
-                            <th style="width:100px">Acción</th>
+                            <th class="all">Nombre lugar de trabajo</th>
+                            <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
               			</tr>
             		</thead>
             		<tbody>
             		</tbody>
           		</table>
-          	</div><!-- table-responsive -->
         </div>
   	</div>
 </div>

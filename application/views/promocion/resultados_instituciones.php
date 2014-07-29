@@ -7,26 +7,23 @@ if($exportacion==3) {
 }
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<div class="table-responsive">
-    <table class="table">
+    <table class="display table responsive no-wrap" style="width: 100%;">
         <thead>
             <tr>
             	<?php
 					$css='';
 					if($exportacion==3) {
 						$css='background-color: #CCC;';
-				?>
-                	<th style="<?php echo $css;?>">FECHA DE PROMOCION</th>
-                <?php
 					}
 				?>
-                <th style="<?php echo $css;?>">UBICACION</th>
-                <th style="<?php echo $css;?>">LUGAR DE TRABAJO</th>
-                <th style="<?php echo $css;?> width:90px;">SECTOR</th>
-                <th style="<?php echo $css;?> width:30px;">H</th>
-                <th style="<?php echo $css;?> width:30px;">M</th>
-                <th style="<?php echo $css;?>width:30px;">S</th>
-                <th style="<?php echo $css;?>">TECNICO</th>
+               	<th class="desktop" style="<?php echo $css;?>">FECHA DE PROMOCION</th>
+                <th class="none" style="<?php echo $css;?>">UBICACION</th>
+                <th class="all" style="<?php echo $css;?>">LUGAR DE TRABAJO</th>
+                <th class="none" style="<?php echo $css;?>">SECTOR</th>
+                <th class="none" style="<?php echo $css;?>">HOMBRES</th>
+                <th class="none" style="<?php echo $css;?>">MUJERES</th>
+                <th class="none" style="<?php echo $css;?>">SINDICATO</th>
+                <th class="desktop" style="<?php echo $css;?>">TECNICO</th>
             </tr>
         </thead>
         <tbody>
@@ -37,10 +34,10 @@ if($exportacion==3) {
 					<?php
                         if($exportacion==3) {
                     ?>
-                        <td align="center"><?php echo ucwords($val['fecha'])?></td>
                     <?php
                         }
                     ?>
+                 	<td align="center"><?php echo ucwords($val['fecha'])?></td>
                 	<td align="left"><?php echo ucwords($val['ubicacion'])?></td>
                 	<td align="left"><?php echo $val['institucion']?></td>
                 	<td align="left"><?php echo $val['nombre_sector']?></td>
@@ -54,11 +51,11 @@ if($exportacion==3) {
             ?>
         </tbody>
     </table>
-</div><!-- table-responsive -->
 <?php if($exportacion==1) { ?>
 <script>
-	$('.table').dataTable({
-		"sPaginationType": "full_numbers"
+	$('.table').DataTable({
+		"sPaginationType": "simple",
+		responsive: true
 	});
 	$("select").chosen({
 		'width': '100%',

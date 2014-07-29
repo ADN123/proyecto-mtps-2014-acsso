@@ -5,7 +5,7 @@
 		<script type="text/javascript" language="javascript" src="<?php echo base_url()?>/datatable/media/js/jquery.dataTables.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
-				$('#tabla').dataTable();
+				$('#tabla').DataTable();
 			} );
 			
 

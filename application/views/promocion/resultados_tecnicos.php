@@ -7,14 +7,13 @@ if($exportacion==3) {
 }
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
-                <th>Sección</th>
-                <th>Ubicación</th>
-                <th>Técnico</th>
-                <th style="width:95px;">Total</th>
+                <th class="desktop tablet-l" >Sección</th>
+                <th class="desktop" >Ubicación</th>
+                <th class="all" >Técnico</th>
+                <th class="desktop tablet-l tablet-p"style="width:95px;">Total</th>
             </tr>
         </thead>
         <tbody>
@@ -32,11 +31,11 @@ if($exportacion==3) {
             ?>
         </tbody>
     </table>
-</div><!-- table-responsive -->
 <?php if($exportacion==1) { ?>
 <script>
-	$('.table').dataTable({
-		"sPaginationType": "full_numbers"
+	$('.table').DataTable({
+		"sPaginationType": "simple",
+		responsive: true
 	});
 	$("select").chosen({
 		'width': '100%',

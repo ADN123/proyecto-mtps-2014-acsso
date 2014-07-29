@@ -1,9 +1,17 @@
 var fecha_actual;
 var band=true;
 $(document).ready(function(){
-	$('.table').dataTable({
-		"sPaginationType": "full_numbers"
+	$('.table').DataTable({
+		"sPaginationType": "simple",
+		responsive: true
 	});
+	/*$('.table').DataTable({
+		"sPaginationType": "simple",
+		responsive: true,
+		"language":{
+			"url": base_url()+"js/de_ES.txt"
+		}
+	});*/
 	
 	$("select").chosen({
 		'width': '100%',
@@ -154,6 +162,12 @@ $(document).ready(function(){
 				break;
 			case 14:
 				mensaje='Lista de empleados participantes';
+				break;
+			case 15:
+				mensaje='Formulario de ingreso de capacitaciones';
+				break;
+			case 16:
+				mensaje='Lista de capacitaciones registradas';
 				break;
 		}
 		alerta("Ayuda", mensaje);

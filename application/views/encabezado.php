@@ -11,6 +11,7 @@
     
     <link href="<?php echo base_url();?>css/style.default.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/jquery.datatables.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>css/dataTables.responsive.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/fullcalendar.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/style.min.css" rel="stylesheet">
@@ -41,6 +42,7 @@
     <script src="<?php echo base_url();?>js/raphael-2.1.0.min.js"></script>
     
     <script src="<?php echo base_url();?>js/jquery.datatables.min.js"></script>
+    <script src="<?php echo base_url();?>js/dataTables.responsive.min.js"></script>
     <script src="<?php echo base_url();?>js/chosen.jquery.min.js"></script>
     
     <script src="<?php echo base_url();?>js/jquery.gritter.min.js"></script>
@@ -134,6 +136,34 @@
 			border-color: #a94442;
 			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 			box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		}
+		.table {
+			width: 100% !important;
+		}
+		.dataTables_paginate a {
+			color: #428bca;
+			text-decoration: none;
+			background: 0 0;
+		}
+		.dataTables_paginate .paginate_button {
+			float: left;
+			cursor: pointer;
+			padding: 6px 15px;
+			display: inline-block;
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			border-radius: 3px;
+			color: #666;
+		}
+		.dataTables_paginate .enabled {
+			color: #fff;
+			background: #428BCA;
+			border: 1px solid #357EBD;
+		}
+		.dataTables_paginate .disabled {
+			border: 1px solid #ccc;
+			background-color: #ddd;
+			color: #999;
 		}
 	</style>
 </head>
