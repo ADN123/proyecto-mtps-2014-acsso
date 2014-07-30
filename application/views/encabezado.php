@@ -165,6 +165,9 @@
 			background-color: #ddd;
 			color: #999;
 		}
+		.toggle-slide .toggle-blob {
+			z-index: 1;
+		}
 	</style>
 </head>
 
