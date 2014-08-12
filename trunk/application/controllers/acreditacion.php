@@ -210,7 +210,14 @@ class Acreditacion extends CI_Controller
 	
 	function mostrar_lugares_trabajo()
 	{
-		echo "HOLA";
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+			$this->load->view('acreditacion/mostrar_lugares_trabajo',$data);
+		}
+		else {
+			pantalla_error();
+		}
 	}
 }
 ?>
