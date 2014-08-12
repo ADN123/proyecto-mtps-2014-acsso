@@ -89,6 +89,12 @@
 		.leftpanel-collapsed .nav-bracket li a {
 			padding: 12.5px;
 		}
+		body {
+			background: #e4e7ea;
+		}
+		.sticky-leftpanel {
+			background: #1d2939;
+		}
 		.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
 		 	cursor: default !important; 
 		 	background-color: inherit !important; 
@@ -99,6 +105,15 @@
 			-moz-box-shadow: 0 3px 0 rgba(12,12,12,0.1);
 			-webkit-box-shadow: 0 3px 0 rgba(12,12,12,0.1);
 			box-shadow: 0 3px 0 rgba(12,12,12,0.1);
+		}
+		.dataTables_filter input {
+			padding: 5px;
+		}
+		.dataTables_length .chosen-container {
+			max-width: 100px !important;
+		}
+		.dataTables_length label {
+			min-width: 130px;
 		}
 		.table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
 			border-color: #ccc;
@@ -167,6 +182,18 @@
 		}
 		.toggle-slide .toggle-blob {
 			z-index: 1;
+		}
+		@media screen and (max-width: 640px) {
+			.dataTables_length {
+				display: none;
+			}
+			.dataTables_filter {
+				  float: none !important;
+				  padding: 10px 0 0 0px;
+				  margin: auto !important;
+				  display: inline-block;
+				  text-align: left !important;
+			}
 		}
 	</style>
 </head>

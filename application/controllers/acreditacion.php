@@ -219,5 +219,25 @@ class Acreditacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	/*
+	*	Nombre: empleados_lugar_trabajo_capacitacion
+	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 12/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function empleados_lugar_trabajo_capacitacion($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$data['empleados_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo);
+			$this->load->view('acreditacion/participantes_lugar_trabajo_capacitacion',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>

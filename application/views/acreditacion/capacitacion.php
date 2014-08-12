@@ -109,7 +109,7 @@
                             
                         </div>
                 		<div class="tab-pane" id="ptab2">
-                                <a class="btn btn-default" id="agregar-empleado">Agregar Empleado</a>
+                                <a class="btn btn-default" id="agregar-empleado" style="margin-bottom: 10px;">Agregar Empleado</a>
                                 <table id="empleados" class="table table-hover mb30">
                                     <thead>
                                         <tr>
