@@ -157,6 +157,14 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: eliminar_participante
+	*	Objetivo: Desactiva a un empleado que se había ingresado para que participara en una capacitación
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 15/07/2014
+	*	Observaciones: Ninguna.
+	*/
 	function eliminar_participante($id_empleado_institucion)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes);
@@ -182,6 +190,14 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: capacitacion
+	*	Objetivo: Formulario de ingreso de una capacitacion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 12/08/2014
+	*	Observaciones: Ninguna.
+	*/
 	function capacitacion($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
@@ -208,6 +224,14 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: capacitacion_recargado
+	*	Objetivo: Formulario de edidición de una capacitación 
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 12/08/2014
+	*	Observaciones: Ninguna.
+	*/
 	function capacitacion_recargado($id_capacitacion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
@@ -232,6 +256,14 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: mostrar_lugares_trabajo
+	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 12/08/2014
+	*	Observaciones: Ninguna.
+	*/
 	function mostrar_lugares_trabajo()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
@@ -246,7 +278,7 @@ class Acreditacion extends CI_Controller
 	
 	/*
 	*	Nombre: empleados_lugar_trabajo_capacitacion
-	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
+	*	Objetivo: Muestra todos los empleados de un lugar de trabajo de una institucion
 	*	Hecha por: Leonel
 	*	Modificada por: Leonel
 	*	Última Modificación: 12/08/2014
@@ -264,6 +296,14 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: participantes_recargado_capacitacion
+	*	Objetivo: Muestra los datos de un empleado para poder editarlos desde la pantalla de capacitaciones
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 12/08/2014
+	*	Observaciones: Ninguna.
+	*/
 	function participantes_recargado_capacitacion($id_empleado_institucion=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
@@ -276,6 +316,14 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: actualizar_empleado_capacitacion
+	*	Objetivo: Actualiza por medio de ajax el dui y cargo de un empleado desde la pantalla de capacitaciones
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 12/08/2014
+	*	Observaciones: Ninguna.
+	*/
 	function actualizar_empleado_capacitacion($id_empleado_institucion=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
@@ -309,6 +357,14 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	/*
+	*	Nombre: guardar_capacitacion
+	*	Objetivo: Guarda el formulario de capacitación
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 12/08/2014
+	*	Observaciones: Ninguna.
+	*/
 	function guardar_capacitacion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
