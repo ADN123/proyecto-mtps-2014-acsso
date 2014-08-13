@@ -284,5 +284,79 @@ class Acreditacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function guardar_capacitacion()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$id_capacitacion=$this->input->post('id_capacitacion');
+			
+			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
+			$fec=str_replace("/","-",$this->input->post('fecha_capacitacion'));
+			$fecha_capacitacion=date("Y-m-d", strtotime($fec));
+			$hora_capacitacion=$this->input->post('hora_capacitacion');
+			
+			$id_empleado_institucion=$this->input->post('id_empleado_institucion');
+			$id_empleado=$this->input->post('id_empleado');
+			
+			if($id_capacitacion=="") {
+				$fecha_creacion=date('Y-m-d H:i:s');
+				$id_usuario_crea=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_capacitacion'=>$fecha_capacitacion,
+					'hora_capacitacion'=>$hora_capacitacion,
+					'fecha_creacion'=>$fecha_creacion,
+					'id_usuario_crea'=>$id_usuario_crea,
+				);
+				$id_capacitacion=$this->acreditacion_model->guardar_capacitacion($formuInfo);
+				$tipo=1;
+			}
+			else {
+				$fecha_modificacion=date('Y-m-d H:i:s');
+				$id_usuario_modifica=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_capacitacion'=>$id_capacitacion,
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_capacitacion'=>$fecha_capacitacion,
+					'hora_capacitacion'=>$hora_capacitacion,
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica,
+				);
+				$this->acreditacion_model->actualizar_capacitacion($formuInfo);
+				$tipo=2;
+			}
+			
+			$this->acreditacion_model->eliminar_empleados_capacitacion($id_capacitacion);
+			$this->acreditacion_model->eliminar_tecnicos_capacitacion($id_capacitacion);
+			
+			for($i=0;$i<count($id_empleado_institucion);$i++) {
+				$formuInfo = array(
+					'id_capacitacion'=>$id_capacitacion,
+					'id_empleado_institucion'=>$id_empleado_institucion[$i]
+				);
+				$this->acreditacion_model->agregar_empleados_capacitacion($formuInfo);
+			}
+			
+			for($i=0;$i<count($id_empleado);$i++) {
+				$formuInfo = array(
+					'id_capacitacion'=>$id_capacitacion,
+					'id_empleado'=>$id_empleado[$i]
+				);
+				$this->acreditacion_model->agregar_tecnicos_capacitacion($formuInfo);
+			}
+			
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/acreditacion/capacitacion/".$tipo."/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>
