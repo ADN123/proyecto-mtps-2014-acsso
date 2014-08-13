@@ -204,14 +204,18 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
 				case 3:
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();	
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones();
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
-					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	{
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
-					else
+					}
+					else {
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+					}
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion']);
 					break;
 			}	
 			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
@@ -248,6 +252,8 @@ class Acreditacion extends CI_Controller
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}	
+			if($id_capacitacion!=NULL)
+				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
 			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
 			$this->load->view('acreditacion/capacitacion_recargado',$data);
 		}
@@ -433,6 +439,39 @@ class Acreditacion extends CI_Controller
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/acreditacion/capacitacion/".$tipo."/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: eliminar_capacitacion
+	*	Objetivo: elimina una capacitación
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 13/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function eliminar_capacitacion($id_capacitacion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		if($data['id_permiso']==3){
+			$this->db->trans_start();
+			
+			$fecha_modificacion=date('Y-m-d H:i:s');
+			$id_usuario_modifica=$this->session->userdata('id_usuario');
+			
+			$formuInfo = array(
+				'id_capacitacion'=>$id_capacitacion,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica,
+			);
+			$this->acreditacion_model->eliminar_capacitacion($formuInfo);
+			
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/acreditacion/capacitacion/3/".$tr);
 		}
 		else {
 			pantalla_error();
