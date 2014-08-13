@@ -151,11 +151,17 @@
           		<table class="table table-hover mb30">
             		<thead>
               			<tr>
-                            <th class="all">Nombre lugar de trabajo</th>
+                            <th class="all">Fecha</th>
+                            <th class="desktop">Lugar</th>
                             <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
               			</tr>
             		</thead>
             		<tbody>
+                    	<?php
+							foreach($capacitaciones as $val) {
+								echo '<tr><td>'.$val['fecha'].'</td><td>'.$val['lugar'].'</td><td><a href="#" class="edit-row" onClick="editar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" onClick="eliminar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
+							}
+						?>
             		</tbody>
           		</table>
         </div>
@@ -220,6 +226,17 @@
 			$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado");
 		});
 	});
+	function editar(id){
+		$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado/"+id);
+		return false;
+	};
+	function eliminar(id){
+		var titulo="Alerta";
+		var mensaje="Realmente desea eliminar este registro? No podrá revertir los cambios.";
+		var url=base_url()+"index.php/acreditacion/eliminar_capacitacion/"+id;
+		confirmacion(titulo, mensaje, url);
+		return false;
+	}	
 	function quitar_empleado(id,e){
 		var padre=e.parentNode.parentNode;
 		padre.className="quitar";

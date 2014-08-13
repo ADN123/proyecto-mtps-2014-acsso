@@ -31,7 +31,7 @@
                 <label for="hora_visita" class="col-sm-3 control-label">Hora <span class="asterisk">*</span></label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <div class="bootstrap-timepicker"><input data-req="true" id="timepicker" type="text" name="hora_capacitacion" class="form-control" readonly /></div>
+                        <div class="bootstrap-timepicker"><input data-req="true" id="timepicker" type="text" name="hora_capacitacion" class="form-control" readonly  value="<?php echo $capacitacion[0]['hora_capacitacion']?>" /></div>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                     </div>
                 </div>

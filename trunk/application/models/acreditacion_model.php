@@ -174,5 +174,53 @@ class Acreditacion_model extends CI_Model {
 					($id_capacitacion, $id_empleado)";
 		$this->db->query($sentencia);
 	}
+	
+	function mostrar_capacitaciones($id_seccion=NULL)
+	{
+		$where="";
+		if($id_seccion!=NULL) {
+			
+		}
+		$sentencia="SELECT
+					id_capacitacion AS id,
+					DATE_FORMAT(fecha_capacitacion,'%d/%m/%Y') AS fecha,
+					CASE 
+						WHEN sac_capacitacion.id_lugar_trabajo IS NOT NULL THEN CONCAT_WS(' - ',nombre_institucion, nombre_lugar) 
+						WHEN sac_capacitacion.id_lugar_trabajo IS NULL THEN 'MTPS' 
+					END AS lugar
+					FROM
+					sac_capacitacion
+					LEFT JOIN sac_lugar_trabajo ON sac_capacitacion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					LEFT JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function eliminar_capacitacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="DELETE FROM sac_capacitacion WHERE id_capacitacion='$id_capacitacion'";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function ver_capacitacion($id_capacitacion) 
+	{
+		$sentencia="SELECT
+					sac_capacitador.id_capacitacion,
+					id_lugar_trabajo,
+					DATE_FORMAT(fecha_capacitacion,'%d/%m/%Y') AS fecha_capacitacion,
+					DATE_FORMAT(hora_capacitacion,'%h:%i %p') AS hora_capacitacion,
+					id_empleado,
+					id_empleado_institucion
+					FROM
+					sac_capacitacion
+					INNER JOIN sac_capacitador ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
+					INNER JOIN sac_asistencia ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+					WHERE sac_capacitador.id_capacitacion=".$id_capacitacion;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 }
 ?>
