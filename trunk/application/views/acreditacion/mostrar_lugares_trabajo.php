@@ -1,4 +1,4 @@
-<form class="form-horizontal">
+<form id="form_emp" class="form-horizontal">
     <div class="form-group">
         <label for="id_lugar_trabajo_2" class="col-sm-3 control-label">Lugar de trabajo</label>
         <div class="col-sm-9">
@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th class="all">Empleado</th>
-                        <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
+                        <th class="desktop tablet-l tablet-p" style="width: 90px">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,16 +26,41 @@
             </table>
      	</div>
     </div>
+	<div class="modal-footer">
+        <button type="button" id="myModalCancel" class="btn btn-success" data-dismiss="modal">Agregar</button>
+	</div>
 </form>
 <script>
 	$(document).ready(function(){
 		$('#id_lugar_trabajo_2').change(function(){
 			id=$(this).val();
+			if(id=="")
+				id=0;
 			$('#cont-empleado').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo_capacitacion/'+id);
 		});
 		$('.table2').DataTable({
 			"sPaginationType": "simple",
 			responsive: true
+		});
+		var t=$('#empleados').DataTable();
+		$("#myModalCancel").click(function(){
+			$('.fila').each(function(indice, elemento) {
+				var $fil=$(this).parent("tr"); 
+				var $chk=$fil.find("input");
+				if($chk.attr('checked')=="checked"){
+					var id=$(this).data("id");
+					var nom=$(this).html();
+					if(emp[id]==1) {
+					}
+					else {
+						emp[id]=1;
+						t.row.add([
+							nom+'<input type="hidden" name="id_empleado_institucion[]" value="'+id+'">',
+							'<a href="#" class="edit-row" onClick="editar_empleado('+id+');return false;" data-id="'+id+'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" onClick="quitar_empleado('+id+',this);return false;" data-id="'+id+'"><i class="fa fa-trash-o"></i></a>'
+						]).draw();
+					}
+				}
+			});
 		});
 		$("select").chosen({
 			'width': '100%',

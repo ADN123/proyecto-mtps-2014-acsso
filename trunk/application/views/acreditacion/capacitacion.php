@@ -157,6 +157,7 @@
   	</div>
 </div>
 <script language="javascript" >
+	var emp = new Array()
 	$(document).ready(function(){	
 		$('.toggle').toggles({
 			on: true,
@@ -171,14 +172,6 @@
 			modal("Empleados por lugar de trabajo",base_url()+'index.php/acreditacion/mostrar_lugares_trabajo');
 		});
 		$("#id_empleado").bind("chosen:maxselected", function () { alerta_rapida("Error en la selección de técnicos", "Sólo puede seleccionar 2 técnicos como máximo", "danger")}); 
-		
-		var t=$('#empleados').DataTable();
-		$('#agregar_empleado').click(function() {
-			t.row.add([
-				'.1',
-				'<input type="text">'
-			]).draw();
-		});
 		
 		$("#int").change(function(){
 			if(!$(this).is(':checked')) {
@@ -216,8 +209,21 @@
 		$('#fecha_visita').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
 		$('#timepicker').timepicker({defaultTIme: false});
 		$("#limpiar").click(function(){
+			emp.length=0;
 			$("#formu").load(base_url()+"index.php/acreditacion/lugares_trabajo_recargado");
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/lugares_trabajo_empresa/0');
 		});
 	});
+	function quitar_empleado(id,e){
+		var padre=e.parentNode.parentNode;
+		padre.className="quitar";
+		emp[id]=0;
+		var t=$('#empleados').DataTable();
+		t.row('.quitar').remove().draw( false );
+		return false;
+	}
+	function editar_empleado(id){
+		modal("Editar empleado",base_url()+'index.php/acreditacion/participantes_recargado_capacitacion/'+id);
+		return false;
+	}
 </script>

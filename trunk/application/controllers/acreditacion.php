@@ -239,5 +239,17 @@ class Acreditacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function participantes_recargado_capacitacion($id_empleado_institucion=NULL) 
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$data['empleado_institucion']=$this->acreditacion_model->empleado_institucion($id_empleado_institucion);			
+			$this->load->view('acreditacion/participantes_recargado_capacitacion',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>
