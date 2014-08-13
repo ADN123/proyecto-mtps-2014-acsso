@@ -208,6 +208,30 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
+	function capacitacion_recargado($id_capacitacion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			switch($data['id_permiso']) {
+				case 3:
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();	
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+					break;
+			}	
+			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+			$this->load->view('acreditacion/capacitacion_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
 	function mostrar_lugares_trabajo()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 

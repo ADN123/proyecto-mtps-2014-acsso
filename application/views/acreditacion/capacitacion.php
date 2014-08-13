@@ -213,12 +213,11 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
-		$('#fecha_visita').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
+		$('#fecha_capacitacion').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
 		$('#timepicker').timepicker({defaultTIme: false});
 		$("#limpiar").click(function(){
 			emp.length=0;
-			$("#formu").load(base_url()+"index.php/acreditacion/lugares_trabajo_recargado");
-			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/lugares_trabajo_empresa/0');
+			$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado");
 		});
 	});
 	function quitar_empleado(id,e){
