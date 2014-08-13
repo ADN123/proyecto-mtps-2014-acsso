@@ -18,7 +18,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas registrar la asistencia de una capacitación presiona <a href="'.base_url().'index.php/acreditacion/programa" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas registrar la asistencia de una capacitación presiona <a href="'.base_url().'index.php/acreditacion/asistencia" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';
@@ -41,7 +41,7 @@
         	<h3 class="panel-title">Datos de la capacitación</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
-        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_lugar_trabajo" autocomplete="off">
+        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_capacitacion" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">
@@ -60,7 +60,7 @@
                                 <label for="fecha_visita" class="col-sm-3 control-label">Fecha <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_visita" name="fecha_visita" value="<?php echo date('d/m/Y')?>" readonly >
+                                        <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_capacitacion" name="fecha_capacitacion" value="<?php echo date('d/m/Y')?>" readonly >
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                 <label for="hora_visita" class="col-sm-3 control-label">Hora <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <div class="bootstrap-timepicker"><input data-req="true" id="timepicker" type="text" class="form-control" readonly /></div>
+                                        <div class="bootstrap-timepicker"><input data-req="true" id="timepicker" type="text" name="hora_capacitacion" class="form-control" readonly /></div>
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" disabled>
+                                    <select data-req="false" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" disabled>
                                         <option value=""></option>
                                         <?php
                                             foreach($insticion_lugar_trabajo as $val) {
@@ -181,11 +181,13 @@
 		$("#int").change(function(){
 			if(!$(this).is(':checked')) {
 				$("#id_lugar_trabajo").attr("disabled",false);
+				$("#id_lugar_trabajo").data("req",true);
 				$("#id_lugar_trabajo").trigger("chosen:updated");
 			}
 			else {
 				$("#id_lugar_trabajo").val("");
 				$("#id_lugar_trabajo").attr("disabled",true);
+				$("#id_lugar_trabajo").data("req",false);
 				$("#id_lugar_trabajo").trigger("chosen:updated");
 			}
 		});

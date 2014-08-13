@@ -123,5 +123,56 @@ class Acreditacion_model extends CI_Model {
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$this->db->query($sentencia);
 	}
+	
+	function guardar_capacitacion($formuInfo) 
+	{
+		extract($formuInfo);
+		if($id_lugar_trabajo!="")
+			$sentencia="INSERT INTO sac_capacitacion
+						(id_lugar_trabajo, fecha_capacitacion, hora_capacitacion, id_usuario_crea, fecha_creacion) 
+						VALUES 
+						('$id_lugar_trabajo', '$fecha_capacitacion', '$hora_capacitacion', '$id_usuario_crea', '$fecha_creacion')";
+		else
+			$sentencia="INSERT INTO sac_capacitacion
+						(fecha_capacitacion, hora_capacitacion, id_usuario_crea, fecha_creacion) 
+						VALUES 
+						('$fecha_capacitacion', '$hora_capacitacion', '$id_usuario_crea', '$fecha_creacion')";
+		$this->db->query($sentencia);
+		return $this->db->insert_id();
+	}
+	
+	function eliminar_empleados_capacitacion($id_capacitacion)
+	{
+		$sentencia="DELETE FROM sac_asistencia WHERE id_capacitacion='$id_capacitacion'";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function eliminar_tecnicos_capacitacion($id_capacitacion)
+	{
+		$sentencia="DELETE FROM sac_capacitador WHERE id_capacitacion='$id_capacitacion'";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function agregar_empleados_capacitacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="INSERT INTO sac_asistencia
+					(id_capacitacion, id_empleado_institucion) 
+					VALUES 
+					($id_capacitacion, $id_empleado_institucion)";
+		$this->db->query($sentencia);
+	}
+	
+	function agregar_tecnicos_capacitacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="INSERT INTO sac_capacitador
+					(id_capacitacion, id_empleado) 
+					VALUES 
+					($id_capacitacion, $id_empleado)";
+		$this->db->query($sentencia);
+	}
 }
 ?>
