@@ -36,7 +36,11 @@
 			id=$(this).val();
 			if(id=="")
 				id=0;
-			$('#cont-empleado').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo_capacitacion/'+id);
+			var empleados="";
+			$("[name='id_empleado_institucion[]']").each(function(index, element) {
+                empleados=empleados+$(this).val()+"-";
+            });
+			$('#cont-empleado').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo_capacitacion/'+id+'/'+empleados);
 		});
 		$('.table2').DataTable({
 			"sPaginationType": "simple",
