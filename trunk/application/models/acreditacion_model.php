@@ -56,11 +56,17 @@ class Acreditacion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
-	function empleados_lugar_trabajo($id_lugar_trabajo=NULL)
+	function empleados_lugar_trabajo($id_lugar_trabajo=NULL, $empleados="")
 	{
 		$where="";
 		if($id_lugar_trabajo!=NULL)
 			$where=" AND id_lugar_trabajo=".$id_lugar_trabajo;
+		if($empleados!="") {
+			$emp=explode("-",$empleados);
+			for($i=0;$i<(count($emp)-1);$i++) {
+				$where.=" AND id_empleado_institucion <> ".$emp[$i];
+			}
+		}
 		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
 		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
 		$query=$this->db->query($sentencia);
@@ -98,6 +104,18 @@ class Acreditacion_model extends CI_Model {
 		 			id_tipo_representacion=$id_tipo_representacion, 
 		 			id_tipo_inscripcion=$id_tipo_inscripcion, 
 		 			nombre_empleado='$nombre_empleado', 
+		 			dui_empleado='$dui_empleado', 
+		 			cargo_empleado='$cargo_empleado',
+					fecha_modificacion='$fecha_modificacion', 
+					id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_empleado_institucion=".$id_empleado_institucion;
+		$this->db->query($sentencia);
+	}
+	
+	function actualizar_participante_capacitacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_empleado_institucion SET
 		 			dui_empleado='$dui_empleado', 
 		 			cargo_empleado='$cargo_empleado',
 					fecha_modificacion='$fecha_modificacion', 

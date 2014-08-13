@@ -228,11 +228,11 @@ class Acreditacion extends CI_Controller
 	*	Última Modificación: 12/08/2014
 	*	Observaciones: Ninguna.
 	*/
-	function empleados_lugar_trabajo_capacitacion($id_lugar_trabajo=NULL)
+	function empleados_lugar_trabajo_capacitacion($id_lugar_trabajo=NULL,$empleados="")
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
-			$data['empleados_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo);
+			$data['empleados_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,$empleados);
 			$this->load->view('acreditacion/participantes_lugar_trabajo_capacitacion',$data);
 		}
 		else {
@@ -246,6 +246,39 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$data['empleado_institucion']=$this->acreditacion_model->empleado_institucion($id_empleado_institucion);			
 			$this->load->view('acreditacion/participantes_recargado_capacitacion',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function actualizar_empleado_capacitacion($id_empleado_institucion=NULL) 
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+
+			$dui_empleado=$this->input->post('dui_empleado');
+			$cargo_empleado=$this->input->post('cargo_empleado');
+			
+			$fecha_modificacion=date('Y-m-d H:i:s');
+			$id_usuario_modifica=$this->session->userdata('id_usuario');
+			
+			$formuInfo = array(
+				'id_empleado_institucion'=>$id_empleado_institucion,
+				'dui_empleado'=>$dui_empleado,
+				'cargo_empleado'=>$cargo_empleado,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica,
+			);
+			$this->acreditacion_model->actualizar_participante_capacitacion($formuInfo);
+			
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			$json =array(
+				'resultado'=>$tr
+			);
+			echo json_encode($json);
 		}
 		else {
 			pantalla_error();

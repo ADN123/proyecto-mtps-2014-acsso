@@ -1,3 +1,8 @@
+<style>
+	.modal-body {
+		padding-bottom: 0px;
+	}
+</style>
 <?php
 	$objeto='la <strong>programación de capacitación</strong>';
 	switch($accion_transaccion) {
