@@ -21,7 +21,7 @@
                 <label for="fecha_visita" class="col-sm-3 control-label">Fecha <span class="asterisk">*</span></label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_capacitacion" name="fecha_capacitacion" value="<?php echo date('d/m/Y')?>" readonly >
+                        <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_capacitacion" name="fecha_capacitacion" value="<?php if($capacitacion[0]['fecha_capacitacion']!="")echo $capacitacion[0]['fecha_capacitacion']; else echo date('d/m/Y')?>" readonly >
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div>
@@ -84,6 +84,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                    	<?php
+                            foreach($insticion_lugar_trabajo as $val) {
+                                echo '<tr><td></td><td></td></tr>';
+                            }
+                        ?>
                     </tbody>
                 </table>
         </div>

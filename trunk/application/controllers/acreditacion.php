@@ -383,6 +383,7 @@ class Acreditacion extends CI_Controller
 			$fec=str_replace("/","-",$this->input->post('fecha_capacitacion'));
 			$fecha_capacitacion=date("Y-m-d", strtotime($fec));
 			$hora_capacitacion=$this->input->post('hora_capacitacion');
+			$hora_capacitacion=date("H:i:s", strtotime($hora_capacitacion));
 			
 			$id_empleado_institucion=$this->input->post('id_empleado_institucion');
 			$id_empleado=$this->input->post('id_empleado');
