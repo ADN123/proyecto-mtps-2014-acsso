@@ -208,15 +208,17 @@ class Acreditacion_model extends CI_Model {
 	{
 		$sentencia="SELECT
 					sac_capacitador.id_capacitacion,
-					id_lugar_trabajo,
+					sac_capacitacion.id_lugar_trabajo,
 					DATE_FORMAT(fecha_capacitacion,'%d/%m/%Y') AS fecha_capacitacion,
 					DATE_FORMAT(hora_capacitacion,'%h:%i %p') AS hora_capacitacion,
-					id_empleado,
-					id_empleado_institucion
+					sac_capacitador.id_empleado,
+					sac_empleado_institucion.id_empleado_institucion,
+					sac_empleado_institucion.nombre_empleado
 					FROM
 					sac_capacitacion
 					INNER JOIN sac_capacitador ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
 					INNER JOIN sac_asistencia ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+					INNER JOIN sac_empleado_institucion ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
 					WHERE sac_capacitador.id_capacitacion=".$id_capacitacion;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
