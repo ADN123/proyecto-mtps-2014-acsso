@@ -206,9 +206,13 @@ class Acreditacion extends CI_Controller
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones();
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
+					
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	{
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
 					}
@@ -218,7 +222,8 @@ class Acreditacion extends CI_Controller
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion']);
 					break;
 			}	
-			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+			
+			
 			$data['estado_transaccion']=$estado_transaccion;
 			$data['accion_transaccion']=$accion_transaccion;
 			pantalla('acreditacion/capacitacion',$data,Dprogramar_capacitacion);
@@ -243,20 +248,22 @@ class Acreditacion extends CI_Controller
 			switch($data['id_permiso']) {
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();	
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion);
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
 					else
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
 					break;
 			}	
 			if($id_capacitacion!=NULL) {
 				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
 				$data['id_capacitacion']=$id_capacitacion;
 			}
-			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
 			$this->load->view('acreditacion/capacitacion_recargado',$data);
 		}
 		else {
