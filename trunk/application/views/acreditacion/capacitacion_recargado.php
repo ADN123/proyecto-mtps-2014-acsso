@@ -62,11 +62,14 @@
             <div class="form-group">
                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
                 <div class="col-sm-7">
-                    <select data-req="false" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" disabled>
+                    <select data-req="<?php if($capacitacion[0]['id_lugar_trabajo']!="") echo 'true'; else echo 'false';?>" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($capacitacion[0]['id_lugar_trabajo']=="") echo 'disabled';?>>
                         <option value=""></option>
                         <?php
                             foreach($insticion_lugar_trabajo as $val) {
-                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+								if($capacitacion[0]['id_lugar_trabajo']==$val['id'])
+                                	echo '<option value="'.$val['id'].'" selected="selected">'.$val['nombre'].'</option>';
+								else
+                                	echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
                             }
                         ?>
                     </select>
@@ -85,9 +88,17 @@
                     </thead>
                     <tbody>
                     	<?php
-                            foreach($insticion_lugar_trabajo as $val) {
-                                echo '<tr><td></td><td></td></tr>';
-                            }
+                            foreach($capacitacion as $val) {
+                                $id=$val['id_empleado_institucion'];
+                            	$ids[$id]=1;
+							}
+                            foreach($capacitacion as $val) {
+                                $id=$val['id_empleado_institucion'];
+								if($ids[$id]==1) {
+                                	echo '<tr><td>'.$val['nombre_empleado'].'<input type="hidden" name="id_empleado_institucion[]" value="'.$val['id_empleado_institucion'].'"></td><td><a href="#" class="edit-row" onClick="editar_empleado('.$val['id_empleado_institucion'].');return false;" data-id="'.$val['id_empleado_institucion'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" onClick="quitar_empleado('.$val['id_empleado_institucion'].',this);return false;" data-id="'.$val['id_empleado_institucion'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
+									$ids[$id]=0;
+								}
+							}
                         ?>
                     </tbody>
                 </table>
@@ -104,7 +115,7 @@
 	var emp = new Array()
 	$(document).ready(function(){	
 		$('.toggle').toggles({
-			on: true,
+			on:  <?php if($capacitacion[0]['id_lugar_trabajo']=="") echo 'true'; else echo 'false';?>,
 			text: {
 				on:"INTERNO",
 				off:"EXTERNO"
