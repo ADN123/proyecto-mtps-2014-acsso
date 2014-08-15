@@ -4,7 +4,13 @@
 	}
 </style>
 <div id="progressWizard" class="basic-wizard">
-    
+    <?php
+        if(isset($capacitacion[0]['id_capacitacion']) && $capacitacion[0]['id_capacitacion']=!"") {
+    ?>
+            <input type="hidden" name="id_capacitacion" id="id_capacitacion" class="form-control"  value="<?php echo $id_capacitacion ?>" />
+    <?php
+        }
+    ?>
     <ul class="nav nav-pills nav-justified">
         <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
         <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información de Empleados</a></li>
@@ -43,8 +49,16 @@
                     <select data-req="true" multiple class="form-control" name="id_empleado[]" id="id_empleado" data-placeholder="[Seleccione..]" >
                         <option value=""></option>
                         <?php
+                            foreach($capacitacion as $val) {
+                                $id=$val['id_empleado_institucion'];
+                            	$ids[$id]=1;
+								$ide[]=$val['id_empleado'];
+							}
                             foreach($tecnico as $val) {
-                                echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+								if(in_array($val['id'],$ide))
+                                	echo '<option value="'.$val['id'].'" selected="selected">'.ucwords($val['nombre']).'</option>';
+								else
+                                	echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
                             }
                         ?>
                     </select>
@@ -90,10 +104,6 @@
                     	<?php
                             foreach($capacitacion as $val) {
                                 $id=$val['id_empleado_institucion'];
-                            	$ids[$id]=1;
-							}
-                            foreach($capacitacion as $val) {
-                                $id=$val['id_empleado_institucion'];
 								if($ids[$id]==1) {
                                 	echo '<tr><td>'.$val['nombre_empleado'].'<input type="hidden" name="id_empleado_institucion[]" value="'.$val['id_empleado_institucion'].'"></td><td><a href="#" class="edit-row" onClick="editar_empleado('.$val['id_empleado_institucion'].');return false;" data-id="'.$val['id_empleado_institucion'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" onClick="quitar_empleado('.$val['id_empleado_institucion'].',this);return false;" data-id="'.$val['id_empleado_institucion'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
 									$ids[$id]=0;
@@ -106,7 +116,18 @@
     </div><!-- tab-content -->
     
     <ul class="pager wizard">
-        <li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+    	<?php
+			if(isset($capacitacion[0]['id_capacitacion']) && $capacitacion[0]['id_capacitacion']=!"") {
+		?>
+				<li><button class="btn btn-primary" type="submit" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
+        <?php
+			}
+			else {
+		?>
+        		<li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+		<?php
+			}
+		?>
         <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
     
     </ul>

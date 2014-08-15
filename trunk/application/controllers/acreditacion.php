@@ -252,8 +252,10 @@ class Acreditacion extends CI_Controller
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}	
-			if($id_capacitacion!=NULL)
+			if($id_capacitacion!=NULL) {
 				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
+				$data['id_capacitacion']=$id_capacitacion;
+			}
 			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
 			$this->load->view('acreditacion/capacitacion_recargado',$data);
 		}
