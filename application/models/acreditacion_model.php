@@ -224,5 +224,17 @@ class Acreditacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function actualizar_capacitacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_capacitacion SET
+		 			id_lugar_trabajo='$id_lugar_trabajo', 
+		 			fecha_capacitacion='$fecha_capacitacion',
+		 			hora_capacitacion='$hora_capacitacion',
+					fecha_modificacion='$fecha_modificacion', 
+					id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_capacitacion=".$id_capacitacion;
+		$this->db->query($sentencia);
+	}
 }
 ?>
