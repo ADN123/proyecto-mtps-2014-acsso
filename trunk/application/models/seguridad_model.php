@@ -42,10 +42,21 @@ class Seguridad_model extends CI_Model {
 	}
 	
 	function consultar_usuario($login,$clave)
-	{
-		$sentencia="SELECT id_usuario, usuario, nombre_completo, NR , id_seccion, sexo
+	{	
+		$sentencia="SELECT 
+					org_usuario.id_usuario, 
+					org_usuario.usuario, 
+					org_usuario.nombre_completo, 
+					org_usuario.NR , 
+					org_usuario.id_seccion, 
+					org_usuario.sexo
 					FROM org_usuario
-					WHERE usuario='$login' AND password=MD5('$clave') AND estado=1";
+					INNER JOIN org_usuario_rol ON org_usuario_rol.id_usuario = org_usuario.id_usuario
+					INNER JOIN org_rol ON org_rol.id_rol = org_usuario_rol.id_rol
+					INNER JOIN org_rol_modulo_permiso ON org_rol_modulo_permiso.id_rol = org_rol.id_rol
+					INNER JOIN org_modulo ON org_rol_modulo_permiso.id_modulo = org_modulo.id_modulo
+					WHERE org_usuario.usuario='$login' AND org_usuario.password=MD5('$clave') AND org_usuario.estado=1 AND org_modulo.id_sistema=7
+					LIMIT 0,1";
 		$query=$this->db->query($sentencia);
 	
 		if($query->num_rows>0) {
