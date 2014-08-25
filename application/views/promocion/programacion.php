@@ -191,7 +191,7 @@ include(base_url."index.php/promocion/calendario_dia");
 						}
 					},
 					error:function(data) {
-						alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
+						/*alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');*/
 					}
 				});			
 			return false;
