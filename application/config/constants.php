@@ -57,6 +57,9 @@ define('Dcontrol_usuario', 						106);
 define('Dlugares_trabajo', 						107);
 define('Dparticipantes', 						108);
 define('Dasignaciones', 						109);
+define('Dregistrar_comite', 					110);
+define('Daprobar_comite', 						111);
+define('Dimprimir_acreditacion',				112);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

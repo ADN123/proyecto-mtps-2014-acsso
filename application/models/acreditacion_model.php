@@ -134,7 +134,7 @@ class Acreditacion_model extends CI_Model {
 			$sentencia="INSERT INTO sac_capacitacion
 						(id_lugar_trabajo, fecha_capacitacion, hora_capacitacion, id_usuario_crea, fecha_creacion) 
 						VALUES 
-						('$id_lugar_trabajo', '$fecha_capacitacion', '$hora_capacitacion', '$id_usuario_crea', '$fecha_creacion')";
+						($id_lugar_trabajo, '$fecha_capacitacion', '$hora_capacitacion', '$id_usuario_crea', '$fecha_creacion')";
 		else
 			$sentencia="INSERT INTO sac_capacitacion
 						(fecha_capacitacion, hora_capacitacion, id_usuario_crea, fecha_creacion) 
@@ -178,11 +178,14 @@ class Acreditacion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
-	function mostrar_capacitaciones($id_seccion=NULL)
+	function mostrar_capacitaciones($id_seccion=NULL,$todas=NULL)
 	{
 		$where="";
 		if($id_seccion!=NULL) {
 			
+		}
+		if($todas!=NULL) {
+			$where.=" AND estado_capacitacion=".$todas." AND fecha_capacitacion<='".date('Y-m-d')."'";
 		}
 		$sentencia="SELECT
 					id_capacitacion AS id,
@@ -194,7 +197,7 @@ class Acreditacion_model extends CI_Model {
 					FROM
 					sac_capacitacion
 					LEFT JOIN sac_lugar_trabajo ON sac_capacitacion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
-					LEFT JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion ".$where;
+					LEFT JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion WHERE TRUE ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -229,15 +232,59 @@ class Acreditacion_model extends CI_Model {
 	
 	function actualizar_capacitacion($formuInfo)
 	{
+		
 		extract($formuInfo);
 		$sentencia="UPDATE sac_capacitacion SET
-		 			id_lugar_trabajo='$id_lugar_trabajo', 
+		 			id_lugar_trabajo=$id_lugar_trabajo, 
 		 			fecha_capacitacion='$fecha_capacitacion',
 		 			hora_capacitacion='$hora_capacitacion',
 					fecha_modificacion='$fecha_modificacion', 
 					id_usuario_modifica=$id_usuario_modifica 
 					WHERE id_capacitacion=".$id_capacitacion;
 		$this->db->query($sentencia);
+	}
+	
+	function guardar_asistencia_capacitacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_asistencia SET
+					asistio=$asistio 
+					WHERE id_capacitacion=$id_capacitacion AND id_empleado_institucion=$id_empleado_institucion";
+		$query=$this->db->query($sentencia);
+		$sentencia="UPDATE sac_capacitacion SET
+					estado_capacitacion=0 
+					WHERE id_capacitacion=$id_capacitacion";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function lugares_trabajo_comite($todos=NULL)
+	{
+		$where="";
+		if($todos==NULL)
+			$where.=" AND t1.inscritos=t2.capacitados";
+		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre, t1.inscritos, t2.capacitados FROM sac_lugar_trabajo
+					INNER JOIN (SELECT
+					sac_lugar_trabajo.id_lugar_trabajo,
+					Count(DISTINCT sac_asistencia.id_empleado_institucion) AS inscritos
+					FROM sac_institucion
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_asistencia ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+					GROUP BY sac_lugar_trabajo.id_lugar_trabajo) AS t1 ON sac_lugar_trabajo.id_lugar_trabajo=t1.id_lugar_trabajo
+					INNER JOIN (SELECT
+					sac_lugar_trabajo.id_lugar_trabajo,
+					Count(DISTINCT sac_asistencia.id_empleado_institucion) AS capacitados
+					FROM sac_institucion
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_asistencia ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+					WHERE sac_asistencia.asistio=1
+					GROUP BY sac_lugar_trabajo.id_lugar_trabajo) AS t2 ON sac_lugar_trabajo.id_lugar_trabajo=t2.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion=sac_institucion.id_institucion
+					WHERE TRUE ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
 	}
 }
 ?>
