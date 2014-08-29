@@ -18,7 +18,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas registrar un comité de seguridad ocupacional presiona <a href="'.base_url().'index.php/acreditacion/asistencia" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas registrar un comité de seguridad ocupacional presiona <a href="'.base_url().'index.php/acreditacion/registrar_comite" class="alert-link">aquí</a>.';
 	}
 	else {
 		$class='danger';
@@ -41,11 +41,11 @@
         	<h3 class="panel-title">Datos de la asistencia</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
-        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_capacitacion" autocomplete="off">
+        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_asistencia" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">
-                        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
+                        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Empleados Registrados en Capacitación</a></li>
                     </ul>
                       
                     <div class="tab-content">
@@ -59,7 +59,7 @@
                                     <thead>
                                         <tr>
                                             <th class="all">Nombre del empleado</th>
-                                            <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
+                                            <th class="desktop tablet-l tablet-p" style="width:100px">Asistió</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -99,7 +99,7 @@
             		<tbody>
                     	<?php
 							foreach($capacitaciones as $val) {
-								echo '<tr><td>'.$val['fecha'].'</td><td>'.$val['lugar'].'</td><td><a href="#" class="edit-row" onClick="editar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" onClick="eliminar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
+								echo '<tr><td>'.$val['fecha'].'</td><td>'.$val['lugar'].'</td><td><a href="#" class="edit-row" onClick="ingresar_asistencia('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-search"></i></a></td></tr>';
 							}
 						?>
             		</tbody>
@@ -108,35 +108,7 @@
   	</div>
 </div>
 <script language="javascript" >
-	var emp = new Array()
 	$(document).ready(function(){	
-		$('.toggle').toggles({
-			on: true,
-			text: {
-				on:"INTERNO",
-				off:"EXTERNO"
-			},
-			checkbox:$('#int')
-		});
-		
-		$("#agregar-empleado").click(function(){
-			modal("Empleados por lugar de trabajo",base_url()+'index.php/acreditacion/mostrar_lugares_trabajo');
-		});
-		$("#id_empleado").bind("chosen:maxselected", function () { alerta_rapida("Error en la selección de técnicos", "Sólo puede seleccionar 2 técnicos como máximo", "danger")}); 
-		
-		$("#int").change(function(){
-			if(!$(this).is(':checked')) {
-				$("#id_lugar_trabajo").attr("disabled",false);
-				$("#id_lugar_trabajo").data("req",true);
-				$("#id_lugar_trabajo").trigger("chosen:updated");
-			}
-			else {
-				$("#id_lugar_trabajo").val("");
-				$("#id_lugar_trabajo").attr("disabled",true);
-				$("#id_lugar_trabajo").data("req",false);
-				$("#id_lugar_trabajo").trigger("chosen:updated");
-			}
-		});
 	  	$('#progressWizard').bootstrapWizard({
 			'nextSelector': '.next',
 			'previousSelector': '.previous',
@@ -159,28 +131,17 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
-		$('#fecha_capacitacion').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
-		$('#timepicker').timepicker({defaultTIme: false});
 		$("#limpiar").click(function(){
-			emp.length=0;
-			$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado");
+			$("#formu").load(base_url()+"index.php/acreditacion/asistencia_recargado");
 		});
 	});
-	function editar(id){
-		$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado/"+id);
+	function ingresar_asistencia(id){
+		$("#formu").load(base_url()+"index.php/acreditacion/asistencia_recargado/"+id);
 		return false;
 	};
-	function eliminar(id){
-		var titulo="Alerta";
-		var mensaje="Realmente desea eliminar este registro? No podrá revertir los cambios.";
-		var url=base_url()+"index.php/acreditacion/eliminar_capacitacion/"+id;
-		confirmacion(titulo, mensaje, url);
-		return false;
-	}	
 	function quitar_empleado(id,e){
 		var padre=e.parentNode.parentNode;
 		padre.className="quitar";
-		emp[id]=0;
 		var t=$('#empleados').DataTable();
 		t.row('.quitar').remove().draw( false );
 		return false;

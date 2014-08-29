@@ -415,7 +415,7 @@ class Acreditacion extends CI_Controller
 			
 			$id_capacitacion=$this->input->post('id_capacitacion');
 			
-			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
+			$id_lugar_trabajo=($this->input->post('id_lugar_trabajo')=='')?'NULL':$this->input->post('id_lugar_trabajo');
 			$fec=str_replace("/","-",$this->input->post('fecha_capacitacion'));
 			$fecha_capacitacion=date("Y-m-d", strtotime($fec));
 			$hora_capacitacion=$this->input->post('hora_capacitacion');
@@ -529,17 +529,107 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
 				case 3:
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones();
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones(NULL,1);
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion']);
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion'],1);
 					break;
 			}	
 			$data['estado_transaccion']=$estado_transaccion;
 			$data['accion_transaccion']=$accion_transaccion;
 			pantalla('acreditacion/asistencia',$data,Dcontrol_asistencia);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: asistencia_recargado
+	*	Objetivo: registrar la asistencia a una capacitación
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 28/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function asistencia_recargado($id_capacitacion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			if($id_capacitacion!=NULL) {
+				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
+				$data['id_capacitacion']=$id_capacitacion;
+			}
+			$this->load->view('acreditacion/asistencia_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: guardar_asistencia
+	*	Objetivo: Guarda el formulario de asistencia a una capacitación
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 29/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function guardar_asistencia()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$id_capacitacion=$this->input->post('id_capacitacion');
+			$id_empleado_ck=$this->input->post('id_empleado_ck');
+			
+			for($i=0;$i<count($id_empleado_ck);$i++) {
+				$id_emp_ck=explode("***",$id_empleado_ck[$i]);
+				$formuInfo = array(
+					'id_capacitacion'=>$id_capacitacion,
+					'id_empleado_institucion'=>$id_emp_ck[0],
+					'asistio'=>1
+				);
+				if($id_emp_ck[0]!="")
+					$this->acreditacion_model->guardar_asistencia_capacitacion($formuInfo);
+			}
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/acreditacion/asistencia/1/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: registrar_comite
+	*	Objetivo: Guarda el formulario de regidtro de un comite
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 29/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function registrar_comite($accion_transaccion=NULL, $estado_transaccion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dregistrar_comite); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			switch($data['id_permiso']) {
+				case 3:
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones(NULL,1);
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion'],1);
+					break;
+			}	
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('acreditacion/asistencia',$data,Dregistrar_comite);
 		}
 		else {
 			pantalla_error();
