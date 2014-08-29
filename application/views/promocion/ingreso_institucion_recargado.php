@@ -19,7 +19,7 @@
       
         <div class="tab-pane" id="ptab1">
             <div class="form-group">
-                <label for="nombre_institucion" class="col-sm-3 control-label">Nombre del establecimiento <span class="asterisk">*</span></label>
+                <label for="nombre_institucion" class="col-sm-3 control-label">Razón Social <span class="asterisk">*</span></label>
                 <div class="col-sm-8">
                     <input type="text" data-req="true" data-tip="x" data-min="5" name="nombre_institucion" id="nombre_institucion" class="form-control" value="<?php echo $institucion['nombre'] ?>" />
                 </div>
