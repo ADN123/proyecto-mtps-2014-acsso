@@ -13,7 +13,7 @@
 	}
 	if($estado_transaccion==1) {
 		$class='success';
-		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente! Si deseas programar una capacitación presiona <a href="'.base_url().'index.php/acreditacion/capacitacion" class="alert-link">aquí</a>.';
+		$mensaje='<span class="glyphicon glyphicon-info-sign"></span> '.ucfirst($objeto).' se ha <strong>'.$accion_transaccion.'do</strong> éxitosamente!';
 	}
 	else {
 		$class='danger';
@@ -26,6 +26,11 @@
             <?php echo $mensaje?>
         </div>
 <?php } ?>
+<style>
+	.ckbox input[type="checkbox"]:checked + label::after {
+		top: 3px;
+	}
+</style>
 <div class="col-sm-6">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
@@ -33,10 +38,10 @@
         	<a href="#" class="tooltips ayuda" data-ayuda="13" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title">Datos del empleado</h3>
+        	<h3 class="panel-title">Datos del comité</h3>
         </div>
-        <div class="panel-body panel-body-nopadding">
-        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_participantes" autocomplete="off">
+        <div class="panel-body">
+        	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_comite" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">
@@ -51,66 +56,27 @@
                       
                   		<div class="tab-pane" id="ptab1">
                             <div class="form-group">
-                                <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
-                                        <option value=""></option>
-                                        <?php
-                                            foreach($insticion_lugar_trabajo as $val) {
-                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="id_tipo_representacion" class="col-sm-3 control-label">Representación <span class="asterisk">*</span></label>
+                                <label for="nombre_empleado" class="col-sm-4 control-label">Fecha de conformación<span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
-                                    <select data-req="true" class="form-control" name="id_tipo_representacion" id="id_tipo_representacion" data-placeholder="[Seleccione..]" >
-                                        <option value=""></option>
-                                        <?php
-                                            foreach($tipo_representacion as $val) {
-                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
-                                            }
-                                        ?>
-                                    </select>
+                                	<div class="input-group">
+                                        <input type="text" name="fecha_conformacion" id="fecha_conformacion" class="form-control" data-req="true" data-tip="fec" value="<?php echo date('d/m/Y')?>" readonly="readonly"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                	</div>
                                 </div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="nombre_empleado" class="col-sm-3 control-label">Nombre <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <input type="text" name="nombre_empleado" id="nombre_empleado" class="form-control" data-req="true" data-tip="var" data-min="5" />
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="dui_empleado" class="col-sm-3 control-label">DUI <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <input type="text" name="dui_empleado" id="dui_empleado" class="form-control" data-req="true" data-tip="dui" placeholder="######## - #" maxlength="10"/>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="cargo_empleado" class="col-sm-3 control-label">Cargo <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <input type="text" name="cargo_empleado" id="cargo_empleado" class="form-control" data-req="true" data-tip="var" data-min="5" />
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="id_tipo_inscripcion" class="col-sm-3 control-label">Tipo de inscripción <span class="asterisk">*</span></label>
-                                <div class="col-sm-6">
-                                    <select data-req="true" class="form-control" name="id_tipo_inscripcion" id="id_tipo_inscripcion" data-placeholder="[Seleccione..]" >
-                                        <option value=""></option>
-                                        <?php
-                                            foreach($tipo_inscripcion as $val) {
-                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
+                                <table class="table table-hover mb30">
+                                    <thead>
+                                        <tr>
+                                            <th class="all">Nombre del empleado</th>
+                                            <th class="desktop tablet-l tablet-p" style="width:100px">Delegado</th>
+                                            <th class="desktop tablet-l tablet-p" style="width:100px">Sindicato</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                    	</div><!-- tab-content -->
@@ -145,7 +111,7 @@
             		<tbody>
                     	<?php
 							foreach($insticion_lugar_trabajo as $val) {
-								echo '<tr><td>'.$val['nombre'].'</td><td><a href="#" onClick="editar('.$val['id'].');return false;" class="edit-row" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onClick="eliminar('.$val['id'].');return false;" class="delete-row" data-id="'.$val['id'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
+								echo '<tr><td>'.$val['nombre'].'</td><td><a href="#" onClick="editar('.$val['id'].');return false;" class="edit-row" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a></td></tr>';
 							}
 						?>
             		</tbody>
@@ -177,13 +143,13 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
+		$('#fecha_conformacion').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
 		$("#limpiar").click(function(){
-			$("#formu").load(base_url()+"index.php/acreditacion/participantes_recargado");
-			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/0');
-		});
-		$('#id_lugar_trabajo').change(function(){
-			id=$(this).val();
-			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
+			$("#formu").load(base_url()+"index.php/acreditacion/registrar_comite_recargado");
 		});
 	});
+	function editar(id){
+		$("#formu").load(base_url()+"index.php/acreditacion/registrar_comite_recargado/"+id);
+		return false;
+	}
 </script>
