@@ -619,17 +619,17 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
 				case 3:
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones(NULL,1);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite();
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion'],1);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite($dep);
 					break;
-			}	
+			}
 			$data['estado_transaccion']=$estado_transaccion;
 			$data['accion_transaccion']=$accion_transaccion;
-			pantalla('acreditacion/asistencia',$data,Dregistrar_comite);
+			pantalla('acreditacion/registrar_comite',$data,Dregistrar_comite);
 		}
 		else {
 			pantalla_error();

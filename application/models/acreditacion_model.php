@@ -258,7 +258,7 @@ class Acreditacion_model extends CI_Model {
 		return true;
 	}
 	
-	function lugares_trabajo_comite($todos=NULL)
+	function lugares_trabajo_comite($dep=NULL,$todos=NULL)
 	{
 		$where="";
 		if($todos==NULL)
