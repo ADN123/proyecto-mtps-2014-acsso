@@ -635,5 +635,28 @@ class Acreditacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	/*
+	*	Nombre: registrar_comite_recargado
+	*	Objetivo: Guarda el formulario de regidtro de un comite
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 29/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function registrar_comite_recargado($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dregistrar_comite); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			if($id_lugar_trabajo!=NULL) {
+				$data['empleado_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,"");
+				$data['id_lugar_trabajo']=$id_lugar_trabajo;
+			}
+			$this->load->view('acreditacion/registrar_comite_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>
