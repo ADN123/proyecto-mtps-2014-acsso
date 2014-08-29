@@ -1,5 +1,5 @@
 <?php
-	$objeto='el <strong>establecimiento</strong>';
+	$objeto='el <strong>empleador</strong>';
 	switch($accion_transaccion) {
 		case 1: 
 			$accion_transaccion="guarda";
@@ -33,7 +33,7 @@
             <a href="#" class="tooltips ayuda" data-ayuda="1" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title">Datos del establecimiento</h3>
+        	<h3 class="panel-title">Datos del empleador</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
         	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_promocion" autocomplete="off">
@@ -52,7 +52,7 @@
                       
                   		<div class="tab-pane" id="ptab1">
                           	<div class="form-group">
-                            	<label for="nombre_institucion" class="col-sm-3 control-label">Nombre del establecimiento <span class="asterisk">*</span></label>
+                            	<label for="nombre_institucion" class="col-sm-3 control-label">Razón Social <span class="asterisk">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" data-req="true" data-tip="x" data-min="5" name="nombre_institucion" id="nombre_institucion" class="form-control"/>
                                 </div>
@@ -138,13 +138,13 @@
         	<a href="#" class="tooltips ayuda" data-ayuda="2" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title" id="titulo-tabla">Establecimiento registrados</h3>
+        	<h3 class="panel-title" id="titulo-tabla">Empleadores registrados</h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
           		<table class="table table-hover mb30">
             		<thead>
               			<tr>
-                            <th class="all">Nombre establecimiento</th>
+                            <th class="all">Razón Social</th>
                             <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
               			</tr>
             		</thead>

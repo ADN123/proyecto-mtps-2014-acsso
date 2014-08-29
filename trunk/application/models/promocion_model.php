@@ -236,6 +236,7 @@ class Promocion_model extends CI_Model {
 					WHERE id_empleado=".$id_empleado." AND fecha_visita like '".$fecha_visita."' 
 					AND ((hora_visita >= '".$hora_visita."' AND hora_visita < '".$hora_visita_final."') OR (hora_visita_final > '".$hora_visita."' AND hora_visita_final <= '".$hora_visita_final."'))
 					".$where;
+		//echo $sentencia;
 		$query=$this->db->query($sentencia);
 		$val=(array)$query->row();
 		if($val['total']==0)

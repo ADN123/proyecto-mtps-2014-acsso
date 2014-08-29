@@ -34,7 +34,16 @@ class Acreditacion extends CI_Controller
 	{	
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+			switch($data['id_permiso']) {
+				case 3:
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
+					break;
+			}
 			$data['tipo_representacion']=$this->acreditacion_model->tipo_representacion();
 			$data['tipo_inscripcion']=$this->acreditacion_model->tipo_inscripcion();
 			$data['estado_transaccion']=$estado_transaccion;
@@ -58,7 +67,16 @@ class Acreditacion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+			switch($data['id_permiso']) {
+				case 3:
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
+					break;
+			}
 			$data['tipo_representacion']=$this->acreditacion_model->tipo_representacion();
 			$data['tipo_inscripcion']=$this->acreditacion_model->tipo_inscripcion();
 			if($id_empleado_institucion!=NULL)
@@ -210,7 +228,7 @@ class Acreditacion extends CI_Controller
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
-					$dep=$this->promocion_model->ubicacion_departamento($id_seccion);
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
 					
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	{
@@ -252,7 +270,7 @@ class Acreditacion extends CI_Controller
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
-					$dep=$this->promocion_model->ubicacion_departamento($id_seccion);
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
 					else
@@ -283,7 +301,16 @@ class Acreditacion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
-			$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+			switch($data['id_permiso']) {
+				case 3:
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
+					break;
+			}
 			$this->load->view('acreditacion/mostrar_lugares_trabajo',$data);
 		}
 		else {
@@ -482,6 +509,37 @@ class Acreditacion extends CI_Controller
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/acreditacion/capacitacion/3/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: asistencia
+	*	Objetivo: registrar la asistencia a una capacitación
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 28/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function asistencia($accion_transaccion=NULL, $estado_transaccion=NULL) 
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			switch($data['id_permiso']) {
+				case 3:
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones();
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion']);
+					break;
+			}	
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('acreditacion/asistencia',$data,Dcontrol_asistencia);
 		}
 		else {
 			pantalla_error();

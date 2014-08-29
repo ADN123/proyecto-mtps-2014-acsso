@@ -504,6 +504,7 @@ class Promocion extends CI_Controller
 			$hora_visita=date("H:i:s", strtotime($hora_visita));
 			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
 			
+			//echo "*".$id_empleado."*".$id_lugar_trabajo."*".$fecha_visita."*".$hora_visita."*".$hora_visita_final;
 			if($id_empleado!="" && $id_lugar_trabajo!="" && $fecha_visita!="" && $hora_visita!="" && $hora_visita_final!="") {		
 				$formuInfo = array(
 					'id_programacion_visita'=>$id_programacion_visita,

@@ -93,7 +93,7 @@ include(base_url."index.php/promocion/calendario_dia");
                 </div>
                 
                 <ul class="pager wizard">
-                    <li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+                    <li><button class="btn btn-success" type="button" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
                     <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
                 </ul>
             </form>
@@ -173,14 +173,14 @@ include(base_url."index.php/promocion/calendario_dia");
 			eventClick: function(event, jsEvent){
           	}
 		});
-		$("#formu").submit(function(){
+		$("#guardar").click(function(){
 			if($("#id_empleado").val()!="" && $("#id_lugar_trabajo").val()!="" && $("#fecha_visita").val()!="" && $("#timepicker").val()!="")
 				$.ajax({
 					async:	true, 
 					url:	base_url()+"index.php/promocion/comprobar_programacion",
 					dataType:"json",
 					type: "POST",
-					data: $(this).serialize(),
+					data: $("#formu").serialize(),
 					success: function(data) {
 					var json=data;
 						if(Number(json['resultado'])==1) {
