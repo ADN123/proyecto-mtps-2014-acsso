@@ -7,7 +7,7 @@
     <?php
         if(isset($id_lugar_trabajo) && $id_lugar_trabajo=!"") {
     ?>
-            <input type="hidden" name="id_capacitacion" id="id_capacitacion" class="form-control"  value="<?php echo $id_lugar_trabajo ?>" />
+            <input type="hidden" name="id_lugar_trabajo" id="id_lugar_trabajo" class="form-control"  value="<?php echo $ilt ?>" />
     <?php
         }
     ?>
@@ -26,7 +26,7 @@
                 <label for="nombre_empleado" class="col-sm-4 control-label">Fecha de conformación<span class="asterisk">*</span></label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input type="text" name="fecha_conformacion" id="fecha_conformacion" class="form-control" data-req="true" data-tip="fec" value="<?php echo date('d/m/Y')?>" readonly="readonly"/>
+                        <input type="text" name="fecha_conformacion" id="fecha_conformacion" class="form-control" data-req="true" data-tip="fec" value="<?php if($ins['fecha_conformacion']!="") echo $ins['fecha_conformacion']; else echo date('d/m/Y')?>" readonly="readonly"/>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div>
@@ -44,7 +44,11 @@
                     <tbody>
                         <?php
                             foreach($empleado_lugar_trabajo as $val) {
-                                echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_del[]" id="id_empleado_ck_del_'.$val['id'].'" value="'.$val['id'].'***1" /><label for="id_empleado_ck_del_'.$val['id'].'"></label></div></td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_sin[]" id="id_empleado_ck_sin_'.$val['id'].'" value="'.$val['id'].'***1" /><label for="id_empleado_ck_sin_'.$val['id'].'"></label></div></td></tr>';
+                                echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_del[]" id="id_empleado_ck_del_'.$val['id'].'" value="'.$val['id'].'" ';
+								if($val['delegado']==1) echo ' checked="checked"';
+								echo' /><label for="id_empleado_ck_del_'.$val['id'].'"></label></div></td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_sin[]" id="id_empleado_ck_sin_'.$val['id'].'" value="'.$val['id'].'" ';
+								if($val['sindicato']==1) echo ' checked="checked"';
+								echo' /><label for="id_empleado_ck_sin_'.$val['id'].'"></label></div></td></tr>';
                             }
                         ?>
                     </tbody>
@@ -52,7 +56,6 @@
             </div>
         </div>
     </div><!-- tab-content -->
-    
     <ul class="pager wizard">
         <li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
         <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>

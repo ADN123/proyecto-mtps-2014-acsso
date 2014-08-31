@@ -105,7 +105,7 @@ class Promocion_model extends CI_Model {
 			$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE estado=1 AND id_institucion=".$id_institucion;
 		else
 			if($id_lugar_trabajo!=NULL)
-				$sentencia="SELECT id_lugar_trabajo, id_lugar_trabajo AS id, nombre_lugar AS nombre, id_institucion,id_tipo_lugar_trabajo, id_municipio, direccion_lugar, nombre_contacto, telefono, correo, total_hombres, total_mujeres  FROM sac_lugar_trabajo WHERE estado=1 AND id_lugar_trabajo=".$id_lugar_trabajo;
+				$sentencia="SELECT id_lugar_trabajo, id_lugar_trabajo AS id, nombre_lugar AS nombre, id_institucion,id_tipo_lugar_trabajo, id_municipio, direccion_lugar, nombre_contacto, telefono, correo, total_hombres, total_mujeres, DATE_FORMAT(fecha_conformacion,'%d/%m/%Y') AS fecha_conformacion FROM sac_lugar_trabajo WHERE estado=1 AND id_lugar_trabajo=".$id_lugar_trabajo;
 			else
 				$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE estado=1";
 		$query=$this->db->query($sentencia);
