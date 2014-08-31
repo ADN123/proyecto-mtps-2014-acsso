@@ -650,7 +650,9 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			if($id_lugar_trabajo!=NULL) {
 				$data['empleado_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,"");
+				$data['ins']=$this->promocion_model->lugares_trabajo_empresa(NULL,$id_lugar_trabajo);
 				$data['id_lugar_trabajo']=$id_lugar_trabajo;
+				$data['ilt']=$id_lugar_trabajo;
 			}
 			$this->load->view('acreditacion/registrar_comite_recargado',$data);
 		}
@@ -664,67 +666,41 @@ class Acreditacion extends CI_Controller
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
-			
-			$id_capacitacion=$this->input->post('id_capacitacion');
-			
+						
 			$id_lugar_trabajo=($this->input->post('id_lugar_trabajo')=='')?'NULL':$this->input->post('id_lugar_trabajo');
-			$fec=str_replace("/","-",$this->input->post('fecha_capacitacion'));
-			$fecha_capacitacion=date("Y-m-d", strtotime($fec));
-			$hora_capacitacion=$this->input->post('hora_capacitacion');
-			$hora_capacitacion=date("H:i:s", strtotime($hora_capacitacion));
+			$fec=str_replace("/","-",$this->input->post('fecha_conformacion'));
+			$fecha_conformacion=date("Y-m-d", strtotime($fec));
 			
-			$id_empleado_institucion=$this->input->post('id_empleado_institucion');
-			$id_empleado=$this->input->post('id_empleado');
+			$id_empleado_ck_del=$this->input->post('id_empleado_ck_del');
+			$id_empleado_ck_sin=$this->input->post('id_empleado_ck_sin');
 			
-			if($id_capacitacion=="") {
-				$fecha_creacion=date('Y-m-d H:i:s');
-				$id_usuario_crea=$this->session->userdata('id_usuario');
-				
+			$formuInfo = array(
+				'id_lugar_trabajo'=>$id_lugar_trabajo,
+				'fecha_conformacion'=>$fecha_conformacion
+			);
+			$this->acreditacion_model->actualizar_comite($formuInfo);
+
+			$this->acreditacion_model->quitar_empleados_delegados_sindicato($id_lugar_trabajo);
+			
+			for($i=0;$i<count($id_empleado_ck_del);$i++) {
 				$formuInfo = array(
-					'id_lugar_trabajo'=>$id_lugar_trabajo,
-					'fecha_capacitacion'=>$fecha_capacitacion,
-					'hora_capacitacion'=>$hora_capacitacion,
-					'fecha_creacion'=>$fecha_creacion,
-					'id_usuario_crea'=>$id_usuario_crea,
+					'delegado'=>1,
+					'id_empleado_institucion'=>$id_empleado_ck_del[$i]
 				);
-				$id_capacitacion=$this->acreditacion_model->guardar_capacitacion($formuInfo);
-				$tipo=1;
-			}
-			else {
-				$fecha_modificacion=date('Y-m-d H:i:s');
-				$id_usuario_modifica=$this->session->userdata('id_usuario');
-				
-				$formuInfo = array(
-					'id_capacitacion'=>$id_capacitacion,
-					'id_lugar_trabajo'=>$id_lugar_trabajo,
-					'fecha_capacitacion'=>$fecha_capacitacion,
-					'hora_capacitacion'=>$hora_capacitacion,
-					'fecha_modificacion'=>$fecha_modificacion,
-					'id_usuario_modifica'=>$id_usuario_modifica,
-				);
-				$this->acreditacion_model->actualizar_capacitacion($formuInfo);
-				$tipo=2;
+				if($id_empleado_ck_del[$i]!="")
+					$this->acreditacion_model->agregar_empleados_delegados($formuInfo);
 			}
 			
-			$this->acreditacion_model->eliminar_empleados_capacitacion($id_capacitacion);
-			$this->acreditacion_model->eliminar_tecnicos_capacitacion($id_capacitacion);
-			
-			for($i=0;$i<count($id_empleado_institucion);$i++) {
+			for($i=0;$i<count($id_empleado_ck_sin);$i++) {
 				$formuInfo = array(
-					'id_capacitacion'=>$id_capacitacion,
-					'id_empleado_institucion'=>$id_empleado_institucion[$i]
+					'sindicato'=>1,
+					'id_empleado_institucion'=>$id_empleado_ck_sin[$i]
 				);
-				$this->acreditacion_model->agregar_empleados_capacitacion($formuInfo);
+				if($id_empleado_ck_sin[$i]!="")
+					$this->acreditacion_model->agregar_empleados_sindicato($formuInfo);
 			}
 			
-			for($i=0;$i<count($id_empleado);$i++) {
-				$formuInfo = array(
-					'id_capacitacion'=>$id_capacitacion,
-					'id_empleado'=>$id_empleado[$i]
-				);
-				$this->acreditacion_model->agregar_tecnicos_capacitacion($formuInfo);
-			}
-			
+			$tipo=2;
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/acreditacion/registrar_comite/".$tipo."/".$tr);

@@ -71,7 +71,7 @@ class Acreditacion_model extends CI_Model {
 			}
 		}
 		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
-		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
+		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -285,6 +285,46 @@ class Acreditacion_model extends CI_Model {
 					WHERE TRUE ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
+	}
+	
+	function actualizar_comite($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_lugar_trabajo SET
+					fecha_conformacion='$fecha_conformacion' 
+					WHERE id_lugar_trabajo=$id_lugar_trabajo";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function quitar_empleados_delegados_sindicato($id_lugar_trabajo)
+	{
+		$sentencia="UPDATE sac_empleado_institucion SET
+					delegado=NULL,
+					sindicato=NULL
+					WHERE id_lugar_trabajo=$id_lugar_trabajo";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function agregar_empleados_delegados($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_empleado_institucion SET
+					delegado=$delegado
+					WHERE id_empleado_institucion=$id_empleado_institucion";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function agregar_empleados_sindicato($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_empleado_institucion SET
+					sindicato=$sindicato
+					WHERE id_empleado_institucion=$id_empleado_institucion";
+		$query=$this->db->query($sentencia);
+		return true;
 	}
 }
 ?>
