@@ -323,7 +323,7 @@ class Promocion_model extends CI_Model {
 	
 	function fecha_letras($fecha=NULL,$formato="mysql")
 	{
-		$dias = array('Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
+		$dias = array('Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado');
 		$meses = array('','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 		if($fecha==NULL) {
 			$fecha=date('Y-m-d');

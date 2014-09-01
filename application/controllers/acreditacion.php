@@ -8,6 +8,7 @@ class Acreditacion extends CI_Controller
 		error_reporting(0);
 		$this->load->helper('url');
 		$this->load->helper('form');
+		$this->load->library("mpdf");
 		$this->load->model('seguridad_model');
 		$this->load->model('promocion_model');
 		$this->load->model('acreditacion_model');
@@ -733,12 +734,12 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
 				case 3:
-					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite(NULL,2);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite(NULL,1);
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
-					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite($dep,2 );
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite($dep,1);
 					break;
 			}
 			$data['estado_transaccion']=$estado_transaccion;
@@ -798,6 +799,56 @@ class Acreditacion extends CI_Controller
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/acreditacion/aprobar_comite/".$tipo."/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function imprimir_acreditacion()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dimprimir_acreditacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			switch($data['id_permiso']) {
+				case 3:
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite(NULL,2);
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite($dep,2);
+					break;
+			}
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('acreditacion/imprimir_acreditacion',$data,Dimprimir_acreditacion);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function imprimir_pdf($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dimprimir_acreditacion);
+		if($data['id_permiso']!=NULL) {
+			$data['id_seccion']=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+			$empelados=$this->acreditacion_model->consultar_lugar_trabajo_empleados($id_lugar_trabajo);
+			/*$this->load->view('transporte/acreditacion_pdf.php',$data);*/
+			
+			$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+			$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+			$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						
+			for($i=0;$i<count($empelados);$i++) { 
+				if($i>0)
+					$this->mpdf->AddPage();
+				$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]['id_empleado_institucion']);
+				$html = $this->load->view('acreditacion/acreditacion_pdf.php', $data, true);
+				$this->mpdf->WriteHTML($html,2);
+			}
+
+			$this->mpdf->Output(); /*Salida del pdf*/
 		}
 		else {
 			pantalla_error();
