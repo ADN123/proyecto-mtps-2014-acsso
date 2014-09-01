@@ -30,7 +30,7 @@ class Acreditacion_model extends CI_Model {
 					FROM sac_lugar_trabajo
 					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					LEFT JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
-					WHERE sac_lugar_trabajo.estado=1 ".$where;
+					WHERE sac_lugar_trabajo.estado<>0 ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -258,12 +258,17 @@ class Acreditacion_model extends CI_Model {
 		return true;
 	}
 	
-	function lugares_trabajo_comite($dep=NULL,$todos=NULL)
+	function lugares_trabajo_comite($dep=NULL,$est=NULL,$todos=NULL)
 	{
 		$where="";
 		if($todos==NULL)
 			$where.=" AND t1.inscritos=t2.capacitados";
-		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre, t1.inscritos, t2.capacitados FROM sac_lugar_trabajo
+		if($est==1)
+			$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NULL";
+		if($est==2)
+			$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL";
+		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre, t1.inscritos, t2.capacitados 
+					FROM sac_lugar_trabajo
 					INNER JOIN (SELECT
 					sac_lugar_trabajo.id_lugar_trabajo,
 					Count(DISTINCT sac_asistencia.id_empleado_institucion) AS inscritos
@@ -282,7 +287,7 @@ class Acreditacion_model extends CI_Model {
 					WHERE sac_asistencia.asistio=1
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo) AS t2 ON sac_lugar_trabajo.id_lugar_trabajo=t2.id_lugar_trabajo
 					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion=sac_institucion.id_institucion
-					WHERE TRUE ".$where;
+					WHERE sac_lugar_trabajo.estado=1 ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -291,7 +296,9 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="UPDATE sac_lugar_trabajo SET
-					fecha_conformacion='$fecha_conformacion' 
+					fecha_conformacion='$fecha_conformacion',
+					fecha_modificacion='$fecha_modificacion',
+					id_usuario_modifica=$id_usuario_modifica 
 					WHERE id_lugar_trabajo=$id_lugar_trabajo";
 		$query=$this->db->query($sentencia);
 		return true;
@@ -311,7 +318,9 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="UPDATE sac_empleado_institucion SET
-					delegado=$delegado
+					delegado=$delegado,
+					fecha_modificacion='$fecha_modificacion',
+					id_usuario_modifica=$id_usuario_modifica 
 					WHERE id_empleado_institucion=$id_empleado_institucion";
 		$query=$this->db->query($sentencia);
 		return true;
@@ -321,8 +330,22 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="UPDATE sac_empleado_institucion SET
-					sindicato=$sindicato
+					sindicato=$sindicato,
+					fecha_modificacion='$fecha_modificacion',
+					id_usuario_modifica=$id_usuario_modifica 
 					WHERE id_empleado_institucion=$id_empleado_institucion";
+		$query=$this->db->query($sentencia);
+		return true;
+	}
+	
+	function guardar_aprobacion_comite($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_lugar_trabajo SET
+					estado='$estado',
+					fecha_modificacion='$fecha_modificacion',
+					id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_lugar_trabajo=$id_lugar_trabajo";
 		$query=$this->db->query($sentencia);
 		return true;
 	}

@@ -102,12 +102,12 @@ class Promocion_model extends CI_Model {
 	function lugares_trabajo_empresa($id_institucion=NULL,$id_lugar_trabajo=NULL)
 	{
 		if($id_institucion!=NULL)
-			$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE estado=1 AND id_institucion=".$id_institucion;
+			$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE sac_lugar_trabajo.estado>=1 AND id_institucion=".$id_institucion;
 		else
 			if($id_lugar_trabajo!=NULL)
-				$sentencia="SELECT id_lugar_trabajo, id_lugar_trabajo AS id, nombre_lugar AS nombre, id_institucion,id_tipo_lugar_trabajo, id_municipio, direccion_lugar, nombre_contacto, telefono, correo, total_hombres, total_mujeres, DATE_FORMAT(fecha_conformacion,'%d/%m/%Y') AS fecha_conformacion FROM sac_lugar_trabajo WHERE estado=1 AND id_lugar_trabajo=".$id_lugar_trabajo;
+				$sentencia="SELECT id_lugar_trabajo, id_lugar_trabajo AS id, nombre_lugar AS nombre, id_institucion,id_tipo_lugar_trabajo, id_municipio, direccion_lugar, nombre_contacto, telefono, correo, total_hombres, total_mujeres, DATE_FORMAT(fecha_conformacion,'%d/%m/%Y') AS fecha_conformacion FROM sac_lugar_trabajo WHERE sac_lugar_trabajo.estado>=1 AND id_lugar_trabajo=".$id_lugar_trabajo;
 			else
-				$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE estado=1";
+				$sentencia="SELECT id_lugar_trabajo AS id, nombre_lugar AS nombre FROM sac_lugar_trabajo WHERE sac_lugar_trabajo.estado>=1";
 		$query=$this->db->query($sentencia);
 		if($id_lugar_trabajo!=NULL)
 			return (array)$query->row();
@@ -187,7 +187,7 @@ class Promocion_model extends CI_Model {
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
-					WHERE sac_institucion.estado=1 AND org_departamento.id_departamento=".$id_departamento;
+					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado=1 AND org_departamento.id_departamento=".$id_departamento;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
