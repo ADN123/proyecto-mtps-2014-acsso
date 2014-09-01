@@ -607,7 +607,7 @@ class Acreditacion extends CI_Controller
 	
 	/*
 	*	Nombre: registrar_comite
-	*	Objetivo: Guarda el formulario de regidtro de un comite
+	*	Objetivo: Guarda el formulario de registro de un comite
 	*	Hecha por: Leonel
 	*	Modificada por: Leonel
 	*	Última Modificación: 29/08/2014
@@ -638,7 +638,7 @@ class Acreditacion extends CI_Controller
 	
 	/*
 	*	Nombre: registrar_comite_recargado
-	*	Objetivo: Guarda el formulario de regidtro de un comite
+	*	Objetivo: Guarda el formulario de registro de un comite
 	*	Hecha por: Leonel
 	*	Modificada por: Leonel
 	*	Última Modificación: 29/08/2014
@@ -674,9 +674,14 @@ class Acreditacion extends CI_Controller
 			$id_empleado_ck_del=$this->input->post('id_empleado_ck_del');
 			$id_empleado_ck_sin=$this->input->post('id_empleado_ck_sin');
 			
+			$fecha_modificacion=date('Y-m-d H:i:s');
+			$id_usuario_modifica=$this->session->userdata('id_usuario');
+			
 			$formuInfo = array(
 				'id_lugar_trabajo'=>$id_lugar_trabajo,
-				'fecha_conformacion'=>$fecha_conformacion
+				'fecha_conformacion'=>$fecha_conformacion,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica
 			);
 			$this->acreditacion_model->actualizar_comite($formuInfo);
 
@@ -685,7 +690,9 @@ class Acreditacion extends CI_Controller
 			for($i=0;$i<count($id_empleado_ck_del);$i++) {
 				$formuInfo = array(
 					'delegado'=>1,
-					'id_empleado_institucion'=>$id_empleado_ck_del[$i]
+					'id_empleado_institucion'=>$id_empleado_ck_del[$i],
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica
 				);
 				if($id_empleado_ck_del[$i]!="")
 					$this->acreditacion_model->agregar_empleados_delegados($formuInfo);
@@ -694,7 +701,9 @@ class Acreditacion extends CI_Controller
 			for($i=0;$i<count($id_empleado_ck_sin);$i++) {
 				$formuInfo = array(
 					'sindicato'=>1,
-					'id_empleado_institucion'=>$id_empleado_ck_sin[$i]
+					'id_empleado_institucion'=>$id_empleado_ck_sin[$i],
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica
 				);
 				if($id_empleado_ck_sin[$i]!="")
 					$this->acreditacion_model->agregar_empleados_sindicato($formuInfo);
@@ -704,6 +713,91 @@ class Acreditacion extends CI_Controller
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/acreditacion/registrar_comite/".$tipo."/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: aprobar_comite
+	*	Objetivo: Guarda el formulario de aprobación de un comite
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 31/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function aprobar_comite($accion_transaccion=NULL, $estado_transaccion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Daprobar_comite); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			switch($data['id_permiso']) {
+				case 3:
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite(NULL,2);
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->lugares_trabajo_comite($dep,2 );
+					break;
+			}
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('acreditacion/aprobar_comite',$data,Daprobar_comite);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: aprobar_comite_recargado
+	*	Objetivo: Guarda el formulario de aprobación de un comite
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 31/08/2014
+	*	Observaciones: Ninguna.
+	*/
+	function aprobar_comite_recargado($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dregistrar_comite); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			if($id_lugar_trabajo!=NULL) {
+				$data['empleado_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,"");
+				$data['ins']=$this->promocion_model->lugares_trabajo_empresa(NULL,$id_lugar_trabajo);
+				$data['id_lugar_trabajo']=$id_lugar_trabajo;
+				$data['ilt']=$id_lugar_trabajo;
+			}
+			$this->load->view('acreditacion/aprobar_comite_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function guardar_aprobacion_comite()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+						
+			$id_lugar_trabajo=($this->input->post('id_lugar_trabajo')=='')?'NULL':$this->input->post('id_lugar_trabajo');
+			
+			$fecha_modificacion=date('Y-m-d H:i:s');
+			$id_usuario_modifica=$this->session->userdata('id_usuario');
+			
+			$formuInfo = array(
+				'id_lugar_trabajo'=>$id_lugar_trabajo,
+				'estado'=>2,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica
+			);
+			$this->acreditacion_model->guardar_aprobacion_comite($formuInfo);
+			
+			$tipo=2;
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/acreditacion/aprobar_comite/".$tipo."/".$tr);
 		}
 		else {
 			pantalla_error();
