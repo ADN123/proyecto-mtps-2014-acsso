@@ -1,0 +1,34 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.tabla, .tabla2 {
+	width: 100%; 
+	font-size: 12px;
+}
+.tabla, .titu {
+	border: 1px solid #000;
+}
+.tabla tr {
+	height: 25px;
+}
+#imagen {
+}
+#titulo {
+	font-size: 13px;
+}
+.firma {
+	 height: 1205px;
+}
+p {
+	text-align: justify;
+	text-transform: uppercase;
+	font-size: 16px;
+	line-height:26px;
+}
+.extendido {
+	text-align: center;
+	text-transform: none !important;
+}
+#xxx {
+}
+

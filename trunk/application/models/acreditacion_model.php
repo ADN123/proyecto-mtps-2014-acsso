@@ -287,7 +287,7 @@ class Acreditacion_model extends CI_Model {
 					WHERE sac_asistencia.asistio=1
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo) AS t2 ON sac_lugar_trabajo.id_lugar_trabajo=t2.id_lugar_trabajo
 					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion=sac_institucion.id_institucion
-					WHERE sac_lugar_trabajo.estado=1 ".$where;
+					WHERE sac_lugar_trabajo.estado>=1 ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -348,6 +348,36 @@ class Acreditacion_model extends CI_Model {
 					WHERE id_lugar_trabajo=$id_lugar_trabajo";
 		$query=$this->db->query($sentencia);
 		return true;
+	}
+	
+	function consultar_lugar_trabajo_empleados($id_lugar_trabajo)
+	{
+		$sentencia="SELECT
+					sac_empleado_institucion.id_empleado_institucion
+					FROM sac_institucion
+					LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					LEFT JOIN sac_asistencia ON  sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+					LEFT JOIN sac_capacitacion ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+					WHERE sac_asistencia.asistio=1 AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function consultar_lugar_trabajo($id_empleado_institucion)
+	{
+		$sentencia="SELECT
+					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre_lugar,
+					sac_capacitacion.fecha_capacitacion,
+					sac_empleado_institucion.nombre_empleado
+					FROM sac_institucion
+					LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					LEFT JOIN sac_asistencia ON  sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+					LEFT JOIN sac_capacitacion ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+					WHERE sac_asistencia.asistio=1 AND sac_empleado_institucion.id_empleado_institucion=".$id_empleado_institucion." LIMIT 0,1";
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
 	}
 }
 ?>
