@@ -264,9 +264,10 @@ class Acreditacion_model extends CI_Model {
 		if($todos==NULL)
 			$where.=" AND t1.inscritos=t2.capacitados";
 		if($est==1)
-			$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NULL";
+			//$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NULL";
+			$where.=" AND sac_lugar_trabajo.estado=1";
 		if($est==2)
-			$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL";
+			$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL AND sac_lugar_trabajo.estado=2";
 		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre, t1.inscritos, t2.capacitados 
 					FROM sac_lugar_trabajo
 					INNER JOIN (SELECT
