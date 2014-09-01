@@ -1,9 +1,6 @@
 <?php
 
-class Promocion_model extends CI_Model {
-	
-	/*Secciones que no pertenecen a San Salvador*/
-	public $secciones=array(52,53,54,55,56,57,58,59,60,61,64,65,66); 
+class Verificacion_model extends CI_Model {
 	
     function __construct() 
 	{
