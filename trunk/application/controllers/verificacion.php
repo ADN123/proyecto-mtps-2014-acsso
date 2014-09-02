@@ -1,6 +1,8 @@
 <?php
 class Verificacion extends CI_Controller
 {
+	public $mostrar_todos="FALSE"; 
+	
     function Verificacion()
 	{
         parent::__construct();
@@ -12,6 +14,7 @@ class Verificacion extends CI_Controller
 		$this->load->model('seguridad_model');
 		$this->load->model('promocion_model');
 		$this->load->model('acreditacion_model');
+		$this->load->model('verificacion_model');
 		
 		if(!$this->session->userdata('id_usuario')){
 		 	redirect('index.php/sessiones');
@@ -64,7 +67,7 @@ class Verificacion extends CI_Controller
 	*	Última Modificación: 01/09/2014
 	*	Observaciones: Ninguna.
 	*/
-	function programa_recargado($id_empleado_institucion=NULL)
+	function programa_recargado($id_programacion_visita=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
@@ -237,9 +240,10 @@ class Verificacion extends CI_Controller
 					'hora_visita'=>$hora_visita,
 					'hora_visita_final'=>$hora_visita_final,
 					'fecha_creacion'=>$fecha_creacion,
-					'id_usuario_crea'=>$id_usuario_crea
+					'id_usuario_crea'=>$id_usuario_crea,
+					'estado_programacion'=>3
 				);
-				$this->promocion_model->guardar_programacion($formuInfo);
+				$this->verificacion_model->guardar_programacion($formuInfo);
 			}
 			else {
 				$fecha_modificacion=date('Y-m-d H:i:s');
@@ -300,7 +304,7 @@ class Verificacion extends CI_Controller
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 		  	$data['visita']=$this->promocion_model->calendario_dia($id_empleado, $fecha);
-			$this->load->view('promocion/calendario_dia',$data);
+			$this->load->view('verificacion/calendario_dia',$data);
 		}
 		else {
 			$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 

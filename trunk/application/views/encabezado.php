@@ -147,6 +147,10 @@
 			background-color: #5cb85c !important;
 			border: 1px solid #5cb85c !important;
 		}
+		#calendar_dia .visita_2 {
+			background-color: #F0AD4E !important;
+			border: 1px solid #F0AD4E !important;
+		}
 		.has-error .chosen-single, .has-error .chosen-choices {
 			border-color: #a94442;
 			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);

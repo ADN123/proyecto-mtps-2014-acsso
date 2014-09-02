@@ -246,9 +246,9 @@ class Verificacion_model extends CI_Model {
 	{
 		extract($formuInfo);		
 		$sentencia="INSERT INTO sac_programacion_visita
-					(id_empleado, id_lugar_trabajo, fecha_visita, hora_visita, hora_visita_final, fecha_creacion, id_usuario_crea) 
+					(id_empleado, id_lugar_trabajo, fecha_visita, hora_visita, hora_visita_final, estado_programacion, fecha_creacion, id_usuario_crea) 
 					VALUES 
-					($id_empleado, $id_lugar_trabajo, '$fecha_visita', '$hora_visita', '$hora_visita_final', '$fecha_creacion', $id_usuario_crea)";
+					($id_empleado, $id_lugar_trabajo, '$fecha_visita', '$hora_visita', '$hora_visita_final', $estado_programacion, '$fecha_creacion', $id_usuario_crea)";
 		$this->db->query($sentencia);
 	}
 	

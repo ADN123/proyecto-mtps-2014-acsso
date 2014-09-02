@@ -60,6 +60,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -70,7 +71,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -106,6 +107,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -116,7 +118,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -152,6 +154,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -162,7 +165,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -198,6 +201,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -208,7 +212,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -244,6 +248,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -254,7 +259,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -290,6 +295,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -300,7 +306,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -336,6 +342,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -346,7 +353,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -382,6 +389,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -392,7 +400,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
@@ -428,6 +436,7 @@
 																break;
 															case 3:
 																$estado="Verificación de cumplimiento";
+																$class='visita_2';
 																break;
 															default:
 																$estado="";
@@ -438,7 +447,7 @@
                                                                 <div class="fc-event-time"><?php echo $val['hora']." - ".$val['hora_final']." * ".$estado;?><br/><?php echo $val['titulo2']." - ".$val['titulo']."";?></div>
                                                             </div>
                                           	<?php
-														if($val['estado']!=2) {
+														if($val['estado']==1) {
 											?>
                                            					<div class="ui-resizable-handle ui-resizable-s">
                                                                	<a title="Editar" class="editar-programacion" data-id="<?php echo $val['id'];?>" href="#"><span class="glyphicon glyphicon-edit"></span></a>
