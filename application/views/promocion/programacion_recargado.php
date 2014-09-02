@@ -80,12 +80,12 @@
 	<?php
 		if(isset($programacion['id_programacion_visita']) && $programacion['id_programacion_visita']=!"") {
     ?>
-            <li><button class="btn btn-primary" type="submit" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
+            <li><button class="btn btn-primary" type="button" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
     <?php
         }
         else {
     ?>
-            <li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+            <li><button class="btn btn-success" type="button" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
     <?php
         }
     ?>
@@ -111,7 +111,34 @@
 		
 		$('#fecha_visita').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
 		$('#timepicker').timepicker({defaultTIme: false});
-
+		
+		$("#guardar, #actualizar").click(function(){
+			if($("#id_empleado").val()!="" && $("#id_lugar_trabajo").val()!="" && $("#fecha_visita").val()!="" && $("#timepicker").val()!="") {
+				$.ajax({
+					async:	true, 
+					url:	base_url()+"index.php/promocion/comprobar_programacion",
+					dataType:"json",
+					type: "POST",
+					data: $("#formu").serialize(),
+					success: function(data) {
+					var json=data;
+						if(Number(json['resultado'])==1) {
+							$("#formu").submit();
+						}
+						else {
+							alerta_rapida('Error en el ingreso de programación!', 'El técnico ya tiene una visita en el día y hora ingresados', 'danger');
+						}
+					},
+					error:function(data) {
+						/*alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');*/
+					}
+				});		
+			}
+			else {
+				$("#formu").submit();
+			}
+		});
+		
 		$("#limpiar").click(function(){
 			$("#formu").load(base_url()+"index.php/promocion/programa_recargado");
 			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/0');
