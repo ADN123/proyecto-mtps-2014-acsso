@@ -114,11 +114,11 @@ class Verificacion extends CI_Controller
 			if($estado==0) {
 				$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
-				$data['institucion']=$this->promocion_model->institucion_visita($dep);
+				$data['institucion']=$this->verificacion_model->institucion_visita($dep);
 				$this->load->view('verificacion/institucion_visita',$data);
 			}
 			else {
-				$data['institucion']=$this->promocion_model->insticion_lugar_trabajo($id_empleado,date('Y-m-d'));
+				$data['institucion']=$this->verificacion_model->insticion_lugar_trabajo($id_empleado,date('Y-m-d'));
 				$this->load->view('verificacion/institucion_visita2',$data);
 			}
 		}
@@ -142,9 +142,9 @@ class Verificacion extends CI_Controller
 			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
 			if($id_lugar_trabajo!="undefined" && $id_lugar_trabajo!="" && $id_lugar_trabajo!=NULL && $id_lugar_trabajo!=0)
-				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos,$id_lugar_trabajo);
+				$data['lugar_trabajo']=$this->verificacion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos,$id_lugar_trabajo);
 			else {
-				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos);
+				$data['lugar_trabajo']=$this->verificacion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos);
 			}
 			$data['vacio']=$vacio;
 			$this->load->view('verificacion/lugares_trabajo_empresa_visita',$data);
