@@ -174,7 +174,7 @@ include(base_url."index.php/verificacion/calendario_dia");
           	}
 		});
 		$("#guardar").click(function(){
-			if($("#id_empleado").val()!="" && $("#id_lugar_trabajo").val()!="" && $("#fecha_visita").val()!="" && $("#timepicker").val()!="")
+			if($("#id_empleado").val()!="" && $("#id_lugar_trabajo").val()!="" && $("#fecha_visita").val()!="" && $("#timepicker").val()!="") {
 				$.ajax({
 					async:	true, 
 					url:	base_url()+"index.php/verificacion/comprobar_programacion",
@@ -184,7 +184,7 @@ include(base_url."index.php/verificacion/calendario_dia");
 					success: function(data) {
 					var json=data;
 						if(Number(json['resultado'])==1) {
-							document.getElementById("formu").submit();
+							$("#formu").submit();
 						}
 						else {
 							alerta_rapida('Error en el ingreso de programación!', 'El técnico ya tiene una visita en el día y hora ingresados', 'danger');
@@ -193,8 +193,11 @@ include(base_url."index.php/verificacion/calendario_dia");
 					error:function(data) {
 						/*alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');*/
 					}
-				});			
-			return false;
+				});				
+			}
+			else {
+				$("#formu").submit();
+			}
 		});
 		$("#limpiar").click(function(){
 			$("#formu").load(base_url()+"index.php/verificacion/programa_recargado");
