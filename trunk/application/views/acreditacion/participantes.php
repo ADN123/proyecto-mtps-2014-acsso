@@ -33,7 +33,7 @@
         	<a href="#" class="tooltips ayuda" data-ayuda="13" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title">Datos del empleado</h3>
+        	<h3 class="panel-title">Datos de miembro del comité</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
         	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/acreditacion/guardar_participantes" autocomplete="off">
@@ -79,6 +79,16 @@
                             </div>
                             
                             <div class="form-group">
+                            	<label class="col-sm-3 control-label">Delegado</label>
+                                <div class="col-sm-4" style="margin-top: 7px;">
+                                    <div class="ckbox ckbox-default">
+                                        <input type="checkbox" value="1" name="delegado" id="delegado" />
+                                        <label for="delegado">Sí</label>
+                                    </div>
+                               	</div>
+                           	</div>
+                            
+                            <div class="form-group">
                                 <label for="nombre_empleado" class="col-sm-3 control-label">Nombre <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
                                     <input type="text" name="nombre_empleado" id="nombre_empleado" class="form-control" data-req="true" data-tip="var" data-min="5" />
@@ -105,8 +115,14 @@
                                     <select data-req="true" class="form-control" name="id_tipo_inscripcion" id="id_tipo_inscripcion" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
+											$i=1;
                                             foreach($tipo_inscripcion as $val) {
-                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+												if($i==1) {
+													$i=0;
+                                                	echo '<option value="'.$val['id'].'" selected="selected">'.$val['nombre'].'</option>';
+												}
+												else
+                                                	echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
                                             }
                                         ?>
                                     </select>

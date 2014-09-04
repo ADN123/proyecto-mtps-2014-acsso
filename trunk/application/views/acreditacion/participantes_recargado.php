@@ -52,6 +52,16 @@
             </div>
             
             <div class="form-group">
+                <label class="col-sm-3 control-label">Delegado</label>
+                <div class="col-sm-4" style="margin-top: 7px;">
+                    <div class="ckbox ckbox-default">
+                        <input type="checkbox" value="1" name="delegado" id="delegado" <?php if($empleado_institucion['delegado']==1)echo 'checked="checked"';?>/>
+                        <label for="delegado">Sí</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
                 <label for="nombre_empleado" class="col-sm-3 control-label">Nombre <span class="asterisk">*</span></label>
                 <div class="col-sm-7">
                     <input type="text" name="nombre_empleado" id="nombre_empleado" class="form-control" value="<?php echo $empleado_institucion['nombre_empleado'] ?>" data-req="true" data-tip="var" data-min="5" />

@@ -10,7 +10,7 @@
       
       <div class="header-right">
         <ul class="headermenu">
-          <li>
+          <li style="display:none;">
             <div class="btn-group">
               <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-user"></i>
@@ -55,7 +55,7 @@
             </div>
           </li>
           <li>
-            <div class="btn-group">
+            <div class="btn-group" style="display:none;">
               <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-envelope"></i>
                 <span class="badge">1</span>
@@ -180,14 +180,14 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                <li><a href="profile.html"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Account Settings</a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-user"></i> Mi perfil</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Configuraciones</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i> Ayuda</a></li>
                 <li><a href="<?php echo base_url();?>index.php/sessiones/cerrar_session"><i class="glyphicon glyphicon-log-out"></i> Cerrar sesi&oacute;n</a></li>
               </ul>
             </div>
           </li>
-          <li>
+          <li style="display:none;">
             <button id="chatview" class="btn btn-default tp-icon chat-icon">
                 <i class="glyphicon glyphicon-comment"></i>
             </button>

@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="images/favicon.png" type="image/png">
     
-    <title>SACSO - Sistema de Acreditaciones de Comités de Seguridad Ocupacional</title>
+    <title>SRCS - Sistema de Registro de Comités de Seguridad y Salud Ocupacional Acreditados</title>
     
     <link href="<?php echo base_url();?>css/style.default.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/jquery.datatables.css" rel="stylesheet">

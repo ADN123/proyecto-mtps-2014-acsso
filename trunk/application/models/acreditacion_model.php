@@ -53,9 +53,9 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="INSERT INTO sac_empleado_institucion
-					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea) 
+					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea, delegado, sindicato) 
 					VALUES 
-					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea)";
+					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato)";
 		$this->db->query($sentencia);
 	}
 	
@@ -92,7 +92,9 @@ class Acreditacion_model extends CI_Model {
 					nombre_empleado,
 					cargo_empleado,
 					dui_empleado,
-					id_tipo_representacion
+					id_tipo_representacion,
+					delegado,
+					sindicato
 					FROM sac_empleado_institucion
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$query=$this->db->query($sentencia);
@@ -110,7 +112,9 @@ class Acreditacion_model extends CI_Model {
 		 			dui_empleado='$dui_empleado', 
 		 			cargo_empleado='$cargo_empleado',
 					fecha_modificacion='$fecha_modificacion', 
-					id_usuario_modifica=$id_usuario_modifica 
+					id_usuario_modifica=$id_usuario_modifica, 
+					delegado=$delegado, 
+					sindicato=$sindicato  
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$this->db->query($sentencia);
 	}

@@ -18,9 +18,9 @@
           
             <h5 class="sidebartitle actitle">Cuenta</h5>
             <ul class="nav nav-pills nav-stacked nav-bracket mb30">
-              <li><a href="profile.html"><i class="fa fa-user"></i> <span>Profile</span></a></li>
-              <li><a href="#"><i class="fa fa-cog"></i> <span>Account Settings</span></a></li>
-              <li><a href="#"><i class="fa fa-question-circle"></i> <span>Help</span></a></li>
+              <li><a href="#"><i class="fa fa-user"></i> <span>Mi perfil</span></a></li>
+              <li><a href="#"><i class="fa fa-cog"></i> <span>Configuraciones</span></a></li>
+              <li><a href="#"><i class="fa fa-question-circle"></i> <span>Ayuda</span></a></li>
               <li><a href="<?php echo base_url();?>index.php/sessiones/cerrar_session"><i class="fa fa-sign-out"></i> <span>Cerrar sesi&oacute;n</span></a></li>
             </ul>
         </div>
