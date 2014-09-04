@@ -555,5 +555,15 @@ class Verificacion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
+	
+	function guardar_ingreso_tematica($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="INSERT INTO sac_control_visita 
+					(id_programacion_visita,id_tematica)
+					VALUES 
+					($id_programacion_visita,$id_tematica)";
+		$query=$this->db->query($sentencia);
+	}
 }
 ?>

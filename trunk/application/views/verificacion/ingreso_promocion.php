@@ -40,15 +40,15 @@
             <a href="#" class="tooltips ayuda" data-ayuda="10" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title">Datos de la promoción</h3>
+        	<h3 class="panel-title">Datos del control de visita</h3>
         </div>
         <div class="panel-body panel-body-nopadding">
         	<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/verificacion/guardar_ingreso_promocion" autocomplete="off">
                 <div id="progressWizard" class="basic-wizard">
                     
                     <ul class="nav nav-pills nav-justified">
-                        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información de la Promoción</a></li>
-                        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información del establecimiento</a></li>
+                        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información de la verificación</a></li>
+                        <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información de las capacitaciones</a></li>
                     </ul>
                       
                     <div class="tab-content">
@@ -143,9 +143,9 @@
                                 <tbody>
                                     <?php
                                         foreach($tematicas as $val) {
-                                            echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_del[]" id="id_empleado_ck_del_'.$val['id'].'" value="'.$val['id'].'" ';
+                                            echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_tematica[]" id="id_tematica_'.$val['id'].'" value="'.$val['id'].'" ';
                                             if($val['delegado']==1) echo ' checked="checked"';
-                                            echo' /><label for="id_empleado_ck_del_'.$val['id'].'"></label></div></td></tr>';
+                                            echo' /><label for="id_tematica_'.$val['id'].'"></label></div></td></tr>';
                                         }
                                     ?>
                                 </tbody>

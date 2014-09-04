@@ -8,9 +8,9 @@
     <tbody>
         <?php
             foreach($tematicas as $val) {
-                echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_del[]" id="id_empleado_ck_del_'.$val['id'].'" value="'.$val['id'].'" ';
+                echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_tematica[]" id="id_tematica_'.$val['id'].'" value="'.$val['id'].'" ';
                 if($val['delegado']==1) echo ' checked="checked"';
-                echo' /><label for="id_empleado_ck_del_'.$val['id'].'"></label></div></td></tr>';
+                echo' /><label for="id_tematica_'.$val['id'].'"></label></div></td></tr>';
             }
         ?>
     </tbody>
