@@ -60,6 +60,9 @@ define('Dasignaciones', 						109);
 define('Dregistrar_comite', 					125);
 define('Daprobar_comite', 						126);
 define('Dimprimir_acreditacion',				127);
+define('Dreportes_capacitaciones', 				128);
+define('Dreportes_acreditaciones', 				129);
+define('Dreportes_verificaciones',				130);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
