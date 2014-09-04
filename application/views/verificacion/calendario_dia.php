@@ -62,6 +62,10 @@
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
 																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
+																break;
 															default:
 																$estado="";
 														}
@@ -108,6 +112,10 @@
 															case 3:
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
+																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
 																break;
 															default:
 																$estado="";
@@ -156,6 +164,10 @@
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
 																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
+																break;
 															default:
 																$estado="";
 														}
@@ -202,6 +214,10 @@
 															case 3:
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
+																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
 																break;
 															default:
 																$estado="";
@@ -250,6 +266,10 @@
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
 																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
+																break;
 															default:
 																$estado="";
 														}
@@ -296,6 +316,10 @@
 															case 3:
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
+																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
 																break;
 															default:
 																$estado="";
@@ -344,6 +368,10 @@
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
 																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
+																break;
 															default:
 																$estado="";
 														}
@@ -391,6 +419,10 @@
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
 																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
+																break;
 															default:
 																$estado="";
 														}
@@ -437,6 +469,10 @@
 															case 3:
 																$estado="Verificación de cumplimiento";
 																$class='visita_2';
+																break;
+															case 4:
+																$estado="Visita de verificación realizada";
+																$class='visitados';
 																break;
 															default:
 																$estado="";

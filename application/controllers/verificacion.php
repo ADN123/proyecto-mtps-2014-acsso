@@ -118,7 +118,7 @@ class Verificacion extends CI_Controller
 				$this->load->view('verificacion/institucion_visita',$data);
 			}
 			else {
-				$data['institucion']=$this->verificacion_model->insticion_lugar_trabajo($id_empleado,date('Y-m-d'));
+				$data['institucion']=$this->verificacion_model->insticion_lugar_trabajo($id_empleado,date('Y-m-d'),3);
 				$this->load->view('verificacion/institucion_visita2',$data);
 			}
 		}
@@ -438,7 +438,9 @@ class Verificacion extends CI_Controller
 			$hora_inicio=$this->input->post('hora_inicio');
 			$hora_final=$this->input->post('hora_final');
 			$nombre_recibio=$this->input->post('nombre_recibio');
-			$observaciones=$this->input->post('observaciones');		
+			$observaciones=$this->input->post('observaciones');	
+			
+			$id_tematica=$this->input->post('id_tematica');	
 			
 			$fecha_creacion=date('Y-m-d H:i:s');
 			$id_usuario_crea=$this->session->userdata('id_usuario');
@@ -464,6 +466,14 @@ class Verificacion extends CI_Controller
 				'id_usuario_crea'=>$id_usuario_crea
 			);
 			$this->promocion_model->guardar_ingreso_promocion($formuInfo);
+			
+			for($i=0;$i<count($id_tematica);$i++) {
+				$formuInfo = array(
+					'id_programacion_visita'=>$id_programacion_visita,
+					'id_tematica'=>$id_tematica[$i]
+				);
+				$this->verificacion_model->guardar_ingreso_tematica($formuInfo);
+			}
 			
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
