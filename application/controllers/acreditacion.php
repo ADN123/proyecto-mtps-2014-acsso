@@ -110,6 +110,11 @@ class Acreditacion extends CI_Controller
 			$dui_empleado=$this->input->post('dui_empleado');
 			$cargo_empleado=$this->input->post('cargo_empleado');
 			$id_tipo_inscripcion=$this->input->post('id_tipo_inscripcion');
+			$delegado=($this->input->post('delegado')!="")?$this->input->post('delegado'):'NULL';
+			if($id_tipo_representacion==3)
+				$sindicato='1';
+			else
+				$sindicato='NULL';
 			
 			if($id_empleado_institucion=="") {
 				$fecha_creacion=date('Y-m-d H:i:s');
@@ -122,8 +127,10 @@ class Acreditacion extends CI_Controller
 					'dui_empleado'=>$dui_empleado,
 					'cargo_empleado'=>$cargo_empleado,
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
+					'delegado'=>$delegado,
+					'sindicato'=>$sindicato,
 					'fecha_creacion'=>$fecha_creacion,
-					'id_usuario_crea'=>$id_usuario_crea,
+					'id_usuario_crea'=>$id_usuario_crea
 				);
 				$this->acreditacion_model->guardar_participante($formuInfo);
 				$tipo=1;
@@ -140,8 +147,10 @@ class Acreditacion extends CI_Controller
 					'dui_empleado'=>$dui_empleado,
 					'cargo_empleado'=>$cargo_empleado,
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
+					'delegado'=>$delegado,
+					'sindicato'=>$sindicato,
 					'fecha_modificacion'=>$fecha_modificacion,
-					'id_usuario_modifica'=>$id_usuario_modifica,
+					'id_usuario_modifica'=>$id_usuario_modifica
 				);
 				$this->acreditacion_model->actualizar_participante($formuInfo);
 				$tipo=2;

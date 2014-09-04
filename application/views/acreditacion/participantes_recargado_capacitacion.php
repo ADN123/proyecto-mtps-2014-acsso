@@ -28,7 +28,7 @@
 	$(document).ready(function(){
 		$("#myModalCancel").click(function(){
 			var url=base_url()+"index.php/acreditacion/actualizar_empleado_capacitacion/<?php echo $empleado_institucion['id_empleado_institucion'] ?>";
-			var mensaje_correcto="La petición se ha completado éxitosamente!*** Los datos del empleado se han actualizado exitosamente!";
+			var mensaje_correcto="La petición se ha completado éxitosamente!*** Los datos de miembro del comité se han actualizado exitosamente!";
 			var mensaje_incorrecto="Error en la peticitión solicitada!***Se ha perdido la conexión a la red'";
 			var data="dui_empleado="+$("#dui_empleado").val()+"&cargo_empleado="+$("#cargo_empleado").val();
 			ajax_json(url, mensaje_correcto, mensaje_incorrecto, data);
