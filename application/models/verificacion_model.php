@@ -548,5 +548,12 @@ class Verificacion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
+	
+	function ver_tematicas()
+	{
+		$sentencia="SELECT id_tematica AS id, nombre_tematica AS nombre FROM sac_tematica";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 }
 ?>
