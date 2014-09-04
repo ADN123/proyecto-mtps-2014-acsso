@@ -1,4 +1,4 @@
-<div id="calendar_dia" class="fc-ltr">
+<div id="calendar_dia" class="fc-ltr" data-val="1">
 	<table class="fc-header" style="width:100%; display: none;">
     	<tbody>
         	<tr>

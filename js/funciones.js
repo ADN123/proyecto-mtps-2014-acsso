@@ -255,10 +255,15 @@ function ajax_json(url, mensaje_correcto, mensaje_incorrecto, data) {
 			var json=data;
 			if(Number(json['resultado'])==1) {
 				alerta_rapida(bueno_titu, bueno_men, 'success');
-				if($("#calendar_dia").length!=0) {
+				if($("#calendar_dia").data("val")=="1") {
 					$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+$("#id_empleado").val());
 					$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+$("#id_empleado").val());
 					modal("Programación del día",base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+fecha_actual);
+				}
+				if($("#calendar_dia").data("val")=="2") {
+					$('#cont-calendario').load(base_url()+'index.php/verificacion/calendario/'+$("#id_empleado").val());
+					$('#cont-institucion').load(base_url()+'index.php/verificacion/institucion_visita/'+$("#id_empleado").val());
+					modal("Programación del día",base_url()+'index.php/verificacion/calendario_dia/'+$("#id_empleado").val()+'/'+fecha_actual);
 				}
 			}
 			else {

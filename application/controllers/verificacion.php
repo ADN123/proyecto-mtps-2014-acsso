@@ -88,9 +88,9 @@ class Verificacion extends CI_Controller
 				$data['idpv']=$id_programacion_visita;
 				$info=$this->seguridad_model->info_empleado($data['programacion']['id_empleado'], "id_seccion");
 				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
-				$data['institucion']=$this->promocion_model->institucion_visita($dep);
+				$data['institucion']=$this->verificacion_model->institucion_visita($dep);
 				
-				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$data['programacion']['id_institucion'],$this->mostrar_todos,$data['programacion']['id_lugar_trabajo']);
+				$data['lugar_trabajo']=$this->verificacion_model->lugares_trabajo_institucion_visita($dep,$data['programacion']['id_institucion'],$this->mostrar_todos,$data['programacion']['id_lugar_trabajo']);
 			}
 			
 			$this->load->view('verificacion/programacion_recargado',$data);
@@ -363,6 +363,10 @@ class Verificacion extends CI_Controller
 		else {
 			pantalla_error();
 		}
+	}
+	
+	function ingreso()
+	{
 	}
 }
 ?>
