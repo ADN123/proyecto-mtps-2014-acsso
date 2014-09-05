@@ -809,7 +809,7 @@ class Acreditacion extends CI_Controller
 	*/
 	function aprobar_comite_recargado($id_lugar_trabajo=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dregistrar_comite); 
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Daprobar_comite); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			if($id_lugar_trabajo!=NULL) {
 				$data['empleado_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,"");
