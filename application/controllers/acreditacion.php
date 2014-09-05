@@ -251,7 +251,7 @@ class Acreditacion extends CI_Controller
 					else {
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					}
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion']);
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep);
 					break;
 			}	
 			

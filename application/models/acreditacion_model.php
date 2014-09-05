@@ -184,26 +184,31 @@ class Acreditacion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
-	function mostrar_capacitaciones($id_seccion=NULL,$todas=NULL)
+	function mostrar_capacitaciones($dep=NULL,$todas=NULL)
 	{
 		$where="";
-		if($id_seccion!=NULL) {
-			
+		if($dep!=NULL) {
+			$where=" AND org_municipio.id_departamento_pais=".$dep;
 		}
 		if($todas!=NULL) {
 			$where.=" AND estado_capacitacion=".$todas." AND fecha_capacitacion<='".date('Y-m-d')."'";
 		}
-		$sentencia="SELECT
-					id_capacitacion AS id,
-					DATE_FORMAT(fecha_capacitacion,'%d/%m/%Y') AS fecha,
+		$sentencia="SELECT DISTINCT
+					sac_capacitacion.id_capacitacion AS id,
+					DATE_FORMAT(sac_capacitacion.fecha_capacitacion,'%d/%m/%Y') AS fecha,
 					CASE 
-						WHEN sac_capacitacion.id_lugar_trabajo IS NOT NULL THEN CONCAT_WS(' - ',nombre_institucion, nombre_lugar) 
+						WHEN sac_capacitacion.id_lugar_trabajo IS NOT NULL THEN CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) 
 						WHEN sac_capacitacion.id_lugar_trabajo IS NULL THEN 'MTPS' 
 					END AS lugar
 					FROM
 					sac_capacitacion
 					LEFT JOIN sac_lugar_trabajo ON sac_capacitacion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
-					LEFT JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion WHERE TRUE ".$where;
+					LEFT JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN sac_asistencia ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+					INNER JOIN sac_empleado_institucion ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+					INNER JOIN sac_lugar_trabajo AS sac_lugar_trabajo_2 ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo_2.id_lugar_trabajo
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo_2.id_municipio AND org_municipio.id_municipio = sac_lugar_trabajo_2.id_municipio
+					WHERE TRUE ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
