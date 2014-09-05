@@ -375,7 +375,7 @@ class Verificacion extends CI_Controller
 					break;
 				case 4:
 					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
-					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'));
+					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'),3);
 					$data['id_empleado']=$info['id_empleado'];
 					break;
 			}
@@ -399,7 +399,7 @@ class Verificacion extends CI_Controller
 					break;
 				case 4:
 					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
-					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'));
+					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'),3);
 					$data['id_empleado']=$info['id_empleado'];
 					break;
 			}
