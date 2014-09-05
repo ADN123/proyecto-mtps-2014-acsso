@@ -178,13 +178,20 @@ class Verificacion_model extends CI_Model {
 	
 	function institucion_visita($id_departamento)
 	{
+		/*$sentencia="SELECT DISTINCT sac_institucion.id_institucion AS id, sac_institucion.nombre_institucion AS nombre
+					FROM sac_institucion
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
+					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado>=1 AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL AND org_departamento.id_departamento=".$id_departamento;*/
 		$sentencia="SELECT DISTINCT sac_institucion.id_institucion AS id, sac_institucion.nombre_institucion AS nombre
 					FROM sac_institucion
 					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
-					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado>=1 AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL AND org_departamento.id_departamento=".$id_departamento;
+					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado>=1 AND org_departamento.id_departamento=".$id_departamento;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -197,7 +204,8 @@ class Verificacion_model extends CI_Model {
 			$where.="AND sac_lugar_trabajo.id_institucion=".$id_institucion." ";
 		if($mostrar_todos=="FALSE") {
 			/*$where.="AND (sac_programacion_visita.estado_programacion<>1 OR sac_lugar_trabajo.fecha_conformacion IS NOT NULL";*/
-			$where.="AND (sac_lugar_trabajo.fecha_conformacion IS NOT NULL";
+			/*$where.="AND (sac_lugar_trabajo.fecha_conformacion IS NOT NULL";*/
+			$where.="AND (TRUE ";
 			if($id_lugar_trabajo!=NULL) {
 				$where.=" OR sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
 				$w2=" OR sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
