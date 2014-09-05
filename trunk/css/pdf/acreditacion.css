@@ -29,6 +29,7 @@ p {
 	text-align: center;
 	text-transform: none !important;
 }
-#xxx {
+.cabe, .ti {
+	text-transform: uppercase;
 }
 

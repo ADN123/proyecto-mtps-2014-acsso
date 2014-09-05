@@ -99,7 +99,7 @@
             		<tbody>
                     	<?php
 							foreach($capacitaciones as $val) {
-								echo '<tr><td>'.$val['fecha'].'</td><td>'.$val['lugar'].'</td><td><a href="#" class="edit-row" onClick="ingresar_asistencia('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-search"></i></a></td></tr>';
+								echo '<tr><td>'.$val['fecha'].'</td><td>'.$val['lugar'].'</td><td><a href="#" class="edit-row" onClick="ingresar_asistencia('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-search"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="'.base_url().'index.php/acreditacion/imprimir_asistencia/'.$val['id'].'" target="_blank"><i class="glyphicon glyphicon-print"></i></a></td></tr>';
 							}
 						?>
             		</tbody>

@@ -1,6 +1,6 @@
 <div id="progressWizard" class="basic-wizard">
 	<?php
-        if(isset($empleado_institucion['id_empleado_institucion']) && $empleado_institucion['id_empleado_institucion']=!"") {
+        if(isset($empleado_institucion['id_empleado_institucion']) && $empleado_institucion['id_empleado_institucion']!="") {
     ?>
             <input type="hidden" name="id_empleado_institucion" id="id_empleado_institucion" class="form-control"  value="<?php echo $empleado_institucion['id_empleado_institucion'] ?>" />
     <?php
@@ -31,6 +31,16 @@
                             }
                         ?>
                     </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="nombre_empleado" class="col-sm-3 control-label">Fecha de ingreso al comité<span class="asterisk">*</span></label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control" data-req="true" data-tip="fec" value="<?php if($empleado_institucion['fecha_ingreso']!="") echo $empleado_institucion['fecha_ingreso']; else echo date('d/m/Y')?>" readonly="readonly"/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
                 </div>
             </div>
             
@@ -88,11 +98,19 @@
                     <select data-req="true" class="form-control" name="id_tipo_inscripcion" id="id_tipo_inscripcion" data-placeholder="[Seleccione..]" >
                         <option value=""></option>
                         <?php
+							$i=0;
                             foreach($tipo_inscripcion as $val) {
                                 if($empleado_institucion['id_tipo_inscripcion']==$val['id'])
                                     echo '<option value="'.$val['id'].'" selected>'.$val['nombre'].'</option>';
-                                else
-                                    echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+                                else {
+									if($i==0) {
+                                    	echo '<option value="'.$val['id'].'" selected>'.$val['nombre'].'</option>';
+									}
+									else {
+										echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+									}
+								}
+								$i++;
                             }
                         ?>
                     </select>
@@ -103,7 +121,7 @@
     
     <ul class="pager wizard">
     	<?php
-			if(isset($empleado_institucion['id_tipo_inscripcion']) && $empleado_institucion['id_tipo_inscripcion']=!"") {
+			if(isset($empleado_institucion['id_tipo_inscripcion']) && $empleado_institucion['id_tipo_inscripcion']!="") {
 		?>
 				<li><button class="btn btn-primary" type="submit" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
         <?php
@@ -150,7 +168,7 @@
 			id=$(this).val();
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
 		});
-		
+		$('#fecha_ingreso').datepicker({maxDate: '0D'});
 		$("select").chosen({
 			'width': '100%',
 			'min-width': '100px',

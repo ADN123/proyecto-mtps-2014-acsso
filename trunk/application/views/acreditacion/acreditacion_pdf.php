@@ -122,5 +122,16 @@
             <?php echo $fec[2] ?> de 
             <?php echo $mes." ".$fec[0]?> 
     </p>
+    <table align="center">
+    	<tr>
+        	<td align="center">
+            	<img src="img/firma_gerencia.png" /><br />
+                f. _______________________________________<br />
+                LICDA. NORA DEL CARMEN LÓPEZ LAÍNEZ<br />
+                DIRECTORA GENERAL DE TRABAJO Y PREVISIÓN SOCIAL<br />
+                MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

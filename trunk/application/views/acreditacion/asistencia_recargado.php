@@ -5,7 +5,7 @@
 </style>
 <div id="progressWizard" class="basic-wizard">
 	<?php
-        if(isset($capacitacion[0]['id_capacitacion']) && $capacitacion[0]['id_capacitacion']=!"") {
+        if(isset($capacitacion[0]['id_capacitacion']) && $capacitacion[0]['id_capacitacion']!="") {
     ?>
             <input type="hidden" name="id_capacitacion" id="id_capacitacion" class="form-control"  value="<?php echo $id_capacitacion ?>" />
     <?php

@@ -53,9 +53,9 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="INSERT INTO sac_empleado_institucion
-					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea, delegado, sindicato) 
+					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea, delegado, sindicato, fecha_ingreso) 
 					VALUES 
-					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato)";
+					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato, '$fecha_ingreso')";
 		$this->db->query($sentencia);
 	}
 	
@@ -94,7 +94,8 @@ class Acreditacion_model extends CI_Model {
 					dui_empleado,
 					id_tipo_representacion,
 					delegado,
-					sindicato
+					sindicato,
+					DATE_FORMAT(fecha_ingreso,'%d/%m/%Y') AS fecha_ingreso
 					FROM sac_empleado_institucion
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$query=$this->db->query($sentencia);
@@ -114,7 +115,8 @@ class Acreditacion_model extends CI_Model {
 					fecha_modificacion='$fecha_modificacion', 
 					id_usuario_modifica=$id_usuario_modifica, 
 					delegado=$delegado, 
-					sindicato=$sindicato  
+					sindicato=$sindicato,
+					fecha_ingreso='$fecha_ingreso'
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$this->db->query($sentencia);
 	}
@@ -214,22 +216,32 @@ class Acreditacion_model extends CI_Model {
 		return true;
 	}
 	
-	function ver_capacitacion($id_capacitacion) 
+	function ver_capacitacion($id_capacitacion,$id_lugar_trabajo=NULL) 
 	{
+		$where="";
+		if($id_lugar_trabajo!=NULL)
+			$where=" AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
 		$sentencia="SELECT
 					sac_capacitador.id_capacitacion,
 					sac_capacitacion.id_lugar_trabajo,
 					DATE_FORMAT(fecha_capacitacion,'%d/%m/%Y') AS fecha_capacitacion,
+					fecha_capacitacion AS fecha_capacitacion2,
 					DATE_FORMAT(hora_capacitacion,'%h:%i %p') AS hora_capacitacion,
 					sac_capacitador.id_empleado,
+					tcm_empleado.nombre,
 					sac_empleado_institucion.id_empleado_institucion,
-					sac_empleado_institucion.nombre_empleado
-					FROM
-					sac_capacitacion
+					sac_empleado_institucion.nombre_empleado,
+					sac_empleado_institucion.cargo_empleado,
+					sac_lugar_trabajo.id_lugar_trabajo AS id,
+					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre_lugar
+					FROM sac_capacitacion
 					INNER JOIN sac_capacitador ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
 					INNER JOIN sac_asistencia ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
 					INNER JOIN sac_empleado_institucion ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
-					WHERE sac_capacitador.id_capacitacion=".$id_capacitacion;
+					INNER JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_capacitador.id_empleado
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_lugar_trabajo = sac_empleado_institucion.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE sac_capacitador.id_capacitacion=".$id_capacitacion.$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -271,7 +283,8 @@ class Acreditacion_model extends CI_Model {
 			//$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NULL";
 			$where.=" AND sac_lugar_trabajo.estado=1";
 		if($est==2)
-			$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL AND sac_lugar_trabajo.estado=2";
+			//$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL AND sac_lugar_trabajo.estado=2";
+			$where.=" AND sac_lugar_trabajo.estado=2";
 		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre, t1.inscritos, t2.capacitados 
 					FROM sac_lugar_trabajo
 					INNER JOIN (SELECT

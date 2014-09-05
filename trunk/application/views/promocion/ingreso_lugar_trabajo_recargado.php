@@ -1,6 +1,6 @@
 <div id="progressWizard" class="basic-wizard">
     <?php
-		if(isset($lugar_trabajo['id']) && $lugar_trabajo['id']=!"") {
+		if(isset($lugar_trabajo['id']) && $lugar_trabajo['id']!="") {
 	?>
 			<input type="hidden" name="id_lugar_trabajo" id="id_lugar_trabajo" class="form-control"  value="<?php echo $lugar_trabajo['id_lugar_trabajo'] ?>" />
 	<?php
@@ -123,7 +123,7 @@
     
     <ul class="pager wizard">
         <?php
-			if(isset($lugar_trabajo['id_lugar_trabajo']) && $lugar_trabajo['id_lugar_trabajo']=!"") {
+			if(isset($lugar_trabajo['id_lugar_trabajo']) && $lugar_trabajo['id_lugar_trabajo']!="") {
 		?>
 				<li><button class="btn btn-primary" type="submit" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
         <?php
