@@ -237,13 +237,13 @@ class Acreditacion extends CI_Controller
 			switch($data['id_permiso']) {
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones();
-					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones(NULL,1);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo(NULL,1,3);
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
-					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep,1,3);
 					
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	{
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
@@ -251,7 +251,7 @@ class Acreditacion extends CI_Controller
 					else {
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					}
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep);
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep,1);
 					break;
 			}	
 			
@@ -548,7 +548,7 @@ class Acreditacion extends CI_Controller
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
-					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($id_seccion['id_seccion'],1);
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep,1);
 					break;
 			}	
 			$data['estado_transaccion']=$estado_transaccion;
