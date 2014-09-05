@@ -5,7 +5,7 @@
 </style>
 <div id="progressWizard" class="basic-wizard">
     <?php
-        if(isset($id_lugar_trabajo) && $id_lugar_trabajo=!"") {
+        if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="") {
     ?>
             <input type="hidden" name="id_lugar_trabajo" id="id_lugar_trabajo" class="form-control"  value="<?php echo $ilt ?>" />
     <?php

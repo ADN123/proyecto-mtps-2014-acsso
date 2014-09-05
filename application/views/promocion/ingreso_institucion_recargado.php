@@ -1,6 +1,6 @@
 <div id="progressWizard" class="basic-wizard">
     <?php
-		if(isset($institucion['id']) && $institucion['id']=!"") {
+		if(isset($institucion['id']) && $institucion['id']!="") {
 	?>
 			<input type="hidden" name="id_institucion" id="id_institucion" class="form-control"  value="<?php echo $institucion['id_institucion'] ?>" />
 	<?php
@@ -96,7 +96,7 @@
     
     <ul class="pager wizard">
     	<?php
-			if(isset($institucion['id']) && $institucion['id']=!"") {
+			if(isset($institucion['id']) && $institucion['id']!="") {
 		?>
 				<li><button class="btn btn-primary" type="submit" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
         <?php

@@ -1,5 +1,5 @@
 <?php
-	if(isset($programacion['id_programacion_visita']) && $programacion['id_programacion_visita']=!"") {
+	if(isset($programacion['id_programacion_visita']) && $programacion['id_programacion_visita']!="") {
 ?>
 		<input type="hidden" name="id_programacion_visita" id="id_programacion_visita" class="form-control"  value="<?php echo $idpv ?>" />
 <?php
@@ -78,7 +78,7 @@
 
 <ul class="pager wizard">
 	<?php
-		if(isset($programacion['id_programacion_visita']) && $programacion['id_programacion_visita']=!"") {
+		if(isset($programacion['id_programacion_visita']) && $programacion['id_programacion_visita']!="") {
     ?>
             <li><button class="btn btn-primary" type="button" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
     <?php

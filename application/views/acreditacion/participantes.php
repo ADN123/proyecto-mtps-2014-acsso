@@ -65,6 +65,16 @@
                             </div>
                             
                             <div class="form-group">
+                                <label for="nombre_empleado" class="col-sm-3 control-label">Fecha de ingreso al comité<span class="asterisk">*</span></label>
+                                <div class="col-sm-4">
+                                	<div class="input-group">
+                                        <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control" data-req="true" data-tip="fec" value="<?php echo date('d/m/Y')?>" readonly="readonly"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                	</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
                                 <label for="id_tipo_representacion" class="col-sm-3 control-label">Representación <span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
                                     <select data-req="true" class="form-control" name="id_tipo_representacion" id="id_tipo_representacion" data-placeholder="[Seleccione..]" >
@@ -188,6 +198,7 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
+		$('#fecha_ingreso').datepicker({maxDate: '0D'});
 		$("#limpiar").click(function(){
 			$("#formu").load(base_url()+"index.php/acreditacion/participantes_recargado");
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/0');

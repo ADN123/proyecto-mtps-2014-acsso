@@ -105,6 +105,8 @@ class Acreditacion extends CI_Controller
 			
 			$id_empleado_institucion=$this->input->post('id_empleado_institucion');
 			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
+			$fec=str_replace("/","-",$this->input->post('fecha_ingreso'));
+			$fecha_ingreso=date("Y-m-d", strtotime($fec));
 			$id_tipo_representacion=$this->input->post('id_tipo_representacion');
 			$nombre_empleado=$this->input->post('nombre_empleado');
 			$dui_empleado=$this->input->post('dui_empleado');
@@ -129,6 +131,7 @@ class Acreditacion extends CI_Controller
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
 					'delegado'=>$delegado,
 					'sindicato'=>$sindicato,
+					'fecha_ingreso'=>$fecha_ingreso,
 					'fecha_creacion'=>$fecha_creacion,
 					'id_usuario_crea'=>$id_usuario_crea
 				);
@@ -149,10 +152,11 @@ class Acreditacion extends CI_Controller
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
 					'delegado'=>$delegado,
 					'sindicato'=>$sindicato,
+					'fecha_ingreso'=>$fecha_ingreso,
 					'fecha_modificacion'=>$fecha_modificacion,
 					'id_usuario_modifica'=>$id_usuario_modifica
 				);
-				$this->acreditacion_model->actualizar_participante($formuInfo);
+				//$this->acreditacion_model->actualizar_participante($formuInfo);
 				$tipo=2;
 			}
 			
@@ -614,6 +618,41 @@ class Acreditacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function imprimir_asistencia($id_capacitacion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		if($data['id_permiso']!=NULL) {
+			$data['id_seccion']=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+			$capacitacion=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
+			/*$this->load->view('transporte/acreditacion_pdf.php',$data);*/
+			
+			$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+			$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+			$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+			
+			foreach($capacitacion as $val) {
+				$id=$val['id'];
+				$idc[$id]=1;
+			}
+			for($i=0;$i<count($capacitacion);$i++) { 
+				$id=$capacitacion[$i]['id'];
+				if($idc[$id]==1) {
+					$idc[$id]=0;
+					if($i>0)
+						$this->mpdf->AddPage();
+					$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion, $capacitacion[$i]['id']);
+					$html = $this->load->view('acreditacion/asistencia_pdf.php', $data, true);
+					$this->mpdf->WriteHTML($html,2);
+				}
+			}
+			
+			$this->mpdf->Output(); /*Salida del pdf*/
+		}
+		else {
+			pantalla_error();
+		}
+	}		
 	
 	/*
 	*	Nombre: registrar_comite
