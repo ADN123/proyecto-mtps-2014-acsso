@@ -10,7 +10,7 @@ class Acreditacion_model extends CI_Model {
 		parent::__construct();
     }
 	
-	function insticion_lugar_trabajo($dep=NULL,$sin_vacios=1) 
+	function insticion_lugar_trabajo($dep=NULL,$sin_vacios=1,$estado_capacitacion=NULL) 
 	{
 		$where="";
 		if($sin_vacios==1)
@@ -24,6 +24,9 @@ class Acreditacion_model extends CI_Model {
 						AND total_mujeres NOT LIKE ''";
 		if($dep!=NULL)
 			$where.=" 	AND id_departamento_pais=".$dep;
+		if($estado_capacitacion!=NULL)
+			//$where.=" 	AND sac_lugar_trabajo.estado<".$estado_capacitacion;
+			$where.="";
 		$sentencia="SELECT
 					id_lugar_trabajo AS id,
 					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre
@@ -225,7 +228,7 @@ class Acreditacion_model extends CI_Model {
 	{
 		$where="";
 		if($id_lugar_trabajo!=NULL)
-			$where=" AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
+			$where.=" AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo;
 		$sentencia="SELECT
 					sac_capacitador.id_capacitacion,
 					sac_capacitacion.id_lugar_trabajo,
@@ -253,7 +256,6 @@ class Acreditacion_model extends CI_Model {
 	
 	function actualizar_capacitacion($formuInfo)
 	{
-		
 		extract($formuInfo);
 		$sentencia="UPDATE sac_capacitacion SET
 		 			id_lugar_trabajo=$id_lugar_trabajo, 
