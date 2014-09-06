@@ -23,6 +23,7 @@ $(document).ready(function(){
 	
 	$("#formu").submit(function(){
 		band=true;
+		$(".tooltipflot").remove();
 		$('#formu input, #formu select, #formu textarea').each(function(indice, elemento) {
 			var val=$(elemento).val();
 			var padr=$(elemento).parents('.form-group');
@@ -31,44 +32,61 @@ $(document).ready(function(){
 			var tipo=$(elemento).data("tip");
 			var vmin=$(elemento).data("min");
 			var vmax=$(elemento).data("max");
+			var mens=$(elemento).data("men");
 			var patt2;
+			var emen;
+						
+			var pos=$(elemento).position();
+			var h=$(elemento).css("height");
 
 			if($(elemento).attr("class")=="form-control") {
 				
 				$(padr).removeClass('has-error');
-				
 				if(vreq=="true" || vreq=="TRUE" || vreq=="1") {
 					if(val=="" || val==null) {
 						$(padr).addClass('has-error');
 						band=false;
+						emen="No debe quedar vacío";
+						if(mens=="" || mens=="undefined")
+							mensaje_tooltip($(padr).find('div'),mens,h);
+						else
+							mensaje_tooltip($(padr).find('div'),emen,h);
 					}
 				}
 				
-				if(tipo!="" && tipo!="undefinided" && tipo!=null && val!="") {
+				if(tipo!="" && tipo!="undefined" && tipo!=null && val!="") {
 					switch(tipo) {
 						case 'var': /*letras*/
 							patt2=/^([a-z|\' '|ñ|á-ú]*)$/i;
+							emen="Dede escribir sólo letras";
 							break;
 						case 'int': /*numeros enteros*/
 							patt2=/^[0-9]*$/i;
+							emen="Dede escribir sólo números enteros";
 							break;
 						case 'flo': /*numeros flotantes*/
 							patt2=/^[0-9]*([.]?[0-9]{1,2})?$/i;
+							emen="Dede escribir sólo números";
 							break;
 						case 'tel': /*telefono*/
 							patt2=/^[2|6|7]{1}[0-9]{3}[0-9]{4}$/i;
+							emen="Dede escribir un número de teléfono sin guión";
 							break;
 						case 'dui': /*dui*/
 							patt2=/^[0-9]{8}-[0-9]{1}$/i;
+							emen="Dede escribir el DUI con formato 99999999-9";
 							break;
 						case 'nit': /*nit*/
 							patt2=/^[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}$/i;
+							emen="Dede escribir el NIT con formato 9999-999999-999-9";
 							break;
 						case 'cor': /*correo*/
 							patt2=/(^(\w+([\.]\w+)*[\@]{1}\w+([\.]\w+)?[\.]{1}\w{2,3})|^)$/i;
+							emen="Dede escribir un correo con formato ejemplo@correo.com";
 							break;
 						case 'fec': /*fecha*/
 							patt2=/^([0][1-9]|[12][0-9]|3[01])(\/|-)([0][1-9]|[1][0-2])\2(\d{4})$/i;
+							emen="Dede escribir la fecha con formato dd/mm/yyyy";
 							break;
 						default: /*caracteres alfanumericos*/
 							patt2=/^([0-9|#|"|'|\/|\-|°|.|,|a-z|\' '|ñ|á-ú]*)$/i;
@@ -76,47 +94,71 @@ $(document).ready(function(){
 					if(!patt2.test(val)){
 						$(padr).addClass('has-error');
 						band=false;
+						if(mens=="" || mens=="undefined")
+							mensaje_tooltip($(padr).find('div'),mens);
+						else
+							mensaje_tooltip($(padr).find('div'),emen);
 					}
 				}
 				
-				if(vmin!="" && vmin!="undefinided" && vmin!=null && val!="") {
+				if(vmin!="" && vmin!="undefined" && vmin!=null && val!="") {
 					if(tipo=='int' || tipo=='flo'){
 						if(Number(val) < Number(vmin)) {
 							$(padr).addClass('has-error');
 							band=false;
+							emen="Debe ser mayor a "+vmin;
+							if(mens=="" || mens=="undefined")
+								mensaje_tooltip($(padr).find('div'),mens);
+							else
+								mensaje_tooltip($(padr).find('div'),emen);
 						}
 					}
 					else {
 						if(Number(val.length) < Number(vmin)) {
 							$(padr).addClass('has-error');
 							band=false;
+							emen="Debe escribir al menos "+vmin+" caracteres";
+							if(mens=="" || mens=="undefined")
+								mensaje_tooltip($(padr).find('div'),mens);
+							else
+								mensaje_tooltip($(padr).find('div'),emen);
 						}
 						
 					}
 				}
 				
-				if(vmax!="" && vmax!="undefinided" && vmax!=null && val!="") {
+				if(vmax!="" && vmax!="undefined" && vmax!=null && val!="") {
 					if(tipo=='int' || tipo=='flo'){
 						if(Number(val) > Number(vmax)) {
 							$(padr).addClass('has-error');
 							band=false;
+							emen="Debe ser menor a "+vmax;
+							if(mens=="" || mens=="undefined")
+								mensaje_tooltip($(padr).find('div'),mens);
+							else
+								mensaje_tooltip($(padr).find('div'),emen);
 						}
 					}
 					else {
 						if(Number(val.length) > Number(vmax)) {
 							$(padr).addClass('has-error');
 							band=false;
+							emen="Debe escribir no más de "+vmax+" caracteres";
+							if(mens=="" || mens=="undefined")
+								mensaje_tooltip($(padr).find('div'),mens);
+							else
+								mensaje_tooltip($(padr).find('div'),emen);
 						}
 						
 					}
-				}
-				
+				}				
 			}
 		});
 		if(band)
 			document.getElementById("formu").submit();
-		else
+		else {
 			return false;
+		}
 	});
 	
 	$(".ayuda").click(function(){
@@ -176,6 +218,19 @@ $(document).ready(function(){
 		return false;
 	});
 });
+function mensaje_tooltip(obj, men, y) {
+	$('<div id="tooltip" class="tooltipflot">'+men+'</div>').css( {
+		position: 'absolute',
+		display: 'none',
+		top: y,
+		left: 10,
+		right: 10,
+		margin: "0 auto",
+		"min-width": 100,
+		"z-index":1,
+		"text-align": "center"
+	}).appendTo(obj).fadeIn(200);
+}
 function showTooltip(x, y, contents) {
 	jQuery('<div id="tooltip" class="tooltipflot">' + contents + '</div>').css( {
 		position: 'absolute',
