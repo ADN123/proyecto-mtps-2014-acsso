@@ -58,8 +58,10 @@
 <script language="javascript" >
 	$(document).ready(function(){	
 		$('.table').DataTable({
-		"sPaginationType": "simple",
-		responsive: true
+		  "filter": false,
+		  "paginate": false,
+		  "destroy": true,
+		  responsive: true
 		});
 		$("select").chosen({
 			'width': '100%',

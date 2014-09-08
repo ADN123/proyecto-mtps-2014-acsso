@@ -38,6 +38,37 @@ class Acreditacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function insticion_lugar_trabajo_sin_capacitarse($dep=NULL,$sin_vacios=1,$estado_capacitacion=NULL) 
+	{
+		$where="";
+		if($sin_vacios==1)
+			$where.=" 	AND id_tipo_lugar_trabajo NOT LIKE '' 
+						AND sac_lugar_trabajo.id_municipio NOT LIKE '' 
+						AND nombre_lugar NOT LIKE '' 
+						AND direccion_lugar NOT LIKE '' 
+						AND nombre_contacto NOT LIKE '' 
+						AND telefono NOT LIKE '' 
+						AND total_hombres NOT LIKE '' 
+						AND total_mujeres NOT LIKE ''";
+		if($dep!=NULL)
+			$where.=" 	AND id_departamento_pais=".$dep;
+		if($estado_capacitacion!=NULL)
+			//$where.=" 	AND sac_lugar_trabajo.estado<".$estado_capacitacion;
+			$where.="";
+		$sentencia="SELECT DISTINCT
+					sac_lugar_trabajo.id_lugar_trabajo AS id,
+					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre
+					FROM sac_empleado_institucion
+					LEFT JOIN sac_asistencia ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+					LEFT JOIN sac_capacitacion ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+					INNER JOIN sac_lugar_trabajo ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					WHERE sac_empleado_institucion.estado_empleado=1 AND (sac_asistencia.asistio IS NULL OR (sac_asistencia.asistio=0 AND sac_capacitacion.estado_capacitacion=0)) AND sac_lugar_trabajo.estado<>0 ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	function tipo_representacion()
 	{
 		$sentencia="SELECT id_tipo_representacion AS id, nombre_tipo_representacion AS nombre FROM sac_tipo_representacion";
@@ -83,15 +114,24 @@ class Acreditacion_model extends CI_Model {
 	{
 		$where="";
 		if($id_lugar_trabajo!=NULL)
-			$where=" AND id_lugar_trabajo=".$id_lugar_trabajo;
+			$where=" AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo;
 		if($empleados!="") {
 			$emp=explode("-",$empleados);
 			for($i=0;$i<(count($emp)-1);$i++) {
-				$where.=" AND id_empleado_institucion <> ".$emp[$i];
+				$where.=" AND sac_empleado_institucion.id_empleado_institucion <> ".$emp[$i];
 			}
 		}
 		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
-		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
+		$sentencia="SELECT DISTINCT
+					sac_empleado_institucion.id_empleado_institucion AS id,
+					sac_empleado_institucion.nombre_empleado AS nombre,
+					sac_empleado_institucion.delegado,
+					sac_empleado_institucion.sindicato
+					FROM
+					sac_empleado_institucion
+					LEFT JOIN sac_asistencia ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+					LEFT JOIN sac_capacitacion ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+					WHERE sac_empleado_institucion.estado_empleado=1 AND (sac_asistencia.asistio IS NULL OR (sac_asistencia.asistio=0 AND sac_capacitacion.estado_capacitacion=0)) ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}

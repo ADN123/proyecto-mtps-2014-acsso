@@ -131,7 +131,7 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function mostrar_tecnicos_disponibles_por_dia($id_seccion=NULL,$ss=NULL)
+	function mostrar_tecnicos_disponibles_por_dia($id_seccion=NULL,$ss=NULL,$fecha=NULL,$id_capacitacion=NULL)
 	{
 		$where="";
 		if($id_seccion!=NULL && $ss!=NULL) {
@@ -141,7 +141,34 @@ class Promocion_model extends CI_Model {
 			else
 				$where.=" AND id_seccion=".$id_seccion;
 		}
-		$sentencia="SELECT id_empleado AS id, nombre FROM tcm_empleado 
+		$w="";
+		if($fecha==NULL)
+			$f=date('Y-m-d');
+		else {
+			$f=$fecha;
+			$w=" AND sac_capacitacion.id_capacitacion<>'".$id_capacitacion."'";
+		}
+		/*$sentencia="SELECT
+					tcm_empleado.id_empleado AS id,
+					tcm_empleado.nombre,
+					CASE 
+						WHEN (sac_capacitacion.fecha_capacitacion='".$f."' AND sac_capacitacion.estado_capacitacion=1 ".$w.") THEN 'disabled' ELSE ''
+					END AS activo
+					FROM
+					tcm_empleado
+					LEFT JOIN sac_capacitador ON sac_capacitador.id_empleado = tcm_empleado.id_empleado
+					LEFT JOIN sac_capacitacion ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
+					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') ".$where;*/
+		$sentencia="SELECT
+					tcm_empleado.id_empleado AS id,
+					tcm_empleado.nombre,
+					CASE 
+						WHEN (sac_capacitacion.fecha_capacitacion='".$f."' ".$w.") THEN 'disabled' ELSE ''
+					END AS activo
+					FROM
+					tcm_empleado
+					LEFT JOIN sac_capacitador ON sac_capacitador.id_empleado = tcm_empleado.id_empleado
+					LEFT JOIN sac_capacitacion ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
 					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
