@@ -78,8 +78,8 @@
                             
                             <div class="form-group">
                                 <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
-                                    <select data-req="true" multiple class="form-control" name="id_empleado[]" id="id_empleado" data-placeholder="[Seleccione..]" >
+                                <div class="col-sm-6" id="multi-s">
+                                    <select data-req="true" multiple class="form-control" name="id_empleado[]" id="id_empleado" data-placeholder="&nbsp;" >
                                         <option value=""></option>
                                         <?php
                                             foreach($tecnico as $val) {

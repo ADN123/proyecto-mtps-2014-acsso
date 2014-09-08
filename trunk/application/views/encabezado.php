@@ -187,13 +187,16 @@
 		.toggle-slide .toggle-blob {
 			z-index: 1;
 		}
-		.tooltipflot {
+		form .tooltipflot {
 			position: absolute;
 			bottom: 0;
 			margin: 0px auto;
 			width: auto;
 			z-index: 1;
 			text-align: left;
+		}
+		#multi-s .chosen-container-multi .chosen-choices {
+			height: 72px !important;
 		}
 		@media screen and (max-width: 640px) {
 			.dataTables_length {

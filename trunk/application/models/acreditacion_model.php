@@ -73,7 +73,24 @@ class Acreditacion_model extends CI_Model {
 				$where.=" AND id_empleado_institucion <> ".$emp[$i];
 			}
 		}
-		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
+		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
+		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function empleados_lugar_trabajo_sin_capacitarse($id_lugar_trabajo=NULL, $empleados="")
+	{
+		$where="";
+		if($id_lugar_trabajo!=NULL)
+			$where=" AND id_lugar_trabajo=".$id_lugar_trabajo;
+		if($empleados!="") {
+			$emp=explode("-",$empleados);
+			for($i=0;$i<(count($emp)-1);$i++) {
+				$where.=" AND id_empleado_institucion <> ".$emp[$i];
+			}
+		}
+		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
 		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
