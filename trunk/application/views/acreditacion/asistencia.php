@@ -112,7 +112,8 @@
 		$('.table').dataTable( {
 		  "filter": false,
 		  "paginate": false,
-		  "destroy": true
+		  "destroy": true,
+		  responsive: true
 		});
 	  	$('#progressWizard').bootstrapWizard({
 			'nextSelector': '.next',
