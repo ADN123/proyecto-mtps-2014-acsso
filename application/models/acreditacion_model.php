@@ -64,7 +64,9 @@ class Acreditacion_model extends CI_Model {
 					INNER JOIN sac_lugar_trabajo ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
-					WHERE sac_empleado_institucion.estado_empleado=1 AND (sac_asistencia.asistio IS NULL OR (sac_asistencia.asistio=0 AND sac_capacitacion.estado_capacitacion=0)) AND sac_lugar_trabajo.estado<>0 ".$where;
+					WHERE sac_empleado_institucion.estado_empleado=1 AND (sac_asistencia.asistio IS NULL OR (sac_asistencia.asistio=0 AND sac_capacitacion.estado_capacitacion=0)) AND sac_lugar_trabajo.estado<>0 ".$where."
+					GROUP BY sac_empleado_institucion.id_empleado_institucion
+					HAVING MIN(sac_asistencia.asistio) IS NULL";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -131,7 +133,9 @@ class Acreditacion_model extends CI_Model {
 					sac_empleado_institucion
 					LEFT JOIN sac_asistencia ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
 					LEFT JOIN sac_capacitacion ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
-					WHERE sac_empleado_institucion.estado_empleado=1 AND (sac_asistencia.asistio IS NULL OR (sac_asistencia.asistio=0 AND sac_capacitacion.estado_capacitacion=0)) ".$where;
+					WHERE sac_empleado_institucion.estado_empleado=1 AND (sac_asistencia.asistio IS NULL OR (sac_asistencia.asistio=0 AND sac_capacitacion.estado_capacitacion=0)) ".$where."
+					GROUP BY sac_empleado_institucion.id_empleado_institucion
+					HAVING MIN(sac_asistencia.asistio) IS NULL";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
