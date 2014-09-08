@@ -345,7 +345,7 @@ class Acreditacion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
-			$data['empleados_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,$empleados);
+			$data['empleados_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo_sin_capacitarse($id_lugar_trabajo,$empleados);
 			$this->load->view('acreditacion/participantes_lugar_trabajo_capacitacion',$data);
 		}
 		else {
