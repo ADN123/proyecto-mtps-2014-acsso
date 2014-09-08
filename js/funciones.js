@@ -224,6 +224,8 @@ $(document).ready(function(){
 function mensaje_tooltip(obj, men, y) {
 	if($(obj).find('.tooltipflot').length==0) {
 		var w=Number($(obj).width())-20;
+		if(w<212)
+			w="auto";
 		$('<div class="cont-tooltip"><div id="tooltip" class="tooltipflot">'+men+'</div></div>').css( {
 			position: 'absolute',
 			top: 0,

@@ -131,14 +131,14 @@
                         	
                         	<div class="form-group">
                                 <label for="total_hombres" class="col-sm-3 control-label">Total hombres</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <input type="number" name="total_hombres" id="total_hombres" class="form-control" data-tip="int" data-min="0"/>
                                 </div>
                             </div>
                         	
                         	<div class="form-group">
                                 <label for="total_mujeres" class="col-sm-3 control-label">Total Mujeres</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <input type="number" name="total_mujeres" id="total_mujeres" class="form-control" data-tip="int" data-min="0" />
                                 </div>
                             </div>

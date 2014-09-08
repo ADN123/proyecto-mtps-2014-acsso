@@ -69,14 +69,14 @@
 
 <div class="form-group">
     <label for="total_hombres" class="col-sm-3 control-label">Total hombres <span class="asterisk">*</span></label>
-    <div class="col-sm-1">
+    <div class="col-sm-2">
         <input data-req="true" data-tip="int" data-min="0" type="number" name="total_hombres" id="total_hombres" class="form-control" value="<?php if($lugar_trabajo['id_lugar_trabajo']=="")echo ''; else echo $lugar_trabajo['total_hombres'];?>" />
     </div>
 </div>
 
 <div class="form-group">
     <label for="total_mujeres" class="col-sm-3 control-label">Total Mujeres <span class="asterisk">*</span></label>
-    <div class="col-sm-1">
+    <div class="col-sm-2">
         <input data-req="true" data-tip="int" data-min="0" type="number" name="total_mujeres" id="total_mujeres" class="form-control" value="<?php if($lugar_trabajo['id_lugar_trabajo']=="")echo ''; else echo $lugar_trabajo['total_mujeres'];?>" />
     </div>
 </div>

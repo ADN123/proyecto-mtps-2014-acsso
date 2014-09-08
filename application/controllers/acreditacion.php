@@ -31,7 +31,7 @@ class Acreditacion extends CI_Controller
 	*	Última Modificación: 24/07/2014
 	*	Observaciones: Ninguna.
 	*/
-	function participantes($accion_transaccion=NULL, $estado_transaccion=NULL)
+	function participantes($accion_transaccion=NULL, $estado_transaccion=NULL, $idlt=NULL)
 	{	
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
@@ -45,6 +45,7 @@ class Acreditacion extends CI_Controller
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
 					break;
 			}
+			$data['idlt']=$idlt;
 			$data['tipo_representacion']=$this->acreditacion_model->tipo_representacion();
 			$data['tipo_inscripcion']=$this->acreditacion_model->tipo_inscripcion();
 			$data['estado_transaccion']=$estado_transaccion;
@@ -156,13 +157,13 @@ class Acreditacion extends CI_Controller
 					'fecha_modificacion'=>$fecha_modificacion,
 					'id_usuario_modifica'=>$id_usuario_modifica
 				);
-				//$this->acreditacion_model->actualizar_participante($formuInfo);
+				$this->acreditacion_model->actualizar_participante($formuInfo);
 				$tipo=2;
 			}
 			
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a("index.php/acreditacion/participantes/".$tipo."/".$tr);
+			ir_a("index.php/acreditacion/participantes/".$tipo."/".$tr."/".$id_lugar_trabajo);
 		}
 		else {
 			pantalla_error();
@@ -476,7 +477,8 @@ class Acreditacion extends CI_Controller
 					'id_capacitacion'=>$id_capacitacion,
 					'id_empleado_institucion'=>$id_empleado_institucion[$i]
 				);
-				$this->acreditacion_model->agregar_empleados_capacitacion($formuInfo);
+				if($id_empleado_institucion[$i]!="")
+					$this->acreditacion_model->agregar_empleados_capacitacion($formuInfo);
 			}
 			
 			for($i=0;$i<count($id_empleado);$i++) {
