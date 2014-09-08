@@ -43,9 +43,9 @@
                 </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group" id="multi-s">
                 <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <span class="asterisk">*</span></label>
-                <div class="col-sm-6" id="multi-s">
+                <div class="col-sm-6">
                     <select data-req="true" multiple class="form-control" name="id_empleado[]" id="id_empleado" data-placeholder="&nbsp;" >
                         <option value=""></option>
                         <?php
@@ -56,9 +56,9 @@
 							}
                             foreach($tecnico as $val) {
 								if(in_array($val['id'],$ide))
-                                	echo '<option value="'.$val['id'].'" selected="selected">'.ucwords($val['nombre']).'</option>';
+                                	echo '<option value="'.$val['id'].'" selected="selected" '.$val['activo'].'>'.ucwords($val['nombre']).'</option>';
 								else
-                                	echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                	echo '<option value="'.$val['id'].'" '.$val['activo'].'>'.ucwords($val['nombre']).'</option>';
                             }
                         ?>
                     </select>
@@ -119,12 +119,12 @@
     	<?php
 			if(isset($capacitacion[0]['id_capacitacion']) && $capacitacion[0]['id_capacitacion']!="") {
 		?>
-				<li><button class="btn btn-primary" type="submit" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
+				<li><button class="btn btn-primary" type="button" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
         <?php
 			}
 			else {
 		?>
-        		<li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+        		<li><button class="btn btn-success" type="button" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
 		<?php
 			}
 		?>
@@ -194,7 +194,39 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
+		$("#guardar").click(function(){
+			if($("#id_empleado").val()!="" && (($("#id_lugar_trabajo").val()=="" && $("#id_lugar_trabajo").attr("disabled")=="disabled") || ($("#id_lugar_trabajo").val()!="" && $("#id_lugar_trabajo").attr("disabled")!="disabled")) && $("#fecha_visita").val()!="" && $("#timepicker").val()!="") {
+				$.ajax({
+					async:	true, 
+					url:	base_url()+"index.php/acreditacion/comprobar_capacitacion",
+					dataType:"json",
+					type: "POST",
+					data: $('#formu').serialize(),
+					success: function(data) {
+					var json=data;
+						if(Number(json['resultado'])==1) {
+							$("#formu").submit();
+						}
+						else {
+							alerta_rapida('Error en el ingreso de la capacitación!', 'Debe seleccionar al menos un empleado de un lugar de trabajo', 'danger');
+						}
+					},
+					error:function(data) {
+						alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
+					}
+				});		
+			}
+			else {
+				$("#formu").submit();
+			}
+		});
 		$('#fecha_capacitacion').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
+		$('#fecha_capacitacion').change(function(){
+			var fecha = $(this).val();
+			fecha = fecha.replace("/","-");
+			fecha = fecha.replace("/","-");
+			$("#multi-s").load(base_url()+"index.php/acreditacion/lista_tecnicos_disponibles/"+fecha);
+		});
 		$('#timepicker').timepicker({defaultTIme: false});
 		$("#limpiar").click(function(){
 			emp.length=0;

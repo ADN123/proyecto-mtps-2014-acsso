@@ -76,14 +76,14 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
+                            <div class="form-group" id="multi-s">
                                 <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <span class="asterisk">*</span></label>
-                                <div class="col-sm-6" id="multi-s">
+                                <div class="col-sm-6">
                                     <select data-req="true" multiple class="form-control" name="id_empleado[]" id="id_empleado" data-placeholder="&nbsp;" >
                                         <option value=""></option>
                                         <?php
                                             foreach($tecnico as $val) {
-                                                echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                                echo '<option value="'.$val['id'].'" '.$val['activo'].'>'.ucwords($val['nombre']).'</option>';
                                             }
                                         ?>
                                     </select>
@@ -129,7 +129,7 @@
                    	</div><!-- tab-content -->
                     
                     <ul class="pager wizard">
-                        <li><button class="btn btn-success" type="submit" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+                        <li><button class="btn btn-success" type="button" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
                         <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
               		
                     </ul>
@@ -220,12 +220,18 @@
 			}
 	  	});	
 		$('#fecha_capacitacion').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
+		$('#fecha_capacitacion').change(function(){
+			var fecha = $(this).val();
+			fecha = fecha.replace("/","-");
+			fecha = fecha.replace("/","-");
+			$("#multi-s").load(base_url()+"index.php/acreditacion/lista_tecnicos_disponibles/"+fecha);
+		});
 		$('#timepicker').timepicker({defaultTIme: false});
 		$("#limpiar").click(function(){
 			emp.length=0;
 			$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado");
 		});
-		/*$("#guardar").click(function(){
+		$("#guardar").click(function(){
 			if($("#id_empleado").val()!="" && (($("#id_lugar_trabajo").val()=="" && $("#id_lugar_trabajo").attr("disabled")=="disabled") || ($("#id_lugar_trabajo").val()!="" && $("#id_lugar_trabajo").attr("disabled")!="disabled")) && $("#fecha_visita").val()!="" && $("#timepicker").val()!="") {
 				$.ajax({
 					async:	true, 
@@ -239,18 +245,18 @@
 							$("#formu").submit();
 						}
 						else {
-							alerta_rapida('Error en el ingreso de la capacitación!', 'El(los) técnico(s) ya tiene(n) una capacitación programada en el día y hora ingresados', 'danger');
+							alerta_rapida('Error en el ingreso de la capacitación!', 'Debe seleccionar al menos un empleado de un lugar de trabajo', 'danger');
 						}
 					},
 					error:function(data) {
-						//alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
+						alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
 					}
 				});		
 			}
 			else {
 				$("#formu").submit();
 			}
-		});*/
+		});
 	});
 	function editar(id){
 		$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado/"+id);

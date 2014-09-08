@@ -278,25 +278,26 @@ class Acreditacion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			if($id_capacitacion!=NULL) {
+				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
+				$data['id_capacitacion']=$id_capacitacion;
+			}
+			//echo $data['capacitacion'][0]['fecha_capacitacion2'];
 			switch($data['id_permiso']) {
 				case 3:
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia();	
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,$data['capacitacion'][0]['fecha_capacitacion2'],$id_capacitacion);	
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],2);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],2,$data['capacitacion'][0]['fecha_capacitacion2'],$id_capacitacion);
 					else
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],1);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],1,$data['capacitacion'][0]['fecha_capacitacion2'],$id_capacitacion);
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
 					break;
 			}	
-			if($id_capacitacion!=NULL) {
-				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
-				$data['id_capacitacion']=$id_capacitacion;
-			}
 			$this->load->view('acreditacion/capacitacion_recargado',$data);
 		}
 		else {
@@ -318,12 +319,12 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
 				case 3:
-					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo_sin_capacitarse();
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
-					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo_sin_capacitarse($dep);
 					break;
 			}
 			$this->load->view('acreditacion/mostrar_lugares_trabajo',$data);
@@ -907,39 +908,25 @@ class Acreditacion extends CI_Controller
 	
 	/*
 	*	Nombre: comprobar_capacitacion
-	*	Objetivo: Verifica que los tecnicos educadores no les choquen las capacitaciones que tienen asignadas
+	*	Objetivo: Verifica que se haya inscrito al menos un empleado a una capacitacion
 	*	Hecha por: Leonel
 	*	Modificada por: Leonel
-	*	Última Modificación: 31/08/2014
-	*	Observaciones: No esta en funcionamiento, se hizo de otra manera.
+	*	Última Modificación: 08/09/2014
+	*	Observaciones: Ninguna.
 	*/
 	function comprobar_capacitacion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			
-			$id_programacion_visita=$this->input->post('id_programacion_visita');
-			$id_empleado=$this->input->post('id_empleado');
-			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
-			$fec=str_replace("/","-",$this->input->post('fecha_visita'));
-			$fecha_visita=date("Y-m-d", strtotime($fec));
-			$hora_visita=$this->input->post('hour').':'.$this->input->post('minute').':00 '.$this->input->post('meridian');
-			$hora_visita=date("H:i:s", strtotime($hora_visita));
-			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
-			
-			if($id_empleado!="" && $fecha_visita!="" && $hora_visita!="" && $hora_visita_final!="") {		
-				$formuInfo = array(
-					'id_programacion_visita'=>$id_programacion_visita,
-					'id_empleado'=>$id_empleado,
-					'id_lugar_trabajo'=>$id_lugar_trabajo,
-					'fecha_visita'=>$fecha_visita,
-					'hora_visita'=>$hora_visita,
-					'hora_visita_final'=>$hora_visita_final,
-					'estado_programacion'=>$estado_programacion
-				);
-				
+			$id_empleado_institucion=$this->input->post('id_empleado_institucion');
+			$c=false;
+			for($i=0;$i<count($id_empleado_institucion);$i++) {
+				if($id_empleado_institucion[$i]!="")
+					$c=true;
+			}
+			if($c) {		
 				$json =array(
-					'resultado'=>$this->promocion_model->comprobar_programacion($formuInfo)
+					'resultado'=>1
 				);
 			}
 			else {
@@ -954,6 +941,30 @@ class Acreditacion extends CI_Controller
 			);
 		}
 		echo json_encode($json);
+	}
+	
+	function lista_tecnicos_disponibles($fecha=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			if($fecha!=NULL)
+				$fecha=date("Y-m-d", strtotime($fecha));
+			switch($data['id_permiso']) {
+				case 3:
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,1,$fecha);
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	{
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],2,$fecha);
+					}
+					else {
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],1,$fecha);
+					}
+					break;
+			}
+			$this->load->view('acreditacion/lista_tecnicos_disponibles',$data);
+		}
 	}
 }
 ?>

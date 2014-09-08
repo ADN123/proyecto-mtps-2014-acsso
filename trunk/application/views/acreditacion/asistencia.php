@@ -109,6 +109,11 @@
 </div>
 <script language="javascript" >
 	$(document).ready(function(){	
+		$('.table').dataTable( {
+		  "filter": false,
+		  "paginate": false,
+		  "destroy": true
+		});
 	  	$('#progressWizard').bootstrapWizard({
 			'nextSelector': '.next',
 			'previousSelector': '.previous',
