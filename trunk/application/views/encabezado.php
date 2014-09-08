@@ -187,6 +187,14 @@
 		.toggle-slide .toggle-blob {
 			z-index: 1;
 		}
+		.tooltipflot {
+			position: absolute;
+			bottom: 0;
+			margin: 0px auto;
+			width: auto;
+			z-index: 1;
+			text-align: left;
+		}
 		@media screen and (max-width: 640px) {
 			.dataTables_length {
 				display: none;
