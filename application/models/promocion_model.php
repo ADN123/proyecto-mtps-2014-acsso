@@ -131,6 +131,22 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function mostrar_tecnicos_disponibles_por_dia($id_seccion=NULL,$ss=NULL)
+	{
+		$where="";
+		if($id_seccion!=NULL && $ss!=NULL) {
+			if($ss==1) 
+				for($i=0;$i<count($this->secciones);$i++)
+				 	$where.=" AND id_seccion<>".$this->secciones[$i];
+			else
+				$where.=" AND id_seccion=".$id_seccion;
+		}
+		$sentencia="SELECT id_empleado AS id, nombre FROM tcm_empleado 
+					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') ".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	public function ubicacion_departamento($id_seccion)
 	{	
 		switch($id_seccion){
