@@ -57,7 +57,10 @@
                                         <option value=""></option>
                                         <?php
                                             foreach($insticion_lugar_trabajo as $val) {
-                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+												if($val['id']==$idlt)
+                                                	echo '<option value="'.$val['id'].'" selected="selected">'.$val['nombre'].'</option>';
+												else
+													echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
                                             }
                                         ?>
                                     </select>
@@ -207,5 +210,12 @@
 			id=$(this).val();
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
 		});
+		<?php 
+			if($idlt!="") {
+		?>
+				$('#id_lugar_trabajo').change();
+		<?php		
+			}
+		?>
 	});
 </script>

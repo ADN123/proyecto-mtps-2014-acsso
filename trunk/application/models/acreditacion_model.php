@@ -194,7 +194,8 @@ class Acreditacion_model extends CI_Model {
 			$where=" AND org_municipio.id_departamento_pais=".$dep;
 		}
 		if($todas!=NULL) {
-			$where.=" AND estado_capacitacion=".$todas." AND fecha_capacitacion<='".date('Y-m-d')."'";
+			/*$where.=" AND estado_capacitacion=".$todas." AND fecha_capacitacion<='".date('Y-m-d')."'";*/
+			$where.=" AND estado_capacitacion=".$todas;
 		}
 		$sentencia="SELECT DISTINCT
 					sac_capacitacion.id_capacitacion AS id,
@@ -377,7 +378,7 @@ class Acreditacion_model extends CI_Model {
 	
 	function consultar_lugar_trabajo_empleados($id_lugar_trabajo)
 	{
-		$sentencia="SELECT
+		$sentencia="SELECT DISTINCT
 					sac_empleado_institucion.id_empleado_institucion
 					FROM sac_institucion
 					LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion

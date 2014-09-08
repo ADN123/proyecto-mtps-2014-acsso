@@ -12,7 +12,7 @@ class Promocion_model extends CI_Model {
 	
 	function mostrar_clasificacion() 
 	{
-		$sentencia="SELECT id_clasificacion AS id, nombre_clasificacion AS nombre FROM sac_clasificacion_institucion WHERE LENGTH(codigo_clasificacion)=7";
+		$sentencia="SELECT id_clasificacion AS id, CONCAT_WS(' - ',codigo_clasificacion,nombre_clasificacion) AS nombre FROM sac_clasificacion_institucion WHERE LENGTH(codigo_clasificacion)=7";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
