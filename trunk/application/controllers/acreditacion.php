@@ -510,7 +510,7 @@ class Acreditacion extends CI_Controller
 	function eliminar_capacitacion($id_capacitacion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
-		if($data['id_permiso']==3){
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
 			$fecha_modificacion=date('Y-m-d H:i:s');
