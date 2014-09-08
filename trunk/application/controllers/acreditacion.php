@@ -237,7 +237,7 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
 				case 3:
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia();
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones(NULL,1);
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo(NULL,1,3);
 					break;
@@ -247,10 +247,10 @@ class Acreditacion extends CI_Controller
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep,1,3);
 					
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	{
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],2);
 					}
 					else {
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],1);
 					}
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep,1);
 					break;
@@ -280,16 +280,16 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
 				case 3:
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();	
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia();	
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
 					break;
 				case 4:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],2);
 					else
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],1);
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
 					break;
 			}	
@@ -595,7 +595,7 @@ class Acreditacion extends CI_Controller
 	*/
 	function guardar_asistencia()
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia);
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
@@ -623,7 +623,7 @@ class Acreditacion extends CI_Controller
 	
 	function imprimir_asistencia($id_capacitacion=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia);
 		if($data['id_permiso']!=NULL) {
 			$data['id_seccion']=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 			$capacitacion=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
@@ -714,7 +714,7 @@ class Acreditacion extends CI_Controller
 	
 	function guardar_comite()
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dregistrar_comite);
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 						
@@ -828,7 +828,7 @@ class Acreditacion extends CI_Controller
 	
 	function guardar_aprobacion_comite()
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Daprobar_comite);
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 						
@@ -903,6 +903,57 @@ class Acreditacion extends CI_Controller
 		else {
 			pantalla_error();
 		}
+	}
+	
+	/*
+	*	Nombre: comprobar_capacitacion
+	*	Objetivo: Verifica que los tecnicos educadores no les choquen las capacitaciones que tienen asignadas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 31/08/2014
+	*	Observaciones: No esta en funcionamiento, se hizo de otra manera.
+	*/
+	function comprobar_capacitacion()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			
+			$id_programacion_visita=$this->input->post('id_programacion_visita');
+			$id_empleado=$this->input->post('id_empleado');
+			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
+			$fec=str_replace("/","-",$this->input->post('fecha_visita'));
+			$fecha_visita=date("Y-m-d", strtotime($fec));
+			$hora_visita=$this->input->post('hour').':'.$this->input->post('minute').':00 '.$this->input->post('meridian');
+			$hora_visita=date("H:i:s", strtotime($hora_visita));
+			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
+			
+			if($id_empleado!="" && $fecha_visita!="" && $hora_visita!="" && $hora_visita_final!="") {		
+				$formuInfo = array(
+					'id_programacion_visita'=>$id_programacion_visita,
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_visita'=>$fecha_visita,
+					'hora_visita'=>$hora_visita,
+					'hora_visita_final'=>$hora_visita_final,
+					'estado_programacion'=>$estado_programacion
+				);
+				
+				$json =array(
+					'resultado'=>$this->promocion_model->comprobar_programacion($formuInfo)
+				);
+			}
+			else {
+				$json =array(
+					'resultado'=>0
+				);
+			}
+		}
+		else {
+			$json =array(
+				'resultado'=>0
+			);
+		}
+		echo json_encode($json);
 	}
 }
 ?>

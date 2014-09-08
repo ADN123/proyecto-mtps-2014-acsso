@@ -225,29 +225,32 @@
 			emp.length=0;
 			$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado");
 		});
-		$("#formu").submit(function(){
-			if($("#id_empleado").val()!="" && $("#id_lugar_trabajo").val()!="" && $("#fecha_visita").val()!="" && $("#timepicker").val()!="")
+		/*$("#guardar").click(function(){
+			if($("#id_empleado").val()!="" && (($("#id_lugar_trabajo").val()=="" && $("#id_lugar_trabajo").attr("disabled")=="disabled") || ($("#id_lugar_trabajo").val()!="" && $("#id_lugar_trabajo").attr("disabled")!="disabled")) && $("#fecha_visita").val()!="" && $("#timepicker").val()!="") {
 				$.ajax({
 					async:	true, 
 					url:	base_url()+"index.php/acreditacion/comprobar_capacitacion",
 					dataType:"json",
 					type: "POST",
-					data: $(this).serialize(),
+					data: $('#formu').serialize(),
 					success: function(data) {
 					var json=data;
 						if(Number(json['resultado'])==1) {
-							document.getElementById("formu").submit();
+							$("#formu").submit();
 						}
 						else {
 							alerta_rapida('Error en el ingreso de la capacitación!', 'El(los) técnico(s) ya tiene(n) una capacitación programada en el día y hora ingresados', 'danger');
 						}
 					},
 					error:function(data) {
-						/*alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');*/
+						//alerta_rapida('Error en el ingreso de programación!', 'Se ha perdido la conexión a la red', 'danger');
 					}
-				});			
-			return false;
-		});
+				});		
+			}
+			else {
+				$("#formu").submit();
+			}
+		});*/
 	});
 	function editar(id){
 		$("#formu").load(base_url()+"index.php/acreditacion/capacitacion_recargado/"+id);
