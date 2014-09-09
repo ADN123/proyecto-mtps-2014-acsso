@@ -121,7 +121,6 @@ class Acreditacion_model extends CI_Model {
 				$where.=" AND sac_empleado_institucion.id_empleado_institucion <> ".$emp[$i];
 			}
 		}
-		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
 		$sentencia="SELECT DISTINCT
 					sac_empleado_institucion.id_empleado_institucion AS id,
 					sac_empleado_institucion.nombre_empleado AS nombre,
