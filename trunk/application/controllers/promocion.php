@@ -11,6 +11,7 @@ class Promocion extends CI_Controller
 		error_reporting(0);
 		$this->load->helper('url');
 		$this->load->helper('form');
+		$this->load->library("mpdf");
 		$this->load->model('seguridad_model');
 		$this->load->model('promocion_model');
 		
@@ -908,17 +909,59 @@ class Promocion extends CI_Controller
 				case 1:
 					$data['info']=$this->promocion_model->resultados_instituciones($fecha_inicial,$fecha_final);
 					$data['nombre']="Instituciones ".date('d-m-Y hisa');
-					$this->load->view('promocion/resultados_instituciones',$data);
+					if($data['exportacion']!=2)
+						$this->load->view('promocion/resultados_instituciones',$data);
+					else {
+						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('promocion/resultados_instituciones.php', $data, true);
+						$data_cab['titulo']="REPORTE DE PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
 					break;
 				case 2:
 					$data['info']=$this->promocion_model->resultados_tecnicos($fecha_inicial,$fecha_final);
 					$data['nombre']="Técnicos ".date('d-m-Y hisa');
-					$this->load->view('promocion/resultados_tecnicos',$data);
+					if($data['exportacion']!=2)
+						$this->load->view('promocion/resultados_tecnicos',$data);
+					else {
+						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('promocion/resultados_tecnicos.php', $data, true);
+						$data_cab['titulo']="REPORTE DE PROMOCIONES REALIZADAS POR TÉCNICO EDUCADOR";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
 					break;
 				case 3:
 					$data['info']=$this->promocion_model->resultados_sectores($fecha_inicial,$fecha_final);
 					$data['nombre']="Sectores ".date('d-m-Y hisa');
-					$this->load->view('promocion/resultados_sectores',$data);
+					if($data['exportacion']!=2)
+						$this->load->view('promocion/resultados_sectores',$data);
+					else {
+						$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('promocion/resultados_sectores.php', $data, true);
+						$data_cab['titulo']="REPORTE DE PROMOCIONES POR SECTOR ECONÓMICO";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
 					break;
 			}
 		}

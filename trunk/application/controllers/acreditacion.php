@@ -110,6 +110,7 @@ class Acreditacion extends CI_Controller
 			$fecha_ingreso=date("Y-m-d", strtotime($fec));
 			$id_tipo_representacion=$this->input->post('id_tipo_representacion');
 			$nombre_empleado=$this->input->post('nombre_empleado');
+			$id_genero=$this->input->post('id_genero');
 			$dui_empleado=$this->input->post('dui_empleado');
 			$cargo_empleado=$this->input->post('cargo_empleado');
 			$id_tipo_inscripcion=$this->input->post('id_tipo_inscripcion');
@@ -127,6 +128,7 @@ class Acreditacion extends CI_Controller
 					'id_lugar_trabajo'=>$id_lugar_trabajo,
 					'id_tipo_representacion'=>$id_tipo_representacion,
 					'nombre_empleado'=>$nombre_empleado,
+					'id_genero'=>$id_genero,
 					'dui_empleado'=>$dui_empleado,
 					'cargo_empleado'=>$cargo_empleado,
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
@@ -148,6 +150,7 @@ class Acreditacion extends CI_Controller
 					'id_lugar_trabajo'=>$id_lugar_trabajo,
 					'id_tipo_representacion'=>$id_tipo_representacion,
 					'nombre_empleado'=>$nombre_empleado,
+					'id_genero'=>$id_genero,
 					'dui_empleado'=>$dui_empleado,
 					'cargo_empleado'=>$cargo_empleado,
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
@@ -633,7 +636,8 @@ class Acreditacion extends CI_Controller
 			$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
 			$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
 			$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
-			
+			//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true));
+			$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 			foreach($capacitacion as $val) {
 				$id=$val['id'];
 				$idc[$id]=1;
@@ -890,6 +894,8 @@ class Acreditacion extends CI_Controller
 			$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
 			$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
 			$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+			//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true));
+			$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 						
 			for($i=0;$i<count($empelados);$i++) { 
 				if($i>0)
@@ -964,6 +970,19 @@ class Acreditacion extends CI_Controller
 					break;
 			}
 			$this->load->view('acreditacion/lista_tecnicos_disponibles',$data);
+		}
+	}
+	
+	function capacitaciones()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_capacitaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
+			$data['municipio']=$this->promocion_model->mostrar_municipio();
+			pantalla('acreditacion/capacitaciones',$data,Dreportes_capacitaciones);
+		}
+		else {
+			pantalla_error();
 		}
 	}
 }

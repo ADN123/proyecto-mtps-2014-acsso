@@ -87,9 +87,9 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="INSERT INTO sac_empleado_institucion
-					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea, delegado, sindicato, fecha_ingreso) 
+					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea, delegado, sindicato, fecha_ingreso, id_genero) 
 					VALUES 
-					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato, '$fecha_ingreso')";
+					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato, '$fecha_ingreso', $id_genero)";
 		$this->db->query($sentencia);
 	}
 	
@@ -154,7 +154,8 @@ class Acreditacion_model extends CI_Model {
 					id_tipo_representacion,
 					delegado,
 					sindicato,
-					DATE_FORMAT(fecha_ingreso,'%d/%m/%Y') AS fecha_ingreso
+					DATE_FORMAT(fecha_ingreso,'%d/%m/%Y') AS fecha_ingreso,
+					id_genero
 					FROM sac_empleado_institucion
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$query=$this->db->query($sentencia);
@@ -175,7 +176,8 @@ class Acreditacion_model extends CI_Model {
 					id_usuario_modifica=$id_usuario_modifica, 
 					delegado=$delegado, 
 					sindicato=$sindicato,
-					fecha_ingreso='$fecha_ingreso'
+					fecha_ingreso='$fecha_ingreso',
+					id_genero=$id_genero
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$this->db->query($sentencia);
 	}

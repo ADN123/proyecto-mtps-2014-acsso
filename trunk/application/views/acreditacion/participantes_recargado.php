@@ -77,6 +77,24 @@
                     <input type="text" name="nombre_empleado" id="nombre_empleado" class="form-control" value="<?php echo $empleado_institucion['nombre_empleado'] ?>" data-req="true" data-tip="var" data-min="5" />
                 </div>
             </div>
+                            
+            <div class="row">                
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="col-sm-11 control-label">Género <span class="asterisk">*</span></label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="rdio rdio-success">
+                        <input type="radio" name="id_genero" value="1" id="masc" <?php if($empleado_institucion['id_genero']==1) echo 'checked';?> />
+                        <label for="masc">Masculino</label>
+                    </div>
+                    <div class="rdio rdio-success">
+                        <input type="radio" name="id_genero" value="2" id="feme" <?php if($empleado_institucion['id_genero']==2) echo 'checked';?> />
+                        <label for="feme">Femenino</label>
+                    </div>
+                </div>
+            </div>
             
             <div class="form-group">
                 <label for="dui_empleado" class="col-sm-3 control-label">DUI <span class="asterisk">*</span></label>

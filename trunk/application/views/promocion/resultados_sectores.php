@@ -7,20 +7,81 @@ if($exportacion==3) {
 }
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <table class="table">
-        <thead>
+<?php 
+	if($exportacion==2 || $exportacion==3) {
+		if($exportacion==3) {
+?>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+    	 <thead>
             <tr>
-                <th class="all">Clasificación</th>
-                <th class="desktop tablet-l tablet-p" style="width:95px;">Total</th>
+                <th align="left" id="imagen" height="110" width="180">
+                    <img src="<?=base_url()?>img/mtps_report.jpg" />
+                </th>
+                <th align="center">
+                    <strong class="ti">
+                        MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL<br />
+                        DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL Y EMPLEO<br />
+                        DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL<br />
+                        SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br />
+                        REPORTE DE PROMOCIONES POR SECTOR ECONÓMICO
+                    </strong>
+                </th>
+                <th align="right">
+                    <img src="<?=base_url()?>img/escudo.min.gif" style="position:absolute; right:0"/>
+                </th>
+            </tr>
+            <tr>
+            	<th colspan="3" align="center">&nbsp;</th>
+            </tr>
+<?php
+		}
+		else {
+?>
+	<table align="center" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+    	 <thead>
+<?php
+		}
+?>
+            <tr>
+            	<?php
+					$css='';
+					if($exportacion==2 || $exportacion==3) {
+						$css='background-color: #CCC; border: 1px solid #CCC;';
+					}
+				?>
+                <th colspan="2" style="<?php echo $css;?>" width="520">CASIFICACIÓN</th>
+                <th style="<?php echo $css;?>" width="100">TOTAL<?=count($info)?></th>
             </tr>
         </thead>
+<?php 
+	}
+	if($exportacion!=2 && $exportacion!=3) {
+?>  
+    <table class="display table responsive no-wrap" style="width: 100%;">
+        <thead>
+            <tr>
+                <th class="all" >CASIFICACIÓN</th>
+                <th class="desktop tablet-l tablet-p" style="width:95px;">TOTAL<?=count($info)?></th>
+            </tr>
+        </thead>
+<?php 
+	}
+?> 
         <tbody>
             <?php
                 foreach($info as $val) {
 			?>
             	<tr>
-                	<td><?php echo ucwords($val['nombre'])?></td>
-                	<td><?php echo $val['total']?></td>
+                	<?php
+						$css="";
+						$cs="";
+                        if($exportacion==2 || $exportacion==3) {
+							$css='border: 1px solid #CCC;';
+							$cs='colspan="2"';
+                        }
+                    ?>
+                	<td <?php echo $cs;?> valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['nombre'])?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="right"><?php echo $val['total']?></td>
                 </tr>
             <?php
                 }
