@@ -1,3 +1,51 @@
+<style type="text/css">
+	.list-group.panel > .list-group-item {
+	  	border-bottom-right-radius: 4px;
+	  	border-bottom-left-radius: 4px
+	}
+	.list-group-submenu {
+	  	margin-left:20px;
+	}
+</style>
+<div class="col-md-12">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+        <div class="panel-btns">
+        	<a href="#" class="tooltips ayuda" data-ayuda="11" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
+        	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
+        </div><!-- panel-btns -->
+        	<h3 class="panel-title">Acordion </h3>
+        </div>
+        <div class="panel-body">
+        	<div id="MainMenu">
+              	<div class="list-group">
+                	<a href="#demo3" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Item 3</a>
+                	<div class="collapse" id="demo3">
+                  		<a href="#SubMenu1" class="list-group-item" data-toggle="collapse" data-parent="#SubMenu1">Subitem 1 <i class="fa fa-caret-down"></i></a>
+                  		<div class="collapse list-group-submenu" id="SubMenu1">
+                    		<a href="#" class="list-group-item" data-parent="#SubMenu1">Subitem 1 a</a>
+                    		<a href="#" class="list-group-item" data-parent="#SubMenu1">Subitem 2 b</a>
+                    		<a href="#SubSubMenu1" class="list-group-item" data-toggle="collapse" data-parent="#SubSubMenu1">Subitem 3 c <i class="fa fa-caret-down"></i></a>
+                    		<div class="collapse list-group-submenu list-group-submenu-1" id="SubSubMenu1">
+                      			<a href="#" class="list-group-item" data-parent="#SubSubMenu1">Sub sub item 1</a>
+                      			<a href="#" class="list-group-item" data-parent="#SubSubMenu1">Sub sub item 2</a>
+                    		</div>
+                    		<a href="#" class="list-group-item" data-parent="#SubMenu1">Subitem 4 d</a>
+                        </div>
+                        <a href="javascript:;" class="list-group-item">Subitem 2</a>
+                        <a href="javascript:;" class="list-group-item">Subitem 3</a>
+                	</div>
+                	<a href="#demo4" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Item 4</a>
+                	<div class="collapse" id="demo4">
+                  		<a href="" class="list-group-item">Subitem 1</a>
+                  		<a href="" class="list-group-item">Subitem 2</a>
+                  		<a href="" class="list-group-item">Subitem 3</a>
+                	</div>
+              	</div>
+            </div>
+        </div>
+  	</div>
+</div>
 <div class="col-md-4">
 	<div class="panel panel-warning">
 		<div class="panel-heading">
@@ -37,7 +85,7 @@
                 	<div class="col-md-8">
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="1" id="ins" checked />
-                        	<label for="ins">Establecimientos</label>
+                        	<label for="ins">Comités capacitados</label>
                       	</div>
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="2" id="tec" />
@@ -45,7 +93,7 @@
                       	</div>
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="3" id="sec" />
-                        	<label for="sec">Sectores económicos</label>
+                        	<label for="sec">Trabajadores capacitados</label>
                       	</div>
                 	</div>
                 </div>
@@ -62,7 +110,7 @@
                         	<label for="pan">Pantalla</label>
                       	</div>
                       	<div class="rdio rdio-danger">
-                        	<input type="radio" name="radio2" value="2" id="pdf" />
+                        	<input type="radio" name="radio2" value="2" id="pdf" disabled />
                         	<label for="pdf">PDF</label>
                       	</div>
                       	<div class="rdio rdio-danger">

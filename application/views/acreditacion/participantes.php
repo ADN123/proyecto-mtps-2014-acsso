@@ -108,6 +108,24 @@
                                 </div>
                             </div>
                             
+                            <div class="row">                
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="col-sm-11 control-label">Género <span class="asterisk">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="rdio rdio-success">
+                                        <input type="radio" name="id_genero" value="1" id="masc" checked />
+                                        <label for="masc">Masculino</label>
+                                    </div>
+                                    <div class="rdio rdio-success">
+                                        <input type="radio" name="id_genero" value="2" id="feme" />
+                                        <label for="feme">Femenino</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="form-group">
                                 <label for="dui_empleado" class="col-sm-3 control-label">DUI <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
