@@ -346,19 +346,30 @@ class Verificacion extends CI_Controller
 	function ver_asignaciones()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
-				case 3:
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
-					break;
-				case 4:
+				case 1:
 					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
 					$data['visita_mensual']=$this->promocion_model->calendario($info['id_empleado']);
 					$data['visita']=$this->promocion_model->calendario_dia($info['id_empleado'], date('Y-m-d'));
 					$data['id_empleado']=$info['id_empleado'];
 					break;
+				case 3:
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					break;
+				case 4:
+					/*$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					$data['visita_mensual']=$this->promocion_model->calendario($info['id_empleado']);
+					$data['visita']=$this->promocion_model->calendario_dia($info['id_empleado'], date('Y-m-d'));
+					$data['id_empleado']=$info['id_empleado'];*/
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+					break;
 			}
-			pantalla('verificacion/asignaciones',$data,Dasignaciones);
+			pantalla('promocion/asignaciones',$data,Dasignaciones);
 		}
 		else {
 			pantalla_error();
@@ -368,15 +379,25 @@ class Verificacion extends CI_Controller
 	function ingreso()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_visita); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
+				case 1:
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'),3);
+					$data['id_empleado']=$info['id_empleado'];
+					break;
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;
 				case 4:
-					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					/*$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
 					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'),3);
-					$data['id_empleado']=$info['id_empleado'];
+					$data['id_empleado']=$info['id_empleado'];*/
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}
 			$data['tematicas']=$this->verificacion_model->ver_tematicas();
@@ -392,15 +413,25 @@ class Verificacion extends CI_Controller
 	function ingreso_promocion_recargado()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
+				case 1:
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'),3);
+					$data['id_empleado']=$info['id_empleado'];
+					break;
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;
 				case 4:
-					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					/*$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
 					$data['insticion_lugar_trabajo']=$this->promocion_model->insticion_lugar_trabajo($info['id_empleado'],date('Y-m-d'),3);
-					$data['id_empleado']=$info['id_empleado'];
+					$data['id_empleado']=$info['id_empleado'];*/
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}
 			$this->load->view('verificacion/ingreso_promocion_recargado',$data);
@@ -413,7 +444,7 @@ class Verificacion extends CI_Controller
 	function ingreso_promocion_institucion_recargado($id_institucion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$data['tematicas']=$this->verificacion_model->ver_tematicas();
 			$this->load->view('verificacion/ingreso_promocion_institucion_recargado',$data);
 		}
@@ -425,7 +456,7 @@ class Verificacion extends CI_Controller
 	function guardar_ingreso_promocion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$this->db->trans_start();
 			
 			$ids=explode("***",$this->input->post('id_lugar_trabajo'));

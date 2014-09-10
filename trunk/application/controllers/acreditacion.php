@@ -546,8 +546,13 @@ class Acreditacion extends CI_Controller
 	function asistencia($accion_transaccion=NULL, $estado_transaccion=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
+				case 1:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep,1,$id_seccion['id_empleado']);
+					break;
 				case 3:
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones(NULL,1);
 					break;
@@ -577,7 +582,7 @@ class Acreditacion extends CI_Controller
 	function asistencia_recargado($id_capacitacion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {	
 			if($id_capacitacion!=NULL) {
 				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
 				$data['id_capacitacion']=$id_capacitacion;
@@ -600,7 +605,7 @@ class Acreditacion extends CI_Controller
 	function guardar_asistencia()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia);
-		if($data['id_permiso']==3 || $data['id_permiso']==4){
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
 			$id_capacitacion=$this->input->post('id_capacitacion');
@@ -628,7 +633,7 @@ class Acreditacion extends CI_Controller
 	function imprimir_asistencia($id_capacitacion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_asistencia);
-		if($data['id_permiso']!=NULL) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$data['id_seccion']=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 			$capacitacion=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
 			/*$this->load->view('transporte/acreditacion_pdf.php',$data);*/

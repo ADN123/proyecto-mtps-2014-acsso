@@ -194,7 +194,7 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
-		$("#guardar").click(function(){
+		$("#guardar,#actualizar").click(function(){
 			if($("#id_empleado").val()!="" && (($("#id_lugar_trabajo").val()=="" && $("#id_lugar_trabajo").attr("disabled")=="disabled") || ($("#id_lugar_trabajo").val()!="" && $("#id_lugar_trabajo").attr("disabled")!="disabled")) && $("#fecha_visita").val()!="" && $("#timepicker").val()!="") {
 				$.ajax({
 					async:	true, 

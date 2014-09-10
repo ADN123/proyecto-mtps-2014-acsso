@@ -58,3 +58,10 @@ INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_mod
 INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_modulo`, `orden`, `dependencia`, `url_modulo`, `img_modulo`, `opciones_modulo`) VALUES ('7', 'Registrar lugares de trabajo', 'Ingreso de la información básica de una institución', '2', '87', 'promocion/lugares_trabajo', 'fa fa-caret-right', '1');
 INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_modulo`, `orden`, `dependencia`, `url_modulo`, `img_modulo`, `opciones_modulo`) VALUES ('7', 'Registrar participantes', 'Ingreso de los empleados del lugar de trabajo que asistirán a la capacitación', '1', '91', 'acreditacion/participantes', 'fa fa-caret-right', '2');
 INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_modulo`, `orden`, `dependencia`, `url_modulo`, `img_modulo`, `opciones_modulo`) VALUES ('7', 'Ver asignaciones', 'Calendarización de visitas a instituciones', '4', '87', 'promocion/ver_asignaciones', 'fa fa-caret-right', '2');
+
+
+Inicio
+Ver asignaciones OK!
+Registrar promoción OK!
+Control asistencia OK!
+Ingreso de control de visita OK!

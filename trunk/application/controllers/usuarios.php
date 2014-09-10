@@ -455,7 +455,7 @@ class Usuarios extends CI_Controller
 				}
 				$this->db->trans_complete();
 				$tr=($this->db->trans_status()===FALSE)?0:1;
-				ir_a('index.php/usuarios/usuario/'.$tr.'/2');
+				ir_a('index.php/usuarios/usuario/1/'.$tr);
 			}
 			else {
 				$this->db->trans_start();

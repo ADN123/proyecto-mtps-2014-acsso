@@ -13,7 +13,7 @@
         	<h3 class="panel-title">Calendario mensual de actividades </h3>
         </div>
         <div class="panel-body">
-			<?php if($id_permiso==3) {?>	
+			<?php if($id_permiso==3 || $id_permiso==4) {?>	
                 <form class="form-horizontal">
                     <div class="form-group">
                         <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
@@ -562,7 +562,7 @@
 		},
 		eventClick: function(event, jsEvent){	
 			fecha_actual=event.id;	
-			 <?php if($id_permiso==4) {?>		 
+			 <?php if($id_permiso==1) {?>		 
 				$('#cont-calendario-dia').load(base_url()+'index.php/promocion/calendario_dia/<?php echo $id_empleado?>/'+event.id);
 			 <?php } else {?>		 
 				$('#cont-calendario-dia').load(base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);

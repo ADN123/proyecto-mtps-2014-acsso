@@ -1,4 +1,4 @@
-<?php if($id_permiso==3) {?>	
+<?php if($id_permiso==3 || $id_permiso==4) {?>	
     <div class="form-group">
         <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
         <div class="col-sm-4">
@@ -73,6 +73,12 @@
 </div>
 <script language="javascript" >
 	$(document).ready(function(){
+		$("select").chosen({
+			'width': '100%',
+			'min-width': '100px',
+			'white-space': 'nowrap',
+			no_results_text: "Sin resultados!"
+		});
 		$('#id_empleado').change(function(){
 			id=$(this).val();
 			$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id+"/1");
