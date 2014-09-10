@@ -309,12 +309,18 @@ class Usuarios extends CI_Controller
 			switch($data['id_permiso']) { /*Busqueda de informacion a mostrar en la pantalla segun el nivel del usuario logueado*/
 				case 1:
 					$data['usuarios']=$this->usuario_model->mostrar_usuarios();
+					$data['empleados']=$this->usuario_model->empleados_sin_usuario();
+					$data['roles']=$this->usuario_model->mostrar_roles();
 					break;
 				case 2:
 					$data['usuarios']=$this->usuario_model->mostrar_usuarios();
+					$data['empleados']=$this->usuario_model->empleados_sin_usuario();
+					$data['roles']=$this->usuario_model->mostrar_roles();
 					break;
 				case 3:
 					$data['usuarios']=$this->usuario_model->mostrar_usuarios();
+					$data['empleados']=$this->usuario_model->empleados_sin_usuario();
+					$data['roles']=$this->usuario_model->mostrar_roles();
 					break;
 			}
 			$data['estado_transaccion']=$estado_transaccion;

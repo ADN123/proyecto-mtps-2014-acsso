@@ -31,7 +31,8 @@
             <?php
 				if($id_usuario=="") {
 			?>
-                <select name="nombre_completo" id="nombre_completo" tabindex="1"  class="select" style="width:60%">
+                <select name="nombre_completo" id="nombre_completo">
+                	<option value=""></option>
                     <?php
                         foreach($empleados as $val) {
                             echo '<option value="'.$val['id_empleado'].'">'.ucwords($val['nombre']).'</option>';

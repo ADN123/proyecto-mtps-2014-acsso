@@ -87,7 +87,11 @@ $(document).ready(function(){
 							break;
 						case 'fec': /*fecha*/
 							patt2=/^([0][1-9]|[12][0-9]|3[01])(\/|-)([0][1-9]|[1][0-2])\2(\d{4})$/i;
-							emen="La fecha ingresado es incorrecto (dd/mm/yyyy)";
+							emen="La fecha ingresada es incorrecta (dd/mm/yyyy)";
+							break;
+						case 'pas': /*password*/
+							patt2=/^([a-z]{1}[0-9|a-z|`|~|!|@|#|$|%|^|\-|\||\[|\]|\(|\)|+|*|\{|\}|\\|&|_|=|:|;|"|'|<|>|,|.|?|\/]*)$/i;
+							emen="Debe empezar con una letra y no debe contener espacios en blanco";
 							break;
 						default: /*caracteres alfanumericos*/
 							patt2=/^([0-9|#|"|'|\/|\-|°|.|,|a-z|\' '|ñ|á-ú]*)$/i;
