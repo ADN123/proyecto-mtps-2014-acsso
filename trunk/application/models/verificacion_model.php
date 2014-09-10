@@ -191,7 +191,8 @@ class Verificacion_model extends CI_Model {
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
-					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado>=1 AND org_departamento.id_departamento=".$id_departamento;
+					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado=2 AND org_departamento.id_departamento=".$id_departamento;
+		//echo $sentencia;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -218,10 +219,9 @@ class Verificacion_model extends CI_Model {
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
-					WHERE sac_lugar_trabajo.estado>=1 AND org_departamento.id_departamento=".$id_departamento." ".$where."
+					WHERE sac_lugar_trabajo.estado=2 AND org_departamento.id_departamento=".$id_departamento." ".$where."
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo,sac_lugar_trabajo.nombre_lugar
-					HAVING MAX(sac_programacion_visita.estado_programacion)<>3 ".$w2;
-					
+					HAVING (MAX(sac_programacion_visita.estado_programacion)<>3 OR MAX(sac_programacion_visita.estado_programacion) IS NULL) ".$w2;
 		//echo $sentencia;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
