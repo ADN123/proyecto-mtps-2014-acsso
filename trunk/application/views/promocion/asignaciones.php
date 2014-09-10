@@ -100,12 +100,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -140,12 +144,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
-                                                                            break;
-                                                                        default:
+																			break;
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -180,12 +188,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -220,12 +232,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																			case 4:
+																				$estado="Visita de verificación realizada";
+																				$class='visitados';
+																				break;
+																			default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -260,12 +276,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -300,12 +320,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -340,12 +364,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -380,12 +408,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
@@ -420,12 +452,16 @@
                                                                             break;
 																		case 2:
 																			$estado="Visita realizada";
-																$class='visitados';
-																break;
+																			$class='visitados';
+																			break;
                                                                         case 3:
                                                                             $estado="Verificación de cumplimiento";
                                                                             break;
-                                                                        default:
+																		case 4:
+																			$estado="Visita de verificación realizada";
+																			$class='visitados';
+																			break;
+																		default:
                                                                             $estado="";
                                                                     }
                                                         ?>
