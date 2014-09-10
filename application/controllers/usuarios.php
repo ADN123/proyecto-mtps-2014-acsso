@@ -103,178 +103,165 @@ class Usuarios extends CI_Controller
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol);
 		
 		if($data['id_permiso']==3) {
-			$this->db->trans_start();
-			$nombre_rol=strtoupper($this->input->post('nombre_rol'));
-			$descripcion_rol=$this->input->post('descripcion_rol');
-			
-			$formuInfo = array(
-				'nombre_rol'=>$nombre_rol,
-				'descripcion_rol'=>$descripcion_rol
-			);
-			
-			$id_rol=$this->usuario_model->guardar_rol($formuInfo); /*Guardando rol*/
-			$permiso=$this->input->post('permiso');
-			
-			for($i=0;$i<count($permiso);$i++) {
-				if($permiso[$i]!="") {
-					$explode_permiso=explode(",",$permiso[$i]);
-					$id_modulo=$explode_permiso[0];
-					$id_permiso=$explode_permiso[1];
-					$formuInfo = array(
-						'id_rol'=>$id_rol,
-						'id_modulo'=>$id_modulo,
-						'id_permiso'=>$id_permiso,
-						'estado'=>1
-					);
-					$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol*/
-					
-					$data=$this->usuario_model->buscar_padre_permisos_rol($id_modulo); 
-					if($data['padre']!="") {
-						$formuInfo = array(
-							'id_rol'=>$id_rol,
-							'id_modulo'=>$data['padre'],
-							'id_permiso'=>$id_permiso,
-							'estado'=>1
-						);
-						$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['padre']);
-						if($total['total']==0)
-							$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el padre*/
-					}
-					
-					if($data['abuelo']!="") {
-						$formuInfo = array(
-							'id_rol'=>$id_rol,
-							'id_modulo'=>$data['abuelo'],
-							'id_permiso'=>$id_permiso,
-							'estado'=>1
-						);
-						$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['abuelo']);
-						if($total['total']==0)
-							$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el abuelo*/
-					}
-					
-					if($data['bisabuelo']!="") {
-						$formuInfo = array(
-							'id_rol'=>$id_rol,
-							'id_modulo'=>$data['bisabuelo'],
-							'id_permiso'=>$id_permiso,
-							'estado'=>1
-						);
-						$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['bisabuelo']);
-						if($total['total']==0)
-							$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el bisabuelo*/
-					}
-						
-				}
-			}
-			$formuInfo = array(
-				'id_rol'=>$id_rol,
-				'id_modulo'=>71,
-				'id_permiso'=>3,
-				'estado'=>1
-			);
-			$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para salir del sistema*/
-			
-			$this->db->trans_complete();
-			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/roles/1/'.$tr);
-		}
-		else {
-			pantalla_error();
-		}
-	}
-	
-	/*
-	*	Nombre: actualizar_rol
-	*	Objetivo: Actualiza los registros de roles
-	*	Hecha por: Leonel
-	*	Modificada por: Leonel
-	*	Última Modificación: 14/05/2014
-	*	Observaciones: Ninguna.
-	*/
-	function actualizar_rol() 
-	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol);
-		
-		if($data['id_permiso']==3) {
-			$this->db->trans_start();
 			$id_rol=$this->input->post('id_rol');
-			$nombre_rol=strtoupper($this->input->post('nombre_rol'));
-			$descripcion_rol=$this->input->post('descripcion_rol');
+			if($id_rol=="") {
 			
-			$formuInfo = array(
-				'id_rol'=>$id_rol,
-				'nombre_rol'=>$nombre_rol,
-				'descripcion_rol'=>$descripcion_rol
-			);
-			
-			$this->usuario_model->actualizar_rol($formuInfo); /*Actualizar rol*/
-			$this->usuario_model->eliminar_permisos_rol($id_rol); /*Eliminar permisos del rol*/
-			$permiso=$this->input->post('permiso');
-			
-			for($i=0;$i<count($permiso);$i++) {
-				if($permiso[$i]!="") {
-					$explode_permiso=explode(",",$permiso[$i]);
-					$id_modulo=$explode_permiso[0];
-					$id_permiso=$explode_permiso[1];
-					$formuInfo = array(
-						'id_rol'=>$id_rol,
-						'id_modulo'=>$id_modulo,
-						'id_permiso'=>$id_permiso,
-						'estado'=>1
-					);
-					$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol*/
-					
-					$data=$this->usuario_model->buscar_padre_permisos_rol($id_modulo); 
-					if($data['padre']!="") {
+				$this->db->trans_start();
+				$nombre_rol=strtoupper($this->input->post('nombre_rol'));
+				$descripcion_rol=$this->input->post('descripcion_rol');
+				
+				$formuInfo = array(
+					'nombre_rol'=>$nombre_rol,
+					'descripcion_rol'=>$descripcion_rol
+				);
+				
+				$id_rol=$this->usuario_model->guardar_rol($formuInfo); /*Guardando rol*/
+				$permiso=$this->input->post('permiso');
+				
+				for($i=0;$i<count($permiso);$i++) {
+					if($permiso[$i]!="") {
+						$explode_permiso=explode(",",$permiso[$i]);
+						$id_modulo=$explode_permiso[0];
+						$id_permiso=$explode_permiso[1];
 						$formuInfo = array(
 							'id_rol'=>$id_rol,
-							'id_modulo'=>$data['padre'],
+							'id_modulo'=>$id_modulo,
 							'id_permiso'=>$id_permiso,
 							'estado'=>1
 						);
-						$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['padre']);
-						if($total['total']==0)
-							$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el padre*/
-					}
-					
-					if($data['abuelo']!="") {
-						$formuInfo = array(
-							'id_rol'=>$id_rol,
-							'id_modulo'=>$data['abuelo'],
-							'id_permiso'=>$id_permiso,
-							'estado'=>1
-						);
-						$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['abuelo']);
-						if($total['total']==0)
-							$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el abuelo*/
-					}
-					
-					if($data['bisabuelo']!="") {
-						$formuInfo = array(
-							'id_rol'=>$id_rol,
-							'id_modulo'=>$data['bisabuelo'],
-							'id_permiso'=>$id_permiso,
-							'estado'=>1
-						);
-						$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['bisabuelo']);
-						if($total['total']==0)
-							$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el bisabuelo*/
-					}
+						$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol*/
 						
+						$data=$this->usuario_model->buscar_padre_permisos_rol($id_modulo); 
+						if($data['padre']!="") {
+							$formuInfo = array(
+								'id_rol'=>$id_rol,
+								'id_modulo'=>$data['padre'],
+								'id_permiso'=>$id_permiso,
+								'estado'=>1
+							);
+							$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['padre']);
+							if($total['total']==0)
+								$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el padre*/
+						}
+						
+						if($data['abuelo']!="") {
+							$formuInfo = array(
+								'id_rol'=>$id_rol,
+								'id_modulo'=>$data['abuelo'],
+								'id_permiso'=>$id_permiso,
+								'estado'=>1
+							);
+							$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['abuelo']);
+							if($total['total']==0)
+								$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el abuelo*/
+						}
+						
+						if($data['bisabuelo']!="") {
+							$formuInfo = array(
+								'id_rol'=>$id_rol,
+								'id_modulo'=>$data['bisabuelo'],
+								'id_permiso'=>$id_permiso,
+								'estado'=>1
+							);
+							$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['bisabuelo']);
+							if($total['total']==0)
+								$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el bisabuelo*/
+						}
+							
+					}
 				}
+				$formuInfo = array(
+					'id_rol'=>$id_rol,
+					'id_modulo'=>71,
+					'id_permiso'=>3,
+					'estado'=>1
+				);
+				$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para salir del sistema*/
+				
+				$this->db->trans_complete();
+				$tr=($this->db->trans_status()===FALSE)?0:1;
+				ir_a('index.php/usuarios/roles/1/'.$tr);
 			}
-			$formuInfo = array(
-				'id_rol'=>$id_rol,
-				'id_modulo'=>71,
-				'id_permiso'=>3,
-				'estado'=>1
-			);
-			$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para salir del sistema*/
-			
-			$this->db->trans_complete();
-			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/roles/2/'.$tr);
+			else {
+				$this->db->trans_start();
+				$id_rol=$this->input->post('id_rol');
+				$nombre_rol=strtoupper($this->input->post('nombre_rol'));
+				$descripcion_rol=$this->input->post('descripcion_rol');
+				
+				$formuInfo = array(
+					'id_rol'=>$id_rol,
+					'nombre_rol'=>$nombre_rol,
+					'descripcion_rol'=>$descripcion_rol
+				);
+				
+				$this->usuario_model->actualizar_rol($formuInfo); /*Actualizar rol*/
+				$this->usuario_model->eliminar_permisos_rol($id_rol); /*Eliminar permisos del rol*/
+				$permiso=$this->input->post('permiso');
+				
+				for($i=0;$i<count($permiso);$i++) {
+					if($permiso[$i]!="") {
+						$explode_permiso=explode(",",$permiso[$i]);
+						$id_modulo=$explode_permiso[0];
+						$id_permiso=$explode_permiso[1];
+						$formuInfo = array(
+							'id_rol'=>$id_rol,
+							'id_modulo'=>$id_modulo,
+							'id_permiso'=>$id_permiso,
+							'estado'=>1
+						);
+						$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol*/
+						
+						$data=$this->usuario_model->buscar_padre_permisos_rol($id_modulo); 
+						if($data['padre']!="") {
+							$formuInfo = array(
+								'id_rol'=>$id_rol,
+								'id_modulo'=>$data['padre'],
+								'id_permiso'=>$id_permiso,
+								'estado'=>1
+							);
+							$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['padre']);
+							if($total['total']==0)
+								$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el padre*/
+						}
+						
+						if($data['abuelo']!="") {
+							$formuInfo = array(
+								'id_rol'=>$id_rol,
+								'id_modulo'=>$data['abuelo'],
+								'id_permiso'=>$id_permiso,
+								'estado'=>1
+							);
+							$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['abuelo']);
+							if($total['total']==0)
+								$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el abuelo*/
+						}
+						
+						if($data['bisabuelo']!="") {
+							$formuInfo = array(
+								'id_rol'=>$id_rol,
+								'id_modulo'=>$data['bisabuelo'],
+								'id_permiso'=>$id_permiso,
+								'estado'=>1
+							);
+							$total=$this->usuario_model->buscar_padre_modulo_rol($id_rol,$data['bisabuelo']);
+							if($total['total']==0)
+								$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para el bisabuelo*/
+						}
+							
+					}
+				}
+				$formuInfo = array(
+					'id_rol'=>$id_rol,
+					'id_modulo'=>71,
+					'id_permiso'=>3,
+					'estado'=>1
+				);
+				$this->usuario_model->guardar_permisos_rol($formuInfo); /*Guardando permisos del rol para salir del sistema*/
+				
+				$this->db->trans_complete();
+				$tr=($this->db->trans_status()===FALSE)?0:1;
+				ir_a('index.php/usuarios/roles/2/'.$tr);
+			}
 		}
 		else {
 			pantalla_error();
