@@ -27,7 +27,7 @@ class Usuarios extends CI_Controller
 	*	Última Modificación: 11/05/2014
 	*	Observaciones: Ninguna.
 	*/
-	function roles($estado_transaccion=NULL,$accion=NULL)
+	function roles($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_rol); /*Verificacion de permiso para administrara roles*/
 		
@@ -43,13 +43,9 @@ class Usuarios extends CI_Controller
 					$data['roles']=$this->usuario_model->mostrar_roles();
 					break;
 			}
+			$data['menu']=$this->usuario_model->mostrar_menu();
 			$data['estado_transaccion']=$estado_transaccion;
-			if($accion==0)
-				$data['accion']="elimina";
-			if($accion==1)
-				$data['accion']="actualiza";
-			if($accion==2)
-				$data['accion']="guarda";
+			$data['accion_transaccion']=$accion_transaccion;
 			pantalla('usuarios/roles',$data,Dcontrol_rol);	
 		}
 		else {
@@ -181,7 +177,7 @@ class Usuarios extends CI_Controller
 			
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/roles/'.$tr.'/2');
+			ir_a('index.php/usuarios/roles/1/'.$tr);
 		}
 		else {
 			pantalla_error();
@@ -278,7 +274,7 @@ class Usuarios extends CI_Controller
 			
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/roles/'.$tr.'/1');
+			ir_a('index.php/usuarios/roles/2/'.$tr);
 		}
 		else {
 			pantalla_error();
@@ -303,7 +299,7 @@ class Usuarios extends CI_Controller
 			$this->usuario_model->eliminar_permisos_rol($id_rol); /*Eliminar permisos del rol*/
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/roles/'.$tr.'/0');
+			ir_a('index.php/usuarios/roles/3/'.$tr);
 		}
 		else {
 			pantalla_error();

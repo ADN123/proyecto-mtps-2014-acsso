@@ -26,7 +26,7 @@ class Usuario_model extends CI_Model {
 		foreach($m0 as $val0) { 
 			$id_sistema=$val0['id_sistema'];
 			$nombre_sistema=$val0['nombre_sistema'];
-			$result.='<ul>';
+			$result.='<div id="MainMenu'.$id_sistema.'"><div class="list-group">';
 			$sentencia="SELECT id_modulo, nombre_modulo, descripcion_modulo, opciones_modulo FROM org_modulo where (dependencia IS NULL OR dependencia = 0) AND id_modulo<>77 AND id_sistema=".$id_sistema." ORDER BY orden";
 			$query1=$this->db->query($sentencia);
 			$m1=(array)$query1->result_array();
@@ -42,16 +42,16 @@ class Usuario_model extends CI_Model {
 				$m2=(array)$query2->result_array();
 				
 				if($query2->num_rows>0) {
-					$expanded="";
+					$expanded='collapse';
 					for($i=0;$i<count($id_mod);$i++) {
 						$ancestros=$this->buscar_padre_permisos_rol($id_mod[$i]);
 						if($id_modulo==$ancestros['padre'] || $id_modulo==$ancestros['abuelo'] || $id_modulo==$ancestros['bisabuelo'])
-							$expanded="nav-parent";
+							$expanded='';
 					}
-					$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
+					$result.='<a href="#demo'.$id_modulo.'" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu'.$id_sistema.'">'.$nombre_modulo."</a>";
 				}
 				else {
-					$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
+					$result.='<a href="javascript:;" title="'.$descripcion_modulo.'" class="list-group-item" data-parent="#MainMenu'.$id_sistema.'"><div class="form-group"><label for="nombre_rol" class="col-sm-4 control-label">'.$nombre_modulo."</label>";
 					$clave='';
 					$clave=array_search($id_modulo, $id_mod);
 					$op1='';
@@ -88,11 +88,11 @@ class Usuario_model extends CI_Model {
  						$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
 					if($opciones_modulo>=4) 
  						$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
-					$result.='<select class="oculto select_rol" name="permiso[]"><option value=""></option>'.$op.'</select>';
+					$result.='<div class="col-sm-4"><select class="oculto select_rol" name="permiso[]" data-placeholder="[Seleccione...]"><option value=""></option>'.$op.'</select></div></div>';
 				}	
 				
 				if($query2->num_rows>0)
-					$result.=' <ul>';
+					$result.='<div class="'.$expanded.'" id="demo'.$id_modulo.'">';
 				
 				foreach($m2 as $val2) {
 					$id_modulo=$val2['id_modulo'];
@@ -105,16 +105,16 @@ class Usuario_model extends CI_Model {
 					$m3=(array)$query3->result_array();
 					
 					if($query3->num_rows>0){
-						$expanded="false";
+						$expanded='collapse';
 						for($i=0;$i<count($id_mod);$i++) {
 							$ancestros=$this->buscar_padre_permisos_rol($id_mod[$i]);
 							if($id_modulo==$ancestros['padre'] || $id_modulo==$ancestros['abuelo'] || $id_modulo==$ancestros['bisabuelo'])
-								$expanded="true";
+								$expanded='';
 						}
-						$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
+						$result.='<a href="#demo'.$id_modulo.'" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#demo'.$val1['id_modulo'].'">'.$nombre_modulo."</a>";
 					}
 					else {
-						$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
+						$result.='<a href="javascript:;" title="'.$descripcion_modulo.'" class="list-group-item" data-parent="#demo'.$val1['id_modulo'].'"><div class="form-group"><label for="nombre_rol" class="col-sm-4 control-label">'.$nombre_modulo."</label>";
 						$clave='';
 						$clave=array_search($id_modulo, $id_mod);
 						$op1='';
@@ -151,11 +151,11 @@ class Usuario_model extends CI_Model {
 							$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
 						if($opciones_modulo>=4) 
 							$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
-						$result.='<select class="oculto select_rol" name="permiso[]"><option value=""></option>'.$op.'</select>';
+						$result.='<div class="col-sm-4"><select class="oculto select_rol" name="permiso[]" data-placeholder="[Seleccione...]"><option value=""></option>'.$op.'</select></div></div>';
 					}
 					
 					if($query3->num_rows>0)
-						$result.=' <ul>';
+						$result.='<div class="'.$expanded.'" id="demo'.$id_modulo.'">';
 					
 					foreach($m3 as $val3) {
 						$id_modulo=$val3['id_modulo'];
@@ -163,7 +163,7 @@ class Usuario_model extends CI_Model {
 						$descripcion_modulo=$val3['descripcion_modulo'];
 						$opciones_modulo=$val3['opciones_modulo'];
 						
-						$result.='<li title="'.$descripcion_modulo.'"> '.$nombre_modulo;
+						$result.='<a href="javascript:;" title="'.$descripcion_modulo.'" class="list-group-item" data-parent="#demo'.$val2['id_modulo'].'"><div class="form-group"><label for="nombre_rol" class="col-sm-4 control-label">'.$nombre_modulo."</label>";
 						$clave='';
 						$clave=array_search($id_modulo, $id_mod);
 						$op1='';
@@ -200,18 +200,18 @@ class Usuario_model extends CI_Model {
 							$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
 						if($opciones_modulo>=4) 
 							$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
-						$result.='<select class="oculto select_rol" name="permiso[]"><option value=""></option>'.$op.'</select>';
-						$result.=' </li>';				
+						$result.='<div class="col-sm-4"><select class="oculto select_rol" name="permiso[]" data-placeholder="[Seleccione...]"><option value=""></option>'.$op.'</select></div></div>';
+						$result.=' </a>';				
 					}
+					$result.=' </a>';
 					if($query3->num_rows>0)
-						$result.=' </ul>';
-					$result.=' </li>';
+						$result.=' </div>';
 				}
+				$result.=' </a>';
 				if($query2->num_rows>0)
-					$result.=' </ul>';
-				$result.=' </li>';
+					$result.=' </div>';
 			}
-			$result.='</ul>';
+			$result.='</div></div>';
 		}
 		return $result;
 	}
