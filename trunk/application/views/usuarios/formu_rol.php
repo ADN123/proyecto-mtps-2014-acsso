@@ -48,7 +48,7 @@
     	<?php
 			if(isset($id_rol) && $id_rol!="") {
 		?>
-				<li><button class="btn btn-primary" type="button" name="actualizar" id="actualizar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
+				<li><button class="btn btn-primary" type="submit" name="aprobar" id="aprobar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
         <?php
 			}
 			else {
