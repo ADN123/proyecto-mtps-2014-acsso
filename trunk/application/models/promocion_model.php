@@ -461,7 +461,7 @@ class Promocion_model extends CI_Model {
 					tcm_empleado.seccion,
 					tcm_empleado.id_seccion,
 					tcm_empleado.nombre,
-					(COUNT(*)-1) AS total
+					(COUNT(sac_programacion_visita.id_programacion_visita)) AS total
 					FROM
 					tcm_empleado
 					LEFT JOIN sac_programacion_visita ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado

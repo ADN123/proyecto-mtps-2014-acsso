@@ -913,7 +913,7 @@ class Promocion extends CI_Controller
 	function resultados($fecha_iniciale=NULL,$fecha_finale=NULL,$reportee=NULL,$exportacione=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_promociones); 
-		if($data['id_permiso']==3) {
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			if($fecha_inicial==NULL) {
 				$fec=str_replace("/","-",$this->input->post('fecha_inicial'));
 				$fecha_inicial=date("Y-m-d", strtotime($fec));
