@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50536
-Source Host           : 127.0.0.1:3306
+Source Server Version : 50051
+Source Host           : localhost:3306
 Source Database       : mtps
 
 Target Server Type    : MYSQL
-Target Server Version : 50536
+Target Server Version : 50051
 File Encoding         : 65001
 
-Date: 2014-09-10 08:55:30
+Date: 2014-09-10 09:35:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,8 +22,8 @@ DROP TABLE IF EXISTS `sac_asistencia`;
 CREATE TABLE `sac_asistencia` (
   `id_capacitacion` int(11) NOT NULL,
   `id_empleado_institucion` int(11) NOT NULL,
-  `asistio` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_capacitacion`,`id_empleado_institucion`),
+  `asistio` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`id_capacitacion`,`id_empleado_institucion`),
   KEY `fk_capacitacion_asistencia` (`id_capacitacion`),
   KEY `fk_empleado_institucion_asistencia` (`id_empleado_institucion`),
   CONSTRAINT `fk_capacitacion_asistencia` FOREIGN KEY (`id_capacitacion`) REFERENCES `sac_capacitacion` (`id_capacitacion`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -39,16 +39,16 @@ CREATE TABLE `sac_asistencia` (
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_capacitacion`;
 CREATE TABLE `sac_capacitacion` (
-  `id_capacitacion` int(11) NOT NULL AUTO_INCREMENT,
-  `id_lugar_trabajo` int(11) DEFAULT NULL,
+  `id_capacitacion` int(11) NOT NULL auto_increment,
+  `id_lugar_trabajo` int(11) default NULL,
   `fecha_capacitacion` date NOT NULL,
   `hora_capacitacion` time NOT NULL,
-  `estado_capacitacion` tinyint(4) NOT NULL DEFAULT '1',
+  `estado_capacitacion` tinyint(4) NOT NULL default '1',
   `fecha_creacion` datetime NOT NULL,
   `id_usuario_crea` int(11) NOT NULL,
-  `fecha_modificacion` datetime DEFAULT NULL,
-  `id_usuario_modifica` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_capacitacion`),
+  `fecha_modificacion` datetime default NULL,
+  `id_usuario_modifica` int(11) default NULL,
+  PRIMARY KEY  (`id_capacitacion`),
   KEY `fk_lugar_trabajo_capacitacion` (`id_lugar_trabajo`),
   CONSTRAINT `fk_lugar_trabajo_capacitacion` FOREIGN KEY (`id_lugar_trabajo`) REFERENCES `sac_lugar_trabajo` (`id_lugar_trabajo`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS `sac_capacitador`;
 CREATE TABLE `sac_capacitador` (
   `id_capacitacion` int(11) NOT NULL,
   `id_empleado` int(11) NOT NULL,
-  PRIMARY KEY (`id_capacitacion`,`id_empleado`),
+  PRIMARY KEY  (`id_capacitacion`,`id_empleado`),
   CONSTRAINT `fk_capacitador_capacitacion` FOREIGN KEY (`id_capacitacion`) REFERENCES `sac_capacitacion` (`id_capacitacion`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -77,10 +77,10 @@ CREATE TABLE `sac_capacitador` (
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_clasificacion_institucion`;
 CREATE TABLE `sac_clasificacion_institucion` (
-  `id_clasificacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_clasificacion` int(11) NOT NULL auto_increment,
   `codigo_clasificacion` varchar(10) NOT NULL,
   `nombre_clasificacion` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_clasificacion`)
+  PRIMARY KEY  (`id_clasificacion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3469 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3558,7 +3558,7 @@ DROP TABLE IF EXISTS `sac_control_visita`;
 CREATE TABLE `sac_control_visita` (
   `id_programacion_visita` int(11) NOT NULL,
   `id_tematica` int(11) NOT NULL,
-  PRIMARY KEY (`id_programacion_visita`,`id_tematica`),
+  PRIMARY KEY  (`id_programacion_visita`,`id_tematica`),
   KEY `fk_control_visita_tematica` (`id_tematica`),
   CONSTRAINT `fk_control_visita_programacion_visita` FOREIGN KEY (`id_programacion_visita`) REFERENCES `sac_programacion_visita` (`id_programacion_visita`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_control_visita_tematica` FOREIGN KEY (`id_tematica`) REFERENCES `sac_tematica` (`id_tematica`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -3573,7 +3573,7 @@ CREATE TABLE `sac_control_visita` (
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_empleado_institucion`;
 CREATE TABLE `sac_empleado_institucion` (
-  `id_empleado_institucion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empleado_institucion` int(11) NOT NULL auto_increment,
   `id_lugar_trabajo` int(11) NOT NULL,
   `id_tipo_inscripcion` int(11) NOT NULL,
   `id_tipo_representacion` int(11) NOT NULL,
@@ -3582,21 +3582,21 @@ CREATE TABLE `sac_empleado_institucion` (
   `nombre_empleado` varchar(255) NOT NULL,
   `cargo_empleado` varchar(255) NOT NULL,
   `dui_empleado` varchar(10) NOT NULL,
-  `delegado` tinyint(4) DEFAULT NULL,
-  `sindicato` tinyint(4) DEFAULT NULL,
-  `estado_empleado` tinyint(4) NOT NULL DEFAULT '1',
+  `delegado` tinyint(4) default NULL,
+  `sindicato` tinyint(4) default NULL,
+  `estado_empleado` tinyint(4) NOT NULL default '1',
   `fecha_creacion` datetime NOT NULL,
   `id_usuario_crea` int(11) NOT NULL,
-  `fecha_modificacion` datetime DEFAULT NULL,
-  `id_usuario_modifica` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_empleado_institucion`),
+  `fecha_modificacion` datetime default NULL,
+  `id_usuario_modifica` int(11) default NULL,
+  PRIMARY KEY  (`id_empleado_institucion`),
   KEY `fk_lugar_trabajo_empleado_institucion` (`id_lugar_trabajo`),
   KEY `fk_tipo_inscripcion_empleado_emnpresa` (`id_tipo_inscripcion`),
   KEY `fk_tipo_representacion_empleado_institucion` (`id_tipo_representacion`),
   CONSTRAINT `fk_lugar_trabajo_empleado_institucion` FOREIGN KEY (`id_lugar_trabajo`) REFERENCES `sac_lugar_trabajo` (`id_lugar_trabajo`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tipo_inscripcion_empleado_institucion` FOREIGN KEY (`id_tipo_inscripcion`) REFERENCES `sac_tipo_inscripcion` (`id_tipo_inscripcion`) ON UPDATE CASCADE,
   CONSTRAINT `fk_tipo_representacion_empleado_institucion` FOREIGN KEY (`id_tipo_representacion`) REFERENCES `sac_tipo_representacion` (`id_tipo_representacion`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sac_empleado_institucion
@@ -3610,25 +3610,26 @@ INSERT INTO `sac_empleado_institucion` VALUES ('7', '18', '2', '2', '1', '0000-0
 INSERT INTO `sac_empleado_institucion` VALUES ('8', '16', '2', '1', '1', '2014-09-04', 'Juan Leonel Peña Rivas', 'Jefe de informática', '32452345-6', '1', null, '1', '2014-09-05 03:13:29', '22', '2014-09-09 00:42:39', '22');
 INSERT INTO `sac_empleado_institucion` VALUES ('9', '16', '2', '3', '2', '2014-09-04', 'Mayra Evelyn Morán de Peña', 'Supervisora', '09876654-4', null, '1', '1', '2014-09-05 03:17:46', '22', '2014-09-09 00:42:57', '22');
 INSERT INTO `sac_empleado_institucion` VALUES ('10', '13', '1', '2', '2', '2014-09-09', 'Carla Henríquez', 'Cajera', '04235876-4', null, null, '1', '2014-09-09 00:44:09', '22', null, null);
+INSERT INTO `sac_empleado_institucion` VALUES ('11', '13', '1', '2', '2', '2014-09-10', 'Yesenia Mejía', 'Cajera', '01345234-8', '1', null, '1', '2014-09-10 16:28:20', '50', null, null);
 
 -- ----------------------------
 -- Table structure for sac_institucion
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_institucion`;
 CREATE TABLE `sac_institucion` (
-  `id_institucion` int(11) NOT NULL AUTO_INCREMENT,
-  `id_clasificacion` int(11) DEFAULT NULL,
-  `id_sector` int(11) DEFAULT NULL,
+  `id_institucion` int(11) NOT NULL auto_increment,
+  `id_clasificacion` int(11) default NULL,
+  `id_sector` int(11) default NULL,
   `nombre_institucion` varchar(255) NOT NULL,
-  `nit_empleador` varchar(17) DEFAULT NULL,
+  `nit_empleador` varchar(17) default NULL,
   `nombre_representante` varchar(255) NOT NULL,
-  `sindicato` varchar(2) DEFAULT NULL,
-  `estado` tinyint(4) NOT NULL DEFAULT '1',
+  `sindicato` varchar(2) default NULL,
+  `estado` tinyint(4) NOT NULL default '1',
   `fecha_creacion` datetime NOT NULL,
   `id_usuario_crea` int(11) NOT NULL,
-  `fecha_modificacion` datetime DEFAULT NULL,
-  `id_usuario_modifica` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_institucion`),
+  `fecha_modificacion` datetime default NULL,
+  `id_usuario_modifica` int(11) default NULL,
+  PRIMARY KEY  (`id_institucion`),
   KEY `fk_clasificacion_institucion_institucion` (`id_clasificacion`),
   KEY `fk_sector_institucion_institucion` (`id_sector`),
   CONSTRAINT `fk_clasificacion_institucion_institucion` FOREIGN KEY (`id_clasificacion`) REFERENCES `sac_clasificacion_institucion` (`id_clasificacion`) ON UPDATE CASCADE,
@@ -3638,7 +3639,7 @@ CREATE TABLE `sac_institucion` (
 -- ----------------------------
 -- Records of sac_institucion
 -- ----------------------------
-INSERT INTO `sac_institucion` VALUES ('14', '2051', '1', 'Callejas S.A. de C.V.', '0614-310586-106-8', 'Maria Isabel Miranda', '0', '1', '2014-07-22 21:26:44', '22', '2014-09-03 05:57:07', '22');
+INSERT INTO `sac_institucion` VALUES ('14', '2051', '1', 'Callejas S.A. de C.V.', '0614-310586-106-8', 'Maria Isabel Miranda', '0', '1', '2014-07-22 21:26:44', '22', '2014-09-10 16:26:06', '50');
 INSERT INTO `sac_institucion` VALUES ('15', '2795', '2', 'Ministerio de Hacienda', '0987-120623-243-5', 'Josael Rivera', '1', '1', '2014-08-21 14:39:37', '22', '2014-08-27 20:59:59', '22');
 
 -- ----------------------------
@@ -3646,7 +3647,7 @@ INSERT INTO `sac_institucion` VALUES ('15', '2795', '2', 'Ministerio de Hacienda
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_lugar_trabajo`;
 CREATE TABLE `sac_lugar_trabajo` (
-  `id_lugar_trabajo` int(11) NOT NULL AUTO_INCREMENT,
+  `id_lugar_trabajo` int(11) NOT NULL auto_increment,
   `id_institucion` int(11) NOT NULL,
   `id_tipo_lugar_trabajo` int(11) NOT NULL,
   `id_municipio` int(11) NOT NULL,
@@ -3654,16 +3655,16 @@ CREATE TABLE `sac_lugar_trabajo` (
   `direccion_lugar` text NOT NULL,
   `nombre_contacto` varchar(255) NOT NULL,
   `telefono` varchar(8) NOT NULL,
-  `correo` varchar(255) DEFAULT NULL,
+  `correo` varchar(255) default NULL,
   `total_hombres` int(11) NOT NULL,
   `total_mujeres` int(11) NOT NULL,
-  `fecha_conformacion` date DEFAULT NULL,
-  `estado` tinyint(4) NOT NULL DEFAULT '1',
+  `fecha_conformacion` date default NULL,
+  `estado` tinyint(4) NOT NULL default '1',
   `fecha_creacion` datetime NOT NULL,
   `id_usuario_crea` int(11) NOT NULL,
-  `fecha_modificacion` datetime DEFAULT NULL,
-  `id_usuario_modifica` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_lugar_trabajo`),
+  `fecha_modificacion` datetime default NULL,
+  `id_usuario_modifica` int(11) default NULL,
+  PRIMARY KEY  (`id_lugar_trabajo`),
   KEY `fk_tipo_lugar_trabajo_lugar_trabajo` (`id_tipo_lugar_trabajo`),
   KEY `fk_institucion_lugar_trabajo` (`id_institucion`),
   CONSTRAINT `fk_institucion_lugar_trabajo` FOREIGN KEY (`id_institucion`) REFERENCES `sac_institucion` (`id_institucion`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -3673,21 +3674,21 @@ CREATE TABLE `sac_lugar_trabajo` (
 -- ----------------------------
 -- Records of sac_lugar_trabajo
 -- ----------------------------
-INSERT INTO `sac_lugar_trabajo` VALUES ('13', '14', '2', '97', 'Metrosur', 'Condominio Metrocentro Sur # 413 Planta Baja, S.S.', 'Luis Cardona', '22603508', 'luis.cardona@superselectos.com.sv', '15', '20', '2014-08-31', '2', '2014-07-22 21:33:09', '22', '2014-09-01 04:50:57', '22');
+INSERT INTO `sac_lugar_trabajo` VALUES ('13', '14', '2', '97', 'Metrosur', 'Condominio Metrocentro Sur # 413 Planta Baja, S.S.', 'Luis Cardona', '22603508', 'luis.cardona@superselectos.com.sv', '15', '20', '2014-08-31', '1', '2014-07-22 21:33:09', '22', '2014-09-10 16:26:06', '50');
 INSERT INTO `sac_lugar_trabajo` VALUES ('14', '14', '2', '75', 'Santa Tecla', '2a Calle Oriente y 3a. Av .Nte. No 2-9', '', '22888211', '', '0', '0', null, '1', '2014-07-22 21:36:21', '22', '2014-07-22 21:36:32', '22');
 INSERT INTO `sac_lugar_trabajo` VALUES ('15', '14', '2', '163', 'San Vicente', '2a. Av. Sur.ex -local arena, San Vicente', '', '23930073', '', '0', '0', null, '1', '2014-07-22 21:37:32', '22', null, null);
-INSERT INTO `sac_lugar_trabajo` VALUES ('16', '14', '2', '114', 'Plaza Mundo', 'Km. 4 1/2 Boulev. del Ejercito, C.C. Plaza Mundo, Ancla \"A\"', 'Juan Perez', '23402323', 'juanperez@hotmail.com', '10', '8', null, '2', '2014-07-22 21:39:19', '22', '2014-09-05 06:02:56', '22');
+INSERT INTO `sac_lugar_trabajo` VALUES ('16', '14', '2', '114', 'Plaza Mundo', 'Km. 4 1/2 Boulev. del Ejercito, C.C. Plaza Mundo, Ancla \"A\"', 'Juan Perez', '23402323', 'juanperez@hotmail.com', '10', '8', null, '1', '2014-07-22 21:39:19', '22', '2014-09-05 06:02:56', '22');
 INSERT INTO `sac_lugar_trabajo` VALUES ('17', '14', '2', '106', 'Mejicanos', 'Final 5a. Av. Nte. Universitaria', '', '22262715', '', '0', '0', null, '1', '2014-07-22 21:40:45', '22', '2014-07-28 20:07:10', '22');
-INSERT INTO `sac_lugar_trabajo` VALUES ('18', '14', '2', '97', 'Metrocentro', 'Mentrocentro', 'Mayra Evelin de Peña', '76556754', 'mayradepena@gmail.com', '10', '15', '2014-09-01', '2', '2014-08-12 10:44:31', '22', '2014-09-01 05:57:36', '22');
-INSERT INTO `sac_lugar_trabajo` VALUES ('19', '15', '1', '97', 'Dirección General de Aduana Oficina Central', 'San Salvador', 'Carlos Cáceres', '22303445', 'carloscaceres@mh.gob.sv', '75', '25', '2014-09-03', '2', '2014-08-21 14:42:39', '22', '2014-09-01 03:20:48', '22');
-INSERT INTO `sac_lugar_trabajo` VALUES ('20', '15', '2', '97', 'Dirección General de Aduana Santa Ana', 'Santa Ana, Santa Ana', '', '', '', '0', '0', null, '1', '2014-08-21 14:44:18', '22', '2014-09-03 05:52:34', '22');
+INSERT INTO `sac_lugar_trabajo` VALUES ('18', '14', '2', '97', 'Metrocentro', 'Mentrocentro', 'Mayra Evelin de Peña', '76556754', 'mayradepena@gmail.com', '10', '15', '2014-09-01', '1', '2014-08-12 10:44:31', '22', '2014-09-01 05:57:36', '22');
+INSERT INTO `sac_lugar_trabajo` VALUES ('19', '15', '1', '97', 'Dirección General de Aduana Oficina Central', 'San Salvador', 'Carlos Cáceres', '22303445', 'carloscaceres@mh.gob.sv', '75', '25', '2014-09-03', '1', '2014-08-21 14:42:39', '22', '2014-09-01 03:20:48', '22');
+INSERT INTO `sac_lugar_trabajo` VALUES ('20', '15', '2', '13', 'Dirección General de Aduana Santa Ana', 'Santa Ana, Santa Ana', '', '', '', '0', '0', null, '1', '2014-08-21 14:44:18', '22', '2014-09-10 16:16:40', '22');
 
 -- ----------------------------
 -- Table structure for sac_programacion_visita
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_programacion_visita`;
 CREATE TABLE `sac_programacion_visita` (
-  `id_programacion_visita` int(11) NOT NULL AUTO_INCREMENT,
+  `id_programacion_visita` int(11) NOT NULL auto_increment,
   `id_lugar_trabajo` int(11) NOT NULL,
   `id_empleado` int(11) NOT NULL,
   `fecha_visita` date NOT NULL,
@@ -3695,24 +3696,25 @@ CREATE TABLE `sac_programacion_visita` (
   `hora_visita_final` time NOT NULL,
   `fecha_creacion` datetime NOT NULL,
   `id_usuario_crea` int(11) NOT NULL,
-  `fecha_modificacion` datetime DEFAULT NULL,
-  `id_usuario_modifica` int(11) DEFAULT NULL,
-  `estado_programacion` tinyint(4) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id_programacion_visita`),
+  `fecha_modificacion` datetime default NULL,
+  `id_usuario_modifica` int(11) default NULL,
+  `estado_programacion` tinyint(4) NOT NULL default '1',
+  PRIMARY KEY  (`id_programacion_visita`),
   KEY `fk_institucion_programacion_visita` (`id_lugar_trabajo`),
   CONSTRAINT `fk_institucion_programacion_visita` FOREIGN KEY (`id_lugar_trabajo`) REFERENCES `sac_lugar_trabajo` (`id_lugar_trabajo`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sac_programacion_visita
 -- ----------------------------
+INSERT INTO `sac_programacion_visita` VALUES ('45', '13', '2', '2014-09-10', '08:00:00', '09:00:00', '2014-09-10 16:17:08', '22', '2014-09-10 16:26:06', '50', '2');
 
 -- ----------------------------
 -- Table structure for sac_promocion
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_promocion`;
 CREATE TABLE `sac_promocion` (
-  `id_promocion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_promocion` int(11) NOT NULL auto_increment,
   `id_programacion_visita` int(11) NOT NULL,
   `fecha_promocion` date NOT NULL,
   `nombre_recibio` varchar(255) NOT NULL,
@@ -3721,25 +3723,26 @@ CREATE TABLE `sac_promocion` (
   `observaciones` text,
   `fecha_creacion` datetime NOT NULL,
   `id_usuario_crea` int(11) NOT NULL,
-  `fecha_modificacion` datetime DEFAULT NULL,
-  `id_usuario_modifica` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_promocion`),
+  `fecha_modificacion` datetime default NULL,
+  `id_usuario_modifica` int(11) default NULL,
+  PRIMARY KEY  (`id_promocion`),
   KEY `fk_visita_promocion` (`id_programacion_visita`),
   CONSTRAINT `fk_visita_promocion` FOREIGN KEY (`id_programacion_visita`) REFERENCES `sac_programacion_visita` (`id_programacion_visita`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sac_promocion
 -- ----------------------------
+INSERT INTO `sac_promocion` VALUES ('1', '45', '2014-09-10', 'Luis Cardona', '09:00:00', '11:00:00', 'sfadfasdfsdf23545234523452345,fdghfdgh64564-4563456 -4564356', '2014-09-10 16:26:06', '50', null, null);
 
 -- ----------------------------
 -- Table structure for sac_sector_institucion
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_sector_institucion`;
 CREATE TABLE `sac_sector_institucion` (
-  `id_sector` int(11) NOT NULL AUTO_INCREMENT,
+  `id_sector` int(11) NOT NULL auto_increment,
   `nombre_sector` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_sector`)
+  PRIMARY KEY  (`id_sector`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3754,9 +3757,9 @@ INSERT INTO `sac_sector_institucion` VALUES ('3', 'Municipal');
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_tematica`;
 CREATE TABLE `sac_tematica` (
-  `id_tematica` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tematica` int(11) NOT NULL auto_increment,
   `nombre_tematica` varchar(250) NOT NULL,
-  PRIMARY KEY (`id_tematica`)
+  PRIMARY KEY  (`id_tematica`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3780,10 +3783,10 @@ INSERT INTO `sac_tematica` VALUES ('12', 'Técnicas eficaces de comunicación');
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_tipo_inscripcion`;
 CREATE TABLE `sac_tipo_inscripcion` (
-  `id_tipo_inscripcion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tipo_inscripcion` int(11) NOT NULL auto_increment,
   `nombre` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_tipo_inscripcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  PRIMARY KEY  (`id_tipo_inscripcion`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sac_tipo_inscripcion
@@ -3798,9 +3801,9 @@ INSERT INTO `sac_tipo_inscripcion` VALUES ('4', 'Cambio');
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_tipo_lugar_trabajo`;
 CREATE TABLE `sac_tipo_lugar_trabajo` (
-  `id_tipo_lugar_trabajo` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tipo_lugar_trabajo` int(11) NOT NULL auto_increment,
   `nombre_tipo` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_tipo_lugar_trabajo`)
+  PRIMARY KEY  (`id_tipo_lugar_trabajo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3814,9 +3817,9 @@ INSERT INTO `sac_tipo_lugar_trabajo` VALUES ('2', 'Sucursal/Dependecia ');
 -- ----------------------------
 DROP TABLE IF EXISTS `sac_tipo_representacion`;
 CREATE TABLE `sac_tipo_representacion` (
-  `id_tipo_representacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tipo_representacion` int(11) NOT NULL auto_increment,
   `nombre_tipo_representacion` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_tipo_representacion`)
+  PRIMARY KEY  (`id_tipo_representacion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3827,7 +3830,7 @@ INSERT INTO `sac_tipo_representacion` VALUES ('2', 'Trabajadores');
 INSERT INTO `sac_tipo_representacion` VALUES ('3', 'Sindicato');
 
 CREATE 
-VIEW sac_resultado_capacitacion 
+VIEW sac_resultado_capacitacion AS
 SELECT
 sac_clasificacion_institucion.codigo_clasificacion,
 sac_clasificacion_institucion.nombre_clasificacion,
