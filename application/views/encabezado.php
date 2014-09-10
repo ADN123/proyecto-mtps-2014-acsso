@@ -197,6 +197,7 @@
 		}
 		#multi-s .chosen-container-multi .chosen-choices {
 			height: 72px !important;
+			overflow-y: auto !important;
 		}
 		@media screen and (max-width: 640px) {
 			.dataTables_length {

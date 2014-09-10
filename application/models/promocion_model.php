@@ -159,7 +159,7 @@ class Promocion_model extends CI_Model {
 					LEFT JOIN sac_capacitador ON sac_capacitador.id_empleado = tcm_empleado.id_empleado
 					LEFT JOIN sac_capacitacion ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
 					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') ".$where;*/
-		$sentencia="SELECT
+		$sentencia="SELECT DISTINCT
 					tcm_empleado.id_empleado AS id,
 					tcm_empleado.nombre,
 					CASE 
