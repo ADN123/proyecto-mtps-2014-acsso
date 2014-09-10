@@ -3,149 +3,141 @@
 	$nombre_completo="";
 	$usuario="";
 	$id_rol[]="";
-	$dir="guardar_usuario";
-	$label="Guardar";
-	$op='selected="selected"';
-	
+	$req='data-req="true"';
+	$reqla='<span class="asterisk">*</span>';
 	foreach ($usu as $val) {
 		$id_usuario=$val['id_usuario'];
 		$nombre_completo=ucwords($val['nombre_completo']);
 		$usuario=$val['usuario'];
 		$id_rol[]=$val['id_rol'];
-		$dir="actualizar_usuario";
-		$label="Actualizar";
-		$op='';
+		$req='';
+		$reqla='';
 	}
 ?>
-<style>
-	.k-multiselect {
-		display: inline-block;
-	}
-</style>
-<form name="formu" id="formu" style="max-width: 600px;" method="post" action="<?php echo base_url()?>index.php/usuarios/<?=$dir?>">
-  	<input type="hidden" id="id_usuario" name="id_usuario" value="<?=$id_usuario?>"/>
-	<fieldset>      
-        <legend align='left'>Información del Usuario</legend>
-        <p>
-            <label for="nombre_completo" id="lnombre_completo">Nombre </label>
-            <?php
-				if($id_usuario=="") {
-			?>
-                <select name="nombre_completo" id="nombre_completo">
-                	<option value=""></option>
+<div id="progressWizard" class="basic-wizard">
+	<?php
+		if(isset($id_usuario) && $id_usuario!="") {
+	?>
+  			<input type="hidden" id="id_usuario" name="id_usuario" value="<?=$id_usuario?>"/>
+   	<?php
+		}
+	?>
+    <ul class="nav nav-pills nav-justified">
+        <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="tab-pane" id="ptab1">
+            <div class="form-group">
+                <label for="nombre_completo" class="col-sm-3 control-label">Nombre <span class="asterisk">*</span></label>
+                <div class="col-sm-8">
                     <?php
-                        foreach($empleados as $val) {
-                            echo '<option value="'.$val['id_empleado'].'">'.ucwords($val['nombre']).'</option>';
-                        }
+                        if($id_usuario=="") {
                     ?>
-                </select>
-            <?php
-				}
-				else
-					echo "<strong> ".$nombre_completo." </strong>";
-			?>
-        </p>
-        <p>
-            <label for="usuario" id="lusuario">Usuario </label>
-            <?php
-				if($id_usuario=="") {
-			?>
-            	<input type="text" tabindex="2" id="usuario" name="usuario"/>
-            <?php
-				}
-				else
-					echo "<strong> ".$usuario." </strong>";
-			?>
-        </p>
-        <p>
-            <label for="password" id="lpassword">Contraseña </label>
-            <input type="password" tabindex="2" id="password" name="password"/>
-        </p>
-	</fieldset>
-    <fieldset>      
-        <legend align='left'>Información del Rol</legend>
-        <p>
-            <label for="id_rol" id="lid_rol" class="label_textarea">Rol </label>
-            <select name="id_rol[]" id="id_rol" tabindex="3" multiple="multiple" class="multi" style="width:60%;">
-                <?php
-                    foreach($roles as $val) {
-						if(in_array($val['id_rol'], $id_rol))
-                        	echo '<option value="'.$val['id_rol'].'" selected="selected">'.ucwords($val['nombre_rol']).'</option>';
-						else
-                        	echo '<option value="'.$val['id_rol'].'">'.ucwords($val['nombre_rol']).'</option>';
-                    }
-                ?>
-            </select>
-        </p>    
-	</fieldset>
-    <p style='text-align: center;'>
-        <button type="submit" id="aprobar" class="button tam-1 boton_validador" name="aprobar"><?=$label?></button>
-    </p>
-</form>
+                        <select name="nombre_completo" id="nombre_completo" data-req="true" class="form-control" data-placeholder="[Seleccione..]">
+                            <option value=""></option>
+                            <?php
+                                foreach($empleados as $val) {
+                                    echo '<option value="'.$val['id_empleado'].'">'.ucwords($val['nombre']).'</option>';
+                                }
+                            ?>
+                        </select>
+                    <?php
+                        }
+                        else
+                            echo '<label class="col-sm-8 control-label" style="text-align: left;"><strong> '.$nombre_completo.' </strong></label>';
+                    ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="usuario" class="col-sm-3 control-label">Usuario <span class="asterisk">*</span></label>
+                <div class="col-sm-8">
+                    <?php
+                        if($id_usuario=="") {
+                    ?>
+                        <input type="text" id="usuario" name="usuario" data-req="true" class="form-control"/>
+                    <?php
+                        }
+                        else
+                            echo '<label class="col-sm-8 control-label" style="text-align: left;"><strong> '.$usuario." </strong></label>";
+                    ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-3 control-label">Contraseña <?=$reqla?></label>
+                <div class="col-sm-8">
+                    <input type="password" id="password" name="password" <?=$req?> data-tip="pas" data-min="8" data-max="20" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group" id="multi-s">
+                <label for="id_rol" class="col-sm-3 control-label">Rol <span class="asterisk">*</span></label>
+                <div class="col-sm-8">
+                    <select name="id_rol[]" id="id_rol"  data-req="true" multiple class="form-control" data-placeholder="&nbsp;">
+                        <?php
+                            foreach($roles as $val) {
+                                if(in_array($val['id_rol'], $id_rol))
+                                    echo '<option value="'.$val['id_rol'].'" selected="selected">'.ucwords($val['nombre_rol']).'</option>';
+                                else
+                                    echo '<option value="'.$val['id_rol'].'">'.ucwords($val['nombre_rol']).'</option>';
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="pager wizard">
+        <?php
+            if(isset($id_usuario) && $id_usuario!="") {
+        ?>
+                <li><button class="btn btn-primary" type="submit" name="aprobar" id="aprobar"><span class="glyphicon glyphicon-floppy-saved"></span> Actualizar</button></li>
+        <?php
+            }
+            else {
+        ?>
+                <li><button class="btn btn-success" type="submit" name="aprobar" id="aprobar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
+        <?php
+            }
+        ?>
+        <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
+    </ul>
+</div>
 <script>
 	$(document).ready(function() {
-		$("select").prepend('<option value="" <?=$op?>></option>');
-		$(".multi").kendoMultiSelect({
-			filter: "contains"	
-		}).data("kendoMultiSelect");
-		$(".select").kendoComboBox({
-			autoBind: false,
-			filter: "contains"
+		$("#formu select").chosen({
+			'width': '100%',
+			'min-width': '100px',
+			'white-space': 'nowrap',
+			no_results_text: "Sin resultados!"
 		});
-		<?php
-			if($id_usuario=="") {
-		?>
-			$("#nombre_completo").validacion({
-				men: "Debe seleccionar un item"
-			});
-			$("#usuario").validacion({
-				patt: /^([a-z|A-Z])+[.]{1}([a-z|A-Z])+$/i,
-				men: "Debe contener el formato <i>nombre.apellido</i> (sin acentos ni espacios en blanco)"
-			});
-			$("#password").validacion({
-				lonMin: 5,
-				lonMax: 25
-			});
-		<?php
+		var y=$("#id_rol").chosen().data();
+		y.chosen.max_selected_options=100;
+		$('#progressWizard').bootstrapWizard({
+			'nextSelector': '.next',
+			'previousSelector': '.previous',
+			onNext: function(tab, navigation, index) {
+		  		var $total = navigation.find('li').length;
+		  		var $current = index+1;
+		  		var $percent = ($current/$total) * 100;
+		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
+			},
+			onPrevious: function(tab, navigation, index) {
+		  		var $total = navigation.find('li').length;
+		  		var $current = index+1;
+		  		var $percent = ($current/$total) * 100;
+		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
+			},
+			onTabShow: function(tab, navigation, index) {
+		  		var $total = navigation.find('li').length;
+		  		var $current = index+1;
+		  		var $percent = ($current/$total) * 100;
+		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
-			else {
-		?>
-			$("#password").validacion({
-				req: false,
-				lonMin: 5,
-				lonMax: 25
-			});
-		<?php
-			}
-		?>
-		$("#id_rol").validacion({
-			men: "Debe seleccionar un item"
-		});
-		$("#nombre_completo").change(function(){
-			var id=$(this).val();
-			$.ajax({
-				type:  "post",  
-				async:	true, 
-				url:	base_url()+"index.php/usuarios/buscar_info_adicional_usuario",
-				data:   {
-						id_empleado: id
-					},
-				dataType: "json",
-				success: function(data) { 
-					if(data['estado']==1) {
-						var html=data['usuario'];
-						$("#usuario").val(html);
-					}
-					else {	
-						alertify.alert('Error al intentar buscar empleado: No se encuentra el registro');
-						$("#usuario").val("");
-					}
-				},
-				error:function(data) { 
-					alertify.alert('Error al intentar buscar empleado: No se pudo conectar al servidor');
-					$("#usuario").val("");
-				}
-			});
+	  	});
+		$("#limpiar").click(function(){
+			$("#formu").load(base_url()+"index.php/usuarios/datos_de_usuario");
 		});
 	});
 </script>

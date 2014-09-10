@@ -301,35 +301,30 @@ class Usuarios extends CI_Controller
 	*	Última Modificación: 19/05/2014
 	*	Observaciones: Ninguna.
 	*/
-	function usuario($estado_transaccion=NULL,$accion=NULL)
+	function usuario($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario); /*Verificacion de permiso para administrara usuarios*/
 		
 		if($data['id_permiso']==3) {
 			switch($data['id_permiso']) { /*Busqueda de informacion a mostrar en la pantalla segun el nivel del usuario logueado*/
 				case 1:
-					$data['usuarios']=$this->usuario_model->mostrar_usuarios();
+					$data['usuarios']=$this->usuario_model->mostrar_usuarios(NULL,NULL,1);
 					$data['empleados']=$this->usuario_model->empleados_sin_usuario();
 					$data['roles']=$this->usuario_model->mostrar_roles();
 					break;
 				case 2:
-					$data['usuarios']=$this->usuario_model->mostrar_usuarios();
+					$data['usuarios']=$this->usuario_model->mostrar_usuarios(NULL,NULL,1);
 					$data['empleados']=$this->usuario_model->empleados_sin_usuario();
 					$data['roles']=$this->usuario_model->mostrar_roles();
 					break;
 				case 3:
-					$data['usuarios']=$this->usuario_model->mostrar_usuarios();
+					$data['usuarios']=$this->usuario_model->mostrar_usuarios(NULL,NULL,1);
 					$data['empleados']=$this->usuario_model->empleados_sin_usuario();
 					$data['roles']=$this->usuario_model->mostrar_roles();
 					break;
 			}
+			$data['accion_transaccion']=$accion_transaccion;
 			$data['estado_transaccion']=$estado_transaccion;
-			if($accion==0)
-				$data['accion']="elimina";
-			if($accion==1)
-				$data['accion']="actualiza";
-			if($accion==2)
-				$data['accion']="guarda";
 			pantalla('usuarios/usuarios',$data,Dcontrol_usuario);	
 		}
 		else {
@@ -421,93 +416,81 @@ class Usuarios extends CI_Controller
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario);
 		
 		if($data['id_permiso']==3) {
-			$this->db->trans_start();
-			$id_empleado=$this->input->post('nombre_completo');
-			$usuario=$this->input->post('usuario');
-			$password=md5($this->input->post('password'));
-			
-			$data=$this->usuario_model->info_adicional($id_empleado);
-			
-
-			if($data['id_genero']==1) {
-				$data['id_genero']="M";
-			}
-			else 
-				$data['id_genero']="F";
-			
-			$formuInfo = array(
-				'nombre_completo'=>$data['nombre'],
-				'password'=>$password,
-				'nr'=>$data['nr'],
-				'sexo'=>$data['id_genero'],
-				'usuario'=>$usuario,
-				'id_seccion'=>$data['id_seccion'],
-				'estado'=>1
-			);
-			
-			$id_usuario=$this->usuario_model->guardar_usuario($formuInfo); /*Guardando usuario*/
-			$id_rol=$this->input->post('id_rol');
-
-			for($i=0;$i<count($id_rol);$i++) {
-				$formuInfo = array(
-					'id_rol'=>$id_rol[$i],
-					'id_usuario'=>$id_usuario
-				);
-				$this->usuario_model->guardar_permisos_usuario($formuInfo); /*Guardando permisos del usuario*/
-			}
-			$this->db->trans_complete();
-			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/usuario/'.$tr.'/2');
-		}
-		else {
-			pantalla_error();
-		}
-	}
-	
-	/*
-	*	Nombre: actualizar_usuario
-	*	Objetivo: Actualiza los registros de usuarios
-	*	Hecha por: Leonel
-	*	Modificada por: Leonel
-	*	Última Modificación: 07/06/2014
-	*	Observaciones: Ninguna.
-	*/
-	function actualizar_usuario()
-	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dcontrol_usuario);
-		
-		if($data['id_permiso']==3) {
-			$this->db->trans_start();
 			$id_usuario=$this->input->post('id_usuario');
-			$password=md5($this->input->post('password'));
 			
-			if($password!="") {			
+			if($id_usuario=="") {
+				$this->db->trans_start();
+				$id_empleado=$this->input->post('nombre_completo');
+				$usuario=$this->input->post('usuario');
+				$password=md5($this->input->post('password'));
+				
+				$data=$this->usuario_model->info_adicional($id_empleado);
+				
+	
+				if($data['id_genero']==1) {
+					$data['id_genero']="M";
+				}
+				else 
+					$data['id_genero']="F";
+				
 				$formuInfo = array(
+					'nombre_completo'=>$data['nombre'],
 					'password'=>$password,
-					'id_usuario'=>$id_usuario
+					'nr'=>$data['nr'],
+					'sexo'=>$data['id_genero'],
+					'usuario'=>$usuario,
+					'id_seccion'=>$data['id_seccion'],
+					'estado'=>1
 				);
-				$this->usuario_model->actualizar_usuario($formuInfo); /*Actualizar usuario*/
+				
+				$id_usuario=$this->usuario_model->guardar_usuario($formuInfo); /*Guardando usuario*/
+				$id_rol=$this->input->post('id_rol');
+	
+				for($i=0;$i<count($id_rol);$i++) {
+					$formuInfo = array(
+						'id_rol'=>$id_rol[$i],
+						'id_usuario'=>$id_usuario
+					);
+					$this->usuario_model->guardar_permisos_usuario($formuInfo); /*Guardando permisos del usuario*/
+				}
+				$this->db->trans_complete();
+				$tr=($this->db->trans_status()===FALSE)?0:1;
+				ir_a('index.php/usuarios/usuario/'.$tr.'/2');
 			}
-			
-			$this->usuario_model->eliminar_roles_usuario($id_usuario); /*Eliminar permisos del usuario*/
-			
-			$id_rol=$this->input->post('id_rol');
-
-			for($i=0;$i<count($id_rol);$i++) {
-				$formuInfo = array(
-					'id_rol'=>$id_rol[$i],
-					'id_usuario'=>$id_usuario
-				);
-				$this->usuario_model->guardar_permisos_usuario($formuInfo); /*Guardando permisos del usuario*/
+			else {
+				$this->db->trans_start();
+				$id_usuario=$this->input->post('id_usuario');
+				$password=md5($this->input->post('password'));
+				
+				if($password!="") {			
+					$formuInfo = array(
+						'password'=>$password,
+						'id_usuario'=>$id_usuario
+					);
+					$this->usuario_model->actualizar_usuario($formuInfo); /*Actualizar usuario*/
+				}
+				
+				$this->usuario_model->eliminar_roles_usuario($id_usuario); /*Eliminar permisos del usuario*/
+				
+				$id_rol=$this->input->post('id_rol');
+	
+				for($i=0;$i<count($id_rol);$i++) {
+					$formuInfo = array(
+						'id_rol'=>$id_rol[$i],
+						'id_usuario'=>$id_usuario
+					);
+					$this->usuario_model->guardar_permisos_usuario($formuInfo); /*Guardando permisos del usuario*/
+				}
+				$this->db->trans_complete();
+				$tr=($this->db->trans_status()===FALSE)?0:1;
+				ir_a('index.php/usuarios/usuario/2/'.$tr);
 			}
-			$this->db->trans_complete();
-			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/usuario/'.$tr.'/1');
 		}
 		else {
 			pantalla_error();
 		}
 	}
+
 	
 	/*
 	*	Nombre: eliminar_usuario
@@ -528,7 +511,7 @@ class Usuarios extends CI_Controller
 			/*$this->usuario_model->eliminar_permisos_usuario($id_usuario);*/ /*Eliminar permisos del usuario*/
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
-			ir_a('index.php/usuarios/usuario/'.$tr.'/0');
+			ir_a('index.php/usuarios/usuario/3/'.$tr);
 		}
 		else {
 			pantalla_error();
