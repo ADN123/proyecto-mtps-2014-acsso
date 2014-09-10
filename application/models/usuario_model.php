@@ -85,8 +85,8 @@ class Usuario_model extends CI_Model {
 					if($opciones_modulo>=2) 
  						$op='<option value="'.$id_modulo.',4" '.$op4.'>Departamental</option>'.$op;
 					if($opciones_modulo>=3) 
- 						$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
-					if($opciones_modulo>=4) 
+ 						/*$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
+					if($opciones_modulo>=4)*/
  						$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
 					$result.='<div class="col-sm-4"><select class="oculto select_rol" name="permiso[]" data-placeholder="[Seleccione...]"><option value=""></option>'.$op.'</select></div></div>';
 				}	
@@ -148,8 +148,8 @@ class Usuario_model extends CI_Model {
 						if($opciones_modulo>=2) 
 							$op='<option value="'.$id_modulo.',4" '.$op4.'>Departamental</option>'.$op;
 						if($opciones_modulo>=3) 
-							$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
-						if($opciones_modulo>=4) 
+							/*$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
+						if($opciones_modulo>=4)*/
 							$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
 						$result.='<div class="col-sm-4"><select class="oculto select_rol" name="permiso[]" data-placeholder="[Seleccione...]"><option value=""></option>'.$op.'</select></div></div>';
 					}
@@ -197,8 +197,8 @@ class Usuario_model extends CI_Model {
 						if($opciones_modulo>=2) 
 							$op='<option value="'.$id_modulo.',4" '.$op4.'>Departamental</option>'.$op;
 						if($opciones_modulo>=3) 
-							$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
-						if($opciones_modulo>=4) 
+							/*$op='<option value="'.$id_modulo.',2" '.$op2.'>Sección</option>'.$op;
+						if($opciones_modulo>=4)*/ 
 							$op='<option value="'.$id_modulo.',1" '.$op1.'>Personal</option>'.$op;
 						$result.='<div class="col-sm-4"><select class="oculto select_rol" name="permiso[]" data-placeholder="[Seleccione...]"><option value=""></option>'.$op.'</select></div></div>';
 						$result.=' </a>';				

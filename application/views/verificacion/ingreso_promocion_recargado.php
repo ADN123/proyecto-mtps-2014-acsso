@@ -1,4 +1,4 @@
-<?php if($id_permiso==3) {?>	
+<?php if($id_permiso==3 || $id_permiso==4) {?>	
     <div class="form-group">
         <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
         <div class="col-sm-4">

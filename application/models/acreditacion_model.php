@@ -245,7 +245,7 @@ class Acreditacion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
-	function mostrar_capacitaciones($dep=NULL,$todas=NULL)
+	function mostrar_capacitaciones($dep=NULL,$todas=NULL,$id_empleado=NULL)
 	{
 		$where="";
 		if($dep!=NULL) {
@@ -254,6 +254,9 @@ class Acreditacion_model extends CI_Model {
 		if($todas!=NULL) {
 			/*$where.=" AND estado_capacitacion=".$todas." AND fecha_capacitacion<='".date('Y-m-d')."'";*/
 			$where.=" AND estado_capacitacion=".$todas;
+		}
+		if($id_empleado!=NULL) {
+			$where.=" AND sac_capacitador.id_empleado=".$id_empleado;
 		}
 		$sentencia="SELECT DISTINCT
 					sac_capacitacion.id_capacitacion AS id,
@@ -270,6 +273,7 @@ class Acreditacion_model extends CI_Model {
 					INNER JOIN sac_empleado_institucion ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
 					INNER JOIN sac_lugar_trabajo AS sac_lugar_trabajo_2 ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo_2.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo_2.id_municipio AND org_municipio.id_municipio = sac_lugar_trabajo_2.id_municipio
+					INNER JOIN sac_capacitador ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
 					WHERE TRUE ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
