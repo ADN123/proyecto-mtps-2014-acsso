@@ -120,8 +120,8 @@
                     <td><?php echo ucwords($val['nombre_completo'])?></td>
                     <td><?php echo $val['usuario']?></td>
                     <td>
-                        <a class="modificar_usuario" title="Modificar Usuario" onClick="editar(<?php echo $val['id_rol']?>);return false;" href="#" data-id_usuario="<?php echo $val['id_usuario']?>" data-nombre_completo="<?php echo $val['usuario']?>"><img src="<?php echo base_url()?>img/usu_editar.png"/></a>
-                        <a class="eliminar_usuario" title="Eliminar Usuario" onClick="eliminar(<?php echo $val['id_rol']?>);return false;" href="#" data-id_usuario="<?php echo $val['id_usuario']?>" data-nombre_completo="<?php echo $val['usuario']?>"><img src="<?php echo base_url()?>img/usu_borrar.png"/></a>
+                        <a class="modificar_usuario" title="Modificar Usuario" onClick="editar(<?php echo $val['id_usuario']?>);return false;" href="#" data-id_usuario="<?php echo $val['id_usuario']?>" data-nombre_completo="<?php echo $val['usuario']?>"><img src="<?php echo base_url()?>img/usu_editar.png"/></a>
+                        <a class="eliminar_usuario" title="Eliminar Usuario" onClick="eliminar(<?php echo $val['id_usuario']?>);return false;" href="#" data-id_usuario="<?php echo $val['id_usuario']?>" data-nombre_completo="<?php echo $val['usuario']?>"><img src="<?php echo base_url()?>img/usu_borrar.png"/></a>
                     </td>
                   </tr>
                 <?php } ?>
@@ -157,7 +157,7 @@
 			}
 	  	});
 		$("#limpiar").click(function(){
-			$("#formu").load(base_url()+"index.php/usuarios/datos_de_rol");
+			$("#formu").load(base_url()+"index.php/usuarios/datos_de_usuario");
 		});
 		$("#nombre_completo").change(function(){
 			var id=$(this).val();
