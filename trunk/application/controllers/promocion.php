@@ -236,6 +236,7 @@ class Promocion extends CI_Controller
 		if($data['id_permiso']==3){
 			$this->db->trans_start();
 			
+			unset($_post);
 			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
 			$id_institucion=$this->input->post('id_institucion');
 			$id_tipo_lugar_trabajo=$this->input->post('id_tipo_lugar_trabajo');
