@@ -211,6 +211,11 @@
 			height: 72px !important;
 			overflow-y: auto !important;
 		}
+		.chosen-container-multi .chosen-choices li.search-choice {
+			margin: 1px 0 1px 0px;
+			padding: 10px 0 10px 0px;
+			width: 100%;
+		}
 		@media screen and (max-width: 640px) {
 			.dataTables_length {
 				display: none;
