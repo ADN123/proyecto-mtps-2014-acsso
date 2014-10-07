@@ -357,6 +357,54 @@ class Promocion extends CI_Controller
 	}
 	
 	/*
+	*	Nombre: asignacion
+	*	Objetivo: Carga la vista que contiene el formulario de ingreso de asignacion de visitas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 07/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function asignacion($accion_transaccion=NULL, $estado_transaccion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasigancion_visita_1); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			switch($data['id_permiso']) {
+				case 3:
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+					break;
+			}
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('promocion/asignacion',$data,Dasigancion_visita_1);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: guardar_asignacion
+	*	Objetivo: Guarda el formulario de ingreso de asignacion de visitas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 07/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function guardar_asignacion()
+	{
+		echo "<pre>";
+		print_r($this->input->post('id_empleado'));
+		echo "</pre>";
+	}
+	
+	/*
 	*	Nombre: programa
 	*	Objetivo: Carga la vista que contiene el formulario de ingreso de programacion de visitas
 	*	Hecha por: Leonel
