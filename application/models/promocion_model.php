@@ -222,6 +222,21 @@ class Promocion_model extends CI_Model {
 		return $id_departamento;
 	}
 	
+	function institucion_visita_nuevo($id_departamento=0)
+	{
+		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre 
+					FROM sac_institucion 
+					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion 
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio 
+					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais 
+					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo 
+					WHERE sac_lugar_trabajo.estado=1 
+					AND sac_programacion_visita.estado_programacion IS NULL
+					AND org_departamento.id_departamento=".$id_departamento;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	function institucion_visita($id_departamento)
 	{
 		$sentencia="SELECT DISTINCT sac_institucion.id_institucion AS id, sac_institucion.nombre_institucion AS nombre
@@ -255,6 +270,7 @@ class Promocion_model extends CI_Model {
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					WHERE sac_lugar_trabajo.estado=1 AND org_departamento.id_departamento=".$id_departamento." ".$where;
 		$query=$this->db->query($sentencia);
+		/*echo $sentencia;*/
 		return (array)$query->result_array();
 	}
 	
