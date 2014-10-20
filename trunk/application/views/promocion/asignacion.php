@@ -62,6 +62,42 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
+                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
                             </tbody>
                         </table>
                    	</div>
@@ -70,6 +106,7 @@
                     <li><button class="btn btn-success" type="button" name="guardar" id="guardar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</button></li>
                     <li><button class="btn btn-warning" type="reset" name="limpiar" id="limpiar"><span class="glyphicon glyphicon-trash"></span> Limpiar</button></li>
                 </ul>
+                <input type="hidden" name="tabla" id="tabla" />
             </form>
       	</div>
    	</div>
@@ -99,6 +136,11 @@
 </div>
 <script>
 	$(document).ready(function() {
+		var table = $('.table').dataTable();
+		$("#formu").submit(function(){
+        	var data = table.$('input, select').serialize();
+			$('#tabla').val(data);
+		});
 		$('#id_empleado').change(function(){
 			id=$(this).val();
 			/*$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);*/
