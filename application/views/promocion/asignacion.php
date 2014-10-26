@@ -143,7 +143,7 @@
 		});
 		$('#id_empleado').change(function(){
 			id=$(this).val();
-			/*$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);*/
+			$('#contenido-tabla').load(base_url()+'index.php/promocion/lugares_trabajo_empresa_asigna/'+id);
 		});
 		$("#guardar").click(function(){
 			$("#formu").submit();
