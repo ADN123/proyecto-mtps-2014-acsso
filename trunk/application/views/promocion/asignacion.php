@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                 	<div class="col-sm-12">		
-                        <table class="table table-hover mb30">
+                        <table class="table table-hover mb30" id="lugar_trabajo">
                             <thead>
                                 <tr>
                                     <th class="all">Nombre lugar de trabajo</th>
@@ -62,42 +62,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
-                                <tr><td>sadfasdfasd</td><td><input type="text" name="ins[]"/></td></tr>
                             </tbody>
                         </table>
                    	</div>
