@@ -422,7 +422,7 @@ class Promocion extends CI_Controller
 	function guardar_asignacion()
 	{
 		$t= "&".$this->input->post('tabla');
-		$t=explode("&ins%5B%5D=",$t);
+		$t=explode("&id_lugar_trabajo%5B%5D=",$t);
 		echo "<pre>";
 		print_r($t);
 		echo "</pre>";
