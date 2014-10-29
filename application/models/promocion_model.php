@@ -304,6 +304,22 @@ class Promocion_model extends CI_Model {
 			return 0;
 	}
 	
+	function eliminar_asignacion($id_empleado)
+	{
+		$sentencia="DELETE FROM sac_programacion_visita WHERE id_empleado=".$id_empleado." AND estado_programacion=1";
+		$this->db->query($sentencia);
+	}
+	
+	function guardar_asignacion($formuInfo)
+	{
+		extract($formuInfo);		
+		$sentencia="INSERT INTO sac_programacion_visita
+					(id_empleado, id_lugar_trabajo, fecha_creacion, id_usuario_crea) 
+					VALUES 
+					($id_empleado, $id_lugar_trabajo, '$fecha_creacion', $id_usuario_crea)";
+		$this->db->query($sentencia);
+	}
+	
 	function guardar_programacion($formuInfo)
 	{
 		extract($formuInfo);		

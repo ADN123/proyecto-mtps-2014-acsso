@@ -101,6 +101,7 @@
 <script>
 	$(document).ready(function() {
 		var table = $('.table').dataTable();
+		var tt=$('#lugar_trabajo').DataTable();
 		$("#formu").submit(function(){
         	var data = table.$('input, select').serialize();
 			$('#tabla').val(data);
@@ -108,12 +109,14 @@
 		$('#id_empleado').change(function(){
 			id=$(this).val();
 			$('#contenido-tabla').load(base_url()+'index.php/promocion/lugares_trabajo_empresa_asigna/'+id);
+			$('#lugar_trabajo').find('tbody tr').addClass('quitar');
+			tt.row('.quitar').remove().draw( false );
 		});
 		$("#guardar").click(function(){
 			$("#formu").submit();
 		});
 		$("#limpiar").click(function(){
-			/*$("#formu").load(base_url()+"index.php/promocion/asignacion_recargado");*/
+			$("#formu").load(base_url()+"index.php/promocion/asignacion_recargado");
 		});
 	});
 </script>

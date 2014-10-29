@@ -216,6 +216,15 @@
 			padding: 10px 0 10px 0px;
 			width: 100%;
 		}
+		.dir {
+			text-align: right;
+			font-size: 10px;
+		}
+		@media screen and (max-width: 991px) {
+			.logo, .dir {
+				text-align: center;
+			}
+		}
 		@media screen and (max-width: 640px) {
 			.dataTables_length {
 				display: none;

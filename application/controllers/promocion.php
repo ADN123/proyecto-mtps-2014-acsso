@@ -421,11 +421,36 @@ class Promocion extends CI_Controller
 	*/
 	function guardar_asignacion()
 	{
-		$t= "&".$this->input->post('tabla');
-		$t=explode("&id_lugar_trabajo%5B%5D=",$t);
-		echo "<pre>";
-		print_r($t);
-		echo "</pre>";
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasigancion_visita_1);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$id_empleado=$this->input->post("id_empleado");
+			if($this->input->post('tabla')!="")
+				$lt= "&".$this->input->post('tabla');
+			$id_lugar_trabajo=explode("&id_lugar_trabajo%5B%5D=",$lt);
+			$fecha_creacion=date('Y-m-d H:i:s');
+			$id_usuario_crea=$this->session->userdata('id_usuario');
+			
+			$this->promocion_model->eliminar_asignacion($id_empleado);
+			
+			for($i=1;$i<count($id_lugar_trabajo);$i++) {
+				$formuInfo = array(
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo[$i],
+					'fecha_creacion'=>$fecha_creacion,
+					'id_usuario_crea'=>$id_usuario_crea
+				);
+				$this->promocion_model->guardar_asignacion($formuInfo);
+			}
+			
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/promocion/asignacion/1/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
 		
 	}
 	
