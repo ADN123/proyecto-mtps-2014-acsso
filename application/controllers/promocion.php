@@ -432,7 +432,11 @@ class Promocion extends CI_Controller
 			$fecha_creacion=date('Y-m-d H:i:s');
 			$id_usuario_crea=$this->session->userdata('id_usuario');
 			
-			$this->promocion_model->eliminar_asignacion($id_empleado);
+			$cad="";
+			for($i=1;$i<count($id_lugar_trabajo);$i++) {
+				$cad.=" AND id_lugar_trabajo <> ".$id_lugar_trabajo[$i];
+			}
+			$this->promocion_model->eliminar_asignacion($id_empleado,$cad);
 			
 			for($i=1;$i<count($id_lugar_trabajo);$i++) {
 				$formuInfo = array(
@@ -441,7 +445,9 @@ class Promocion extends CI_Controller
 					'fecha_creacion'=>$fecha_creacion,
 					'id_usuario_crea'=>$id_usuario_crea
 				);
-				$this->promocion_model->guardar_asignacion($formuInfo);
+				$t=$this->promocion_model->buscar_asignacion($id_empleado,$id_lugar_trabajo[$i]);
+				if($t['total']==0)
+					$this->promocion_model->guardar_asignacion($formuInfo);
 			}
 			
 			$this->db->trans_complete();
@@ -548,11 +554,11 @@ class Promocion extends CI_Controller
 			if($id_programacion_visita!=NULL) {
 				$data['programacion']=$this->promocion_model->buscar_programacion($id_programacion_visita);
 				$data['idpv']=$id_programacion_visita;
-				$info=$this->seguridad_model->info_empleado($data['programacion']['id_empleado'], "id_seccion");
+				/*$info=$this->seguridad_model->info_empleado($data['programacion']['id_empleado'], "id_seccion");
 				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
 				$data['institucion']=$this->promocion_model->institucion_visita($dep);
-				
-				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$data['programacion']['id_institucion'],$this->mostrar_todos,$data['programacion']['id_lugar_trabajo']);
+				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$data['programacion']['id_institucion'],$this->mostrar_todos,$data['programacion']['id_lugar_trabajo']);*/
+				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita_nuevo($data['programacion']['id_empleado'],$id_programacion_visita);
 			}
 			
 			$this->load->view('promocion/programacion_recargado',$data);
