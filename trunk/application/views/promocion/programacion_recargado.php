@@ -8,7 +8,7 @@
 <div class="form-group">
     <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
+        <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" <?php if(isset($programacion['id_empleado']) && $programacion['id_empleado']!="") echo 'disabled="disabled"';?> >
             <option value=""></option>
             <?php
                 foreach($tecnico as $val) {
@@ -42,7 +42,7 @@
 <div class="form-group" id="cont-lugar-trabajo">
     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($programacion['id_lugar_trabajo']=="") echo 'disabled="disabled"' ?> >
+        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" disabled="disabled" >
             <option value=""></option>
             <?php
                 foreach($lugar_trabajo as $val) {

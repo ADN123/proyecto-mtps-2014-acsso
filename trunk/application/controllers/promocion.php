@@ -901,6 +901,39 @@ class Promocion extends CI_Controller
 		echo json_encode($json);
 	}
 	
+	/*
+	*	Nombre: eliminar_programacion_nuevo
+	*	Objetivo: Elimina un registro de visita
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 17/07/2014
+	*	Observaciones: Ninguna.
+	*/
+	function eliminar_programacion_nuevo($id_programacion_visita=NULL) 
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
+			$fecha_modificacion=date('Y-m-d H:i:s');
+			$id_usuario_modifica=$this->session->userdata('id_usuario');
+			
+			$formuInfo = array(
+				'id_programacion_visita'=>$id_programacion_visita,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica
+			);
+			$this->promocion_model->eliminar_programacion_nuevo($formuInfo);
+			$json =array(
+					'resultado'=>1
+				);
+		}
+		else {
+			$json =array(
+					'resultado'=>0
+				);
+		}
+		echo json_encode($json);
+	}
+	
 	function ingreso($accion_transaccion=NULL,$estado_transaccion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dingreso_promocion); 

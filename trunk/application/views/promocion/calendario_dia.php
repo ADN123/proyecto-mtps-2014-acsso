@@ -512,6 +512,8 @@
 	$(".editar-programacion").click(function(){
 		var id=$(this).data("id");
 		$("#formu").load(base_url()+"index.php/promocion/programa_recargado/"+id);
+		/*$("#id_empleado").attr("disabled","disabled");
+		$("#id_empleado").trigger("chosen:updated");*/
 		$('#modal-modal .close').click();
 		return false;
 	});
@@ -519,7 +521,7 @@
 		var id=$(this).data("id");
 		var titulo="Alerta";
 		var mensaje="Realmente desea eliminar este registro? No podrá revertir los cambios.";
-		var url=base_url()+"index.php/promocion/eliminar_programacion/"+id;
+		var url=base_url()+"index.php/promocion/eliminar_programacion_nuevo/"+id;
 		confirmacion(titulo,mensaje,url,true);
 		return false;
 	});

@@ -408,6 +408,15 @@ class Promocion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
+	function eliminar_programacion_nuevo($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_programacion_visita SET
+					fecha_visita='0000-00-00', hora_visita='00:00:00', hora_visita_final='00:00:00', fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica
+					WHERE id_programacion_visita=".$id_programacion_visita;
+		$this->db->query($sentencia);
+	}
+	
 	function actualizar_lugar_trabajo($formuInfo)
 	{
 		extract($formuInfo);		
