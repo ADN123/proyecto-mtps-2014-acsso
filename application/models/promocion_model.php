@@ -274,6 +274,17 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function lugares_trabajo_institucion_visita_nuevo($id_empleado=0)
+	{
+		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE sac_programacion_visita.fecha_visita like '0000-00-00' AND sac_programacion_visita.hora_visita like '00:00:00' AND sac_lugar_trabajo.estado=1 AND sac_programacion_visita.id_empleado=".$id_empleado;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	function es_san_salvador($id_seccion)
 	{	
 		if(in_array($id_seccion,$this->secciones)){
@@ -338,6 +349,15 @@ class Promocion_model extends CI_Model {
 					(id_empleado, id_lugar_trabajo, fecha_visita, hora_visita, hora_visita_final, fecha_creacion, id_usuario_crea) 
 					VALUES 
 					($id_empleado, $id_lugar_trabajo, '$fecha_visita', '$hora_visita', '$hora_visita_final', '$fecha_creacion', $id_usuario_crea)";
+		$this->db->query($sentencia);
+	}
+	
+	function guardar_programacion_nuevo($formuInfo)
+	{
+		extract($formuInfo);		
+		$sentencia="UPDATE sac_programacion_visita SET
+					fecha_visita='$fecha_visita', hora_visita='$hora_visita', hora_visita_final='$hora_visita_final', fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica
+					WHERE sac_programacion_visita.fecha_visita like '0000-00-00' AND sac_programacion_visita.hora_visita like '00:00:00' AND id_empleado=".$id_empleado;
 		$this->db->query($sentencia);
 	}
 	
