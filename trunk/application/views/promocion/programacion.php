@@ -39,7 +39,7 @@ include(base_url."index.php/promocion/calendario_dia");
         	<h3 class="panel-title">Datos de la visita</h3>
         </div>
         <div class="panel-body">
-  			<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_programacion" autocomplete="off">                
+  			<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_programacion_nuevo" autocomplete="off">                
                 <div class="form-group">
                     <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
                     <div class="col-sm-7">
@@ -54,14 +54,14 @@ include(base_url."index.php/promocion/calendario_dia");
                     </div>
                 </div>
                 
-                <div class="form-group" id="cont-institucion">
+                <!--<div class="form-group" id="cont-institucion">
                     <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
                     <div class="col-sm-7">
                         <select class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" disabled="disabled">
                             <option value=""></option>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 
                	<div class="form-group" id="cont-lugar-trabajo">
                     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
@@ -124,8 +124,9 @@ include(base_url."index.php/promocion/calendario_dia");
 		
 		$('#id_empleado').change(function(){
 			id=$(this).val();
-			$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);
-			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/0/0/0');
+			/*$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);
+			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/0/0/0');*/
+			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita_nuevo/'+id);
 			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+id);
 		});
 		

@@ -499,7 +499,7 @@ class Promocion extends CI_Controller
 	function programa($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
@@ -532,7 +532,7 @@ class Promocion extends CI_Controller
 	function programa_recargado($id_programacion_visita=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
@@ -573,7 +573,7 @@ class Promocion extends CI_Controller
 	function institucion_visita($id_empleado=NULL,$estado=0)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			if($estado==0) {
 				$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
@@ -601,13 +601,41 @@ class Promocion extends CI_Controller
 	function lugares_trabajo_institucion_visita($id_empleado=NULL,$id_institucion=NULL,$id_lugar_trabajo=NULL,$vacio=1)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
 			if($id_lugar_trabajo!="undefined" && $id_lugar_trabajo!="" && $id_lugar_trabajo!=NULL && $id_lugar_trabajo!=0)
 				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos,$id_lugar_trabajo);
 			else {
 				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita($dep,$id_institucion,$this->mostrar_todos);
+			}
+			$data['vacio']=$vacio;
+			$this->load->view('promocion/lugares_trabajo_empresa_visita',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: lugares_trabajo_institucion_visita_nuevo
+	*	Objetivo: Muestra todos los lugares de trabajo asignados a un empleado
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 30/10/2014
+	*	Observaciones: Esta funcion permite filtrar si se desea que un lugar de trabajo no puede tener dos visitas activas.
+	*/
+	function lugares_trabajo_institucion_visita_nuevo($id_empleado=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
+			if($id_empleado!=NULL) {
+				$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita_nuevo($id_empleado);
+				$vacio=1;
+			}
+			else {
+				$vacio=0;
+				$data['lugar_trabajo']=array();
 			}
 			$data['vacio']=$vacio;
 			$this->load->view('promocion/lugares_trabajo_empresa_visita',$data);
@@ -628,7 +656,7 @@ class Promocion extends CI_Controller
 	function comprobar_programacion($estado_programacion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$id_programacion_visita=$this->input->post('id_programacion_visita');
 			$id_empleado=$this->input->post('id_empleado');
 			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
@@ -679,7 +707,7 @@ class Promocion extends CI_Controller
 	function guardar_programacion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1);
-		if($data['id_permiso']==3 || $data['id_permiso']==4){
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
 			$id_programacion_visita=$this->input->post('id_programacion_visita');
@@ -732,6 +760,69 @@ class Promocion extends CI_Controller
 	}
 	
 	/*
+	*	Nombre: guardar_programacion_nuevo
+	*	Objetivo: Guarda el registro de asignacion de visita a una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 30/10/2014
+	*	Observaciones: Ninguna.
+	*/
+	function guardar_programacion_nuevo()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1);
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$id_programacion_visita=$this->input->post('id_programacion_visita');
+			$id_empleado=$this->input->post('id_empleado');
+			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
+			$fec=str_replace("/","-",$this->input->post('fecha_visita'));
+			$fecha_visita=date("Y-m-d", strtotime($fec));
+			$hora_visita=$this->input->post('hour').':'.$this->input->post('minute').':00 '.$this->input->post('meridian');
+			$hora_visita=date("H:i:s", strtotime($hora_visita));
+			$hora_visita_final=date("H:i:s", strtotime($hora_visita)+3600);
+			
+			if($id_programacion_visita=="") {
+				$fecha_modificacion=date('Y-m-d H:i:s');
+				$id_usuario_modifica=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_visita'=>$fecha_visita,
+					'hora_visita'=>$hora_visita,
+					'hora_visita_final'=>$hora_visita_final,
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica
+				);
+				$this->promocion_model->guardar_programacion_nuevo($formuInfo);
+			}
+			else {
+				$fecha_modificacion=date('Y-m-d H:i:s');
+				$id_usuario_modifica=$this->session->userdata('id_usuario');
+				
+				$formuInfo = array(
+					'id_programacion_visita'=>$id_programacion_visita,
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo,
+					'fecha_visita'=>$fecha_visita,
+					'hora_visita'=>$hora_visita,
+					'hora_visita_final'=>$hora_visita_final,
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica
+				);
+				$this->promocion_model->actualizar_programacion($formuInfo);
+			}
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/promocion/programa/1/".$tr);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
 	*	Nombre: calendario
 	*	Objetivo: Muestra el calendario mensual de las visitas programadas
 	*	Hecha por: Leonel
@@ -742,7 +833,7 @@ class Promocion extends CI_Controller
 	function calendario($id_empleado=NULL,$como_mostrar=0)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$data['como_mostrar']=$como_mostrar;
 			$data['visita']=$this->promocion_model->calendario($id_empleado);
 			$this->load->view('promocion/calendario',$data);
@@ -790,7 +881,7 @@ class Promocion extends CI_Controller
 	function eliminar_programacion($id_programacion_visita=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$this->promocion_model->eliminar_programacion($id_programacion_visita);
 			$json =array(
 					'resultado'=>1

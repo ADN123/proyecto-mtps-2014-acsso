@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="form-group" id="cont-institucion">
+<!--<div class="form-group" id="cont-institucion">
     <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
     <div class="col-sm-7">
         <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" <?php if($programacion['id_institucion']=="") echo 'disabled="disabled"' ?> >
@@ -37,7 +37,7 @@
             ?>
         </select>
     </div>
-</div>
+</div>-->
 
 <div class="form-group" id="cont-lugar-trabajo">
     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
@@ -97,8 +97,9 @@
 	$(document).ready(function() {
 		$('#id_empleado').change(function(){
 			id=$(this).val();
-			$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);
-			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/0/0/0');
+			/*$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);
+			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/0/0/0');*/
+			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita_nuevo/'+id);
 			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+id);
 		});
 		
