@@ -450,8 +450,42 @@ class Promocion extends CI_Controller
 		}
 		else {
 			pantalla_error();
+		}		
+	}
+	
+	/*
+	*	Nombre: ver_asignaciones_programacion
+	*	Objetivo: Mostrar en una tabla las asignaciones programadas a un empleado
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 29/10/2014
+	*	Observaciones: Ninguna.
+	*/
+	function ver_asignaciones_programacion($id_empleado=0)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasigancion_visita_1);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$data['lugares_trabajo']=$this->promocion_model->ver_asignaciones($id_empleado);
+						
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			if($tr==1)
+				$json =array(
+					'resultado'=>$data['lugares_trabajo']
+				);
+			else
+				$json =array(
+					'resultado'=>0
+				);
 		}
-		
+		else {
+			$json =array(
+				'resultado'=>0
+			);
+		}
+		echo json_encode($json);
 	}
 	
 	/*
