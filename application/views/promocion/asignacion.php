@@ -111,6 +111,16 @@
 			$('#contenido-tabla').load(base_url()+'index.php/promocion/lugares_trabajo_empresa_asigna/'+id);
 			$('#lugar_trabajo').find('tbody tr').addClass('quitar');
 			tt.row('.quitar').remove().draw( false );
+			$.ajax({
+				async:	true, 
+				url:	base_url()+'index.php/promocion/ver_asignaciones_programacion/'+id,
+				dataType:"json",
+				type: "GET",
+				success: function(data) {
+					var json=data;
+					//json['resultado'];
+				}
+			});	
 		});
 		$("#guardar").click(function(){
 			$("#formu").submit();

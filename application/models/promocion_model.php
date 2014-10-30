@@ -320,6 +320,17 @@ class Promocion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
+	function ver_asignaciones($id_empleado)
+	{
+		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre 
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE sac_lugar_trabajo.estado=1 AND sac_programacion_visita.estado_programacion=1 AND sac_programacion_visita.id_empleado=".$id_empleado;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	function guardar_programacion($formuInfo)
 	{
 		extract($formuInfo);		
