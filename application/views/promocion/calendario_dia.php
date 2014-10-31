@@ -525,4 +525,7 @@
 		confirmacion(titulo,mensaje,url,true);
 		return false;
 	});
+	$("#myModalLink").click(function(){
+		$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita_nuevo/'+$("#id_empleado").val());
+	});
 </script>
