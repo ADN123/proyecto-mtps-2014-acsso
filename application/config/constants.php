@@ -64,6 +64,7 @@ define('Dreportes_capacitaciones', 				128);
 define('Dreportes_acreditaciones', 				129);
 define('Dreportes_verificaciones',				130);
 define('Dasigancion_visita_1', 					131);
+define('Dasigancion_visita_2', 					132);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

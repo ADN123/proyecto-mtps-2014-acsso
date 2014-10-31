@@ -507,6 +507,10 @@ class Promocion extends CI_Controller
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
 		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
+				case 1:
+					$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					$data['lugar_trabajo']=$this->promocion_model->lugares_trabajo_institucion_visita_nuevo($info['id_empleado']);
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
 					break;

@@ -66,8 +66,13 @@ include(base_url."index.php/promocion/calendario_dia");
                	<div class="form-group" id="cont-lugar-trabajo">
                     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
                     <div class="col-sm-7">
-                        <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" disabled="disabled">
+                        <select class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if(!isset($lugar_trabajo)) echo 'disabled="disabled"' ?>>
                             <option value=""></option>
+				            <?php
+				                foreach($lugar_trabajo as $val) {
+									echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+				                }
+				            ?>
                         </select>
                     </div>
                 </div>
