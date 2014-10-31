@@ -367,17 +367,17 @@ class Promocion_model extends CI_Model {
 		extract($formuInfo);		
 		$sentencia="UPDATE sac_programacion_visita SET
 					fecha_visita='$fecha_visita', hora_visita='$hora_visita', hora_visita_final='$hora_visita_final', fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica
-					WHERE sac_programacion_visita.fecha_visita like '0000-00-00' AND sac_programacion_visita.hora_visita like '00:00:00' AND id_empleado=".$id_empleado;
+					WHERE fecha_visita like '0000-00-00' AND hora_visita like '00:00:00' AND id_empleado=".$id_empleado." AND id_lugar_trabajo=".$id_lugar_trabajo;
 		$this->db->query($sentencia);
 	}
 	
-	function calendario($id_empleado)
+	function calendario($id_empleado=0)
 	{	
 		$sentencia="SELECT
 					CONCAT_WS(' ','N° visitas: ',COUNT(*)) AS titulo,
 					fecha_visita AS fecha
 					FROM sac_programacion_visita
-					WHERE id_empleado=".$id_empleado." AND fecha_visita>='".date('Y-m-01', strtotime('-6 month'))."'
+					WHERE id_empleado='".$id_empleado."' AND fecha_visita>='".date('Y-m-01', strtotime('-6 month'))."'
 					GROUP BY fecha_visita";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();

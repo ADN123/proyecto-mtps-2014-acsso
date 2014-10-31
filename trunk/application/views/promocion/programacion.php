@@ -124,6 +124,8 @@ include(base_url."index.php/promocion/calendario_dia");
 		
 		$('#id_empleado').change(function(){
 			id=$(this).val();
+			if(id=="")
+				id=0;
 			/*$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id);
 			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita/0/0/0');*/
 			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita_nuevo/'+id);

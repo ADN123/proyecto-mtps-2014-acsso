@@ -268,6 +268,7 @@ function confirmacion(titulo, mensaje, url, ajax, tipo)
 	$("#myModalAccept").attr("style","display:none");
 	
 	$('#boton-confirmacion').click();
+	
 }
 function alerta(titulo, mensaje)
 {
