@@ -40,20 +40,23 @@ include(base_url."index.php/promocion/calendario_dia");
         </div>
         <div class="panel-body">
   			<form class="form-horizontal" name="formu" id="formu" method="post" action="<?php echo base_url()?>index.php/promocion/guardar_programacion_nuevo" autocomplete="off">                
-                <div class="form-group">
-                    <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
-                    <div class="col-sm-7">
-                        <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
-                            <option value=""></option>
-                            <?php
-                                foreach($tecnico as $val) {
-                                    echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
-                                }
-                            ?>
-                        </select>
+				<?php if($id_permiso==3 || $id_permiso==4) {?>
+                    <div class="form-group">
+                        <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
+                        <div class="col-sm-7">
+                            <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
+                                <option value=""></option>
+                                <?php
+                                    foreach($tecnico as $val) {
+                                        echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                    }
+                                ?>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                
+           		<?php } else {?>
+                	<input type="hidden" name="id_empleado" id="id_empleado" value="<?=$id_empleado?>" />                	
+          		<?php } ?>
                 <!--<div class="form-group" id="cont-institucion">
                     <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
                     <div class="col-sm-7">
@@ -136,6 +139,10 @@ include(base_url."index.php/promocion/calendario_dia");
 			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita_nuevo/'+id);
 			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+id);
 		});
+		
+		<?php if($id_permiso==1) {?>
+			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+<?=$id_empleado?>);
+		<?php }?>
 		
 		$('#fecha_visita').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
 		$('#timepicker').timepicker({defaultTIme: false});
