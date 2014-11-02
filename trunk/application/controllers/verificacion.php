@@ -73,7 +73,7 @@ class Verificacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
-			$data['lugar_trabajo']=$this->promocion_model->institucion_visita_nuevo($dep);
+			$data['lugar_trabajo']=$this->verificacion_model->institucion_visita_nuevo($dep);
 			$this->load->view('verificacion/lugares_trabajo_empresa_asigna',$data);
 		}
 		else {
