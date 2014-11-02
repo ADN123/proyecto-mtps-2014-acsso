@@ -4,26 +4,30 @@
 		<input type="hidden" name="id_programacion_visita" id="id_programacion_visita" class="form-control"  value="<?php echo $idpv ?>" />
 <?php
 	}
-?>    
-<div class="form-group">
-    <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
-    <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
-            <option value=""></option>
-            <?php
-                foreach($tecnico as $val) {
-					if($programacion['id_empleado']==$val['id'])
-                   		echo '<option value="'.$val['id'].'" selected="selected">'.ucwords($val['nombre']).'</option>';
-					else
-						if(isset($programacion['id_empleado']) && $programacion['id_empleado']!="")
-                   			echo '<option value="'.$val['id'].'" disabled="disabled">'.ucwords($val['nombre']).'</option>';
-						else
-                   			echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
-                }
-            ?>
-        </select>
+?>   
+<?php if($id_permiso==3 || $id_permiso==4) {?> 
+    <div class="form-group">
+        <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
+        <div class="col-sm-7">
+            <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
+                <option value=""></option>
+                <?php
+                    foreach($tecnico as $val) {
+                        if($programacion['id_empleado']==$val['id'])
+                            echo '<option value="'.$val['id'].'" selected="selected">'.ucwords($val['nombre']).'</option>';
+                        else
+                            if(isset($programacion['id_empleado']) && $programacion['id_empleado']!="")
+                                echo '<option value="'.$val['id'].'" disabled="disabled">'.ucwords($val['nombre']).'</option>';
+                            else
+                                echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                    }
+                ?>
+            </select>
+        </div>
     </div>
-</div>
+<?php } else {?>
+	<input type="hidden" name="id_empleado" id="id_empleado" value="<?=$id_empleado?>" />                	
+<?php } ?>
 
 <!--<div class="form-group" id="cont-institucion">
     <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
@@ -45,7 +49,7 @@
 <div class="form-group" id="cont-lugar-trabajo">
     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($programacion['id_lugar_trabajo']=="") echo 'disabled="disabled"' ?> >
+        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($programacion['id_lugar_trabajo']=="" && !isset($lugar_trabajo)) echo 'disabled="disabled"' ?> >
             <option value=""></option>
             <?php
                 foreach($lugar_trabajo as $val) {
@@ -108,6 +112,10 @@
 			$('#cont-lugar-trabajo').load(base_url()+'index.php/promocion/lugares_trabajo_institucion_visita_nuevo/'+id);
 			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+id);
 		});
+		
+		<?php if($id_permiso==1) {?>
+			$('#cont-calendario').load(base_url()+'index.php/promocion/calendario/'+<?=$id_empleado?>);
+		<?php }?>
 		
 		$("select").chosen({
 			'width': '100%',
