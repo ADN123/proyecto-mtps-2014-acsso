@@ -48,7 +48,11 @@
 			$("#formu").submit();
 		});
 		$("#limpiar").click(function(){
-			$("#formu").load(base_url()+"index.php/promocion/asignacion_recargado");
+			$('#lugar_trabajo').find('tbody tr').addClass('quitar');
+			tt.row('.quitar').remove().draw( false );
+			$('#id_empleado').val("");
+			$("#id_empleado").trigger("chosen:updated");
+			$('#id_empleado').change();
 		});
 	});
 </script>
