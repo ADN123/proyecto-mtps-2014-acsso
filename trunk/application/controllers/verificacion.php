@@ -27,6 +27,144 @@ class Verificacion extends CI_Controller
   	}
 	
 	/*
+	*	Nombre: asignacion
+	*	Objetivo: Carga la vista que contiene el formulario de ingreso de asignacion de visitas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 02/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function asignacion($accion_transaccion=NULL, $estado_transaccion=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasigancion_visita_2); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			switch($data['id_permiso']) {
+				case 3:
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
+					break;
+				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],2);
+					else
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
+					break;
+			}
+			$data['estado_transaccion']=$estado_transaccion;
+			$data['accion_transaccion']=$accion_transaccion;
+			pantalla('verificacion/asignacion',$data,Dasigancion_visita_2);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: lugares_trabajo_empresa_asigna
+	*	Objetivo: Muestra todos los lugares de trabajo de una institucion
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 02/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function lugares_trabajo_empresa_asigna($id_empleado=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasigancion_visita_2); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
+			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
+			$data['lugar_trabajo']=$this->promocion_model->institucion_visita_nuevo($dep);
+			$this->load->view('verificacion/lugares_trabajo_empresa_asigna',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: guardar_asignacion
+	*	Objetivo: Guarda el formulario de ingreso de asignacion de visitas
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 02/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function guardar_asignacion()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasigancion_visita_2);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$id_empleado=$this->input->post("id_empleado");
+			if($this->input->post('tabla')!="")
+				$lt= "&".$this->input->post('tabla');
+			$id_lugar_trabajo=explode("&id_lugar_trabajo%5B%5D=",$lt);
+			$fecha_creacion=date('Y-m-d H:i:s');
+			$id_usuario_crea=$this->session->userdata('id_usuario');
+			
+			$cad="";
+			for($i=1;$i<count($id_lugar_trabajo);$i++) {
+				$cad.=" AND id_lugar_trabajo <> ".$id_lugar_trabajo[$i];
+			}
+			$this->promocion_model->eliminar_asignacion($id_empleado,$cad);
+			
+			for($i=1;$i<count($id_lugar_trabajo);$i++) {
+				$formuInfo = array(
+					'id_empleado'=>$id_empleado,
+					'id_lugar_trabajo'=>$id_lugar_trabajo[$i],
+					'fecha_creacion'=>$fecha_creacion,
+					'id_usuario_crea'=>$id_usuario_crea
+				);
+				$t=$this->promocion_model->buscar_asignacion($id_empleado,$id_lugar_trabajo[$i]);
+				if($t['total']==0)
+					$this->promocion_model->guardar_asignacion($formuInfo);
+			}
+			
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			ir_a("index.php/verificacion/asignacion/1/".$tr);
+		}
+		else {
+			pantalla_error();
+		}		
+	}
+	
+	/*
+	*	Nombre: ver_asignaciones_programacion
+	*	Objetivo: Mostrar en una tabla las asignaciones programadas a un empleado
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 02/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function ver_asignaciones_programacion($id_empleado=0)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasigancion_visita_2);
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+			
+			$data['lugares_trabajo']=$this->promocion_model->ver_asignaciones($id_empleado);
+						
+			$this->db->trans_complete();
+			$tr=($this->db->trans_status()===FALSE)?0:1;
+			if($tr==1)
+				$json =array(
+					'resultado'=>$data['lugares_trabajo']
+				);
+			else
+				$json =array(
+					'resultado'=>0
+				);
+		}
+		else {
+			$json =array(
+				'resultado'=>0
+			);
+		}
+		echo json_encode($json);
+	}
+	
+	/*
 	*	Nombre: programa
 	*	Objetivo: Carga la vista del formulario de registro de programacion de visitas
 	*	Hecha por: Leonel
