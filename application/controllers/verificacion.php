@@ -175,7 +175,7 @@ class Verificacion extends CI_Controller
 	function programa($accion_transaccion=NULL, $estado_transaccion=NULL)
 	{	
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
@@ -208,7 +208,7 @@ class Verificacion extends CI_Controller
 	function programa_recargado($id_programacion_visita=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			switch($data['id_permiso']) {
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos();
@@ -248,7 +248,7 @@ class Verificacion extends CI_Controller
 	function institucion_visita($id_empleado=NULL,$estado=0)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			if($estado==0) {
 				$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
@@ -276,7 +276,7 @@ class Verificacion extends CI_Controller
 	function lugares_trabajo_institucion_visita($id_empleado=NULL,$id_institucion=NULL,$id_lugar_trabajo=NULL,$vacio=1)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 			$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
 			if($id_lugar_trabajo!="undefined" && $id_lugar_trabajo!="" && $id_lugar_trabajo!=NULL && $id_lugar_trabajo!=0)
@@ -303,7 +303,7 @@ class Verificacion extends CI_Controller
 	function comprobar_programacion($estado_programacion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$id_programacion_visita=$this->input->post('id_programacion_visita');
 			$id_empleado=$this->input->post('id_empleado');
 			$id_lugar_trabajo=$this->input->post('id_lugar_trabajo');
@@ -355,7 +355,7 @@ class Verificacion extends CI_Controller
 	function guardar_programacion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2);
-		if($data['id_permiso']==3 || $data['id_permiso']==4){
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
 			$id_programacion_visita=$this->input->post('id_programacion_visita');
@@ -419,7 +419,7 @@ class Verificacion extends CI_Controller
 	function calendario($id_empleado=NULL,$como_mostrar=0)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$data['como_mostrar']=$como_mostrar;
 			$data['visita']=$this->promocion_model->calendario($id_empleado);
 			$this->load->view('verificacion/calendario',$data);
@@ -440,13 +440,13 @@ class Verificacion extends CI_Controller
 	function calendario_dia($id_empleado=NULL,$fecha)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 		  	$data['visita']=$this->promocion_model->calendario_dia($id_empleado, $fecha);
 			$this->load->view('verificacion/calendario_dia',$data);
 		}
 		else {
 			$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
-			if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 				$data['visita']=$this->promocion_model->calendario_dia($id_empleado, $fecha);
 				$this->load->view('verificacion/calendario_dia',$data);
 			}
@@ -467,7 +467,7 @@ class Verificacion extends CI_Controller
 	function eliminar_programacion($id_programacion_visita=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_2); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$this->promocion_model->eliminar_programacion($id_programacion_visita);
 			$json =array(
 					'resultado'=>1
