@@ -1,6 +1,6 @@
 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
 <div class="col-sm-7">
-    <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?=($vacio==0)?'disabled="disabled"':''?>>
+    <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($vacio==0) echo 'disabled="disabled"'?>>
         <option value=""></option>
         <?php
 			if($vacio!=0)

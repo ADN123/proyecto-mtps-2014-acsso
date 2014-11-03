@@ -5,24 +5,28 @@
 <?php
 	}
 ?>    
-<div class="form-group">
-    <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
-    <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
-            <option value=""></option>
-            <?php
-                foreach($tecnico as $val) {
-					if($programacion['id_empleado']==$val['id'])
-                   		echo '<option value="'.$val['id'].'" selected="selected">'.ucwords($val['nombre']).'</option>';
-					else
-                   		echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
-                }
-            ?>
-        </select>
-    </div>
-</div>
+<?php if($id_permiso==3 || $id_permiso==4) {?> 
+	<div class="form-group">
+	    <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
+	    <div class="col-sm-7">
+	        <select data-req="true" class="form-control" name="id_empleado" id="id_empleado" data-placeholder="[Seleccione..]" >
+	            <option value=""></option>
+	            <?php
+	                foreach($tecnico as $val) {
+						if($programacion['id_empleado']==$val['id'])
+	                   		echo '<option value="'.$val['id'].'" selected="selected">'.ucwords($val['nombre']).'</option>';
+						else
+	                   		echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+	                }
+	            ?>
+	        </select>
+	    </div>
+	</div>
+<?php } else {?>
+	<input type="hidden" name="id_empleado" id="id_empleado" value="<?=$id_empleado?>" />                	
+<?php } ?>
 
-<div class="form-group" id="cont-institucion">
+<!--<div class="form-group" id="cont-institucion">
     <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
     <div class="col-sm-7">
         <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" <?php if($programacion['id_institucion']=="") echo 'disabled="disabled"' ?> >
@@ -37,19 +41,22 @@
             ?>
         </select>
     </div>
-</div>
+</div>-->
 
 <div class="form-group" id="cont-lugar-trabajo">
     <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
     <div class="col-sm-7">
-        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($programacion['id_lugar_trabajo']=="") echo 'disabled="disabled"' ?> >
+        <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" <?php if($programacion['id_lugar_trabajo']=="" && !isset($lugar_trabajo)) echo 'disabled="disabled"' ?> >
             <option value=""></option>
             <?php
                 foreach($lugar_trabajo as $val) {
 					if($programacion['id_lugar_trabajo']==$val['id'])
                    		echo '<option value="'.$val['id'].'" selected="selected">'.ucwords($val['nombre']).'</option>';
 					else
-                   		echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+						if(isset($programacion['id_lugar_trabajo']) && $programacion['id_lugar_trabajo']!="")
+                   			echo '<option value="'.$val['id'].'" disabled="disabled">'.ucwords($val['nombre']).'</option>';
+						else
+                   			echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
                 }
             ?>
         </select>
@@ -97,10 +104,14 @@
 	$(document).ready(function() {
 		$('#id_empleado').change(function(){
 			id=$(this).val();
-			$('#cont-institucion').load(base_url()+'index.php/verificacion/institucion_visita/'+id);
-			$('#cont-lugar-trabajo').load(base_url()+'index.php/verificacion/lugares_trabajo_institucion_visita/0/0/0');
+			$('#cont-lugar-trabajo').load(base_url()+'index.php/verificacion/lugares_trabajo_institucion_visita_nuevo/'+id);
 			$('#cont-calendario').load(base_url()+'index.php/verificacion/calendario/'+id);
+
 		});
+		
+		<?php if($id_permiso==1) {?>
+			$('#cont-calendario').load(base_url()+'index.php/verificacion/calendario/'+<?=$id_empleado?>);
+		<?php }?>
 		
 		$("select").chosen({
 			'width': '100%',
