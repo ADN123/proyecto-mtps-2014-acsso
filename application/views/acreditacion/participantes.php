@@ -52,7 +52,7 @@
                   		<div class="tab-pane" id="ptab1">
                             <div class="form-group">
                                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
-                                <div class="col-sm-7">
+                                <div class="col-sm-6">
                                     <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
@@ -64,6 +64,9 @@
                                             }
                                         ?>
                                     </select>
+                                </div>
+                                <div class="col-sm-1 control-label" style="text-align:left">
+                                    <i id="resumen_empleados" class="fa fa-list" title="Resumen de Empleados"></i>
                                 </div>
                             </div>
                             
@@ -228,6 +231,12 @@
 			id=$(this).val();
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
 		});
+        $('#resumen_empleados').click(function(){
+            var id=$("#id_lugar_trabajo").val();
+            if(id!="")
+                modal("Programación del día",base_url()+'index.php/acreditacion/resumen_empleados_comite/'+id);
+            return false;
+        });
 		<?php 
 			if($idlt!="") {
 		?>
