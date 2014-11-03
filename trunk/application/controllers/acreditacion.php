@@ -91,6 +91,25 @@ class Acreditacion extends CI_Controller
 	}
 	
 	/*
+	*	Nombre: resumen_empleados_comite
+	*	Objetivo: Muestra el resumen de los empleados registrados en un lugar de trabajo
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 03/10/2014
+	*	Observaciones: Ninguna.
+	*/
+	function resumen_empleados_comite($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			echo "Hola ".$id_lugar_trabajo."!";
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
 	*	Nombre: guardar_participantes
 	*	Objetivo: Guarda el formulario de ingreso de empleados de un lugar de trabajo
 	*	Hecha por: Leonel
