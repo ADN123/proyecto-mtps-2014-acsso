@@ -1,13 +1,15 @@
-		<div class="col-md-12">
-        	<div class="col-md-3 logo">
-                <img class="ues" src="<?=base_url();?>img/ues.min.png" />
-                <img class="escudo" src="<?=base_url();?>img/escudo.png" />
-          	</div>
-        	<div class="col-md-9 dir">
-            	Ministerio de Trabajo y Previsión Social - República de El Salvador C.A.<br/>
-                Alameda Juan Pablo II y 17 Ave. Norte Edificios 2,3 y 4, Centro de Gobierno, San Salvador, C.A.<br/>
-                PBX:(503)2259-3700, FAX:(503)2259-3756. asesorialaboral@mtps.gob.sv, Asesoría Laboral (503)2259-3838<br/>
-                &copy; Todos los derechos reservados UES-FMP <?=date('Y')?>
+        <div class="col-md-12">
+            <div class="signup-footer">
+            	<div class="col-md-3 logo">
+                    <img class="ues" src="<?=base_url();?>img/ues.min.png" />
+                    <img class="escudo" src="<?=base_url();?>img/escudo.png" />
+              	</div>
+            	<div class="col-md-9 dir">
+                	Ministerio de Trabajo y Previsión Social - República de El Salvador C.A.<br/>
+                    Alameda Juan Pablo II y 17 Ave. Norte Edificios 2,3 y 4, Centro de Gobierno, San Salvador, C.A.<br/>
+                    PBX:(503)2259-3700, FAX:(503)2259-3756. asesorialaboral@mtps.gob.sv, Asesoría Laboral (503)2259-3838<br/>
+                    &copy; Todos los derechos reservados UES-FMP <?=date('Y')?>
+                </div>
             </div>
         </div>
     </div><!-- contentpanel -->
