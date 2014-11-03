@@ -106,7 +106,7 @@ class Verificacion extends CI_Controller
 			for($i=1;$i<count($id_lugar_trabajo);$i++) {
 				$cad.=" AND id_lugar_trabajo <> ".$id_lugar_trabajo[$i];
 			}
-			$this->promocion_model->eliminar_asignacion($id_empleado,$cad);
+			$this->verificacion_model->eliminar_asignacion($id_empleado,$cad);
 			
 			for($i=1;$i<count($id_lugar_trabajo);$i++) {
 				$formuInfo = array(
@@ -115,9 +115,9 @@ class Verificacion extends CI_Controller
 					'fecha_creacion'=>$fecha_creacion,
 					'id_usuario_crea'=>$id_usuario_crea
 				);
-				$t=$this->promocion_model->buscar_asignacion($id_empleado,$id_lugar_trabajo[$i]);
+				$t=$this->verificacion_model->buscar_asignacion($id_empleado,$id_lugar_trabajo[$i]);
 				if($t['total']==0)
-					$this->promocion_model->guardar_asignacion($formuInfo);
+					$this->verificacion_model->guardar_asignacion($formuInfo);
 			}
 			
 			$this->db->trans_complete();
@@ -143,7 +143,7 @@ class Verificacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
-			$data['lugares_trabajo']=$this->promocion_model->ver_asignaciones($id_empleado);
+			$data['lugares_trabajo']=$this->verificacion_model->ver_asignaciones($id_empleado);
 						
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;

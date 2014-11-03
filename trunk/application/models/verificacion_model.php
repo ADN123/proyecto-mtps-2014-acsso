@@ -205,7 +205,9 @@ class Verificacion_model extends CI_Model {
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
-					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado=2 AND org_departamento.id_departamento=".$id_departamento;
+					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado=2 AND org_departamento.id_departamento=".$id_departamento."
+					GROUP BY sac_lugar_trabajo.id_lugar_trabajo,sac_lugar_trabajo.nombre_lugar
+					HAVING (MAX(sac_programacion_visita.estado_programacion)<>3 OR MAX(sac_programacion_visita.estado_programacion) IS NULL)";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -247,6 +249,41 @@ class Verificacion_model extends CI_Model {
 		}else{
 			return true;
 		}
+	}
+	
+	function ver_asignaciones($id_empleado)
+	{
+		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre 
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE sac_lugar_trabajo.estado=2 AND sac_programacion_visita.estado_programacion=3 AND sac_programacion_visita.id_empleado=".$id_empleado;
+		$query=$this->db->query($sentencia);
+		//echo $sentencia;
+		return (array)$query->result_array();
+	}
+	
+	function eliminar_asignacion($id_empleado,$cad)
+	{
+		$sentencia="DELETE FROM sac_programacion_visita WHERE id_empleado=".$id_empleado." AND estado_programacion=3 ".$cad;
+		$this->db->query($sentencia);
+	}
+	
+	function buscar_asignacion($id_empleado=0,$id_lugar_trabajo=0)
+	{
+		$sentencia="SELECT COUNT(*) AS total FROM sac_programacion_visita WHERE id_empleado=".$id_empleado." AND id_lugar_trabajo=".$id_lugar_trabajo." AND estado_programacion=3";
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
+	}
+	
+	function guardar_asignacion($formuInfo)
+	{
+		extract($formuInfo);		
+		$sentencia="INSERT INTO sac_programacion_visita
+					(id_empleado, id_lugar_trabajo, estado_programacion, fecha_creacion, id_usuario_crea) 
+					VALUES 
+					($id_empleado, $id_lugar_trabajo, 3, '$fecha_creacion', $id_usuario_crea)";
+		$this->db->query($sentencia);
 	}
 	
 	function comprobar_programacion($formuInfo)

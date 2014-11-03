@@ -320,7 +320,7 @@ class Promocion_model extends CI_Model {
 	
 	function buscar_asignacion($id_empleado=0,$id_lugar_trabajo=0)
 	{
-		$sentencia="SELECT COUNT(*) AS total FROM sac_programacion_visita WHERE id_empleado=".$id_empleado." AND id_lugar_trabajo=".$id_lugar_trabajo;
+		$sentencia="SELECT COUNT(*) AS total FROM sac_programacion_visita WHERE id_empleado=".$id_empleado." AND id_lugar_trabajo=".$id_lugar_trabajo." AND estado_programacion=1";
 		$query=$this->db->query($sentencia);
 		return (array)$query->row();
 	}
