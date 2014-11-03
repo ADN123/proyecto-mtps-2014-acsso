@@ -519,8 +519,13 @@
 		var id=$(this).data("id");
 		var titulo="Alerta";
 		var mensaje="Realmente desea eliminar este registro? No podrá revertir los cambios.";
-		var url=base_url()+"index.php/verificacion/eliminar_programacion/"+id;
+		var url=base_url()+"index.php/verificacion/eliminar_programacion_nuevo/"+id;
 		confirmacion(titulo,mensaje,url,true);
 		return false;
+	});
+	$("#myModalLink").click(function(){
+		setTimeout(function() {
+			$('#cont-lugar-trabajo').load(base_url()+'index.php/verificacion/lugares_trabajo_institucion_visita_nuevo/'+$("#id_empleado").val());
+		}, 1000);
 	});
 </script>

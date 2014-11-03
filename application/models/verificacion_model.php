@@ -242,6 +242,20 @@ class Verificacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function lugares_trabajo_institucion_visita_nuevo($id_empleado=0,$id_programacion_visita=NULL)
+	{
+		$where="";
+		if($id_programacion_visita!=NULL)
+			$where=" OR sac_programacion_visita.id_programacion_visita=".$id_programacion_visita;
+		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					WHERE (sac_programacion_visita.fecha_visita like '0000-00-00' AND sac_programacion_visita.hora_visita like '00:00:00' AND sac_lugar_trabajo.estado=2 AND sac_programacion_visita.id_empleado=".$id_empleado.")".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	function es_san_salvador($id_seccion)
 	{	
 		if(in_array($id_seccion,$this->secciones)){
