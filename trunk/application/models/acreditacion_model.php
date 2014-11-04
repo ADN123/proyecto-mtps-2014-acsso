@@ -83,6 +83,46 @@ class Acreditacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function resumen_empleados_comite($id_lugar_trabajo=0)
+	{
+		$sentencia="SELECT
+					sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres AS total_empleados,
+					sac_lugar_trabajo.total_hombres AS total_empleados_hombres,
+					sac_lugar_trabajo.total_mujeres AS total_empleados_mujeres,
+					COUNT(sac_empleado_institucion.id_empleado_institucion) AS total_comite,
+					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=1 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_hombres,
+					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=2 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_mujeres,
+					(SELECT COUNT(sac_empleado_institucion.id_tipo_representacion) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_tipo_representacion=1 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_representantes_empleador,
+					(SELECT COUNT(sac_empleado_institucion.id_tipo_representacion) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_tipo_representacion=2 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_representantes_trabajadores,
+					COUNT(sac_empleado_institucion.sindicato) AS total_comite_sindicato,
+					COUNT(sac_empleado_institucion.delegado) AS total_comite_delegados,
+					CASE 
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=15 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=49 THEN 2
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=50 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=99 THEN 3
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=100 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=499 THEN 4
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=500 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=999 THEN 5
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=1000 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=2000 THEN 6
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=2001 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=3000 THEN 7
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=3001 THEN 8
+					END AS total_empleados_representantes,
+					CASE 
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=15 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=49 THEN 1
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=50 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=100 THEN 2
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=101 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=500 THEN 3
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=501 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=1000 THEN 4
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=1001 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=2000 THEN 5
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=2001 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=3000 THEN 6
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=3001 AND (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)<=4000 THEN 7
+						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=4001 THEN 8
+					END AS total_empleados_delegados
+					FROM sac_lugar_trabajo
+					LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo=sac_lugar_trabajo.id_lugar_trabajo
+					WHERE sac_lugar_trabajo.estado<>0 AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo."
+					GROUP BY sac_lugar_trabajo.id_lugar_trabajo";
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
+	}
+	
 	function guardar_participante($formuInfo)
 	{
 		extract($formuInfo);

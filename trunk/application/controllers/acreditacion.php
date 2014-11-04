@@ -102,7 +102,8 @@ class Acreditacion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			echo "Hola ".$id_lugar_trabajo."!";
+			$data=$this->acreditacion_model->resumen_empleados_comite($id_lugar_trabajo);
+			$this->load->view('acreditacion/resumen_empleados_comite',$data);
 		}
 		else {
 			pantalla_error();
