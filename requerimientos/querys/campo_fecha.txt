@@ -1,0 +1,2 @@
+ALTER TABLE sac_asistencia
+ADD COLUMN fecha_acreditacion date NULL;

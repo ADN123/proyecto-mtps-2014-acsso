@@ -927,6 +927,10 @@ class Acreditacion extends CI_Controller
 				if($i>0)
 					$this->mpdf->AddPage();
 				$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]['id_empleado_institucion']);
+				if($data['lugar_trabajo']['tiempo_activo']>=2 || $data['lugar_trabajo']['tiempo_activo']<0) {
+					$this->acreditacion_model->actulizar_acreditacion($empelados[$i]['id_empleado_institucion']);
+					$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]['id_empleado_institucion']);
+				}
 				$html = $this->load->view('acreditacion/acreditacion_pdf.php', $data, true);
 				$this->mpdf->WriteHTML($html,2);
 			}

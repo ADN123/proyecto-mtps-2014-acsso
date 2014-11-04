@@ -31,7 +31,7 @@
     <br />
     <p class="extendido">
 		Extiendo en <?php 
-					$fec=explode("-",date('Y-m-d'));
+					$fec=explode("-",$lugar_trabajo['fecha_acreditacion']);
 					switch($fec[1]) {
 						case 1: 
 							$mes="Enero";
