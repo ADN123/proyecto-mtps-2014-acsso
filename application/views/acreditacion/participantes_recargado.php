@@ -9,13 +9,10 @@
     <ul class="nav nav-pills nav-justified">
         <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información General</a></li>
     </ul>
-      
     <div class="tab-content">
-      
         <div class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-      
         <div class="tab-pane" id="ptab1">
             <div class="form-group">
                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
@@ -31,6 +28,9 @@
                             }
                         ?>
                     </select>
+                </div>
+                <div class="col-sm-1 control-label" style="text-align:left">
+                    <a id="resumen_empleados" href="#" title="Resumen de conformación de Comité"><i class="fa fa-list">&nbsp;</i></a>
                 </div>
             </div>
             
@@ -193,5 +193,11 @@
 			'white-space': 'nowrap',
 			no_results_text: "Sin resultados!"
 		});
+        $('#resumen_empleados i').click(function(){
+            var id=$("#id_lugar_trabajo").val();
+            if(id!="")
+                modal("Resumen de conformación de comité",base_url()+'index.php/acreditacion/resumen_empleados_comite/'+id);
+            return false;
+        });
 	});
 </script>

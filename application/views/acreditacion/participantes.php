@@ -52,7 +52,7 @@
                   		<div class="tab-pane" id="ptab1">
                             <div class="form-group">
                                 <label for="id_lugar_trabajo" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-7">
                                     <select data-req="true" class="form-control" name="id_lugar_trabajo" id="id_lugar_trabajo" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
@@ -66,7 +66,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-1 control-label" style="text-align:left">
-                                    <i id="resumen_empleados" class="fa fa-list" title="Resumen de Empleados"></i>
+                                    <a id="resumen_empleados" href="#" title="Resumen de conformación de Comité"><i class="fa fa-list">&nbsp;</i></a>
                                 </div>
                             </div>
                             
@@ -185,16 +185,16 @@
         	<h3 class="panel-title" id="titulo-tabla">Empleados registrados</h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
-          		<table class="table table-hover mb30">
-            		<thead>
-              			<tr>
-                            <th class="all">Nombre del empleado</th>
-                            <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
-              			</tr>
-            		</thead>
-            		<tbody>
-            		</tbody>
-          		</table>
+            <table class="table table-hover mb30">
+                <thead>
+                    <tr>
+                        <th class="all">Nombre del empleado</th>
+                        <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
   	</div>
 </div>
@@ -231,10 +231,10 @@
 			id=$(this).val();
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
 		});
-        $('#resumen_empleados').click(function(){
+        $('#resumen_empleados i').click(function(){
             var id=$("#id_lugar_trabajo").val();
             if(id!="")
-                modal("Programación del día",base_url()+'index.php/acreditacion/resumen_empleados_comite/'+id);
+                modal("Resumen de conformación de comité",base_url()+'index.php/acreditacion/resumen_empleados_comite/'+id);
             return false;
         });
 		<?php 
