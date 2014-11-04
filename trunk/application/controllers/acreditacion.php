@@ -848,6 +848,7 @@ class Acreditacion extends CI_Controller
 				$data['ins']=$this->promocion_model->lugares_trabajo_empresa(NULL,$id_lugar_trabajo);
 				$data['id_lugar_trabajo']=$id_lugar_trabajo;
 				$data['ilt']=$id_lugar_trabajo;
+				$data['lugar_trabajo']=$this->acreditacion_model->resumen_empleados_comite($id_lugar_trabajo);
 			}
 			$this->load->view('acreditacion/aprobar_comite_recargado',$data);
 		}
