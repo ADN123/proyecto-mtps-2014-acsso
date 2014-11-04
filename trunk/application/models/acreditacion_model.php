@@ -492,11 +492,14 @@ class Acreditacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function consultar_lugar_trabajo($id_empleado_institucion)
+	function consultar_lugar_trabajo($id_empleado_institucion=0)
 	{
 		$sentencia="SELECT
+					sac_capacitacion.id_capacitacion,
 					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre_lugar,
 					sac_capacitacion.fecha_capacitacion,
+					sac_asistencia.fecha_acreditacion,
+					COALESCE(TIMESTAMPDIFF(YEAR,sac_asistencia.fecha_acreditacion,CURRENT_DATE),-1) as tiempo_activo,
 					sac_empleado_institucion.nombre_empleado
 					FROM sac_institucion
 					LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
@@ -506,6 +509,12 @@ class Acreditacion_model extends CI_Model {
 					WHERE sac_asistencia.asistio=1 AND sac_empleado_institucion.id_empleado_institucion=".$id_empleado_institucion." LIMIT 0,1";
 		$query=$this->db->query($sentencia);
 		return (array)$query->row();
+	}
+	
+	function actulizar_acreditacion($id_empleado_institucion=0)
+	{
+		$sentencia="UPDATE sac_asistencia SET fecha_acreditacion='".date('Y-m-d')."' WHERE asistio=1 AND id_empleado_institucion=".$id_empleado_institucion;
+		$query=$this->db->query($sentencia);
 	}
 }
 ?>
