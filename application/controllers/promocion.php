@@ -839,6 +839,64 @@ class Promocion extends CI_Controller
 	}
 	
 	/*
+	*	Nombre: buscar_asignaciones
+	*	Objetivo: Muestra el formulario de busqueda de asignaciones
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 05/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function buscar_asignaciones()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
+			$this->load->view('promocion/buscar_asignaciones');
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function asignaciones_pdf()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dasignaciones); 
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
+			$id_empleado=$this->input->post('id_empleado');
+			$fec=str_replace("/","-",$this->input->post('fecha_inicial'));
+			$fecha_inicial=date("Y-m-d", strtotime($fec));
+			$fec=str_replace("/","-",$this->input->post('fecha_final'));
+			$fecha_final=date("Y-m-d", strtotime($fec));
+			
+			if($id_empleado=="") {
+				$info=$this->seguridad_model->info_empleado(0, "id_empleado",$this->session->userdata('id_usuario'));
+				$id_empleado=$info['id_empleado'];
+			}
+			
+			$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+			$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+			$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+			$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+			
+			$data['programaciones']=$this->promocion_model->asignaciones_pdf($id_empleado,$fecha_inicial,$fecha_final);
+			$html = $this->load->view('promocion/resultados_asignaciones.php', $data, true);
+			$data_cab['titulo']="ASIGNACIONES PROGRAMADAS";
+			$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+			$this->mpdf->WriteHTML($html,2);
+			
+			$this->mpdf->AddPage();
+			$data['programaciones']=$this->promocion_model->asignaciones_pdf($id_empleado,'0000-00-00','0000-00-00');
+			$html = $this->load->view('promocion/resultados_asignaciones.php', $data, true);
+			$data_cab['titulo']="ASIGNACIONES NO PROGRAMADAS";
+			$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+			$this->mpdf->WriteHTML($html,2);
+			$this->mpdf->Output(); /*Salida del pdf*/
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
 	*	Nombre: calendario
 	*	Objetivo: Muestra el calendario mensual de las visitas programadas
 	*	Hecha por: Leonel

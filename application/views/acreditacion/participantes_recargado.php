@@ -184,6 +184,8 @@
 		});	
 		$('#id_lugar_trabajo').change(function(){
 			id=$(this).val();
+			if(id=="")
+				id=0;
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
 		});
 		$('#fecha_ingreso').datepicker({maxDate: '0D'});

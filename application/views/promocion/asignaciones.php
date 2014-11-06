@@ -14,7 +14,7 @@
         </div>
         <div class="panel-body">
 			<?php if($id_permiso==3 || $id_permiso==4) {?>	
-                <form class="form-horizontal">
+                <form class="form-horizontal" name="formu" id="formu">
                     <div class="form-group">
                         <label for="id_empleado" class="col-sm-3 control-label">Técnico <span class="asterisk">*</span></label>
                         <div class="col-sm-7">
@@ -33,6 +33,9 @@
             <div id="cont-calendario">
   				<div id="calendar"></div>
             </div>
+            <ul class="pager wizard">
+                <li><button class="btn btn-info" type="button" name="itinerario" id="itinerario"><span class="glyphicon glyphicon-search"></span> Consultar Programaciones</button></li>
+            </ul>
       	</div>
    	</div>
 </div>
@@ -45,7 +48,7 @@
         </div><!-- panel-btns -->
         	<h3 class="panel-title">Calendario diario de actividades</h3>
         </div>
-        <div class="panel-body" id="cont-calendario-dia">
+		<div class="panel-body" id="cont-calendario-dia">
   			<div id="calendar_dia" class="fc-ltr">
                 <table class="fc-header" style="width:100%; display: none;">
                     <tbody>
@@ -568,5 +571,9 @@
 				$('#cont-calendario-dia').load(base_url()+'index.php/promocion/calendario_dia/'+$("#id_empleado").val()+'/'+event.id);
 			 <?php } ?>
 		}
+	});
+	$("#itinerario").click(function(){
+		if(($('#id_empleado').val()!="" && $('#id_empleado').length!=0) || ($('#id_empleado').length==0))
+			modal("Imprimir itinerario",base_url()+'index.php/promocion/buscar_asignaciones');
 	});
 </script>
