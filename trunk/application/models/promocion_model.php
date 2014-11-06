@@ -676,5 +676,37 @@ class Promocion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
+	
+	function asignaciones_pdf($id_empleado,$fecha_inicial,$fecha_final)
+	{
+		$sentencia="SELECT 
+					CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre,
+					DATE_FORMAT(sac_programacion_visita.fecha_visita, '%d/%m/%Y') AS fecha,
+					DATE_FORMAT(sac_programacion_visita.hora_visita,'%h:%i %p') AS hora,
+					sac_lugar_trabajo.direccion_lugar,
+					LOWER(CONCAT_WS(', ', org_departamento.departamento, org_municipio.municipio)) AS municipio,
+					CASE 
+						WHEN sac_programacion_visita.estado_programacion=1 THEN 'Promoción de ley'
+						WHEN sac_programacion_visita.estado_programacion=2 THEN 'Promoción de ley'
+						WHEN sac_programacion_visita.estado_programacion=3 THEN 'Verificación de cumplimiento'
+						WHEN sac_programacion_visita.estado_programacion=4 THEN 'Verificación de cumplimiento'
+					END AS tipo_programacion,
+					CASE 
+						WHEN sac_programacion_visita.estado_programacion=1 THEN 'Programada'
+						WHEN sac_programacion_visita.estado_programacion=2 THEN 'Realizada'
+						WHEN sac_programacion_visita.estado_programacion=3 THEN 'Programada'
+						WHEN sac_programacion_visita.estado_programacion=4 THEN 'Realizada'
+					END AS estado_programacion
+					FROM sac_programacion_visita
+					INNER JOIN sac_lugar_trabajo ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
+					WHERE sac_programacion_visita.id_empleado=".$id_empleado." AND sac_programacion_visita.fecha_visita BETWEEN '".$fecha_inicial."' AND '".$fecha_final."'
+					ORDER BY sac_programacion_visita.fecha_visita, sac_programacion_visita.hora_visita
+					";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 }
 ?>
