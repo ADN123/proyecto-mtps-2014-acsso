@@ -16,7 +16,7 @@
   	</table>
     <br />
     <p>
-        el ministerio de trabajo y previción social a través de la dirección general de previsión social, hace constar que el día <strong><?=$this->promocion_model->fecha_letras($lugar_trabajo['fecha_capacitacion'])?></strong> brindó la capacitación inicial estipulada en el artículo 15 de la ley general de precención de riesgos en los lugares de trabajo, al miembro del comité de seguridad y salud ocupacional de <strong></strong>.
+        el ministerio de trabajo y previción social a través de la dirección general de previsión social, hace constar que el día <strong><?=$this->promocion_model->fecha_letras($lugar_trabajo['fecha_capacitacion'])?></strong> brindó la capacitación inicial estipulada en el artículo 15 de la ley general de prevención de riesgos en los lugares de trabajo, al miembro del comité de seguridad y salud ocupacional de <strong></strong>.
     
     </p>
     <p>
@@ -26,7 +26,7 @@
         el comité de seguridad y salud ocupacional acreditado tendrá las funciones establecidas en el artículo 17 de la ley general de prevención de riesgos en los lugares de trabajo y sus respectivos reglamentos.
     </p>
     <p>
-        el comité de seguridad de <strong><?=$lugar_trabajo['nombre_lugar']?></strong> deberá gestionar sus actividades con su patrono o representante, quiem estará en la disposición de colaborar en esta labor.
+        el comité de seguridad de <strong><?=$lugar_trabajo['nombre_lugar']?></strong> deberá gestionar sus actividades con su patrono o representante, quien estará en la disposición de colaborar en esta labor.
     </p>    
     <br />
     <p class="extendido">

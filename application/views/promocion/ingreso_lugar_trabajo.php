@@ -52,7 +52,7 @@
                       
                   		<div class="tab-pane" id="ptab1">
                             <div class="form-group">
-                                <label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
+                                <label for="id_institucion" class="col-sm-3 control-label">Empleador <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
                                     <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
