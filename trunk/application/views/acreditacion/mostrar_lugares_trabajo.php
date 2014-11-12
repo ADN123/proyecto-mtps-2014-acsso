@@ -27,7 +27,7 @@
      	</div>
     </div>
 	<div class="modal-footer">
-        <button type="button" id="myModalCancel" class="btn btn-success" data-dismiss="modal">Agregar</button>
+        <button type="button" id="myModalCancel" class="btn btn-white" data-dismiss="modal"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
 	</div>
 </form>
 <script>
