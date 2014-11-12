@@ -50,9 +50,9 @@
         </tr>
     	<tr>
         	<td>Representantes de trabajadores</td>
-        	<td align="right"><?=$total_comite_representantes_trabajadores?></td>
+        	<td align="right"><?=$total_comite_representantes_trabajadores+$total_comite_sindicato?></td>
         	<td align="right"><?=$total_empleados_representantes?></td>
-            <td align="center"><?php if($total_comite_representantes_trabajadores>=$total_empleados_representantes) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
+            <td align="center"><?php if($total_comite_representantes_trabajadores+$total_comite_sindicato>=$total_empleados_representantes) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
         </tr>
     	<tr>
         	<td>Delegados de prevención</td>
