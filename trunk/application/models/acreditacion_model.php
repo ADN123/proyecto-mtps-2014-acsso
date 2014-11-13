@@ -496,7 +496,8 @@ class Acreditacion_model extends CI_Model {
 	{
 		$sentencia="SELECT
 					sac_capacitacion.id_capacitacion,
-					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre_lugar,
+					sac_lugar_trabajo.nombre_lugar,
+					sac_institucion.nombre_institucion,
 					sac_capacitacion.fecha_capacitacion,
 					sac_asistencia.fecha_acreditacion,
 					COALESCE(TIMESTAMPDIFF(YEAR,sac_asistencia.fecha_acreditacion,CURRENT_DATE),-1) as tiempo_activo,

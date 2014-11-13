@@ -12,6 +12,14 @@ body {
 	height: 25px;
 }
 #imagen {
+	width: 190px;
+	height: auto;
+	opacity: 0.65;
+}
+#escudo {
+	width: 75px;
+	height: auto;
+	opacity: 0.4;
 }
 #titulo {
 	font-size: 13px;
@@ -22,12 +30,11 @@ body {
 p {
 	text-align: justify;
 	text-transform: uppercase;
-	font-size: 16px;
+	font-size: 13.5px;
 	line-height:26px;
 }
 .extendido {
 	text-align: center;
-	text-transform: none !important;
 }
 .cabe, .ti {
 	text-transform: uppercase;
