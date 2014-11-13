@@ -2,32 +2,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="images/ico.ico" type="image/png">
 </head>
 <body>
     <table align="center" border="0" cellspacing="0" style="width:100%;">
         <tr>
-            <td align="left" id="imagen">
-                <img src="img/mtps_report.jpg" />
+            <td align="left">
+                <img id="imagen" src="img/mtps_report2.jpg" />
             </td>
             <td align="right">
-                <img src="img/escudo.min.gif" />
+                <img id="escudo" src="img/escudo.min.gif" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+            	<strong style="font-size:20px">ACREDITACION</strong>
             </td>
         </tr>
   	</table>
+    <p>
+        EL MINISTERIO DE TRABAJO Y PREVISION SOCIAL A TRAVÉS DE LA DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL, HACE CONSTAR QUE EL DÍA: <strong><?=$this->promocion_model->fecha_letras($lugar_trabajo['fecha_capacitacion'])?></strong> BRINDÓ LA CAPACITACIÓN  INICIAL  ESTIPULADA EN EL ARTICULO 15 DE LA LEY GENERAL DE PREVENCIÓN DE RIESGOS EN LOS LUGARES DE TRABAJO, A <strong><?=$lugar_trabajo['nombre_empleado']?></strong> EN SU CALIDAD DE MIEMBRO DEL COMITÉ DE SEGURIDAD Y SALUD OCUPACIONAL DEL LUGAR DE TRABAJO DENOMINADO <strong><?=$lugar_trabajo['nombre_lugar']?></strong> PROPIEDAD DE <strong><?=$lugar_trabajo['nombre_institucion']?></strong>.
+    </p>
     <br />
     <p>
-        el ministerio de trabajo y previción social a través de la dirección general de previsión social, hace constar que el día <strong><?=$this->promocion_model->fecha_letras($lugar_trabajo['fecha_capacitacion'])?></strong> brindó la capacitación inicial estipulada en el artículo 15 de la ley general de prevención de riesgos en los lugares de trabajo, al miembro del comité de seguridad y salud ocupacional de <strong></strong>.
-    
+        por lo que la dirección general de previsión social, otorga a <strong><?=$lugar_trabajo['nombre_empleado']?></strong>,  LA PRESENTE <strong>ACREDITACION</strong> como miembro del comité de seguridad y salud ocupacional de: <strong><?=$lugar_trabajo['nombre_lugar']?></strong> PROPIEDAD DE <strong><?=$lugar_trabajo['nombre_institucion']?></strong>.
     </p>
+    <br />
     <p>
-        por lo que la dirección general de previsión social, otorga a <strong><?=$lugar_trabajo['nombre_empleado']?></strong> el presente nombramiento como miembro del comité de seguridad y salud ocupacional de <strong><?=$lugar_trabajo['nombre_lugar']?></strong>.
+        TENIENDO LAS RESPONSABILIDADES ESTABLECIDAS EN LA LEY GENERAL DE PREVENCION DE RIESGOS EN LOS LUGARES DE TRABAJO Y LOS REGLAMENTOS DE EJECUCION.
     </p>
+    <br />
     <p>
-        el comité de seguridad y salud ocupacional acreditado tendrá las funciones establecidas en el artículo 17 de la ley general de prevención de riesgos en los lugares de trabajo y sus respectivos reglamentos.
-    </p>
-    <p>
-        el comité de seguridad de <strong><?=$lugar_trabajo['nombre_lugar']?></strong> deberá gestionar sus actividades con su patrono o representante, quien estará en la disposición de colaborar en esta labor.
+        <strong>LOS MIEMBROS DEL COMITÉ, ASI COMO LOS DELEGADOS DE PREVENCION DURARAN EN SUS FUNCIONES, DENTRO DEL COMITÉ, DOS AÑOS. A PARTIR DE SU ACREDITACION.</strong>
     </p>    
+    <br />
     <br />
     <p class="extendido">
 		Extiendo en <?php 
@@ -126,10 +134,11 @@
     	<tr>
         	<td align="center">
             	<img src="img/firma_gerencia.png" /><br />
-                f. _______________________________________<br />
-                LICDA. NORA DEL CARMEN LÓPEZ LAÍNEZ<br />
-                DIRECTORA GENERAL DE TRABAJO Y PREVISIÓN SOCIAL<br />
-                MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL
+                <p>
+	                f. _______________________________________<br />
+	                LICDA. NORA DEL CARMEN LÓPEZ LAÍNEZ<br />
+	                <strong>DIRECTORA GENERAL DE PREVISIÓN SOCIAL Y EMPLEO</strong>
+	            </p>
             </td>
         </tr>
     </table>
