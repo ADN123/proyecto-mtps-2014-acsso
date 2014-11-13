@@ -30,6 +30,9 @@
 	.ckbox input[type="checkbox"]:checked + label::after {
 		top: 3px;
 	}
+    .ckbox #sel-todo:checked + label::after {
+        top: 0px;
+    }
 </style>
 <div class="col-sm-1">
 </div>
@@ -89,7 +92,7 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="fecha_promocion" class="col-sm-3 control-label">Fecha de promoción <span class="asterisk">*</span></label>
+                                <label for="fecha_promocion" class="col-sm-3 control-label">Fecha de verificación <span class="asterisk">*</span></label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
                                         <input data-req="true" data-tip="fec"type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" value="<?php echo date('d/m/Y')?>" readonly="readonly" >
@@ -150,6 +153,7 @@
                                     ?>
                                 </tbody>
                             </table>
+                            <div class="ckbox ckbox-success"><input type="checkbox" name="sel-todo" id="sel-todo"  /><label for="sel-todo">Seleccionar/Deseleccionar todo</label></div> 
                       	</div>  
                     </div><!-- tab-content -->
                     
@@ -167,12 +171,18 @@
 	$(document).ready(function(){
 		$('.table').dataTable( {
 		  "filter": false,
-		  "paginate": false,
-		  "destroy": true
+          "paginate": false,
+          "destroy": true,
+          responsive: true,
+          sort: false,
+          info: false
 		});
 		$('.table2').DataTable({
 			responsive: true
 		});
+        $('#sel-todo').click(function(){
+            $('.chk').prop('checked', $(this).prop('checked'));
+        });
 	  	$('#progressWizard').bootstrapWizard({
 			'nextSelector': '.next',
 			'previousSelector': '.previous',

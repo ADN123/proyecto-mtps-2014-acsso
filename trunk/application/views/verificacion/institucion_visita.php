@@ -1,5 +1,5 @@
-<label for="id_institucion" class="col-sm-3 control-label">Establecimiento <span class="asterisk">*</span></label>
-<div class="col-sm-7">
+<label for="id_institucion" class="col-sm-3 control-label">Lugar de trabajo <span class="asterisk">*</span></label>
+<div class="col-sm-4">
     <select data-req="true" class="form-control" name="id_institucion" id="id_institucion" data-placeholder="[Seleccione..]">
         <option value=""></option>
         <?php
