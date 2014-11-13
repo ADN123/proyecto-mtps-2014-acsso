@@ -29,7 +29,7 @@
 </div>
 
 <div class="form-group">
-    <label for="fecha_promocion" class="col-sm-3 control-label">Fecha de promoción <span class="asterisk">*</span></label>
+    <label for="fecha_promocion" class="col-sm-3 control-label">Fecha de verificación <span class="asterisk">*</span></label>
     <div class="col-sm-2">
         <div class="input-group">
             <input data-req="true" data-tip="fec" type="text" class="form-control" id="fecha_promocion" name="fecha_promocion" value="<?php echo date('d/m/Y')?>" readonly="readonly" >

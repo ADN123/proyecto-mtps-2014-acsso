@@ -15,12 +15,19 @@
         ?>
     </tbody>
 </table>
+<div class="ckbox ckbox-success"><input type="checkbox" name="sel-todo" id="sel-todo"  /><label for="sel-todo">Seleccionar/Deseleccionar todo</label></div> 
 <script language="javascript" >
 	$(document).ready(function(){
 		$('.table').dataTable( {
-		  "filter": false,
-		  "paginate": false,
-		  "destroy": true
-		});
+          "filter": false,
+          "paginate": false,
+          "destroy": true,
+          responsive: true,
+          sort: false,
+          info: false
+        });
+        $('#sel-todo').click(function(){
+            $('.chk').prop('checked', $(this).prop('checked'));
+        });
 	});
 </script>
