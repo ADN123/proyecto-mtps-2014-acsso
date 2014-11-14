@@ -944,12 +944,19 @@ class Acreditacion extends CI_Controller
 		}
 	}
 	
-	function imprimir_pdf($id_lugar_trabajo=NULL)
+	function imprimir_pdf()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dimprimir_acreditacion);
 		if($data['id_permiso']!=NULL) {
 			$data['id_seccion']=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
-			$empelados=$this->acreditacion_model->consultar_lugar_trabajo_empleados($id_lugar_trabajo);
+
+			$id_lugar_trabajo=$this->input->post("id_lugar_trabajo");
+
+			if($this->input->post('tabla')!="")
+				$lt= "&".$this->input->post('tabla');
+			$empelados=explode("&id_empleado_institucion%5B%5D=",$lt);
+
+			//$empelados=$this->acreditacion_model->consultar_lugar_trabajo_empleados($id_lugar_trabajo);
 			/*$this->load->view('transporte/acreditacion_pdf.php',$data);*/
 			
 			$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
@@ -958,13 +965,13 @@ class Acreditacion extends CI_Controller
 			//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true));
 			$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 						
-			for($i=0;$i<count($empelados);$i++) { 
-				if($i>0)
+			for($i=1;$i<count($empelados);$i++) { 
+				if($i>1)
 					$this->mpdf->AddPage();
-				$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]['id_empleado_institucion']);
+				$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]);
 				if($data['lugar_trabajo']['tiempo_activo']>=2 || $data['lugar_trabajo']['tiempo_activo']<0) {
-					$this->acreditacion_model->actulizar_acreditacion($empelados[$i]['id_empleado_institucion']);
-					$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]['id_empleado_institucion']);
+					$this->acreditacion_model->actulizar_acreditacion($empelados[$i]);
+					$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]);
 				}
 				$html = $this->load->view('acreditacion/acreditacion_pdf.php', $data, true);
 				$this->mpdf->WriteHTML($html,2);
@@ -1045,6 +1052,21 @@ class Acreditacion extends CI_Controller
 			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
 			$data['municipio']=$this->promocion_model->mostrar_municipio();
 			pantalla('acreditacion/capacitaciones',$data,Dreportes_capacitaciones);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+
+	function ver_empleados_capacitados($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dimprimir_acreditacion); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+			$data['id_lugar_trabajo']=$id_lugar_trabajo;
+			if ($id_lugar_trabajo!=NULL) {
+				$data['empleado_lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo_empleados($id_lugar_trabajo);
+			}
+			$this->load->view('acreditacion/ver_empleados_capacitados',$data);
 		}
 		else {
 			pantalla_error();

@@ -490,7 +490,8 @@ class Acreditacion_model extends CI_Model {
 	function consultar_lugar_trabajo_empleados($id_lugar_trabajo)
 	{
 		$sentencia="SELECT DISTINCT
-					sac_empleado_institucion.id_empleado_institucion
+					sac_empleado_institucion.id_empleado_institucion,
+					sac_empleado_institucion.nombre_empleado
 					FROM sac_institucion
 					LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
