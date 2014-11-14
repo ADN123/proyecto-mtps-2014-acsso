@@ -1,6 +1,4 @@
-<div class="col-sm-2">
-</div>
-<div class="col-sm-8">
+<div class="col-sm-6">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
         <div class="panel-btns">
@@ -10,21 +8,21 @@
         	<h3 class="panel-title" id="titulo-tabla">Comités aprobados</h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
-          		<table class="table table-hover mb30">
-            		<thead>
-              			<tr>
-                            <th class="all">Lugar de trabajo</th>
-                            <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
-              			</tr>
-            		</thead>
-            		<tbody>
-                    	<?php
-							foreach($insticion_lugar_trabajo as $val) {
-								echo '<tr><td>'.$val['nombre'].'</td><td><a href="'.base_url().'index.php/acreditacion/imprimir_pdf/'.$val['id'].'" target="_blank" class="edit-row" data-id="'.$val['id'].'"><i class="fa fa-cloud-download"></i></a></td></tr>';
-							}
-						?>
-            		</tbody>
-          		</table>
+            <table class="table table-hover mb30">
+                <thead>
+                    <tr>
+                        <th class="all">Lugar de trabajo</th>
+                        <th class="desktop tablet-l tablet-p" style="width:100px">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        foreach($insticion_lugar_trabajo as $val) {
+                            echo '<tr><td>'.$val['nombre'].'</td><td><a href="'.base_url().'index.php/acreditacion/imprimir_pdf/'.$val['id'].'" target="_blank" class="edit-row" data-id="'.$val['id'].'"><i class="fa fa-cloud-download"></i></a></td></tr>';
+                        }
+                    ?>
+                </tbody>
+            </table>
         </div>
   	</div>
 </div>
