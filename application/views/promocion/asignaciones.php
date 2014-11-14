@@ -34,7 +34,7 @@
   				<div id="calendar"></div>
             </div>
             <ul class="pager wizard">
-                <li><button class="btn btn-info" type="button" name="itinerario" id="itinerario"><span class="glyphicon glyphicon-search"></span> Consultar Programaciones</button></li>
+                <li><button class="btn btn-info" type="button" name="itinerario" id="itinerario"><span class="glyphicon glyphicon-search"></span> Consultar</button></li>
             </ul>
       	</div>
    	</div>
@@ -574,6 +574,6 @@
 	});
 	$("#itinerario").click(function(){
 		if(($('#id_empleado').val()!="" && $('#id_empleado').length!=0) || ($('#id_empleado').length==0))
-			modal("Imprimir itinerario",base_url()+'index.php/promocion/buscar_asignaciones');
+			modal("Consultar itinerario",base_url()+'index.php/promocion/buscar_asignaciones');
 	});
 </script>

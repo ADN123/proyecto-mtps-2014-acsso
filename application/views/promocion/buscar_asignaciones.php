@@ -19,7 +19,7 @@
         </div>
     </div>
     <ul class="pager wizard">
-        <li><button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-print"></span> Buscar</button></li>
+        <li><button class="btn btn-info" type="submit"><span class="fa fa-calendar-o"></span> Buscar</button></li>
     </ul>
 </form>
 <script>
