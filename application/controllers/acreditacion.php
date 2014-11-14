@@ -46,6 +46,7 @@ class Acreditacion extends CI_Controller
 					break;
 			}
 			$data['idlt']=$idlt;
+			$data['cargo_comite']=$this->acreditacion_model->cargo_comite();
 			$data['tipo_representacion']=$this->acreditacion_model->tipo_representacion();
 			$data['tipo_inscripcion']=$this->acreditacion_model->tipo_inscripcion();
 			$data['estado_transaccion']=$estado_transaccion;
@@ -79,11 +80,42 @@ class Acreditacion extends CI_Controller
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep);
 					break;
 			}
+			$data['cargo_comite']=$this->acreditacion_model->cargo_comite();
 			$data['tipo_representacion']=$this->acreditacion_model->tipo_representacion();
 			$data['tipo_inscripcion']=$this->acreditacion_model->tipo_inscripcion();
 			if($id_empleado_institucion!=NULL)
 				$data['empleado_institucion']=$this->acreditacion_model->empleado_institucion($id_empleado_institucion);			
 			$this->load->view('acreditacion/participantes_recargado',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: busqueda_dui_empleados
+	*	Objetivo: Busca si un numero de dui ya ha sido registrado
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 14/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function busqueda_dui_empleados()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$this->db->trans_start();
+
+			$dui_empleado=$this->input->post('dui_empleado');
+			$id_empleado_institucion=$this->input->post('id_empleado_institucion');
+			
+			$r=$this->acreditacion_model->busqueda_dui_empleados($dui_empleado,$id_empleado_institucion);
+			
+			$this->db->trans_complete();
+			$json =array(
+				'resultado'=>$r['total']
+			);
+			echo json_encode($json);
 		}
 		else {
 			pantalla_error();
@@ -133,6 +165,7 @@ class Acreditacion extends CI_Controller
 			$id_genero=$this->input->post('id_genero');
 			$dui_empleado=$this->input->post('dui_empleado');
 			$cargo_empleado=$this->input->post('cargo_empleado');
+			$id_cargo_comite=($this->input->post('id_cargo_comite')!="")?$this->input->post('id_cargo_comite'):'NULL';
 			$id_tipo_inscripcion=$this->input->post('id_tipo_inscripcion');
 			$delegado=($this->input->post('delegado')!="")?$this->input->post('delegado'):'NULL';
 			if($id_tipo_representacion==3)
@@ -151,6 +184,7 @@ class Acreditacion extends CI_Controller
 					'id_genero'=>$id_genero,
 					'dui_empleado'=>$dui_empleado,
 					'cargo_empleado'=>$cargo_empleado,
+					'id_cargo_comite'=>$id_cargo_comite,
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
 					'delegado'=>$delegado,
 					'sindicato'=>$sindicato,
@@ -173,6 +207,7 @@ class Acreditacion extends CI_Controller
 					'id_genero'=>$id_genero,
 					'dui_empleado'=>$dui_empleado,
 					'cargo_empleado'=>$cargo_empleado,
+					'id_cargo_comite'=>$id_cargo_comite,
 					'id_tipo_inscripcion'=>$id_tipo_inscripcion,
 					'delegado'=>$delegado,
 					'sindicato'=>$sindicato,

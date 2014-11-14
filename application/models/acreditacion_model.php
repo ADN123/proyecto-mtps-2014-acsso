@@ -76,6 +76,13 @@ class Acreditacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function cargo_comite()
+	{
+		$sentencia="SELECT id_cargo_comite AS id, nombre_cargo_comite AS nombre FROM sac_cargo_comite";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	function tipo_inscripcion()
 	{
 		$sentencia="SELECT id_tipo_inscripcion AS id, nombre AS nombre FROM sac_tipo_inscripcion";
@@ -90,10 +97,10 @@ class Acreditacion_model extends CI_Model {
 					sac_lugar_trabajo.total_hombres AS total_empleados_hombres,
 					sac_lugar_trabajo.total_mujeres AS total_empleados_mujeres,
 					COUNT(sac_empleado_institucion.id_empleado_institucion) AS total_comite,
-					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=1 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_hombres,
-					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=2 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_mujeres,
-					(SELECT COUNT(sac_empleado_institucion.id_tipo_representacion) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_tipo_representacion=1 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_representantes_empleador,
-					(SELECT COUNT(sac_empleado_institucion.id_tipo_representacion) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_tipo_representacion=2 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo.") AS total_comite_representantes_trabajadores,
+					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=1 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1) AS total_comite_hombres,
+					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=2 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1) AS total_comite_mujeres,
+					(SELECT COUNT(sac_empleado_institucion.id_tipo_representacion) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_tipo_representacion=1 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1) AS total_comite_representantes_empleador,
+					(SELECT COUNT(sac_empleado_institucion.id_tipo_representacion) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_tipo_representacion=2 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1) AS total_comite_representantes_trabajadores,
 					COUNT(sac_empleado_institucion.sindicato) AS total_comite_sindicato,
 					COUNT(sac_empleado_institucion.delegado) AS total_comite_delegados,
 					CASE 
@@ -117,7 +124,7 @@ class Acreditacion_model extends CI_Model {
 					END AS total_empleados_delegados
 					FROM sac_lugar_trabajo
 					LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo=sac_lugar_trabajo.id_lugar_trabajo
-					WHERE sac_lugar_trabajo.estado<>0 AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo."
+					WHERE sac_lugar_trabajo.estado<>0 AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo";
 		$query=$this->db->query($sentencia);
 		return (array)$query->row();
@@ -127,9 +134,9 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="INSERT INTO sac_empleado_institucion
-					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, fecha_creacion, id_usuario_crea, delegado, sindicato, fecha_ingreso, id_genero) 
+					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, id_cargo_comite, fecha_creacion, id_usuario_crea, delegado, sindicato, fecha_ingreso, id_genero) 
 					VALUES 
-					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato, '$fecha_ingreso', $id_genero)";
+					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, $id_cargo_comite, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato, '$fecha_ingreso', $id_genero)";
 		$this->db->query($sentencia);
 	}
 	
@@ -188,6 +195,7 @@ class Acreditacion_model extends CI_Model {
 					id_empleado_institucion,
 					id_lugar_trabajo,
 					id_tipo_inscripcion,
+					id_cargo_comite,
 					nombre_empleado,
 					cargo_empleado,
 					dui_empleado,
@@ -209,6 +217,7 @@ class Acreditacion_model extends CI_Model {
 		 			id_lugar_trabajo=$id_lugar_trabajo, 
 		 			id_tipo_representacion=$id_tipo_representacion, 
 		 			id_tipo_inscripcion=$id_tipo_inscripcion, 
+					id_cargo_comite=$id_cargo_comite,
 		 			nombre_empleado='$nombre_empleado', 
 		 			dui_empleado='$dui_empleado', 
 		 			cargo_empleado='$cargo_empleado',
@@ -516,6 +525,18 @@ class Acreditacion_model extends CI_Model {
 	{
 		$sentencia="UPDATE sac_asistencia SET fecha_acreditacion='".date('Y-m-d')."' WHERE asistio=1 AND id_empleado_institucion=".$id_empleado_institucion;
 		$query=$this->db->query($sentencia);
+	}
+	
+	function busqueda_dui_empleados($dui_empleado,$id_empleado_institucion)
+	{
+		$where="";
+		if($id_empleado_institucion!="" && $id_empleado_institucion!=NULL)
+			$where=" AND id_empleado_institucion<>".$id_empleado_institucion;
+		$sentencia="SELECT COUNT(dui_empleado) AS total
+					FROM sac_empleado_institucion
+					where dui_empleado LIKE '".$dui_empleado."'".$where;
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
 	}
 }
 ?>
