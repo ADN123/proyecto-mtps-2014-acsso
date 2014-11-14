@@ -1,0 +1,15 @@
+CREATE TABLE `sac_cargo_comite` (
+`id_cargo_comite`  int(11) NOT NULL AUTO_INCREMENT ,
+`nombre_cargo_comite`  varchar(255) NOT NULL ,
+PRIMARY KEY (`id_cargo_comite`)
+)ENGINE=InnoDB;
+
+
+ALTER TABLE `sac_empleado_institucion`
+ADD COLUMN `id_cargo_comite`  int(11) NULL AFTER `id_tipo_representacion`,
+ADD COLUMN `id_empleado_institucion_sustituye`  int(11) NULL AFTER `sindicato`;
+
+ALTER TABLE `sac_empleado_institucion` ADD CONSTRAINT `fk_cargo_comite_empleado` FOREIGN KEY (`id_cargo_comite`) REFERENCES `sac_cargo_comite` (`id_cargo_comite`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `sac_empleado_institucion` ADD CONSTRAINT `fk_empleado_sustituye` FOREIGN KEY (`id_empleado_institucion_sustituye`) REFERENCES `sac_empleado_institucion` (`id_empleado_institucion`) ON DELETE SET NULL ON UPDATE CASCADE;
+
