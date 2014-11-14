@@ -137,15 +137,29 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="cargo_empleado" class="col-sm-3 control-label">Cargo <span class="asterisk">*</span></label>
+                                <label for="cargo_empleado" class="col-sm-3 control-label">Cargo funcional<span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
                                     <input type="text" name="cargo_empleado" id="cargo_empleado" class="form-control" data-req="true" data-tip="var" data-min="5" />
                                 </div>
                             </div>
                             
                             <div class="form-group">
+                                <label for="id_cargo_comite" class="col-sm-3 control-label">Cargo comité </label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="id_cargo_comite" id="id_cargo_comite" data-placeholder="[Seleccione..]" >
+                                        <option value=""></option>
+                                        <?php
+                                            foreach($cargo_comite as $val) {
+                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
                                 <label for="id_tipo_inscripcion" class="col-sm-3 control-label">Tipo de inscripción <span class="asterisk">*</span></label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <select data-req="true" class="form-control" name="id_tipo_inscripcion" id="id_tipo_inscripcion" data-placeholder="[Seleccione..]" >
                                         <option value=""></option>
                                         <?php
@@ -239,6 +253,23 @@
                 modal("Resumen de conformación de comité",base_url()+'index.php/acreditacion/resumen_empleados_comite/'+id);
             return false;
         });
+		$("#dui_empleado").blur(function(){
+			$.ajax({
+				async: true, 
+				url: base_url()+'index.php/acreditacion/busqueda_dui_empleados',
+				dataType:"json",
+				type: "POST",
+				data: {dui_empleado:$("#dui_empleado").val()},
+				success: function(data) {
+					var json=data;
+					if(Number(json['resultado'])!=0)
+						alerta("Búsqueda de empleado", "El número DUI ya está registrado")
+				},
+				error:function(data) {
+					alerta_rapida("Error en la búsqueda de empleado", 'Se ha perdido la conexión a la red', 'danger');
+				}
+			});	
+		});
 		<?php 
 			if($idlt!="") {
 		?>
