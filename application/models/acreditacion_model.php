@@ -309,7 +309,8 @@ class Acreditacion_model extends CI_Model {
 		}
 		$sentencia="SELECT DISTINCT
 					sac_capacitacion.id_capacitacion AS id,
-					DATE_FORMAT(sac_capacitacion.fecha_capacitacion,'%d/%m/%Y') AS fecha,
+					/*DATE_FORMAT(sac_capacitacion.fecha_capacitacion,'%d/%m/%Y') AS fecha,*/
+					sac_capacitacion.fecha_capacitacion AS fecha,
 					CASE 
 						WHEN sac_capacitacion.id_lugar_trabajo IS NOT NULL THEN CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) 
 						WHEN sac_capacitacion.id_lugar_trabajo IS NULL THEN 'MTPS' 
