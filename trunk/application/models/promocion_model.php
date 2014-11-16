@@ -505,9 +505,9 @@ class Promocion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="INSERT INTO sac_promocion 
-					(id_programacion_visita,fecha_promocion,hora_inicio,hora_final,nombre_recibio,observaciones,fecha_creacion,id_usuario_crea)
+					(id_programacion_visita,fecha_promocion,hora_inicio,hora_final,nombre_recibio,observaciones,necesita_comite,fecha_creacion,id_usuario_crea)
 					VALUES 
-					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones','$fecha_creacion',$id_usuario_crea)";
+					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones',$necesita_comite,'$fecha_creacion',$id_usuario_crea)";
 		$this->db->query($sentencia);
 	}
 	

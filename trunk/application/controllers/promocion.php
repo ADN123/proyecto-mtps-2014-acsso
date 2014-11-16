@@ -590,7 +590,8 @@ class Promocion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_visita_1); 
 		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
-			if($estado==0) {
+			if($estado==0 && $id_empleado!=NULL && $id_empleado!='') {
+				echo "++++++++++++++".$id_empleado."+++++++++++++";
 				$info=$this->seguridad_model->info_empleado($id_empleado, "id_seccion");
 				$dep=$this->promocion_model->ubicacion_departamento($info["id_seccion"]);
 				$data['institucion']=$this->promocion_model->institucion_visita($dep);
@@ -1143,7 +1144,8 @@ class Promocion extends CI_Controller
 			$hora_inicio=$this->input->post('hora_inicio');
 			$hora_final=$this->input->post('hora_final');
 			$nombre_recibio=$this->input->post('nombre_recibio');
-			$observaciones=$this->input->post('observaciones');		
+			$observaciones=$this->input->post('observaciones');
+			$necesita_comite=($this->input->post('necesita_comite')=='')?'0':$this->input->post('necesita_comite');		
 			
 			$nombre_institucion=$this->input->post('nombre_institucion');
 			$nit_empleador=$this->input->post('nit_empleador');
@@ -1183,6 +1185,7 @@ class Promocion extends CI_Controller
 				'hora_final'=>$hora_final,
 				'nombre_recibio'=>$nombre_recibio,
 				'observaciones'=>$observaciones,
+				'necesita_comite'=>$necesita_comite,
 				'fecha_creacion'=>$fecha_creacion,
 				'id_usuario_crea'=>$id_usuario_crea
 			);

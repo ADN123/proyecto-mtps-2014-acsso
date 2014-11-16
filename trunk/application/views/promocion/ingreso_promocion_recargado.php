@@ -71,6 +71,16 @@
         <textarea data-tip="x" data-min="10" class="form-control" id="observaciones" name="observaciones" ></textarea>
     </div>
 </div>
+                            
+<div class="form-group">
+    <label class="col-sm-3 control-label">Necesita Comité</label>
+    <div class="col-sm-4" style="margin-top: 7px;">
+        <div class="ckbox ckbox-default">
+            <input type="checkbox" value="1" name="necesita_comite" id="necesita_comite" />
+            <label for="necesita_comite">Sí</label>
+        </div>
+    </div>
+</div>
 <script language="javascript" >
 	$(document).ready(function(){
 		$("select").chosen({
@@ -81,6 +91,8 @@
 		});
 		$('#id_empleado').change(function(){
 			id=$(this).val();
+			if(id=="")
+				id=0;
 			$('#cont-institucion').load(base_url()+'index.php/promocion/institucion_visita/'+id+"/1");
 			$("#ptab2").load(base_url()+"index.php/promocion/ingreso_promocion_institucion_recargado/0");
 			$("#ptab3").load(base_url()+"index.php/promocion/ingreso_promocion_lugar_trabajo_recargado/0");
