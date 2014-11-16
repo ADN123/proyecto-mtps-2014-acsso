@@ -73,7 +73,7 @@
 </div>
                             
 <div class="form-group">
-    <label class="col-sm-3 control-label">Necesita Comité</label>
+    <label class="col-sm-3 control-label">Aplica para capacitación</label>
     <div class="col-sm-4" style="margin-top: 7px;">
         <div class="ckbox ckbox-default">
             <input type="checkbox" value="1" name="necesita_comite" id="necesita_comite" />
