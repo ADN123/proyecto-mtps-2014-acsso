@@ -14,23 +14,28 @@ class Acreditacion_model extends CI_Model {
 	{
 		$where="";
 		if($sin_vacios==1)
-			$where.=" 	AND id_tipo_lugar_trabajo NOT LIKE '' 
+			/*Muestra todos los lugares de trabajo que han sido promocionados*/
+			/*$where.=" 	AND id_tipo_lugar_trabajo NOT LIKE '' 
 						AND sac_lugar_trabajo.id_municipio NOT LIKE '' 
 						AND nombre_lugar NOT LIKE '' 
 						AND direccion_lugar NOT LIKE '' 
 						AND nombre_contacto NOT LIKE '' 
 						AND telefono NOT LIKE '' 
 						AND total_hombres NOT LIKE '' 
-						AND total_mujeres NOT LIKE ''";
+						AND total_mujeres NOT LIKE ''";*/ 
+			/*Muestra todos los lugares de trabajo que el tecnico dijo que necesitaban comite*/
+			$where.=" AND necesita_comite=1";
 		if($dep!=NULL)
 			$where.=" 	AND id_departamento_pais=".$dep;
 		if($estado_capacitacion!=NULL)
 			//$where.=" 	AND sac_lugar_trabajo.estado<".$estado_capacitacion;
 			$where.="";
 		$sentencia="SELECT
-					id_lugar_trabajo AS id,
+					sac_lugar_trabajo.id_lugar_trabajo AS id,
 					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre
 					FROM sac_lugar_trabajo
+					INNER JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
 					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					LEFT JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					WHERE sac_lugar_trabajo.estado<>0 ".$where;
@@ -124,7 +129,7 @@ class Acreditacion_model extends CI_Model {
 					END AS total_empleados_delegados
 					FROM sac_lugar_trabajo
 					LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo=sac_lugar_trabajo.id_lugar_trabajo
-					WHERE sac_lugar_trabajo.estado<>0 AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1
+					WHERE sac_lugar_trabajo.estado<>0 AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo." AND (sac_empleado_institucion.estado_empleado=1 OR sac_empleado_institucion.estado_empleado IS NULL)
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo";
 		$query=$this->db->query($sentencia);
 		return (array)$query->row();
