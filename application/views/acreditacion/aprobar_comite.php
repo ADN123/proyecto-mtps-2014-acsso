@@ -128,11 +128,11 @@
                             </table>
                         </div>
                   		<div class="tab-pane" id="ptab3">
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label for="nombre_empleado" class="col-sm-4 control-label">Fecha de conformación<span class="asterisk">*</span></label>
                                 <div class="col-sm-4">
                                 </div>
-                            </div>
+                            </div>-->
                             <table class="table table-hover mb30">
                                 <thead>
                                     <tr>

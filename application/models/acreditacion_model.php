@@ -30,7 +30,7 @@ class Acreditacion_model extends CI_Model {
 		if($estado_capacitacion!=NULL)
 			//$where.=" 	AND sac_lugar_trabajo.estado<".$estado_capacitacion;
 			$where.="";
-		$sentencia="SELECT
+		$sentencia="SELECT DISTINCT
 					sac_lugar_trabajo.id_lugar_trabajo AS id,
 					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre
 					FROM sac_lugar_trabajo
@@ -544,6 +544,13 @@ class Acreditacion_model extends CI_Model {
 					where dui_empleado LIKE '".$dui_empleado."'".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->row();
+	}
+
+	function actualizar_cargo_comite($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_empleado_institucion SET id_cargo_comite=".$id_cargo_comite.", fecha_modificacion='".$fecha_modificacion."', id_usuario_modifica=".$id_usuario_modifica." WHERE id_empleado_institucion=".$id_empleado_institucion;
+		$query=$this->db->query($sentencia);
 	}
 }
 ?>
