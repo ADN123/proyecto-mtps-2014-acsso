@@ -66,7 +66,7 @@
 </div>
 
 <div class="form-group">
-    <label for="observaciones" class="col-sm-3 control-label">Resultado de la visita </label>
+    <label for="observaciones" class="col-sm-3 control-label">Resultado de la verificación </label>
     <div class="col-sm-7">
         <textarea data-tip="x" data-min="10" class="form-control" id="observaciones" name="observaciones" ></textarea>
     </div>

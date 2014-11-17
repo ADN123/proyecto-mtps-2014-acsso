@@ -911,6 +911,19 @@ class Acreditacion extends CI_Controller
 				'id_usuario_modifica'=>$id_usuario_modifica
 			);
 			$this->acreditacion_model->guardar_aprobacion_comite($formuInfo);
+
+			$id_cargo_comite=$this->input->post('id_cargo_comite');
+
+			for ($i=0;$i<count($id_cargo_comite);$i++) { 
+				$cargo_comite=explode("***", $id_cargo_comite[$i]);
+				$formuInfo = array(
+					'id_empleado_institucion'=>$cargo_comite[0],
+					'id_cargo_comite'=>$cargo_comite[1],
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica
+				);
+				$this->acreditacion_model->actualizar_cargo_comite($formuInfo);
+			}
 			
 			$tipo=2;
 			$this->db->trans_complete();

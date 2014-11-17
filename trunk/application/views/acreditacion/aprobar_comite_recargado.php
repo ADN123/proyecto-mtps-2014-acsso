@@ -96,12 +96,12 @@
             </table>
         </div>
         <div class="tab-pane" id="ptab3">
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="nombre_empleado" class="col-sm-4 control-label">Fecha de conformación<span class="asterisk">*</span></label>
                 <div class="col-sm-2 control-label">
                     <strong><?php if($ins['fecha_conformacion']!="") echo $ins['fecha_conformacion'];?></strong>
                 </div>
-            </div>
+            </div>-->
             <table class="table table-hover mb30">
                 <thead>
                     <tr>
@@ -112,13 +112,20 @@
                 <tbody>
                     <?php
                         foreach($empleado_lugar_trabajo as $val) {
-                            echo '<tr><td>'.$val['nombre'].'</td><td>';
-							echo '<select class="form-control" name="id_cargo_comite[]" id="id_cargo_comite'.$val['id'].'" data-placeholder="[Seleccione..]" ><option value=""></option>';
+                            echo '<tr>
+                                    <td>'.$val['nombre'].'</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <select data-req="true" class="form-control" name="id_cargo_comite[]" id="id_cargo_comite'.$val['id'].'" data-placeholder="[Seleccione..]" ><option value=""></option>';
 							foreach($cargo_comite as $val2) {
-								echo '<option value="'.$val2['id'].'">'.$val2['nombre'].'</option>';
+								echo '              <option value="'.$val['id'].'***'.$val2['id'].'" selected="selected">'.$val2['nombre'].'</option>';
 							}
-                            echo '</select>';
-							echo '</td></tr>';
+                            echo '              </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>';
                         }
                     ?>
                 </tbody>
