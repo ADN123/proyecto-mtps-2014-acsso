@@ -76,9 +76,9 @@
                     </tr>
                     <tr>
                         <td>Representantes de trabajadores</td>
-                        <td align="right"><?=$lugar_trabajo['total_comite_representantes_trabajadores']?></td>
+                        <td align="right"><?=$lugar_trabajo['total_comite_representantes_trabajadores']+$lugar_trabajo['total_comite_sindicato']?></td>
                         <td align="right"><?=$lugar_trabajo['total_empleados_representantes']?></td>
-                        <td align="center"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="")if($lugar_trabajo['total_comite_representantes_trabajadores']>=$lugar_trabajo['total_empleados_representantes']) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
+                        <td align="center"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="")if($lugar_trabajo['total_comite_representantes_trabajadores']+$lugar_trabajo['total_comite_sindicato']>=$lugar_trabajo['total_empleados_representantes']) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
                     </tr>
                     <tr>
                         <td>Delegados de prevención</td>
@@ -106,18 +106,19 @@
                 <thead>
                     <tr>
                         <th class="all">Nombre del empleado</th>
-                        <th class="desktop tablet-l tablet-p" style="width:100px">Delegado</th>
-                        <th class="desktop tablet-l tablet-p" style="width:100px">Sindicato</th>
+                        <th class="desktop tablet-l tablet-p" style="width:200px">Cargo Comité</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                         foreach($empleado_lugar_trabajo as $val) {
-                            echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_del[]" id="id_empleado_ck_del_'.$val['id'].'" value="'.$val['id'].'" ';
-                            if($val['delegado']==1) echo ' checked="checked"';
-                            echo ' disabled="disabled"/><label for="id_empleado_ck_del_'.$val['id'].'"></label></div></td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_empleado_ck_sin[]" id="id_empleado_ck_sin_'.$val['id'].'" value="'.$val['id'].'" ';
-                            if($val['sindicato']==1) echo ' checked="checked"';
-                            echo ' disabled="disabled"/><label for="id_empleado_ck_sin_'.$val['id'].'"></label></div></td></tr>';
+                            echo '<tr><td>'.$val['nombre'].'</td><td>';
+							echo '<select class="form-control" name="id_cargo_comite[]" id="id_cargo_comite'.$val['id'].'" data-placeholder="[Seleccione..]" ><option value=""></option>';
+							foreach($cargo_comite as $val2) {
+								echo '<option value="'.$val2['id'].'">'.$val2['nombre'].'</option>';
+							}
+                            echo '</select>';
+							echo '</td></tr>';
                         }
                     ?>
                 </tbody>

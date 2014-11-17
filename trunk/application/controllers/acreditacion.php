@@ -885,6 +885,7 @@ class Acreditacion extends CI_Controller
 				$data['ilt']=$id_lugar_trabajo;
 				$data['lugar_trabajo']=$this->acreditacion_model->resumen_empleados_comite($id_lugar_trabajo);
 			}
+			$data['cargo_comite']=$this->acreditacion_model->cargo_comite();
 			$this->load->view('acreditacion/aprobar_comite_recargado',$data);
 		}
 		else {
