@@ -137,8 +137,7 @@
                                 <thead>
                                     <tr>
                                         <th class="all">Nombre del empleado</th>
-                                        <th class="desktop tablet-l tablet-p" style="width:100px">Delegado</th>
-                                        <th class="desktop tablet-l tablet-p" style="width:100px">Sindicato</th>
+                                        <th class="desktop tablet-l tablet-p" style="width:200px">Cargo Comité</th>
                                     </tr>
                                 </thead>
                                 <tbody>
