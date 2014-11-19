@@ -10,7 +10,7 @@
     <script src="<?php echo base_url()?>js/modernizr.min.js"></script>
     <script src="<?php echo base_url()?>js/retina.min.js"></script>
     <script src="<?php echo base_url()?>js/custom.js"></script>
-    <title>SRCS - Sistema de Registro de Comités de Seguridad y Salud Ocupacional Acreditados</title>
+    <title>SRCS - Sistema de Registro de Comités de SSO</title>
 </head>
 <body style="background: #FFF;">
     <button style="display:none" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-static"></button>

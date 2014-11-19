@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="shortcut icon" href="images/favicon.png" type="image/png">
 
-  <title>SACSO - Sistema de Acreditaciones de Comités de Seguridad Ocupacional</title>
+  <title>SACSO - Sistema de Registro de Comités de SSO</title>
 
   <link href="<?php echo $url?>css/style.default.css" rel="stylesheet">
 
