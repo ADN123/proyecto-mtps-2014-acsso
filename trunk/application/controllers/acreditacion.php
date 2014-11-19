@@ -978,10 +978,16 @@ class Acreditacion extends CI_Controller
 			$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
 			//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true));
 			$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
-						
+			
+			$data['memo']=$this->acreditacion_model->memo_acreditacion_pdf($empelados[1]);
+			$html = $this->load->view('acreditacion/memo_acreditacion_pdf.php', $data, true);
+			$this->mpdf->WriteHTML($html,2);
+			$this->mpdf->AddPage();
+			$html = $this->load->view('acreditacion/memo_acreditacion_pdf.php', $data, true);
+			$this->mpdf->WriteHTML($html,2);
+					
 			for($i=1;$i<count($empelados);$i++) { 
-				if($i>1)
-					$this->mpdf->AddPage();
+				$this->mpdf->AddPage();
 				$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]);
 				if($data['lugar_trabajo']['tiempo_activo']>=2 || $data['lugar_trabajo']['tiempo_activo']<0) {
 					$this->acreditacion_model->actulizar_acreditacion($empelados[$i]);
@@ -990,7 +996,6 @@ class Acreditacion extends CI_Controller
 				$html = $this->load->view('acreditacion/acreditacion_pdf.php', $data, true);
 				$this->mpdf->WriteHTML($html,2);
 			}
-
 			$this->mpdf->Output(); /*Salida del pdf*/
 		}
 		else {

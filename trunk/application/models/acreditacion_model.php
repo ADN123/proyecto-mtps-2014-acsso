@@ -47,14 +47,17 @@ class Acreditacion_model extends CI_Model {
 	{
 		$where="";
 		if($sin_vacios==1)
-			$where.=" 	AND id_tipo_lugar_trabajo NOT LIKE '' 
+			/*Muestra todos los lugares de trabajo que han sido promocionados*/
+			/*$where.=" 	AND id_tipo_lugar_trabajo NOT LIKE '' 
 						AND sac_lugar_trabajo.id_municipio NOT LIKE '' 
 						AND nombre_lugar NOT LIKE '' 
 						AND direccion_lugar NOT LIKE '' 
 						AND nombre_contacto NOT LIKE '' 
 						AND telefono NOT LIKE '' 
 						AND total_hombres NOT LIKE '' 
-						AND total_mujeres NOT LIKE ''";
+						AND total_mujeres NOT LIKE ''";*/
+			/*Muestra todos los lugares de trabajo que el tecnico dijo que necesitaban comite*/
+			$where.=" AND necesita_comite=1";
 		if($dep!=NULL)
 			$where.=" 	AND id_departamento_pais=".$dep;
 		if($estado_capacitacion!=NULL)
@@ -551,6 +554,28 @@ class Acreditacion_model extends CI_Model {
 		extract($formuInfo);
 		$sentencia="UPDATE sac_empleado_institucion SET id_cargo_comite=".$id_cargo_comite.", fecha_modificacion='".$fecha_modificacion."', id_usuario_modifica=".$id_usuario_modifica." WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$query=$this->db->query($sentencia);
+	}
+	
+	function memo_acreditacion_pdf($id_empleado_institucion=0)
+	{
+		$sentencia="SELECT DISTINCT
+					sac_lugar_trabajo.fecha_conformacion,
+					sac_lugar_trabajo.nombre_lugar,
+					sac_institucion.nombre_institucion,
+					sac_lugar_trabajo.telefono AS telefono_lugar,
+					sac_lugar_trabajo.direccion_lugar,
+					LOWER(CONCAT_WS(', ',org_municipio.municipio,org_departamento.departamento)) AS municipio_lugar,
+					E.nombre_empleado,
+					E.cargo_empleado
+					FROM sac_empleado_institucion
+					INNER JOIN sac_lugar_trabajo ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+					INNER JOIN sac_empleado_institucion AS E ON E.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
+					WHERE E.id_cargo_comite=1 AND E.estado_empleado=1 AND sac_empleado_institucion.id_empleado_institucion=".$id_empleado_institucion;
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
 	}
 }
 ?>
