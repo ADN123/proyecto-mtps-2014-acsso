@@ -43,8 +43,18 @@ p {
 	font-size: 12px;
 	text-transform: none !important;
 }
+#titu_memo_2 {
+	font-size: 36px;
+}
 #fecha {
 	text-transform: uppercase;
+}
+#fecha_2 {
+	text-transform: uppercase;
+	font-size: 16px;
+}
+#fecha_3 {
+	font-size: 16px;
 }
 #memoria {
 	text-transform: none !important;

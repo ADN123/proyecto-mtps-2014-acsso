@@ -980,10 +980,19 @@ class Acreditacion extends CI_Controller
 			$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 			
 			$data['memo']=$this->acreditacion_model->memo_acreditacion_pdf($empelados[1]);
+			$data['empleados']=$this->acreditacion_model->memo_acreditacion_lista_empleados_pdf('0'.str_replace("&id_empleado_institucion%5B%5D=",",",$lt));
 			$html = $this->load->view('acreditacion/memo_acreditacion_pdf.php', $data, true);
 			$this->mpdf->WriteHTML($html,2);
 			$this->mpdf->AddPage();
 			$html = $this->load->view('acreditacion/memo_acreditacion_pdf.php', $data, true);
+			$this->mpdf->WriteHTML($html,2);
+			$this->mpdf->AddPage();
+
+			$data['carta']=$this->acreditacion_model->memo_acreditacion_pdf($empelados[1]);
+			$html = $this->load->view('acreditacion/carta_acreditacion_pdf.php', $data, true);
+			$this->mpdf->WriteHTML($html,2);
+			$this->mpdf->AddPage();
+			$html = $this->load->view('acreditacion/carta_acreditacion_pdf.php', $data, true);
 			$this->mpdf->WriteHTML($html,2);
 					
 			for($i=1;$i<count($empelados);$i++) { 
