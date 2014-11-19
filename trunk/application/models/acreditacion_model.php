@@ -577,5 +577,18 @@ class Acreditacion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->row();
 	}
+	
+	function memo_acreditacion_lista_empleados_pdf($id_empleado_institucion='')
+	{
+		$sentencia="SELECT DISTINCT
+					E.nombre_empleado,
+					C.nombre_cargo_comite AS cargo_comite
+					FROM sac_empleado_institucion AS E
+					LEFT JOIN sac_cargo_comite AS C ON C.id_cargo_comite=E.id_cargo_comite 
+					WHERE E.estado_empleado=1 AND E.id_empleado_institucion IN (".$id_empleado_institucion.")
+					ORDER BY E.id_cargo_comite";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 }
 ?>

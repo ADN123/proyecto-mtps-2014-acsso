@@ -5,24 +5,58 @@
     <link rel="shortcut icon" href="images/ico.ico" type="image/png">
 </head>
 <body>
-	<table align="center" border="0" cellspacing="0" style="width:100%;">
+	<table align="center" border="0" cellspacing="0" style="width:100%; border-bottom:3px solid #000">
         <tr>
-            <td align="center">
-                <img id="escudo" src="img/escudo.min.gif" />
+        	<td align="center" colspan="2">
+            	<strong id="titu_memo_2">MEMORANDUM</strong>
             </td>
         </tr>
         <tr>
-        	<td align="center">
-            	<strong id="titu_memo"><br />
-            	Ministerio de Trabajo y Previsión Social<br />
-                Dirección General de Previsión Social<br />
-                Departamento de Seguridad e Higiene Ocupacional<br />
-                Sección de Prevención de Riesgos Ocupacionales</strong>
-            </td>
+        	<td id="fecha_2" valign="top" width="150">
+            	<br />
+        		PARA:
+        	</td>
+        	<td id="fecha_2">
+        		<br />
+        		LICDA. NORA DEL CARMEN LÓPEZ LAÍNEZ
+        		<br />
+        		DIRECTORA GENERAL DE PREVISIÓN SOCIAL Y EMPLEO
+        	</td>
+        </tr>>
+        <tr>
+        	<td id="fecha_2" valign="top">
+            	<br />
+        		DE:
+        	</td>
+        	<td id="fecha_2">
+        		<br />
+        		ING. JUAN CARLOS SERRANO
+        		<br />
+        		JEFE DE SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES
+        	</td>
+        </tr>>
+        <tr>
+        	<td id="fecha_2" valign="top">
+            	<br />
+        		ASUNTO:
+        	</td>
+        	<td id="fecha_2">
+        		<br />
+        		SOLICITAR FIMAS PARA ACREDITACIONES DE COMITÉ DE SEGURIDAD Y SALUD OCUPACIONAL DE:
+        		<br />
+        		<br />
+        		LUGAR DE TRABAJO: <strong id="fecha_2"><?=$memo['nombre_lugar']?></strong>
+        		<br />
+        		PROPIEDAD DE: <strong id="fecha"><?=$memo['nombre_institucion']?></strong>
+        	</td>
         </tr>
         <tr>
-        	<td id="fecha" align="right">
-            	<br /><br />
+        	<td id="fecha_2" valign="top">
+            	<br />
+        		FECHA:
+        	</td>
+        	<td id="fecha_2">
+        		<br />
             	<?php 
 					/*$fec=explode("-",$memo['fecha_conformacion']);*/
 					$fec=explode("-",date('Y-m-d'));
@@ -112,46 +146,32 @@
 					}
 					echo $depto.", ".$fec[2]." de ". $mes." de ".$fec[0];
 				?> 
+				<br />
             </td>
         </tr>
   	</table>
-    <p id="memoria">
-    <br /><br />
-    LUGAR DE TRABAJO: <strong id="fecha"><?=$memo['nombre_lugar']?></strong> PROPIEDAD DE: <strong id="fecha"><?=$memo['nombre_institucion']?></strong>
-    <br /><br />
-    TELÉFONO: <?=$memo['telefono_lugar']?>
-    <br />
-    DIRECCIÓN: <?=$memo['direccion_lugar']?>
-    <br />
-    <span style="text-transform: capitalize;"><?=$memo['municipio_lugar']?></span>
-    <br /><br />
-    SEÑOR (A), (ITA):
-    <br />
-    <?=$memo['nombre_empleado']?><br />
-    <?=$memo['cargo_empleado']?><br />
-    PRESENTE
-    <br /><br />
-    Remito Acreditaciones de Comité de Seguridad y Salud Ocupacional, debidamente autorizados por el Ministerio de Trabajo y Previsión Social.
-    <br /><br />
-    Agradeciendo el apoyo para la gestión del mismo, dando a conocer su funcionamiento en su empresa, de acuerdo a metodologías a implementar.
-    <br /><br />
-    Reiteramos nuestras felicitaciones y por la atención a la presente muchas gracias.
-    <br /><br /><br /></p>
-    <table align="center">
-        <tr>
-            <td align="center">
-                <p id="memoria">
-                    Atentamente,
-                </p><br />
-                    <img src="img/firma_jefatura.JPG" /><br />
-                <p id="pie">
-                	<strong>
-                        Ing. Juan Carlos Serrano<br />
-                        Jefe se Sección de Prevención de Riesgos Ocupacionales.
-                    </strong>
-                </p>
-            </td>
-        </tr>
-    </table>
+  	<br />
+  	<span id="fecha_3">Atentamente, solicito firma para Acreditaciones de Comité de la empresa mencionada:</span>
+  	<br /><br />
+  	<table align="center" style="border-collapse:collapse; border: none; width:100%; ">
+  		<tr>
+  			<td align="center" style="border:1px solid #000; padding: 5px;"><strong>No.</strong></td>
+  			<td align="center" style="border:1px solid #000; padding: 5px;"><strong>NOMBRE</strong></td>
+  			<td align="center" style="border:1px solid #000; padding: 5px;"><strong>CARGO EN COMITÉ</strong></td>
+  		</tr>
+  		<?php
+  			$i=0;
+  			foreach($empleados as $val) {
+  				$i++;
+  		?>
+  				<tr>
+		  			<td align="center" style="border:1px solid #000; padding: 5px;"><?=$i?></td>
+		  			<td align="center" style="border:1px solid #000; padding: 5px; text-transform: uppercase;"><?=$val['nombre_empleado']?></td>
+		  			<td align="center" style="border:1px solid #000; padding: 5px; text-transform: uppercase;"><?=$val['cargo_comite']?></td>
+		  		</tr>
+  		<?php
+	        }
+  		?>
+  	</table>
 </body>
 </html>
