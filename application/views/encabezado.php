@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="<?php echo base_url();?>images/ico.ico" type="image/png">
     
-    <title>SRCS - Sistema de Registro de Comités de Seguridad y Salud Ocupacional Acreditados</title>
+    <title>SRCS - Sistema de Registro de Comités de SSO</title>
     
     <link href="<?php echo base_url();?>css/style.default.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/jquery.datatables.css" rel="stylesheet">
