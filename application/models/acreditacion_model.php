@@ -24,7 +24,7 @@ class Acreditacion_model extends CI_Model {
 						AND total_hombres NOT LIKE '' 
 						AND total_mujeres NOT LIKE ''";*/ 
 			/*Muestra todos los lugares de trabajo que el tecnico dijo que necesitaban comite*/
-			$where.=" AND necesita_comite=1";
+			$where.=" AND sac_lugar_trabajo.necesita_comite=1";
 		if($dep!=NULL)
 			$where.=" 	AND id_departamento_pais=".$dep;
 		if($estado_capacitacion!=NULL)
@@ -34,8 +34,6 @@ class Acreditacion_model extends CI_Model {
 					sac_lugar_trabajo.id_lugar_trabajo AS id,
 					CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre
 					FROM sac_lugar_trabajo
-					INNER JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
-					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
 					INNER JOIN sac_institucion ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					LEFT JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					WHERE sac_lugar_trabajo.estado<>0 ".$where;
@@ -57,7 +55,7 @@ class Acreditacion_model extends CI_Model {
 						AND total_hombres NOT LIKE '' 
 						AND total_mujeres NOT LIKE ''";*/
 			/*Muestra todos los lugares de trabajo que el tecnico dijo que necesitaban comite*/
-			$where.=" AND necesita_comite=1";
+			$where.=" AND sac_lugar_trabajo.necesita_comite=1";
 		if($dep!=NULL)
 			$where.=" 	AND id_departamento_pais=".$dep;
 		if($estado_capacitacion!=NULL)

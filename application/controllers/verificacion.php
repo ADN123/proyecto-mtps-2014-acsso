@@ -672,6 +672,7 @@ class Verificacion extends CI_Controller
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}
+			$data['estado_verificacion']=$this->verificacion_model->ver_estados_verificacion();
 			$data['tematicas']=$this->verificacion_model->ver_tematicas();
 			$data['estado_transaccion']=$estado_transaccion;
 			$data['accion_transaccion']=$accion_transaccion;
@@ -706,6 +707,7 @@ class Verificacion extends CI_Controller
 						$data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
 					break;
 			}
+			$data['estado_verificacion']=$this->verificacion_model->ver_estados_verificacion();
 			$this->load->view('verificacion/ingreso_promocion_recargado',$data);
 		}
 		else {

@@ -1185,7 +1185,7 @@ class Promocion extends CI_Controller
 				'hora_final'=>$hora_final,
 				'nombre_recibio'=>$nombre_recibio,
 				'observaciones'=>$observaciones,
-				'necesita_comite'=>$necesita_comite,
+				/*'necesita_comite'=>$necesita_comite,*/
 				'fecha_creacion'=>$fecha_creacion,
 				'id_usuario_crea'=>$id_usuario_crea
 			);
@@ -1215,7 +1215,8 @@ class Promocion extends CI_Controller
 				'telefono'=>$telefono,
 				'correo'=>$correo,
 				'total_hombres'=>$total_hombres,
-				'total_mujeres'=>$total_mujeres,
+				'total_mujeres'=>$total_mujeres,				
+				'necesita_comite'=>$necesita_comite,
 				'fecha_modificacion'=>$fecha_modificacion,
 				'id_usuario_modifica'=>$id_usuario_modifica,
 			);
