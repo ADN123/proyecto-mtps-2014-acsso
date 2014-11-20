@@ -635,6 +635,13 @@ class Verificacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
+	function ver_estados_verificacion()
+	{
+		$sentencia="SELECT id_estado_verificacion AS id, nombre_estado_verificacion AS nombre FROM sac_estado_verificacion";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
 	function guardar_ingreso_tematica($formuInfo)
 	{
 		extract($formuInfo);

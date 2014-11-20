@@ -134,6 +134,20 @@
                                     <textarea data-tip="x" data-min="10" class="form-control" id="observaciones" name="observaciones" ></textarea>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="id_estado_verificacion" class="col-sm-3 control-label">Estado <span class="asterisk">*</span></label>
+                                <div class="col-sm-2">
+                                    <select data-req="true" class="form-control" name="id_estado_verificacion" id="id_estado_verificacion" data-placeholder="[Seleccione..]" >
+                                        <option value=""></option>
+                                        <?php
+                                            foreach($estado_verificacion as $val) {
+                                                echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
               			</div>
                 		<div class="tab-pane" id="ptab2">
                             <table class="table table-hover mb30">
@@ -141,6 +155,8 @@
                                     <tr>
                                         <th class="all">Temática</th>
                                         <th class="desktop tablet-l tablet-p" style="width:150px">Impartida</th>
+                                        <th class="desktop tablet-l tablet-p" style="width:200px">Fecha</th>
+                                        <th class="desktop tablet-l tablet-p" style="width:350px">Facilitador</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -148,7 +164,25 @@
                                         foreach($tematicas as $val) {
                                             echo '<tr><td>'.$val['nombre'].'</td><td><div class="ckbox ckbox-success"><input type="checkbox" class="chk" name="id_tematica[]" id="id_tematica_'.$val['id'].'" value="'.$val['id'].'" ';
                                             if($val['delegado']==1) echo ' checked="checked"';
-                                            echo' /><label for="id_tematica_'.$val['id'].'"></label></div></td></tr>';
+                                            echo' /><label for="id_tematica_'.$val['id'].'"></label></div></td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="input-group">
+                                                                <input data-req="true" data-tip="fec" type="text" class="form-control fechas" id="fecha_capacitacion_'.$val['id'].'" name="fecha_capacitacion[]" readonly="readonly" disabled="disabled" />
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <input type="text" data-req="true" class="form-control" name="facilitador[]" id="facilitador_'.$val['id'].'" disabled="disabled" value=" "/>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>';
                                         }
                                     ?>
                                 </tbody>
@@ -222,6 +256,7 @@
 			$("#ptab2").load(base_url()+"index.php/verificacion/ingreso_promocion_institucion_recargado/0");
 		});
 		$('#fecha_promocion').datepicker({beforeShowDay: $.datepicker.noWeekends, maxDate: '0D'});
+        $('.fechas').datepicker({beforeShowDay: $.datepicker.noWeekends, maxDate: '0D'});
 		$('#timepicker,#timepicker2').timepicker({defaultTIme: false});
 	});
 </script>

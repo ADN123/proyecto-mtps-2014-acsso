@@ -71,6 +71,20 @@
         <textarea data-tip="x" data-min="10" class="form-control" id="observaciones" name="observaciones" ></textarea>
     </div>
 </div>
+
+<div class="form-group">
+    <label for="id_estado_verificacion" class="col-sm-3 control-label">Estado <span class="asterisk">*</span></label>
+    <div class="col-sm-2">
+        <select data-req="true" class="form-control" name="id_estado_verificacion" id="id_estado_verificacion" data-placeholder="[Seleccione..]" >
+            <option value=""></option>
+            <?php
+                foreach($estado_verificacion as $val) {
+                    echo '<option value="'.$val['id'].'">'.$val['nombre'].'</option>';
+                }
+            ?>
+        </select>
+    </div>
+</div>
 <script language="javascript" >
 	$(document).ready(function(){
 		$('#id_empleado').change(function(){

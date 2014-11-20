@@ -421,7 +421,7 @@ class Promocion_model extends CI_Model {
 	{
 		extract($formuInfo);		
 		$sentencia="UPDATE sac_lugar_trabajo SET
-					id_institucion=$id_institucion, id_tipo_lugar_trabajo=$id_tipo_lugar_trabajo, nombre_lugar='$nombre_lugar', direccion_lugar='$direccion_lugar', id_municipio=$id_municipio, nombre_contacto='$nombre_contacto', telefono='$telefono', correo='$correo', total_hombres=$total_hombres, total_mujeres=$total_mujeres, fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica 
+					id_institucion=$id_institucion, id_tipo_lugar_trabajo=$id_tipo_lugar_trabajo, nombre_lugar='$nombre_lugar', direccion_lugar='$direccion_lugar', id_municipio=$id_municipio, nombre_contacto='$nombre_contacto', telefono='$telefono', correo='$correo', total_hombres=$total_hombres, total_mujeres=$total_mujeres, necesita_comite=$necesita_comite,fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica 
 					WHERE id_lugar_trabajo=".$id_lugar_trabajo;
 		$this->db->query($sentencia);
 	}
@@ -504,10 +504,14 @@ class Promocion_model extends CI_Model {
 	function guardar_ingreso_promocion($formuInfo)
 	{
 		extract($formuInfo);
-		$sentencia="INSERT INTO sac_promocion 
+		/*$sentencia="INSERT INTO sac_promocion 
 					(id_programacion_visita,fecha_promocion,hora_inicio,hora_final,nombre_recibio,observaciones,necesita_comite,fecha_creacion,id_usuario_crea)
 					VALUES 
-					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones',$necesita_comite,'$fecha_creacion',$id_usuario_crea)";
+					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones',$necesita_comite,'$fecha_creacion',$id_usuario_crea)";*/
+		$sentencia="INSERT INTO sac_promocion 
+					(id_programacion_visita,fecha_promocion,hora_inicio,hora_final,nombre_recibio,observaciones,fecha_creacion,id_usuario_crea)
+					VALUES 
+					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones','$fecha_creacion',$id_usuario_crea)";
 		$this->db->query($sentencia);
 	}
 	
