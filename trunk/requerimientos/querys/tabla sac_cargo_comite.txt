@@ -33,3 +33,6 @@ ADD COLUMN `id_estado_verificacion`  int(11) NULL AFTER `observaciones`;
 ALTER TABLE `sac_promocion` ADD CONSTRAINT `fk_estado_verificacion_promocion` FOREIGN KEY (`id_estado_verificacion`) REFERENCES `sac_estado_verificacion` (`id_estado_verificacion`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 
+ALTER TABLE `sac_control_visita`
+ADD COLUMN `fecha_capacitacion`  date NOT NULL AFTER `id_tematica`,
+ADD COLUMN `facilitador`  varchar(255) NOT NULL AFTER `fecha_capacitacion`;
