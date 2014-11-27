@@ -245,13 +245,13 @@
 		$('#id_empleado').change(function(){
 			id=$(this).val();
 			$('#cont-institucion').load(base_url()+'index.php/verificacion/institucion_visita/'+id+"/1");
-			$("#ptab2").load(base_url()+"index.php/verificacion/ingreso_promocion_institucion_recargado/0");
+			/*$("#ptab2").load(base_url()+"index.php/verificacion/ingreso_promocion_institucion_recargado/0");*/
 		});
 		
 		$("#id_lugar_trabajo").change(function(){
 			var id=$(this).val();
 			var ids=id.split('***');
-			$("#ptab2").load(base_url()+"index.php/verificacion/ingreso_promocion_institucion_recargado/"+ids[1]);
+			/**$("#ptab2").load(base_url()+"index.php/verificacion/ingreso_promocion_institucion_recargado/"+ids[1]);*/
 		});
 		$("#limpiar").click(function(){
 			$("#ptab1").load(base_url()+"index.php/verificacion/ingreso_promocion_recargado");

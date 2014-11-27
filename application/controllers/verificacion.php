@@ -744,8 +744,12 @@ class Verificacion extends CI_Controller
 			$hora_final=$this->input->post('hora_final');
 			$nombre_recibio=$this->input->post('nombre_recibio');
 			$observaciones=$this->input->post('observaciones');	
+			$id_estado_verificacion=$this->input->post('id_estado_verificacion');	
 			
-			$id_tematica=$this->input->post('id_tematica');	
+			/*$id_tematica=$this->input->post('id_tematica');*/	
+			$id_tematica=$this->input->post('id_tematica_real');
+			$fecha_capacitacion=$this->input->post('fecha_capacitacion');
+			$facilitador=$this->input->post('facilitador');
 			
 			$fecha_creacion=date('Y-m-d H:i:s');
 			$id_usuario_crea=$this->session->userdata('id_usuario');
@@ -767,19 +771,23 @@ class Verificacion extends CI_Controller
 				'hora_final'=>$hora_final,
 				'nombre_recibio'=>$nombre_recibio,
 				'observaciones'=>$observaciones,
+				'id_estado_verificacion'=>$id_estado_verificacion,
 				'fecha_creacion'=>$fecha_creacion,
 				'id_usuario_crea'=>$id_usuario_crea
 			);
-			$this->promocion_model->guardar_ingreso_promocion($formuInfo);
+			$this->verificacion_model->guardar_ingreso_promocion($formuInfo);
 			
 			for($i=0;$i<count($id_tematica);$i++) {
+				$fec=str_replace("/","-",$fecha_capacitacion[$i]);
+				$fecha_capacitacion[$i]=date("Y-m-d", strtotime($fec));
 				$formuInfo = array(
 					'id_programacion_visita'=>$id_programacion_visita,
-					'id_tematica'=>$id_tematica[$i]
+					'id_tematica'=>$id_tematica[$i],
+					'fecha_capacitacion'=>$fecha_capacitacion[$i],
+					'facilitador'=>$facilitador[$i]
 				);
 				$this->verificacion_model->guardar_ingreso_tematica($formuInfo);
 			}
-			
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/verificacion/ingreso/1/".$tr);
