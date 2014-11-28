@@ -714,6 +714,26 @@ class Verificacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+
+	/*
+	*	Nombre: miembros_comite
+	*	Objetivo: Muestra los miembros de un comite
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 28/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function miembros_comite($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$data['empleado_institucion']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,"",1);
+			$this->load->view('acreditacion/miembros_comite',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 	
 	function ingreso_promocion_institucion_recargado($id_institucion=NULL)
 	{
@@ -743,6 +763,7 @@ class Verificacion extends CI_Controller
 			$hora_inicio=$this->input->post('hora_inicio');
 			$hora_final=$this->input->post('hora_final');
 			$nombre_recibio=$this->input->post('nombre_recibio');
+			$id_empleado_institucion=$this->input->post('id_empleado_institucion');	
 			$observaciones=$this->input->post('observaciones');	
 			$id_estado_verificacion=$this->input->post('id_estado_verificacion');	
 			
@@ -763,7 +784,10 @@ class Verificacion extends CI_Controller
 				'id_usuario_modifica'=>$id_usuario_modifica
 			);
 			$this->promocion_model->actualizar_estado_programacion($formuInfo);
-			
+			/*echo "actualizar_estado_programacion<pre>";
+			print_r($formuInfo);
+			echo "</pre>";*/
+
 			$formuInfo = array(
 				'id_programacion_visita'=>$id_programacion_visita,
 				'fecha_promocion'=>$fecha_promocion,
@@ -775,8 +799,12 @@ class Verificacion extends CI_Controller
 				'fecha_creacion'=>$fecha_creacion,
 				'id_usuario_crea'=>$id_usuario_crea
 			);
-			$this->verificacion_model->guardar_ingreso_promocion($formuInfo);
+			$id_promocion=$this->verificacion_model->guardar_ingreso_promocion($formuInfo);
+			/*echo "guardar_ingreso_promocion<pre>";
+			print_r($formuInfo);
+			echo "</pre>";*/
 			
+			/*echo "guardar_ingreso_tematica";*/
 			for($i=0;$i<count($id_tematica);$i++) {
 				$fec=str_replace("/","-",$fecha_capacitacion[$i]);
 				$fecha_capacitacion[$i]=date("Y-m-d", strtotime($fec));
@@ -787,6 +815,21 @@ class Verificacion extends CI_Controller
 					'facilitador'=>$facilitador[$i]
 				);
 				$this->verificacion_model->guardar_ingreso_tematica($formuInfo);
+				/*echo "<pre>";
+				print_r($formuInfo);
+				echo "</pre>";*/
+			}
+
+			/*echo "guardar_ingreso_miembros_entrevistados";*/
+			for($i=0;$i<count($id_empleado_institucion);$i++) {
+				$formuInfo = array(
+					'id_promocion'=>$id_promocion,
+					'id_empleado_institucion'=>$id_empleado_institucion[$i]
+				);
+				$this->verificacion_model->guardar_ingreso_miembros_entrevistados($formuInfo);
+				/*echo "<pre>";
+				print_r($formuInfo);
+				echo "</pre>";*/
 			}
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;

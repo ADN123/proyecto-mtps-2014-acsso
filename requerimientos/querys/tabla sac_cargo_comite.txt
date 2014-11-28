@@ -36,3 +36,12 @@ ALTER TABLE `sac_promocion` ADD CONSTRAINT `fk_estado_verificacion_promocion` FO
 ALTER TABLE `sac_control_visita`
 ADD COLUMN `fecha_capacitacion`  date NOT NULL AFTER `id_tematica`,
 ADD COLUMN `facilitador`  varchar(255) NOT NULL AFTER `fecha_capacitacion`;
+
+CREATE TABLE `sac_miembro_entrevistado` (
+  `id_promocion` int(11) NOT NULL,
+  `id_empleado_institucion` int(11) NOT NULL,
+  KEY `fk_miembros_entrevistados_promocion` (`id_promocion`),
+  KEY `fk_miembros_entrevistados_empleado_institucion` (`id_empleado_institucion`),
+  CONSTRAINT `fk_miembros_entrevistados_promocion` FOREIGN KEY (`id_promocion`) REFERENCES `sac_promocion` (`id_promocion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_miembros_entrevistados_empleado_institucion` FOREIGN KEY (`id_empleado_institucion`) REFERENCES `sac_empleado_institucion` (`id_empleado_institucion`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

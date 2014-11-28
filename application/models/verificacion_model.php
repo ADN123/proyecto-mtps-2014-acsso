@@ -460,6 +460,7 @@ class Verificacion_model extends CI_Model {
 					VALUES 
 					($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones',$id_estado_verificacion,'$fecha_creacion',$id_usuario_crea)";
 		$this->db->query($sentencia);
+		return $this->db->insert_id();
 	}
 	
 	function resultados_instituciones($fecha_inicial,$fecha_final)
@@ -649,6 +650,16 @@ class Verificacion_model extends CI_Model {
 					(id_programacion_visita,id_tematica,fecha_capacitacion,facilitador)
 					VALUES 
 					($id_programacion_visita,$id_tematica,'$fecha_capacitacion','$facilitador')";
+		$query=$this->db->query($sentencia);
+	}
+	
+	function guardar_ingreso_miembros_entrevistados($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="INSERT INTO sac_miembro_entrevistado 
+					(id_promocion,id_empleado_institucion)
+					VALUES 
+					($id_promocion,$id_empleado_institucion)";
 		$query=$this->db->query($sentencia);
 	}
 }

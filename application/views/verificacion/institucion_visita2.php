@@ -13,6 +13,9 @@
 	$("#id_lugar_trabajo").change(function(){
 		var id=$(this).val();
 		var ids=id.split('***');
+		if(id=="")
+			ids[2]=0;
+        $('#multi-s').load(base_url()+'index.php/verificacion/miembros_comite/'+ids[2]);
 		/*$("#ptab2").load(base_url()+"index.php/verificacion/ingreso_promocion_institucion_recargado/"+ids[1]);
 		$("#ptab3").load(base_url()+"index.php/verificacion/ingreso_promocion_lugar_trabajo_recargado/"+ids[2]);*/
 	});

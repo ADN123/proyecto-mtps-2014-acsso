@@ -65,6 +65,15 @@
     </div>
 </div>
 
+<div class="form-group" id="multi-s">
+    <label for="id_empleado_institucion" class="col-sm-3 control-label">Miembros del comité entrevistados <span class="asterisk">*</span></label>
+    <div class="col-sm-6">
+        <select data-req="true" multiple class="form-control" data-placeholder="&nbsp;" name="id_empleado_institucion[]" id="id_empleado_institucion">
+            <option value=""></option>
+        </select>
+    </div>
+</div>
+
 <div class="form-group">
     <label for="observaciones" class="col-sm-3 control-label">Resultado de la verificación </label>
     <div class="col-sm-7">
