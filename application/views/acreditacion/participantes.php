@@ -176,6 +176,15 @@
                                     </select>
                                 </div>
                             </div>
+                            
+                            <div class="form-group" id="empleado_sustituye">
+                                <label for="id_empleado_institucion_sustituye" class="col-sm-3 control-label">Empleado a sustituir <span class="asterisk">*</span></label>
+                                <div class="col-sm-7">
+                                    <select data-req="false" class="form-control" name="id_empleado_institucion_sustituye" id="id_empleado_institucion_sustituye" data-placeholder="[Seleccione..]" disabled="disabled">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                    	</div><!-- tab-content -->
                     
@@ -236,6 +245,19 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
+        $("#id_tipo_inscripcion").change(function(){
+            if($(this).val()==4 && $("#id_lugar_trabajo").val()!="") {
+                $("#id_empleado_institucion_sustituye").attr("disabled",false);
+                $("#id_empleado_institucion_sustituye").data("req",true);
+                $("#id_empleado_institucion_sustituye").trigger("chosen:updated");
+            }
+            else {
+                $("#id_empleado_institucion_sustituye").val("");
+                $("#id_empleado_institucion_sustituye").attr("disabled",true);
+                $("#id_empleado_institucion_sustituye").data("req",false);
+                $("#id_empleado_institucion_sustituye").trigger("chosen:updated");
+            }
+        });
 		$('#fecha_ingreso').datepicker({maxDate: '0D'});
 		$("#limpiar").click(function(){
 			$("#formu").load(base_url()+"index.php/acreditacion/participantes_recargado");
@@ -246,6 +268,8 @@
 			if(id=="")
 				id=0;
 			$('#contenido-tabla').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo/'+id);
+            $('#empleado_sustituye').load(base_url()+'index.php/acreditacion/empleados_lugar_trabajo_sustituyen/'+id);
+            $("#id_tipo_inscripcion").change();
 		});
         $('#resumen_empleados i').click(function(){
             var id=$("#id_lugar_trabajo").val();

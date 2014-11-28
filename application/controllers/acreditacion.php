@@ -83,8 +83,10 @@ class Acreditacion extends CI_Controller
 			$data['cargo_comite']=$this->acreditacion_model->cargo_comite();
 			$data['tipo_representacion']=$this->acreditacion_model->tipo_representacion();
 			$data['tipo_inscripcion']=$this->acreditacion_model->tipo_inscripcion();
-			if($id_empleado_institucion!=NULL)
-				$data['empleado_institucion']=$this->acreditacion_model->empleado_institucion($id_empleado_institucion);			
+			if($id_empleado_institucion!=NULL) {
+				$data['empleado_institucion']=$this->acreditacion_model->empleado_institucion($id_empleado_institucion);	
+				$data['empleados_lugar_trabajo_sustituyen']=$this->acreditacion_model->empleados_lugar_trabajo($data['empleado_institucion']['id_lugar_trabajo'],"",1,$id_empleado_institucion);	
+			}	
 			$this->load->view('acreditacion/participantes_recargado',$data);
 		}
 		else {
@@ -168,6 +170,7 @@ class Acreditacion extends CI_Controller
 			$id_cargo_comite=($this->input->post('id_cargo_comite')!="")?$this->input->post('id_cargo_comite'):'NULL';
 			$id_tipo_inscripcion=$this->input->post('id_tipo_inscripcion');
 			$delegado=($this->input->post('delegado')!="")?$this->input->post('delegado'):'NULL';
+			
 			if($id_tipo_representacion==3)
 				$sindicato='1';
 			else
@@ -176,6 +179,7 @@ class Acreditacion extends CI_Controller
 			if($id_empleado_institucion=="") {
 				$fecha_creacion=date('Y-m-d H:i:s');
 				$id_usuario_crea=$this->session->userdata('id_usuario');
+				$id_empleado_institucion_sustituye=($this->input->post('id_empleado_institucion_sustituye')!="")?$this->input->post('id_empleado_institucion_sustituye'):'NULL';
 				
 				$formuInfo = array(
 					'id_lugar_trabajo'=>$id_lugar_trabajo,
@@ -189,6 +193,7 @@ class Acreditacion extends CI_Controller
 					'delegado'=>$delegado,
 					'sindicato'=>$sindicato,
 					'fecha_ingreso'=>$fecha_ingreso,
+					'id_empleado_institucion_sustituye'=>$id_empleado_institucion_sustituye,
 					'fecha_creacion'=>$fecha_creacion,
 					'id_usuario_crea'=>$id_usuario_crea
 				);
@@ -198,6 +203,7 @@ class Acreditacion extends CI_Controller
 			else {
 				$fecha_modificacion=date('Y-m-d H:i:s');
 				$id_usuario_modifica=$this->session->userdata('id_usuario');
+				$id_empleado_institucion_sustituye=($this->input->post('id_empleado_institucion_sustituye')!="")?$this->input->post('id_empleado_institucion_sustituye'):'id_empleado_institucion_sustituye';
 				
 				$formuInfo = array(
 					'id_empleado_institucion'=>$id_empleado_institucion,
@@ -212,11 +218,24 @@ class Acreditacion extends CI_Controller
 					'delegado'=>$delegado,
 					'sindicato'=>$sindicato,
 					'fecha_ingreso'=>$fecha_ingreso,
+					'id_empleado_institucion_sustituye'=>$id_empleado_institucion_sustituye,
 					'fecha_modificacion'=>$fecha_modificacion,
 					'id_usuario_modifica'=>$id_usuario_modifica
 				);
 				$this->acreditacion_model->actualizar_participante($formuInfo);
 				$tipo=2;
+			}
+
+			if ($id_empleado_institucion_sustituye!='NULL' && $id_empleado_institucion_sustituye!='id_empleado_institucion_sustituye') {
+				$fecha_modificacion=date('Y-m-d H:i:s');
+				$id_usuario_modifica=$this->session->userdata('id_usuario');
+
+				$formuInfo = array(
+					'id_empleado_institucion'=>$id_empleado_institucion_sustituye,
+					'fecha_modificacion'=>$fecha_modificacion,
+					'id_usuario_modifica'=>$id_usuario_modifica,
+				);
+				$this->acreditacion_model->eliminar_participante($formuInfo);
 			}
 			
 			$this->db->trans_complete();
@@ -242,6 +261,26 @@ class Acreditacion extends CI_Controller
 		if($data['id_permiso']==3 || $data['id_permiso']==4){
 			$data['empleados_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo);
 			$this->load->view('acreditacion/participantes_lugar_trabajo',$data);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	/*
+	*	Nombre: empleados_lugar_trabajo_sustituyen
+	*	Objetivo: Muestra todos los lugares de trabajo de una institucion para sustitución
+	*	Hecha por: Leonel
+	*	Modificada por: Leonel
+	*	Última Modificación: 27/11/2014
+	*	Observaciones: Ninguna.
+	*/
+	function empleados_lugar_trabajo_sustituyen($id_lugar_trabajo=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dparticipantes); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4){
+			$data['empleados_lugar_trabajo_sustituyen']=$this->acreditacion_model->empleados_lugar_trabajo($id_lugar_trabajo,"",1);
+			$this->load->view('acreditacion/empleados_lugar_trabajo_sustituyen',$data);
 		}
 		else {
 			pantalla_error();

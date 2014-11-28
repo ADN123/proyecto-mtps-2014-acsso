@@ -140,13 +140,13 @@ class Acreditacion_model extends CI_Model {
 	{
 		extract($formuInfo);
 		$sentencia="INSERT INTO sac_empleado_institucion
-					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, id_cargo_comite, fecha_creacion, id_usuario_crea, delegado, sindicato, fecha_ingreso, id_genero) 
+					(id_lugar_trabajo, id_tipo_representacion, nombre_empleado, dui_empleado, cargo_empleado, id_tipo_inscripcion, id_cargo_comite, fecha_creacion, id_usuario_crea, delegado, sindicato, fecha_ingreso, id_genero,id_empleado_institucion_sustituye) 
 					VALUES 
-					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, $id_cargo_comite, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato, '$fecha_ingreso', $id_genero)";
+					($id_lugar_trabajo, $id_tipo_representacion, '$nombre_empleado', '$dui_empleado', '$cargo_empleado', $id_tipo_inscripcion, $id_cargo_comite, '$fecha_creacion', $id_usuario_crea, $delegado, $sindicato, '$fecha_ingreso', $id_genero, $id_empleado_institucion_sustituye)";
 		$this->db->query($sentencia);
 	}
 	
-	function empleados_lugar_trabajo($id_lugar_trabajo=NULL, $empleados="")
+	function empleados_lugar_trabajo($id_lugar_trabajo=NULL, $empleados="",$estado=1,$id_empleado_institucion=NULL)
 	{
 		$where="";
 		if($id_lugar_trabajo!=NULL)
@@ -157,8 +157,12 @@ class Acreditacion_model extends CI_Model {
 				$where.=" AND id_empleado_institucion <> ".$emp[$i];
 			}
 		}
+		if($estado==1)
+			$where.=" AND estado_empleado=1";
+		if($id_empleado_institucion!=NULL)
+			$where.=" AND id_empleado_institucion<>".$id_empleado_institucion;
 		/*$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 AND id_tipo_inscripcion<>2 ".$where;*/
-		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE estado_empleado=1 ".$where;
+		$sentencia="SELECT id_empleado_institucion AS id, nombre_empleado AS nombre, delegado, sindicato FROM sac_empleado_institucion WHERE TRUE ".$where;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -232,6 +236,7 @@ class Acreditacion_model extends CI_Model {
 					delegado=$delegado, 
 					sindicato=$sindicato,
 					fecha_ingreso='$fecha_ingreso',
+					id_empleado_institucion_sustituye=$id_empleado_institucion_sustituye,
 					id_genero=$id_genero
 					WHERE id_empleado_institucion=".$id_empleado_institucion;
 		$this->db->query($sentencia);
