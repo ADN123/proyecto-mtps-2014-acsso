@@ -77,13 +77,13 @@
                             </div>
                             
                             <div class="form-group" id="multi-s">
-                                <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <span class="asterisk">*</span></label>
+                                <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <?php echo $tecnico['id'];?><span class="asterisk">*</span></label>
                                 <div class="col-sm-6">
                                     <select data-req="true" multiple class="form-control" data-placeholder="&nbsp;" name="id_empleado[]" id="id_empleado">
                                         <option value=""></option>
                                         <?php
                                             foreach($tecnico as $val) {
-                                                echo '<option value="'.$val['id'].'" '.$val['activo'].'>'.ucwords($val['nombre']).'</option>';
+                                                echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
                                             }
                                         ?>
                                     </select>
