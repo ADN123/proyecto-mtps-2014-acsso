@@ -337,10 +337,7 @@ class Acreditacion extends CI_Controller
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep,1,3);
-					$data['tecnico']=array(
-						"id"=>$id_seccion['id_empleado'],
-						"nombre"=>$id_seccion['id_empleado']
-					);
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,NULL,NULL,$id_seccion['id_empleado']);
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep,1);
 					break;
 				case 3:
@@ -1101,10 +1098,14 @@ class Acreditacion extends CI_Controller
 	function lista_tecnicos_disponibles($fecha=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			if($fecha!=NULL)
 				$fecha=date("Y-m-d", strtotime($fecha));
 			switch($data['id_permiso']) {
+				case 1:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,NULL,$fecha,$id_seccion['id_empleado']);
+					break;
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,1,$fecha);
 					break;

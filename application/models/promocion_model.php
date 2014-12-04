@@ -131,7 +131,7 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function mostrar_tecnicos_disponibles_por_dia($id_seccion=NULL,$ss=NULL,$fecha=NULL,$id_capacitacion=NULL)
+	function mostrar_tecnicos_disponibles_por_dia($id_seccion=NULL,$ss=NULL,$fecha=NULL,$id_capacitacion=NULL,$id_empleado=NULL)
 	{
 		$where="";
 		if($id_seccion!=NULL && $ss!=NULL) {
@@ -140,6 +140,9 @@ class Promocion_model extends CI_Model {
 				 	$where.=" AND id_seccion<>".$this->secciones[$i];
 			else
 				$where.=" AND id_seccion=".$id_seccion;
+		}
+		if ($id_empleado!=NULL) {
+			$where.=" AND tcm_empleado.id_empleado=".$id_empleado;
 		}
 		$w="";
 		if($fecha==NULL)
@@ -170,6 +173,7 @@ class Promocion_model extends CI_Model {
 					LEFT JOIN sac_capacitador ON sac_capacitador.id_empleado = tcm_empleado.id_empleado
 					LEFT JOIN sac_capacitacion ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
 					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') ".$where;
+		echo "<br><br><br><br><br><br><br><br><br><br><br><br>".$sentencia;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}

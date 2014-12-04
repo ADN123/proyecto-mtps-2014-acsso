@@ -77,7 +77,7 @@
                             </div>
                             
                             <div class="form-group" id="multi-s">
-                                <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <?php echo $tecnico['id'];?><span class="asterisk">*</span></label>
+                                <label for="id_empleado" class="col-sm-3 control-label">Técnico(s) <span class="asterisk">*</span></label>
                                 <div class="col-sm-6">
                                     <select data-req="true" multiple class="form-control" data-placeholder="&nbsp;" name="id_empleado[]" id="id_empleado">
                                         <option value=""></option>
@@ -219,7 +219,15 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
-		$('#fecha_capacitacion').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
+		$('#fecha_capacitacion').datepicker({
+			beforeShowDay: $.datepicker.noWeekends, 
+			minDate: '0D',
+            disabledDates: [
+                new Date(2014, 12, 10),
+                "22/12/2014",
+                "2014-12-10"
+            ]
+		});
 		$('#fecha_capacitacion').change(function(){
 			var fecha = $(this).val();
 			fecha = fecha.replace("/","-");
