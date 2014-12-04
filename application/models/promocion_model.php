@@ -523,7 +523,7 @@ class Promocion_model extends CI_Model {
 	{
 		$sentencia="SELECT
 					sac_promocion.id_promocion,
-					LOWER(CONCAT_WS(', ',org_departamento.departamento,org_municipio.municipio)) AS ubicacion,
+					LOWER(CONCAT_WS(', ',sac_lugar_trabajo.direccion_lugar, org_departamento.departamento,org_municipio.municipio)) AS ubicacion,
 					CONCAT_WS(' - ',sac_institucion.nombre_institucion,sac_lugar_trabajo.nombre_lugar) AS institucion,
 					sac_sector_institucion.nombre_sector,
 					sac_lugar_trabajo.total_hombres,
@@ -540,7 +540,7 @@ class Promocion_model extends CI_Model {
 					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
 					INNER JOIN sac_sector_institucion ON sac_institucion.id_sector = sac_sector_institucion.id_sector
 					INNER JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
-					WHERE sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'";
+					WHERE sac_programacion_visita.estado_programacion<=2 AND sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}

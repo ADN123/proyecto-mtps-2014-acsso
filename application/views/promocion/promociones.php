@@ -37,7 +37,7 @@
                 	<div class="col-md-8">
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="1" id="ins" checked />
-                        	<label for="ins">Establecimientos</label>
+                        	<label for="ins">Lugares de trabajo</label>
                       	</div>
                       	<div class="rdio rdio-success">
                         	<input type="radio" name="radio" value="2" id="tec" />
