@@ -22,8 +22,8 @@ if($exportacion==3) {
                         MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL<br />
                         DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL Y EMPLEO<br />
                         DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL<br />
-                        SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br />
-                        REPORTE DE PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO
+                        SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br /><br />
+                        PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO
                     </strong>
                 </th>
                 <th align="right">
@@ -50,7 +50,7 @@ if($exportacion==3) {
 					}
 				?>
                	<th style="<?php echo $css;?>" width="80">FECHA</th>
-                <th style="<?php echo $css;?>" width="100">UBICACION</th>
+                <th style="<?php echo $css;?>" width="100">DIRECCIÓN COMPLETA</th>
                 <th style="<?php echo $css;?>" width="200">LUGAR DE TRABAJO</th>
                 <th style="<?php echo $css;?>" width="50">SECTOR</th>
                 <th style="<?php echo $css;?>" width="60">HOMBRES</th>
@@ -67,7 +67,7 @@ if($exportacion==3) {
         <thead>
         	<tr>
                	<th class="desktop">FECHA DE PROMOCION</th>
-                <th class="none">UBICACION</th>
+                <th class="none">DIRECCIÓN COMPLETA</th>
                 <th class="all">LUGAR DE TRABAJO</th>
                 <th class="none">SECTOR</th>
                 <th class="none">HOMBRES</th>

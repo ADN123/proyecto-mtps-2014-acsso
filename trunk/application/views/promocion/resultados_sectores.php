@@ -22,8 +22,8 @@ if($exportacion==3) {
                         MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL<br />
                         DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL Y EMPLEO<br />
                         DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL<br />
-                        SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br />
-                        REPORTE DE PROMOCIONES POR SECTOR ECONÓMICO
+                        SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br /><br />
+                        PROMOCIONES POR SECTOR ECONÓMICO
                     </strong>
                 </th>
                 <th align="right">
