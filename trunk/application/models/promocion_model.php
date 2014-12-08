@@ -541,6 +541,34 @@ class Promocion_model extends CI_Model {
 					INNER JOIN sac_sector_institucion ON sac_institucion.id_sector = sac_sector_institucion.id_sector
 					INNER JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
 					WHERE sac_programacion_visita.estado_programacion<=2 AND sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'";
+		
+		/*********************************************************************/
+		/**************ESTE ES EL NUEVO QUERY DE LAS PROMOCIONES**************/
+		/*********************************************************************/
+
+		/*$sentencia="SELECT 
+					@s:=@s+1 numero, 
+					DATE_FORMAT(RP.fecha_promocion, '%d/%m/%y') AS fecha_promocion,
+					DATE_FORMAT(RP.hora_inicio,'%h:%i %p') AS hora_promocion,
+					CONCAT_WS(' - ',RP.nombre_institucion,RP.nombre_lugar) AS nombre_lugar,
+					LOWER(CONCAT_WS(', ',RP.direccion_lugar, RP.municipio,RP.departamento)) AS direccion_lugar,
+					RP.nombre_clasificacion,
+					RP.nombre_tipo,
+					RP.nombre_representante,
+					(RP.total_hombres+RP.total_mujeres) AS total_empleados,
+					CASE
+						WHEN RP.sindicato=1 THEN 'Sí' ELSE 'No' 
+					END AS posee_sindicato,
+					RP.nombre_contacto,
+					RP.telefono,
+					RP.correo,
+					RP.observaciones,
+					CASE
+						WHEN RP.necesita_comite=1 THEN 'Sí' ELSE 'No' 
+					END AS necesita_comite
+					FROM sac_resultado_promocion AS RP, (SELECT @s:=0) AS S
+					WHERE RP.id_promocion IS NOT NULL AND RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
+					ORDER BY RP.fecha_promocion ASC";*/
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
