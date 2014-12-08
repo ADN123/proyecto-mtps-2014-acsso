@@ -551,7 +551,7 @@ class Promocion_model extends CI_Model {
 					DATE_FORMAT(RP.fecha_promocion, '%d/%m/%y') AS fecha_promocion,
 					DATE_FORMAT(RP.hora_inicio,'%h:%i %p') AS hora_promocion,
 					CONCAT_WS(' - ',RP.nombre_institucion,RP.nombre_lugar) AS nombre_lugar,
-					LOWER(CONCAT_WS(', ',RP.direccion_lugar, RP.municipio,RP.departamento)) AS direccion_lugar,
+					CONCAT_WS(', ',RP.direccion_lugar, LOWER(RP.municipio),LOWER(RP.departamento)) AS direccion_lugar,
 					RP.nombre_clasificacion,
 					RP.nombre_tipo,
 					RP.nombre_representante,
