@@ -593,5 +593,19 @@ class Acreditacion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
+
+
+	/*
+SELECT 
+@s:=@s+1 numero,
+DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%y') AS fecha_capacitacion,
+CONCAT_WS(' - ',RC.nombre_institucion,RC.nombre_lugar) AS nombre_lugar,
+CONCAT_WS(', ',RC.direccion_lugar, LOWER(RC.municipio),LOWER(RC.departamento)) AS direccion_lugar,
+COUNT(*),
+(RC.total_hombres+RC.total_mujeres) AS total_empleados
+FROM sac_resultado_capacitacion AS RC
+GROUP BY RC.id_lugar_trabajo
+HAVING RC.asistio_empleado=1
+	*/
 }
 ?>
