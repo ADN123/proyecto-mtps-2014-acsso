@@ -62,7 +62,7 @@
                         	<label for="pan">Pantalla</label>
                       	</div>
                       	<div class="rdio rdio-danger">
-                        	<input type="radio" name="radio2" value="2" id="pdf" disabled />
+                        	<input type="radio" name="radio2" value="2" id="pdf" />
                         	<label for="pdf">PDF</label>
                       	</div>
                       	<div class="rdio rdio-danger">
@@ -105,10 +105,10 @@
 				var f2=String($("#fecha_final").val());
 				f2=f2.replace(/\//gi,"-");
 				var rep=$('input:radio[name=radio]:checked').val();
-				window.open(base_url()+'index.php/promocion/resultados/'+f1+'/'+f2+'/'+rep+'/'+ex);
+				window.open(base_url()+'index.php/acreditacion/resultados/'+f1+'/'+f2+'/'+rep+'/'+ex);
 			}
 			else
-				ajax_html(base_url()+'index.php/promocion/resultados', $('#cont-resultados'), "", $('#formu').serialize())
+				ajax_html(base_url()+'index.php/acreditacion/resultados', $('#cont-resultados'), "", $('#formu').serialize())
 		});
 	});
 </script>

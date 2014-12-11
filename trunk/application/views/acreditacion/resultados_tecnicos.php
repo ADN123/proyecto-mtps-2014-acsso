@@ -14,7 +14,7 @@ if($exportacion==3) {
     <table align="center" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
     	 <thead>
             <tr>
-                <th align="left" id="imagen" height="110" width="180" colspan="2">
+                <th align="left" id="imagen" height="110" colspan="2">
                     <img src="<?=base_url()?>img/mtps_report.jpg" />
                 </th>
                 <th align="center">
@@ -23,7 +23,7 @@ if($exportacion==3) {
                         DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL Y EMPLEO<br />
                         DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL<br />
                         SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br /><br />
-                        PROMOCIONES POR SECTOR ECONÓMICO
+                        CAPACITACIONES REALIZADAS POR TÉCNICO EDUCADOR
                     </strong>
                 </th>
                 <th align="right">
@@ -31,7 +31,7 @@ if($exportacion==3) {
                 </th>
             </tr>
             <tr>
-            	<th colspan="3" align="center">&nbsp;</th>
+            	<th colspan="4" align="center">&nbsp;</th>
             </tr>
 <?php
 		}
@@ -49,9 +49,10 @@ if($exportacion==3) {
 						$css='background-color: #CCC; border: 1px solid #CCC;';
 					}
 				?>
-               	<th style="<?php echo $css;?>" width="25" valign="middle">N°</th>
-                <th colspan="2" style="<?php echo $css;?>" width="520">CASIFICACIÓN</th>
-                <th style="<?php echo $css;?>" width="100">TOTAL</th>
+                <th style="<?php echo $css;?>" width="25" valign="middle">N°</th>
+                <th style="<?php echo $css;?>" width="200" valign="middle">SECCIÓN</th>
+                <th style="<?php echo $css;?>" width="340" valign="middle">TÉCNICO EDUCADOR</th>
+                <th style="<?php echo $css;?>" width="100" valign="middle">TOTAL</th>
             </tr>
         </thead>
 <?php 
@@ -61,8 +62,9 @@ if($exportacion==3) {
     <table class="display table responsive no-wrap" style="width: 100%;">
         <thead>
             <tr>
-               	<th class="all" width="50">N°</th>
-                <th class="all">CASIFICACIÓN</th>
+                <th class="all" width="50">N°</th>
+                <th class="desktop">SECCIÓN</th>
+                <th class="all">TÉCNICO EDUCADOR</th>
                 <th class="desktop tablet-l tablet-p" style="width:95px;">TOTAL</th>
             </tr>
         </thead>
@@ -72,17 +74,17 @@ if($exportacion==3) {
         <tbody>
             <?php
                 foreach($info as $val) {
+					
 			?>
             	<tr>
                 	<?php
 						$css="";
-						$cs="";
                         if($exportacion==2 || $exportacion==3) {
 							$css='border: 1px solid #CCC;';
-							$cs='colspan="2"';
                         }
                     ?>
-                    <td <?php echo $cs;?> valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['seccion'])?></td>
                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['nombre'])?></td>
                 	<td valign="middle" style="<?php echo $css;?>" align="right"><?php echo $val['total']?></td>
                 </tr>

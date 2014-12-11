@@ -521,7 +521,7 @@ class Promocion_model extends CI_Model {
 	
 	function resultados_instituciones($fecha_inicial,$fecha_final)
 	{
-		$sentencia="SELECT
+		/*$sentencia="SELECT
 					sac_promocion.id_promocion,
 					LOWER(CONCAT_WS(', ',sac_lugar_trabajo.direccion_lugar, org_departamento.departamento,org_municipio.municipio)) AS ubicacion,
 					CONCAT_WS(' - ',sac_institucion.nombre_institucion,sac_lugar_trabajo.nombre_lugar) AS institucion,
@@ -540,15 +540,15 @@ class Promocion_model extends CI_Model {
 					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
 					INNER JOIN sac_sector_institucion ON sac_institucion.id_sector = sac_sector_institucion.id_sector
 					INNER JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
-					WHERE sac_programacion_visita.estado_programacion<=2 AND sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'";
+					WHERE sac_programacion_visita.estado_programacion<=2 AND sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'";*/
 		
 		/*********************************************************************/
 		/**************ESTE ES EL NUEVO QUERY DE LAS PROMOCIONES**************/
 		/*********************************************************************/
 
-		/*$sentencia="SELECT 
-					@s:=@s+1 numero, 
-					DATE_FORMAT(RP.fecha_promocion, '%d/%m/%y') AS fecha_promocion,
+		$sentencia="SELECT 
+					@s:=@s+1 AS numero, 
+					DATE_FORMAT(RP.fecha_promocion, '%d/%m/%Y') AS fecha_promocion,
 					DATE_FORMAT(RP.hora_inicio,'%h:%i %p') AS hora_promocion,
 					CONCAT_WS(' - ',RP.nombre_institucion,RP.nombre_lugar) AS nombre_lugar,
 					CONCAT_WS(', ',RP.direccion_lugar, LOWER(RP.municipio),LOWER(RP.departamento)) AS direccion_lugar,
@@ -568,14 +568,14 @@ class Promocion_model extends CI_Model {
 					END AS necesita_comite
 					FROM sac_resultado_promocion AS RP, (SELECT @s:=0) AS S
 					WHERE RP.id_promocion IS NOT NULL AND RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
-					ORDER BY RP.fecha_promocion ASC";*/
+					ORDER BY RP.fecha_promocion ASC";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
 	
 	function resultados_tecnicos($fecha_inicial,$fecha_final)
 	{
-		$sentencia="SELECT
+		/*$sentencia="SELECT
 					tcm_empleado.seccion,
 					tcm_empleado.id_seccion,
 					tcm_empleado.nombre,
@@ -585,14 +585,29 @@ class Promocion_model extends CI_Model {
 					LEFT JOIN sac_programacion_visita ON tcm_empleado.id_empleado = sac_programacion_visita.id_empleado
 					LEFT JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
 					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') AND (sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final' OR sac_promocion.fecha_promocion IS NULL)
-					GROUP BY tcm_empleado.id_empleado, tcm_empleado.nombre";
+					GROUP BY tcm_empleado.id_empleado, tcm_empleado.nombre";*/
+		
+		/*********************************************************************/
+		/**************ESTE ES EL NUEVO QUERY DE LAS PROMOCIONES**************/
+		/*********************************************************************/
+		
+		$sentencia="SELECT
+					@s:=@s+1 AS numero,
+					RP.seccion,
+					RP.nombre_empleado AS nombre,
+					COUNT(RP.id_promocion) AS total
+					FROM sac_resultado_promocion AS RP, (SELECT @s:=0) AS S
+					WHERE RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
+					GROUP BY RP.id_empleado
+					ORDER BY numero ASC";
+		
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
 
 	function resultados_sectores($fecha_inicial,$fecha_final)
 	{
-		$sentencia="SELECT
+		/*$sentencia="SELECT
 					sac_clasificacion_institucion.nombre_clasificacion AS nombre,
 					COUNT(*) AS total
 					FROM
@@ -602,7 +617,20 @@ class Promocion_model extends CI_Model {
 					INNER JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN sac_promocion ON sac_promocion.id_programacion_visita = sac_programacion_visita.id_programacion_visita
 					WHERE sac_promocion.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
-					GROUP BY sac_clasificacion_institucion.nombre_clasificacion";
+					GROUP BY sac_clasificacion_institucion.nombre_clasificacion";*/
+		
+		/*********************************************************************/
+		/**************ESTE ES EL NUEVO QUERY DE LAS PROMOCIONES**************/
+		/*********************************************************************/
+		
+		$sentencia="SELECT
+					@s:=@s+1 AS numero,
+					RP.nombre_clasificacion AS nombre,
+					COUNT(RP.id_promocion) AS total
+					FROM sac_resultado_promocion AS RP, (SELECT @s:=0) AS S
+					WHERE RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
+					GROUP BY RP.id_clasificacion
+					ORDER BY numero ASC";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}

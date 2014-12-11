@@ -1249,7 +1249,7 @@ class Promocion extends CI_Controller
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_promociones); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
-			if($fecha_inicial==NULL) {
+			if($fecha_iniciale==NULL) {
 				$fec=str_replace("/","-",$this->input->post('fecha_inicial'));
 				$fecha_inicial=date("Y-m-d", strtotime($fec));
 			}
@@ -1275,17 +1275,17 @@ class Promocion extends CI_Controller
 				case 1:
 					$data['info']=$this->promocion_model->resultados_instituciones($fecha_inicial,$fecha_final);
 					$data['nombre']="Instituciones ".date('d-m-Y hisa');
-					if($data['exportacion']!=2)
+					if($data['exportacion']!=2) {
 						$this->load->view('promocion/resultados_instituciones',$data);
-					else {
+					}
+					else {						
 						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
 						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
 						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
-						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
 						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 						
 						$html = $this->load->view('promocion/resultados_instituciones.php', $data, true);
-						$data_cab['titulo']="REPORTE DE PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO";
+						$data_cab['titulo']="PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO";
 						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
 						$this->mpdf->WriteHTML($html,2);
 						$this->mpdf->Output(); /*Salida del pdf*/
@@ -1304,7 +1304,7 @@ class Promocion extends CI_Controller
 						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 						
 						$html = $this->load->view('promocion/resultados_tecnicos.php', $data, true);
-						$data_cab['titulo']="REPORTE DE PROMOCIONES REALIZADAS POR TÉCNICO EDUCADOR";
+						$data_cab['titulo']="PROMOCIONES REALIZADAS POR TÉCNICO EDUCADOR";
 						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
 						$this->mpdf->WriteHTML($html,2);
 						$this->mpdf->Output(); /*Salida del pdf*/
@@ -1323,7 +1323,7 @@ class Promocion extends CI_Controller
 						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 						
 						$html = $this->load->view('promocion/resultados_sectores.php', $data, true);
-						$data_cab['titulo']="REPORTE DE PROMOCIONES POR SECTOR ECONÓMICO";
+						$data_cab['titulo']="PROMOCIONES POR SECTOR ECONÓMICO";
 						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
 						$this->mpdf->WriteHTML($html,2);
 						$this->mpdf->Output(); /*Salida del pdf*/
