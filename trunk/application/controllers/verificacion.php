@@ -839,5 +839,115 @@ class Verificacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+
+	function verificaciones()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_verificaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			
+			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
+			$data['municipio']=$this->promocion_model->mostrar_municipio();
+			pantalla('verificacion/verificaciones',$data,Dreportes_verificaciones);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function resultados($fecha_iniciale=NULL,$fecha_finale=NULL,$reportee=NULL,$exportacione=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_verificaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			if($fecha_iniciale==NULL) {
+				$fec=str_replace("/","-",$this->input->post('fecha_inicial'));
+				$fecha_inicial=date("Y-m-d", strtotime($fec));
+			}
+			else {
+				$fecha_inicial=date("Y-m-d", strtotime($fecha_iniciale));
+			}
+			if($fecha_finale==NULL) {
+				$fec=str_replace("/","-",$this->input->post('fecha_final'));
+				$fecha_final=date("Y-m-d", strtotime($fec));
+			}
+			else {
+				$fecha_final=date("Y-m-d", strtotime($fecha_finale));
+			}
+			if($reportee==NULL)
+				$reporte=$this->input->post('radio');
+			else
+				$reporte=$reportee;
+			if($exportacione==NULL)
+				$data['exportacion']=$this->input->post('radio2');
+			else
+				$data['exportacion']=$exportacione;
+			$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+			if($data['id_permiso']==4)
+				$id_departamento=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+			else
+				$id_departamento=NULL;
+			switch($reporte) {
+				case 1:
+					$data['info']=$this->verificacion_model->resultados_instituciones($fecha_inicial,$fecha_final,$id_departamento);
+					$data['nombre']="Instituciones ".date('d-m-Y hisa');
+					if($data['exportacion']!=2) {
+						$this->load->view('verificacion/resultados_instituciones',$data);
+					}
+					else {						
+						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('verificacion/resultados_instituciones.php', $data, true);
+						$data_cab['titulo']="VERIFICACIONES REALIZADAS POR LUGAR DE TRABAJO";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
+					break;
+				case 2:
+					$data['info']=$this->verificacion_model->resultados_tecnicos($fecha_inicial,$fecha_final,$id_departamento);
+					$data['nombre']="Técnicos ".date('d-m-Y hisa');
+					if($data['exportacion']!=2)
+						$this->load->view('verificacion/resultados_tecnicos',$data);
+					else {
+						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('verificacion/resultados_tecnicos.php', $data, true);
+						$data_cab['titulo']="VERIFICACIONES REALIZADAS POR TÉCNICO EDUCADOR";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
+					break;
+				case 3:
+					$data['info']=$this->verificacion_model->resultados_otros($fecha_inicial,$fecha_final,$id_departamento);
+					$data['nombre']="Sectores ".date('d-m-Y hisa');
+					if($data['exportacion']!=2)
+						$this->load->view('verificacion/resultados_otros',$data);
+					else {
+						$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('verificacion/resultados_otros.php', $data, true);
+						$data_cab['titulo']="VERIFICACIONES POR SECTOR ECONÓMICO";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
+					break;
+			}
+		}
+		else {
+			pantalla_error();
+		}
+	}
 }
 ?>
