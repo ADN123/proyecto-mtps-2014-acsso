@@ -69,8 +69,8 @@ if($exportacion==3) {
         <thead>
         	<tr>
                	<th class="all" width="50">N°</th>
-               	<th class="desktop">FECHA DE PROMOCIÓN</th>
-               	<th class="none">HORA DE PROMOCIÓN</th>
+               	<th class="desktop">FECHA DE VERIFICACIÓN</th>
+               	<th class="none">HORA DE VERIFICACIÓN</th>
                 <th class="all">LUGAR DE TRABAJO</th>
                 <th class="none">DIRECCIÓN COMPLETA</th>
                 <th class="none">ATENDIÓ</th>
