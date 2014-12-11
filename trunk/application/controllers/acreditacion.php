@@ -1177,9 +1177,14 @@ class Acreditacion extends CI_Controller
 				$data['exportacion']=$this->input->post('radio2');
 			else
 				$data['exportacion']=$exportacione;
+			$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+			if($data['id_permiso']==4)
+				$id_departamento=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+			else
+				$id_departamento=NULL;
 			switch($reporte) {
 				case 1:
-					$data['info']=$this->acreditacion_model->resultados_comites($fecha_inicial,$fecha_final);
+					$data['info']=$this->acreditacion_model->resultados_comites($fecha_inicial,$fecha_final,$id_departamento);
 					$data['nombre']="Comites ".date('d-m-Y hisa');
 					if($data['exportacion']!=2) {
 						$this->load->view('acreditacion/resultados_comites',$data);
@@ -1198,7 +1203,7 @@ class Acreditacion extends CI_Controller
 					}
 					break;
 				case 2:
-					$data['info']=$this->acreditacion_model->resultados_tecnicos($fecha_inicial,$fecha_final);
+					$data['info']=$this->acreditacion_model->resultados_tecnicos($fecha_inicial,$fecha_final,$id_departamento);
 					$data['nombre']="Técnicos ".date('d-m-Y hisa');
 					if($data['exportacion']!=2)
 						$this->load->view('acreditacion/resultados_tecnicos',$data);
@@ -1217,7 +1222,7 @@ class Acreditacion extends CI_Controller
 					}
 					break;
 				case 3:
-					$data['info']=$this->acreditacion_model->resultados_trabajadores_capacitados($fecha_inicial,$fecha_final);
+					$data['info']=$this->acreditacion_model->resultados_trabajadores_capacitados($fecha_inicial,$fecha_final,$id_departamento);
 					$data['nombre']="Trabajadores Capacitados ".date('d-m-Y hisa');
 					if($data['exportacion']!=2)
 						$this->load->view('acreditacion/resultados_trabajadores_capacitados',$data);

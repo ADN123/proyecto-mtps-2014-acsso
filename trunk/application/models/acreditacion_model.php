@@ -594,8 +594,12 @@ class Acreditacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function resultados_comites($fecha_inicial,$fecha_final)
+	function resultados_comites($fecha_inicial,$fecha_final,$id_departamento=NULL)
 	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RC.id_departamento=".$id_departamento;
+		}
 		$sentencia="SELECT 
 					@s:=@s+1 numero,
 					DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%Y') AS fecha_capacitacion,
@@ -609,30 +613,38 @@ class Acreditacion_model extends CI_Model {
 						ELSE RC.nombre_lugar_capacitacion
 					END AS lugar_capacitacion
 					FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
-					WHERE RC.asistio_empleado=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+					WHERE RC.asistio_empleado=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'".$where."
 					GROUP BY RC.id_lugar_trabajo
 					ORDER BY numero ASC";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
 	
-	function resultados_tecnicos($fecha_inicial,$fecha_final)
+	function resultados_tecnicos($fecha_inicial,$fecha_final,$id_departamento=NULL)
 	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RC.id_departamento=".$id_departamento;
+		}
 		$sentencia="SELECT 
 					@s:=@s+1 numero,
 					RC.tecnico_educador AS nombre,
 					RC.seccion,
 					COUNT(DISTINCT RC.id_capacitacion) AS total
 					FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
-					WHERE RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+					WHERE RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'".$where."
 					GROUP BY RC.id_empleado
 					ORDER BY numero ASC";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
 	
-	function resultados_trabajadores_capacitados($fecha_inicial,$fecha_final)
+	function resultados_trabajadores_capacitados($fecha_inicial,$fecha_final,$id_departamento=NULL)
 	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RC.id_departamento=".$id_departamento;
+		}
 		$sentencia="SELECT
 					@s:=@s+1 numero,
 					RC.dui_empleado,
@@ -646,7 +658,7 @@ class Acreditacion_model extends CI_Model {
 					CONCAT_WS(' - ',RC.nombre_institucion,RC.nombre_lugar) AS nombre_lugar,
 					DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%Y') AS fecha_capacitacion
 					FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
-					WHERE RC.asistio_empleado	=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+					WHERE RC.asistio_empleado	=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'".$where."
 					GROUP BY RC.id_empleado_institucion
 					ORDER BY numero ASC";
 		$query=$this->db->query($sentencia);
