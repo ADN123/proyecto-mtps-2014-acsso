@@ -463,7 +463,7 @@ class Verificacion_model extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	function resultados_instituciones($fecha_inicial,$fecha_final)
+	function resultados_instituciones_no_se_utiliza($fecha_inicial,$fecha_final)
 	{
 		$sentencia="SELECT
 					sac_promocion.id_promocion,
@@ -489,7 +489,7 @@ class Verificacion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 	
-	function resultados_tecnicos($fecha_inicial,$fecha_final)
+	function resultados_tecnicos_no_se_utiliza($fecha_inicial,$fecha_final)
 	{
 		$sentencia="SELECT
 					tcm_empleado.seccion,
@@ -661,6 +661,64 @@ class Verificacion_model extends CI_Model {
 					VALUES 
 					($id_promocion,$id_empleado_institucion)";
 		$query=$this->db->query($sentencia);
+	}
+
+	function resultados_instituciones($fecha_inicial,$fecha_final,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RV.id_departamento=".$id_departamento;
+		}		
+		$sentencia="SELECT
+					@s:=@s+1 AS numero,
+					CONCAT_WS(' - ',RV.nombre_institucion,RV.nombre_lugar) AS nombre_lugar,
+					CONCAT_WS(', ',RV.direccion_lugar, LOWER(RV.municipio),LOWER(RV.departamento)) AS direccion_lugar,
+					DATE_FORMAT(RV.fecha_promocion, '%d/%m/%Y') AS fecha_promocion,
+					DATE_FORMAT(RV.hora_inicio,'%h:%i %p') AS hora_promocion,
+					RV.nombre_recibio,
+					RV.observaciones,
+					RV.nombre_estado_verificacion,
+					GROUP_CONCAT(DISTINCT RV.nombre_empleado_institucion,' (',IF(RV.nombre_cargo_comite IS NULL, 'Sin Cargo', RV.nombre_cargo_comite),')') AS entrevistados,
+					GROUP_CONCAT(DISTINCT RV.nombre_tematica,' - ',DATE_FORMAT(RV.fecha_capacitacion, '%d/%m/%Y'),' (',RV.facilitador,')') AS tematicas
+					FROM sac_resultado_verificacion AS RV, (SELECT @s:=0) AS S
+					WHERE RV.id_promocion IS NOT NULL AND RV.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
+					GROUP BY RV.id_lugar_trabajo
+					ORDER BY RV.fecha_promocion ASC";
+		
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function resultados_tecnicos($fecha_inicial,$fecha_final,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RV.id_departamento=".$id_departamento;
+		}		
+		$sentencia="SELECT
+					@s:=@s+1 AS numero,
+					RV.seccion,
+					RV.nombre_empleado AS nombre,
+					COUNT(DISTINCT RV.id_promocion) AS total
+					FROM sac_resultado_verificacion AS RV, (SELECT @s:=0) AS S
+					WHERE RV.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
+					GROUP BY RV.id_empleado
+					ORDER BY numero ASC";
+		
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function resultados_otros($fecha_inicial,$fecha_final,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RV.id_departamento=".$id_departamento;
+		}		
+		$sentencia="";
+		
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
 	}
 }
 ?>

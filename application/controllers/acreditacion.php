@@ -1138,7 +1138,7 @@ class Acreditacion extends CI_Controller
 
 	function ver_empleados_capacitados($id_lugar_trabajo=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dimprimir_acreditacion); 
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_capacitaciones); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
 			$data['id_lugar_trabajo']=$id_lugar_trabajo;
 			if ($id_lugar_trabajo!=NULL) {
@@ -1153,7 +1153,7 @@ class Acreditacion extends CI_Controller
 	
 	function resultados($fecha_iniciale=NULL,$fecha_finale=NULL,$reportee=NULL,$exportacione=NULL)
 	{
-		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_promociones); 
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_capacitaciones); 
 		if($data['id_permiso']==3 || $data['id_permiso']==4) {
 			if($fecha_iniciale==NULL) {
 				$fec=str_replace("/","-",$this->input->post('fecha_inicial'));
