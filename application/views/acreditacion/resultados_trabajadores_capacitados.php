@@ -17,13 +17,13 @@ if($exportacion==3) {
                 <th align="left" id="imagen" height="110" width="180" colspan="2">
                     <img src="<?=base_url()?>img/mtps_report.jpg" />
                 </th>
-                <th align="center">
+                <th align="center" colspan="4">
                     <strong class="ti">
                         MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL<br />
                         DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL Y EMPLEO<br />
                         DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL<br />
                         SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br /><br />
-                        PROMOCIONES POR SECTOR ECONÓMICO
+                        CAPACITACIONES POR EMPLEADO
                     </strong>
                 </th>
                 <th align="right">
@@ -50,8 +50,12 @@ if($exportacion==3) {
 					}
 				?>
                	<th style="<?php echo $css;?>" width="25" valign="middle">N°</th>
-                <th colspan="2" style="<?php echo $css;?>" width="520">CASIFICACIÓN</th>
-                <th style="<?php echo $css;?>" width="100">TOTAL</th>
+                <th style="<?php echo $css;?>" width="100">DUI</th>
+                <th style="<?php echo $css;?>" width="200">NOMBRE</th>
+                <th style="<?php echo $css;?>" width="70">GÉNERO</th>
+                <th style="<?php echo $css;?>" width="105">REPRESENTACIÓN</th>
+                <th style="<?php echo $css;?>" width="200">LUGAR DE TRABAJO</th>
+                <th style="<?php echo $css;?>" width="100">FECHA CAPACITACIÓN</th>
             </tr>
         </thead>
 <?php 
@@ -62,8 +66,12 @@ if($exportacion==3) {
         <thead>
             <tr>
                	<th class="all" width="50">N°</th>
-                <th class="all">CASIFICACIÓN</th>
-                <th class="desktop tablet-l tablet-p" style="width:95px;">TOTAL</th>
+                <th class="all">DUI</th>
+                <th class="all">NOMBRE</th>
+                <th class="none">GÉNERO</th>
+                <th class="none">REPRESENTACIÓN</th>
+                <th class="all">LUGAR DE TRABAJO</th>
+                <th class="none">FECHA CAPACITACIÓN</th>
             </tr>
         </thead>
 <?php 
@@ -82,9 +90,13 @@ if($exportacion==3) {
 							$cs='colspan="2"';
                         }
                     ?>
-                    <td <?php echo $cs;?> valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['nombre'])?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="right"><?php echo $val['total']?></td>
+                    <td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['dui_empleado']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['nombre_empleado'])?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo ucwords($val['genero'])?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['tipo_representacion']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['nombre_lugar']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo $val['fecha_capacitacion']?></td>
                 </tr>
             <?php
                 }

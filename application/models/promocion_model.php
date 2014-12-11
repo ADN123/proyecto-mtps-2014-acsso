@@ -519,7 +519,7 @@ class Promocion_model extends CI_Model {
 		$this->db->query($sentencia);
 	}
 	
-	function resultados_instituciones($fecha_inicial,$fecha_final)
+	function resultados_instituciones($fecha_inicial,$fecha_final,$id_departamento=NULL)
 	{
 		/*$sentencia="SELECT
 					sac_promocion.id_promocion,
@@ -546,6 +546,10 @@ class Promocion_model extends CI_Model {
 		/**************ESTE ES EL NUEVO QUERY DE LAS PROMOCIONES**************/
 		/*********************************************************************/
 
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RP.id_departamento=".$id_departamento;
+		}
 		$sentencia="SELECT 
 					@s:=@s+1 AS numero, 
 					DATE_FORMAT(RP.fecha_promocion, '%d/%m/%Y') AS fecha_promocion,
@@ -567,13 +571,13 @@ class Promocion_model extends CI_Model {
 						WHEN RP.necesita_comite=1 THEN 'Sí' ELSE 'No' 
 					END AS necesita_comite
 					FROM sac_resultado_promocion AS RP, (SELECT @s:=0) AS S
-					WHERE RP.id_promocion IS NOT NULL AND RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
+					WHERE RP.id_promocion IS NOT NULL AND RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
 					ORDER BY RP.fecha_promocion ASC";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
 	
-	function resultados_tecnicos($fecha_inicial,$fecha_final)
+	function resultados_tecnicos($fecha_inicial,$fecha_final,$id_departamento=NULL)
 	{
 		/*$sentencia="SELECT
 					tcm_empleado.seccion,
@@ -590,14 +594,18 @@ class Promocion_model extends CI_Model {
 		/*********************************************************************/
 		/**************ESTE ES EL NUEVO QUERY DE LAS PROMOCIONES**************/
 		/*********************************************************************/
-		
+
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RP.id_departamento=".$id_departamento;
+		}		
 		$sentencia="SELECT
 					@s:=@s+1 AS numero,
 					RP.seccion,
 					RP.nombre_empleado AS nombre,
 					COUNT(RP.id_promocion) AS total
 					FROM sac_resultado_promocion AS RP, (SELECT @s:=0) AS S
-					WHERE RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
+					WHERE RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
 					GROUP BY RP.id_empleado
 					ORDER BY numero ASC";
 		
@@ -605,7 +613,7 @@ class Promocion_model extends CI_Model {
 		return (array)$query->result_array();
 	}
 
-	function resultados_sectores($fecha_inicial,$fecha_final)
+	function resultados_sectores($fecha_inicial,$fecha_final,$id_departamento=NULL)
 	{
 		/*$sentencia="SELECT
 					sac_clasificacion_institucion.nombre_clasificacion AS nombre,
@@ -622,13 +630,17 @@ class Promocion_model extends CI_Model {
 		/*********************************************************************/
 		/**************ESTE ES EL NUEVO QUERY DE LAS PROMOCIONES**************/
 		/*********************************************************************/
-		
+
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RP.id_departamento=".$id_departamento;
+		}		
 		$sentencia="SELECT
 					@s:=@s+1 AS numero,
 					RP.nombre_clasificacion AS nombre,
 					COUNT(RP.id_promocion) AS total
 					FROM sac_resultado_promocion AS RP, (SELECT @s:=0) AS S
-					WHERE RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'
+					WHERE RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
 					GROUP BY RP.id_clasificacion
 					ORDER BY numero ASC";
 		$query=$this->db->query($sentencia);
