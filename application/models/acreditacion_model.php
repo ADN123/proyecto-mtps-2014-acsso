@@ -593,19 +593,114 @@ class Acreditacion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
-
+	
+	function resultados_comites($fecha_inicial,$fecha_final)
+	{
+		$sentencia="SELECT 
+					@s:=@s+1 numero,
+					DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%Y') AS fecha_capacitacion,
+					CONCAT_WS(' - ',RC.nombre_institucion,RC.nombre_lugar) AS nombre_lugar,
+					CONCAT_WS(', ',RC.direccion_lugar, LOWER(RC.municipio),LOWER(RC.departamento)) AS direccion_lugar,
+					COUNT(DISTINCT RC.id_empleado_institucion) AS total_capacitados,
+					(RC.total_hombres+RC.total_mujeres) AS total_empleados,
+					RC.nombre_sector,
+					CASE
+						WHEN RC.nombre_lugar_capacitacion IS NULL THEN 'MTPS'
+						ELSE RC.nombre_lugar_capacitacion
+					END AS lugar_capacitacion
+					FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
+					WHERE RC.asistio_empleado=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+					GROUP BY RC.id_lugar_trabajo
+					ORDER BY numero ASC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function resultados_tecnicos($fecha_inicial,$fecha_final)
+	{
+		$sentencia="SELECT 
+					@s:=@s+1 numero,
+					RC.tecnico_educador AS nombre,
+					RC.seccion,
+					COUNT(DISTINCT RC.id_capacitacion) AS total
+					FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
+					WHERE RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+					GROUP BY RC.id_empleado
+					ORDER BY numero ASC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function resultados_trabajadores_capacitados($fecha_inicial,$fecha_final)
+	{
+		$sentencia="SELECT
+					@s:=@s+1 numero,
+					RC.dui_empleado,
+					RC.nombre_empleado,
+					LOWER(RC.genero) AS genero,
+					CASE 
+						WHEN RC.id_tipo_representacion=3 THEN 'Trabajadores'
+						ELSE RC.tipo_representacion
+					END AS tipo_representacion,
+					RC.tipo_representacion AS tipo_representacion_real,
+					CONCAT_WS(' - ',RC.nombre_institucion,RC.nombre_lugar) AS nombre_lugar,
+					DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%Y') AS fecha_capacitacion
+					FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
+					WHERE RC.asistio_empleado	=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+					GROUP BY RC.id_empleado_institucion
+					ORDER BY numero ASC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 
 	/*
-SELECT 
-@s:=@s+1 numero,
-DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%y') AS fecha_capacitacion,
-CONCAT_WS(' - ',RC.nombre_institucion,RC.nombre_lugar) AS nombre_lugar,
-CONCAT_WS(', ',RC.direccion_lugar, LOWER(RC.municipio),LOWER(RC.departamento)) AS direccion_lugar,
-COUNT(*),
-(RC.total_hombres+RC.total_mujeres) AS total_empleados
-FROM sac_resultado_capacitacion AS RC
-GROUP BY RC.id_lugar_trabajo
-HAVING RC.asistio_empleado=1
+		SELECT 
+		@s:=@s+1 numero,
+		DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%Y') AS fecha_capacitacion,
+		CONCAT_WS(' - ',RC.nombre_institucion,RC.nombre_lugar) AS nombre_lugar,
+		CONCAT_WS(', ',RC.direccion_lugar, LOWER(RC.municipio),LOWER(RC.departamento)) AS direccion_lugar,
+		COUNT(DISTINCT RC.id_empleado_institucion) AS total_capacitados,
+		(RC.total_hombres+RC.total_mujeres) AS total_empleados,
+		RC.nombre_sector,
+		CASE
+			WHEN RC.nombre_lugar_capacitacion IS NULL THEN 'MTPS'
+			ELSE RC.nombre_lugar_capacitacion
+		END AS lugar_capacitacion
+		FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
+		WHERE RC.asistio_empleado=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+		GROUP BY RC.id_lugar_trabajo
+		ORDER BY numero ASC
+	*/
+	
+	/*
+		SELECT 
+		@s:=@s+1 numero,
+		RC.tecnico_educador,
+		RC.seccion,
+		COUNT(DISTINCT RC.id_capacitacion) AS total
+		FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
+		WHERE RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+		GROUP BY RC.id_empleado
+		ORDER BY numero ASC	
+	*/
+	
+	/*
+		SELECT
+		@s:=@s+1 numero,
+		RC.dui_empleado,
+		RC.nombre_empleado,
+		LOWER(RC.genero) AS genero,
+		CASE 
+			WHEN RC.id_tipo_representacion=3 THEN 'Trabajadores'
+			ELSE RC.tipo_representacion
+		END AS tipo_representacion,
+		RC.tipo_representacion AS tipo_representacion_real,
+		CONCAT_WS(' - ',RC.nombre_institucion,RC.nombre_lugar) AS nombre_lugar,
+		DATE_FORMAT(RC.fecha_capacitacion, '%d/%m/%Y') AS fecha_capacitacion
+		FROM sac_resultado_capacitacion AS RC, (SELECT @s:=0) AS S
+		WHERE RC.asistio_empleado	=1 AND RC.fecha_capacitacion BETWEEN '$fecha_inicial' AND '$fecha_final' AND RC.fecha_capacitacion <= '".date('Y-m-d')."'
+		GROUP BY RC.id_empleado_institucion
+		ORDER BY numero ASC
 	*/
 }
 ?>

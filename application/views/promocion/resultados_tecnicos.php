@@ -14,10 +14,10 @@ if($exportacion==3) {
     <table align="center" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
     	 <thead>
             <tr>
-                <th align="left" id="imagen" height="110">
+                <th align="left" id="imagen" height="110" colspan="2">
                     <img src="<?=base_url()?>img/mtps_report.jpg" />
                 </th>
-                <th align="center" colspan="2">
+                <th align="center">
                     <strong class="ti">
                         MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL<br />
                         DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL Y EMPLEO<br />
@@ -49,10 +49,10 @@ if($exportacion==3) {
 						$css='background-color: #CCC; border: 1px solid #CCC;';
 					}
 				?>
-                <th style="<?php echo $css;?>" width="205">SECCIÓN</th>
-                <th style="<?php echo $css;?>" width="270">UBICACIÓN</th>
-                <th style="<?php echo $css;?>" width="270">TÉCNICO EDUCADOR</th>
-                <th style="<?php echo $css;?>" width="100">TOTAL</th>
+                <th style="<?php echo $css;?>" width="25" valign="middle">N°</th>
+                <th style="<?php echo $css;?>" width="200" valign="middle">SECCIÓN</th>
+                <th style="<?php echo $css;?>" width="340" valign="middle">TÉCNICO EDUCADOR</th>
+                <th style="<?php echo $css;?>" width="100" valign="middle">TOTAL</th>
             </tr>
         </thead>
 <?php 
@@ -62,9 +62,9 @@ if($exportacion==3) {
     <table class="display table responsive no-wrap" style="width: 100%;">
         <thead>
             <tr>
-                <th class="desktop tablet-l" >SECCIÓN</th>
-                <th class="desktop" >UBICACIÓN</th>
-                <th class="all" >TÉCNICO EDUCADOR</th>
+                <th class="all" width="50">N°</th>
+                <th class="desktop">SECCIÓN</th>
+                <th class="all">TÉCNICO EDUCADOR</th>
                 <th class="desktop tablet-l tablet-p" style="width:95px;">TOTAL</th>
             </tr>
         </thead>
@@ -83,8 +83,8 @@ if($exportacion==3) {
 							$css='border: 1px solid #CCC;';
                         }
                     ?>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['seccion'])?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['id_seccion']?></td>
                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['nombre'])?></td>
                 	<td valign="middle" style="<?php echo $css;?>" align="right"><?php echo $val['total']?></td>
                 </tr>
