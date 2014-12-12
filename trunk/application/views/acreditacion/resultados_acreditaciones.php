@@ -53,10 +53,10 @@ if($exportacion==3) {
                	<th style="<?php echo $css;?>" width="80" valign="middle">FECHA</th>
                 <th style="<?php echo $css;?>" width="200" valign="middle">LUGAR DE TRABAJO</th>
                 <th style="<?php echo $css;?>" width="300" valign="middle">DIRECCIÓN COMPLETA</th>
-                <th style="<?php echo $css;?>" width="80" valign="middle">SECTOR</th>
-                <th style="<?php echo $css;?>" width="85" valign="middle">TOTAL CAPACITADOS</th>
-                <th style="<?php echo $css;?>" width="85" valign="middle">TOTAL BENEFICIADOS</th>
-                <th style="<?php echo $css;?>" width="200" valign="middle">LUGAR CAPACITACIÓN</th>
+                <th style="<?php echo $css;?>" width="80" valign="middle">NOMBRE ENTREGA</th>
+                <th style="<?php echo $css;?>" width="85" valign="middle">DUI ENTREGA</th>
+                <th style="<?php echo $css;?>" width="85" valign="middle">FECHA ENTREGA</th>
+                <th style="<?php echo $css;?>" width="400" valign="middle">PERSONAS ACREDITADAS</th>
             </tr>
         </thead>
 <?php 
@@ -67,13 +67,13 @@ if($exportacion==3) {
         <thead>
         	<tr>
                	<th class="all" width="50">N°</th>
-               	<th class="desktop">FECHA DE PROMOCIÓN</th>
+               	<th class="desktop">FECHA DE ACREDITACIÓN</th>
                 <th class="all">LUGAR DE TRABAJO</th>
                 <th class="none">DIRECCIÓN COMPLETA</th>
-                <th class="none">SECTOR</th>
-                <th class="none">TOTAL CAPACITADOS</th>
-                <th class="none">TOTAL BENEFICIADOS</th>
-                <th class="none">LUGAR CAPACITACIÓN</th>
+                <th class="none">NOMBRE ENTREGA</th>
+                <th class="none">DUI ENTREGA</th>
+                <th class="none">FECHA ENTREGA</th>
+                <th class="none">PERSONAS ACREDITADAS</th>
             </tr>
         </thead>
 <?php
@@ -81,6 +81,7 @@ if($exportacion==3) {
 ?>
         <tbody>
             <?php
+                $i=1;
                 foreach($info as $val) {
 			?>
             	<tr valign="middle" style="cursor: pointer;" class="ver_promociones" data-id="<?php echo $val['id_promocion']?>">
@@ -90,16 +91,24 @@ if($exportacion==3) {
 							$css='border: 1px solid #CCC;';
                         }
                     ?>
-                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
-                 	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo $val['fecha_capacitacion']?></td>
+                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $i?></td>
+                 	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo $val['fecha_emision']?></td>
                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['nombre_lugar']?></td>
                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['direccion_lugar'])?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['nombre_sector']?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="right"><?php echo $val['total_capacitados']?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="right"><?php echo $val['total_empleados']?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['lugar_capacitacion']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['nombre_entrega']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo $val['dui_entrega']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo $val['fecha_entrega']?></td>
+                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php 
+                                                                                        $ent=explode(",", $val['empleados_acreditados']);
+                                                                                        //echo "<ul>";
+                                                                                        for ($i=0; $i <count($ent) ; $i++) { 
+                                                                                            echo "<li>".$ent[$i]."</li>";
+                                                                                        }
+                                                                                        //echo "</ul>";
+                                                                                ?></td>
                 </tr>
             <?php
+                    $i++;
                 }
             ?>
         </tbody>
