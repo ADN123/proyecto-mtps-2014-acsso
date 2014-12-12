@@ -24,6 +24,15 @@
         </div>
       	
         <div class="tab-pane" id="ptab1">
+        	<div class="form-group">
+                <label for="fecha_conformacion" class="col-sm-3 control-label">Fecha de aprobación<span class="asterisk">*</span></label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="text" name="fecha_conformacion" id="fecha_conformacion" class="form-control" data-req="true" data-tip="fec" value="<?php echo date('d/m/Y')?>" readonly="readonly"/>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
             <table class="table table-hover mb30">
                 <thead>
                     <tr>
@@ -177,7 +186,7 @@
 		  		$('#progressWizard').find('.progress-bar').css('width', $percent+'%');
 			}
 	  	});	
-		$('#fecha_conformacion').datepicker({beforeShowDay: $.datepicker.noWeekends, minDate: '0D'});
+		$('#fecha_conformacion').datepicker({beforeShowDay: $.datepicker.noWeekends, maxDate: '0D'});
 		$("#limpiar").click(function(){
 			$("#formu").load(base_url()+"index.php/acreditacion/aprobar_comite_recargado");
 		})

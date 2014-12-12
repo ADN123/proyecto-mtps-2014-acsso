@@ -56,6 +56,15 @@
                         	<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
                       	</div>
                       	<div class="tab-pane" id="ptab1">
+                        	<div class="form-group">
+                                <label for="fecha_conformacion" class="col-sm-3 control-label">Fecha de aprobación<span class="asterisk">*</span></label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" name="fecha_conformacion" id="fecha_conformacion" class="form-control" data-req="true" data-tip="fec" value="<?php echo date('d/m/Y')?>" readonly="readonly"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="table table-hover mb30">
                                 <thead>
                                     <tr>
@@ -194,6 +203,7 @@
 		  sort: false,
 		  info: false
 		});
+		$('#fecha_conformacion').datepicker({beforeShowDay: $.datepicker.noWeekends, maxDate: '0D'});
 	  	$('#progressWizard').bootstrapWizard({
 			'nextSelector': '.next',
 			'previousSelector': '.previous',

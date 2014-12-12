@@ -492,6 +492,7 @@ class Acreditacion_model extends CI_Model {
 		extract($formuInfo);
 		$sentencia="UPDATE sac_lugar_trabajo SET
 					estado='$estado',
+					fecha_conformacion='$fecha_conformacion',
 					fecha_modificacion='$fecha_modificacion',
 					id_usuario_modifica=$id_usuario_modifica 
 					WHERE id_lugar_trabajo=$id_lugar_trabajo";
@@ -664,7 +665,38 @@ class Acreditacion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
-
+	
+	function entrega_acreditacion($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="INSERT INTO sac_entrega_acreditacion
+						(id_empleado_institucion, nombre_entrega, dui_entrega, fecha_entrega, id_usuario_crea, fecha_creacion) 
+						VALUES 
+						($id_empleado_institucion, '$nombre_entrega', '$dui_entrega', '$fecha_entrega', $id_usuario_crea, '$fecha_creacion')";
+		$query=$this->db->query($sentencia);
+	}
+	
+	function resultados_acreditaciones($fecha_inicial,$fecha_final,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RA.id_departamento=".$id_departamento;
+		}
+		$sentencia="SELECT 
+					DATE_FORMAT(RA.fecha_conformacion,'%d/%m/%Y') AS fecha_emision,
+					CONCAT_WS(' - ',RA.nombre_institucion,RA.nombre_lugar) AS nombre_lugar,
+					CONCAT_WS(', ',RA.direccion_lugar, LOWER(RA.municipio),LOWER(RA.departamento)) AS direccion_lugar,
+					RA.nombre_entrega,
+					RA.dui_entrega,
+					DATE_FORMAT(RA.fecha_entrega,'%d/%m/%Y') AS fecha_entrega,
+					GROUP_CONCAT(DISTINCT RA.nombre_empleado,' (',IF(RA.nombre_cargo_comite IS NULL, 'Sin Cargo', RA.nombre_cargo_comite),') - ',DATE_FORMAT(RA.fecha_capacitacion,'%d/%m/%Y')) AS empleados_acreditados
+					FROM sac_resultado_acreditacion AS RA
+					WHERE RA.fecha_conformacion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
+					GROUP BY RA.id_lugar_trabajo, RA.fecha_entrega
+					ORDER BY RA.fecha_conformacion ASC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 	/*
 		SELECT 
 		@s:=@s+1 numero,

@@ -249,3 +249,83 @@ LEFT JOIN sac_miembro_entrevistado ON sac_miembro_entrevistado.id_promocion=sac_
 LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_empleado_institucion=sac_miembro_entrevistado.id_empleado_institucion
 LEFT JOIN sac_cargo_comite ON sac_cargo_comite.id_cargo_comite=sac_empleado_institucion.id_cargo_comite
 WHERE sac_programacion_visita.estado_programacion>2 
+
+////////////////////////////
+
+SELECT DISTINCT
+sac_clasificacion_institucion.id_clasificacion,
+sac_clasificacion_institucion.codigo_clasificacion,
+sac_clasificacion_institucion.nombre_clasificacion,
+sac_sector_institucion.id_sector,
+sac_sector_institucion.nombre_sector,
+sac_institucion.id_institucion,
+sac_institucion.nombre_institucion,
+sac_institucion.nit_empleador,
+sac_institucion.nombre_representante,
+sac_institucion.sindicato AS sindicato_empleador,
+sac_lugar_trabajo.id_lugar_trabajo,
+sac_lugar_trabajo.nombre_lugar,
+sac_tipo_lugar_trabajo.nombre_tipo AS tipo_lugar,
+org_departamento.id_departamento,
+org_departamento.departamento,
+org_municipio.id_municipio,
+org_municipio.municipio,
+sac_lugar_trabajo.direccion_lugar,
+sac_lugar_trabajo.nombre_contacto,
+sac_lugar_trabajo.fecha_conformacion,
+sac_lugar_trabajo.telefono AS telefono_contacto,
+sac_lugar_trabajo.correo AS correo_contacto,
+sac_lugar_trabajo.total_hombres,
+sac_lugar_trabajo.total_mujeres,
+sac_lugar_trabajo.estado AS estado_lugar,
+sac_tipo_inscripcion.id_tipo_inscripcion,
+sac_tipo_inscripcion.nombre AS tipo_inscripcion,
+sac_empleado_institucion.id_empleado_institucion,
+sac_empleado_institucion.fecha_ingreso AS fecha_inscripcion,
+sac_empleado_institucion.nombre_empleado,
+sac_empleado_institucion.cargo_empleado,
+sac_empleado_institucion.dui_empleado,
+sac_empleado_institucion.id_genero,
+org_genero.genero,
+sac_tipo_representacion.id_tipo_representacion,
+sac_tipo_representacion.nombre_tipo_representacion AS tipo_representacion,
+sac_empleado_institucion.delegado AS delegado_empleado,
+sac_empleado_institucion.sindicato AS sindicato_empleado,
+sac_empleado_institucion2.id_empleado_institucion AS id_empleado_institucion_sustituye,
+sac_empleado_institucion2.nombre_empleado AS nombre_empleado_sustituye,
+sac_capacitacion.id_capacitacion,
+sac_capacitacion.fecha_capacitacion,
+sac_capacitacion.hora_capacitacion,
+sac_lugar_trabajo2.nombre_lugar AS nombre_lugar_capacitacion,
+sac_capacitacion.estado_capacitacion,
+sac_asistencia.asistio AS asistio_empleado,
+sac_asistencia.fecha_acreditacion,
+tcm_empleado.id_empleado,
+tcm_empleado.nombre AS tecnico_educador,
+tcm_empleado.seccion,
+sac_entrega_acreditacion.id_entrega_acreditacion,
+sac_entrega_acreditacion.fecha_entrega,
+sac_entrega_acreditacion.nombre_entrega,
+sac_entrega_acreditacion.dui_entrega,
+sac_empleado_institucion.id_cargo_comite,
+sac_cargo_comite.nombre_cargo_comite
+FROM sac_institucion
+LEFT JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
+LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
+LEFT JOIN sac_asistencia ON sac_asistencia.id_empleado_institucion = sac_empleado_institucion.id_empleado_institucion
+LEFT JOIN sac_capacitacion ON sac_asistencia.id_capacitacion = sac_capacitacion.id_capacitacion
+LEFT JOIN sac_capacitador ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
+LEFT JOIN sac_clasificacion_institucion ON sac_institucion.id_clasificacion = sac_clasificacion_institucion.id_clasificacion
+LEFT JOIN sac_sector_institucion ON sac_institucion.id_sector = sac_sector_institucion.id_sector
+LEFT JOIN sac_tipo_inscripcion ON sac_empleado_institucion.id_tipo_inscripcion = sac_tipo_inscripcion.id_tipo_inscripcion
+LEFT JOIN sac_tipo_lugar_trabajo ON sac_lugar_trabajo.id_tipo_lugar_trabajo = sac_tipo_lugar_trabajo.id_tipo_lugar_trabajo
+LEFT JOIN sac_tipo_representacion ON sac_empleado_institucion.id_tipo_representacion = sac_tipo_representacion.id_tipo_representacion
+LEFT JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
+LEFT JOIN org_departamento ON org_municipio.id_departamento_pais = org_departamento.id_departamento
+LEFT JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_capacitador.id_empleado
+LEFT JOIN sac_lugar_trabajo AS sac_lugar_trabajo2 ON sac_capacitacion.id_lugar_trabajo = sac_lugar_trabajo2.id_lugar_trabajo
+LEFT JOIN sac_empleado_institucion AS sac_empleado_institucion2 ON sac_empleado_institucion.id_empleado_institucion_sustituye=sac_empleado_institucion2.id_empleado_institucion 
+LEFT JOIN org_genero ON org_genero.id_genero=sac_empleado_institucion.id_genero 
+LEFT JOIN sac_entrega_acreditacion ON sac_entrega_acreditacion.id_empleado_institucion=sac_empleado_institucion.id_empleado_institucion
+left JOIN sac_cargo_comite ON sac_cargo_comite.id_cargo_comite=sac_empleado_institucion.id_cargo_comite
+WHERE sac_lugar_trabajo.estado=2 
