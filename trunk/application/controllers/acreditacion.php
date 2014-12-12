@@ -946,6 +946,8 @@ class Acreditacion extends CI_Controller
 			$this->db->trans_start();
 						
 			$id_lugar_trabajo=($this->input->post('id_lugar_trabajo')=='')?'NULL':$this->input->post('id_lugar_trabajo');
+			$fec=str_replace("/","-",$this->input->post('fecha_conformacion'));
+			$fecha_conformacion=date("Y-m-d", strtotime($fec));
 			
 			$fecha_modificacion=date('Y-m-d H:i:s');
 			$id_usuario_modifica=$this->session->userdata('id_usuario');
@@ -953,6 +955,7 @@ class Acreditacion extends CI_Controller
 			$formuInfo = array(
 				'id_lugar_trabajo'=>$id_lugar_trabajo,
 				'estado'=>2,
+				'fecha_conformacion'=>$fecha_conformacion,
 				'fecha_modificacion'=>$fecha_modificacion,
 				'id_usuario_modifica'=>$id_usuario_modifica
 			);
@@ -1040,9 +1043,21 @@ class Acreditacion extends CI_Controller
 			$this->mpdf->AddPage();
 			$html = $this->load->view('acreditacion/carta_acreditacion_pdf.php', $data, true);
 			$this->mpdf->WriteHTML($html,2);
-					
+			
+			$fec=str_replace("/","-",$this->input->post('fecha_entrega'));
+			$fecha_entrega=date("Y-m-d", strtotime($fec));
+			
 			for($i=1;$i<count($empelados);$i++) { 
 				$this->mpdf->AddPage();
+				$formuInfo = array(
+					'id_empleado_institucion'=>$empelados[$i],
+					'nombre_entrega'=>$this->input->post('nombre_entrega'),
+					'dui_entrega'=>$this->input->post('dui_entrega'),
+					'fecha_entrega'=>$fecha_entrega,
+					'fecha_creacion'=>date('Y-m-d H:i:s'),
+					'id_usuario_crea'=>$this->session->userdata('id_usuario')
+				);
+				$this->acreditacion_model->entrega_acreditacion($formuInfo);
 				$data['lugar_trabajo']=$this->acreditacion_model->consultar_lugar_trabajo($empelados[$i]);
 				if($data['lugar_trabajo']['tiempo_activo']>=2 || $data['lugar_trabajo']['tiempo_activo']<0) {
 					$this->acreditacion_model->actulizar_acreditacion($empelados[$i]);
@@ -1135,6 +1150,19 @@ class Acreditacion extends CI_Controller
 			pantalla_error();
 		}
 	}
+	
+	function acreditaciones()
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_acreditaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			$data['tipo_lugar_trabajo']=$this->promocion_model->mostrar_tipo_lugar_trabajo();
+			$data['municipio']=$this->promocion_model->mostrar_municipio();
+			pantalla('acreditacion/acreditaciones',$data,Dreportes_acreditaciones);
+		}
+		else {
+			pantalla_error();
+		}
+	}
 
 	function ver_empleados_capacitados($id_lugar_trabajo=NULL)
 	{
@@ -1197,6 +1225,102 @@ class Acreditacion extends CI_Controller
 						
 						$html = $this->load->view('acreditacion/resultados_comites.php', $data, true);
 						$data_cab['titulo']="CAPACITACIONES REALIZADAS POR LUGAR DE TRABAJO";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
+					break;
+				case 2:
+					$data['info']=$this->acreditacion_model->resultados_tecnicos($fecha_inicial,$fecha_final,$id_departamento);
+					$data['nombre']="Técnicos ".date('d-m-Y hisa');
+					if($data['exportacion']!=2)
+						$this->load->view('acreditacion/resultados_tecnicos',$data);
+					else {
+						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('acreditacion/resultados_tecnicos.php', $data, true);
+						$data_cab['titulo']="CAPACITACIONES REALIZADAS POR TÉCNICO EDUCADOR";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
+					break;
+				case 3:
+					$data['info']=$this->acreditacion_model->resultados_trabajadores_capacitados($fecha_inicial,$fecha_final,$id_departamento);
+					$data['nombre']="Trabajadores Capacitados ".date('d-m-Y hisa');
+					if($data['exportacion']!=2)
+						$this->load->view('acreditacion/resultados_trabajadores_capacitados',$data);
+					else {
+						$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						//$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('acreditacion/resultados_trabajadores_capacitados.php', $data, true);
+						$data_cab['titulo']="CAPACITACIONES POR EMPLEADO";
+						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						$this->mpdf->WriteHTML($html,2);
+						$this->mpdf->Output(); /*Salida del pdf*/
+					}
+					break;
+			}
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function resultados_acreditaciones($fecha_iniciale=NULL,$fecha_finale=NULL,$reportee=NULL,$exportacione=NULL)
+	{
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_acreditaciones); 
+		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+			if($fecha_iniciale==NULL) {
+				$fec=str_replace("/","-",$this->input->post('fecha_inicial'));
+				$fecha_inicial=date("Y-m-d", strtotime($fec));
+			}
+			else {
+				$fecha_inicial=date("Y-m-d", strtotime($fecha_iniciale));
+			}
+			if($fecha_finale==NULL) {
+				$fec=str_replace("/","-",$this->input->post('fecha_final'));
+				$fecha_final=date("Y-m-d", strtotime($fec));
+			}
+			else {
+				$fecha_final=date("Y-m-d", strtotime($fecha_finale));
+			}
+			if($reportee==NULL)
+				$reporte=$this->input->post('radio');
+			else
+				$reporte=$reportee;
+			if($exportacione==NULL)
+				$data['exportacion']=$this->input->post('radio2');
+			else
+				$data['exportacion']=$exportacione;
+			$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+			if($data['id_permiso']==4)
+				$id_departamento=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+			else
+				$id_departamento=NULL;
+			switch($reporte) {
+				case 1:
+					$data['info']=$this->acreditacion_model->resultados_acreditaciones($fecha_inicial,$fecha_final,$id_departamento);
+					$data['nombre']="Comites ".date('d-m-Y hisa');
+					if($data['exportacion']!=2) {
+						$this->load->view('acreditacion/resultados_acreditaciones',$data);
+					}
+					else {						
+						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+						
+						$html = $this->load->view('acreditacion/resultados_acreditaciones.php', $data, true);
+						$data_cab['titulo']="ACREDITACIONES REALIZADAS POR LUGAR DE TRABAJO";
 						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
 						$this->mpdf->WriteHTML($html,2);
 						$this->mpdf->Output(); /*Salida del pdf*/
