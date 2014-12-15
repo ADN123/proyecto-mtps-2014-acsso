@@ -997,7 +997,7 @@ class Promocion_model extends CI_Model {
 					FROM sac_resultado_verificacion AS RV 
 					WHERE DATE_FORMAT(RV.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RV.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
 					GROUP BY RV.id_lugar_trabajo";
-		echo $sentencia;
+		//echo $sentencia;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
