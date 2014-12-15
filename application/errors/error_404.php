@@ -1,5 +1,5 @@
 <?php
-	$url="http://localhost/sacso/";
+    $url="http://192.168.1.200/srcs/";
 ?>
 <!DOCTYPE html>
 <html lang="es">

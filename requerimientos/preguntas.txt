@@ -59,9 +59,50 @@ INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_mod
 INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_modulo`, `orden`, `dependencia`, `url_modulo`, `img_modulo`, `opciones_modulo`) VALUES ('7', 'Registrar participantes', 'Ingreso de los empleados del lugar de trabajo que asistirán a la capacitación', '1', '91', 'acreditacion/participantes', 'fa fa-caret-right', '2');
 INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_modulo`, `orden`, `dependencia`, `url_modulo`, `img_modulo`, `opciones_modulo`) VALUES ('7', 'Ver asignaciones', 'Calendarización de visitas a instituciones', '4', '87', 'promocion/ver_asignaciones', 'fa fa-caret-right', '2');
 
-
 Inicio
 Ver asignaciones OK!
 Registrar promoción OK!
 Control asistencia OK!
 Ingreso de control de visita OK!
+
+
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
+
+LEER!!!!!!! IMPORTANTE!!!!!!!!!!!!!
+
+Hice unos cambios importantes en algunas pantallas. Estos cambios tienen que ver con el usuario que 
+esta logueado en el momento:
+
+MENU Promocion->Ver asignaciones:
+	Como Administrador Srcs: Ve las asignaciones de TODOS los tecnicos educadores.
+	Como Jefe Departamental Srcs: Ve las asignaciones de los tecnicos que pertenecen al mismo departamento.
+	Como Tecnico Educador Srcs: Ve sus propias asignaciones.
+
+MENU Promocion->Registrar promocion:
+	Como Administrador Srcs: Puede registrar las promociones de TODOS los tecnicos educadores.
+	Como Jefe Departamental Srcs: Puede registrar las promociones de los tecnicos que pertenecen al mismo departamento.
+	Como Tecnico Educador Srcs: Registra sus propias promociones.
+
+MENU Capacitacion->Control asistencia:
+	Como Administrador Srcs: Puede registrar la asistencia de TODAS las capacitaciones.
+	Como Jefe Departamental Srcs: Puede registrar la asistencia de las capacitaciones que pertenecen al mismo departamento.
+	Como Tecnico Educador Srcs: Registra la asistencia de las capacitaciones que el imparte.
+
+MENU Verificacion->Ingreso de control de visita:
+	Como Administrador Srcs: Puede registrar el control de veficacion de TODOS los tecnicos educadores.
+	Como Jefe Departamental Srcs: Puede registrar el control de veficacion de los tecnicos que pertenecen al mismo departamento.
+	Como Tecnico Educador Srcs: Registra sus propios controles de veficacion.
+
+Cabe mecionar que esto no es estático, si no se desea de esta manera unicamente se tiene que modificar el tipo de permiso del rol.
+
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
+/*********************************************************************************/
