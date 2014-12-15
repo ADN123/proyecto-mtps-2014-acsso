@@ -83,7 +83,7 @@
                                         <option value=""></option>
                                         <?php
                                             foreach($tecnico as $val) {
-                                                echo '<option value="'.$val['id'].'">'.ucwords($val['nombre']).'</option>';
+                                                echo '<option value="'.$val['id'].'" '.$val['activo'].'>'.ucwords($val['nombre']).'</option>';
                                             }
                                         ?>
                                     </select>
@@ -145,7 +145,7 @@
         	<a href="#" class="tooltips ayuda" data-ayuda="16" data-toggle="tooltip" title="" data-original-title="Ayuda"><i class="fa fa-question-circle"></i></a>
         	<a href="#"class="tooltips minimize" data-toggle="tooltip" title="" data-original-title="Minimizar">−</a>
         </div><!-- panel-btns -->
-        	<h3 class="panel-title" id="titulo-tabla">Capacitaciones registradas</h3>
+        	<h3 class="panel-title" id="titulo-tabla">Capacitaciones registradas </h3>
         </div>
         <div class="panel-body" id="contenido-tabla">
           		<table class="table table-hover mb30">
@@ -159,7 +159,10 @@
             		<tbody>
                     	<?php
 							foreach($capacitaciones as $val) {
-								echo '<tr><td>'.$val['fecha'].'</td><td>'.$val['lugar'].'</td><td><a href="#" class="edit-row" onClick="editar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" onClick="eliminar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-trash-o"></i></a></td></tr>';
+								echo '<tr><td>'.$val['fecha'].'</td><td>'.$val['lugar'].'</td><td>';
+								if($id_permiso!=1 && $id_permiso!=NULL)
+									echo '<a href="#" class="edit-row" onClick="editar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="delete-row" onClick="eliminar('.$val['id'].');return false;" data-id="'.$val['id'].'"><i class="fa fa-trash-o"></i></a>'; 
+								echo '</td></tr>';
 							}
 						?>
             		</tbody>

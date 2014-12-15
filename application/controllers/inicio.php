@@ -11,6 +11,7 @@ class Inicio extends CI_Controller
 		error_reporting(0);
 		$this->load->helper('url');
 		$this->load->helper('form');
+		$this->load->library("mpdf");
 		$this->load->model('seguridad_model');
 		$this->load->model('promocion_model');
 		
@@ -124,25 +125,47 @@ class Inicio extends CI_Controller
 				$id_departamento=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 			else
 				$id_departamento=NULL;
+			$data['anio']=$anio;
+			$data['mes']=$mes;
+			$data['id_seccion']=$id_seccion['id_seccion'];
 			switch($reporte) {
 				case 1:
-					$data['info']=$this->promocion_model->resumen_informe($anio,$mes,$id_departamento);
+					$data['resumen_informe_general']=$this->promocion_model->resumen_informe($anio,$mes,$id_departamento);
+					$data['resumen_informe_promocion']=$this->promocion_model->resumen_informe_promocion($anio,$mes,$id_departamento);
+					$data['resumen_informe_verificacion']=$this->promocion_model->resumen_informe_verificacion($anio,$mes,$id_departamento);
+					$data['resumen_informe_capacitacion']=$this->promocion_model->resumen_informe_capacitacion($anio,$mes,$id_departamento);
+					$data['resumen_informe_acreditacion']=$this->promocion_model->resumen_informe_acreditacion($anio,$mes,$id_departamento);
+					$data['nombre_jefe']=$this->promocion_model->nombre_jefe();
+
+					$data['puesto']=$this->seguridad_model->info_empleado(NULL, $select="nominal, funcional", $this->session->userdata('id_usuario'));
 					$data['nombre']="Instituciones ".date('d-m-Y hisa');
-					if($data['exportacion']==1) {
-						//$this->load->view('resumen_informe',$data);
-						echo "<pre>";
-						print_r($data['info']);
+					if($data['exportacion']!=2) {
+						$this->load->view('resumen_informe',$data);
+						/*echo "<pre>";
+						print_r($data['resumen_informe']);
 						echo "</pre>";
+						echo "<pre>";
+						print_r($data['resumen_informe_promocion']);
+						echo "</pre>";
+						echo "<pre>";
+						print_r($data['resumen_informe_verificacion']);
+						echo "</pre>";
+						echo "<pre>";
+						print_r($data['resumen_informe_capacitacion']);
+						echo "</pre>";
+						echo "<pre>";
+						print_r($data['resumen_informe_acreditacion']);
+						echo "</pre>";*/
 					}
 					else {						
-						$this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+						$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
 						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
 						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
 						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
 						
 						$html = $this->load->view('resumen_informe.php', $data, true);
-						$data_cab['titulo']="PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO";
-						$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+						//$data_cab['titulo']="PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO";
+						//$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
 						$this->mpdf->WriteHTML($html,2);
 						$this->mpdf->Output(); /*Salida del pdf*/
 					}

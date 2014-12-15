@@ -337,7 +337,7 @@ class Acreditacion extends CI_Controller
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
 					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep,1,3);
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,NULL,NULL,$id_seccion['id_empleado']);
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,date('Y-m-d'),NULL,$id_seccion['id_empleado']);
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep,1);
 					break;
 				case 3:
@@ -351,10 +351,10 @@ class Acreditacion extends CI_Controller
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep,1,3);
 					
 					if(!$this->promocion_model->es_san_salvador($id_seccion['id_seccion']))	{
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],2);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],2,date('Y-m-d'));
 					}
 					else {
-						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],1);
+						$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia($id_seccion['id_seccion'],1,date('Y-m-d'));
 					}
 					$data['capacitaciones']=$this->acreditacion_model->mostrar_capacitaciones($dep,1);
 					break;
@@ -381,13 +381,19 @@ class Acreditacion extends CI_Controller
 	function capacitacion_recargado($id_capacitacion=NULL)
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {	
 			if($id_capacitacion!=NULL) {
 				$data['capacitacion']=$this->acreditacion_model->ver_capacitacion($id_capacitacion);
 				$data['id_capacitacion']=$id_capacitacion;
 			}
 			//echo $data['capacitacion'][0]['fecha_capacitacion2'];
 			switch($data['id_permiso']) {
+				case 1:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo($dep,1,3);
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,date('Y-m-d'),NULL,$id_seccion['id_empleado']);
+					break;
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,$data['capacitacion'][0]['fecha_capacitacion2'],$id_capacitacion);	
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo();
@@ -420,8 +426,13 @@ class Acreditacion extends CI_Controller
 	function mostrar_lugares_trabajo()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {	
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {	
 			switch($data['id_permiso']) {
+				case 1:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+					$dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo_sin_capacitarse($dep);
+					break;
 				case 3:
 					$data['insticion_lugar_trabajo']=$this->acreditacion_model->insticion_lugar_trabajo_sin_capacitarse();
 					break;
@@ -449,7 +460,7 @@ class Acreditacion extends CI_Controller
 	function empleados_lugar_trabajo_capacitacion($id_lugar_trabajo=NULL,$empleados="")
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4){
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
 			$data['empleados_lugar_trabajo']=$this->acreditacion_model->empleados_lugar_trabajo_sin_capacitarse($id_lugar_trabajo,$empleados);
 			$this->load->view('acreditacion/participantes_lugar_trabajo_capacitacion',$data);
 		}
@@ -469,7 +480,7 @@ class Acreditacion extends CI_Controller
 	function participantes_recargado_capacitacion($id_empleado_institucion=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4){
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
 			$data['empleado_institucion']=$this->acreditacion_model->empleado_institucion($id_empleado_institucion);			
 			$this->load->view('acreditacion/participantes_recargado_capacitacion',$data);
 		}
@@ -489,7 +500,7 @@ class Acreditacion extends CI_Controller
 	function actualizar_empleado_capacitacion($id_empleado_institucion=NULL) 
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4){
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 
 			$dui_empleado=$this->input->post('dui_empleado');
@@ -530,7 +541,7 @@ class Acreditacion extends CI_Controller
 	function guardar_capacitacion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion);
-		if($data['id_permiso']==3 || $data['id_permiso']==4){
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4){
 			$this->db->trans_start();
 			
 			$id_capacitacion=$this->input->post('id_capacitacion');
@@ -1084,7 +1095,7 @@ class Acreditacion extends CI_Controller
 	function comprobar_capacitacion()
 	{
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dprogramar_capacitacion); 
-		if($data['id_permiso']==3 || $data['id_permiso']==4) {
+		if($data['id_permiso']==1 || $data['id_permiso']==3 || $data['id_permiso']==4) {
 			$id_empleado_institucion=$this->input->post('id_empleado_institucion');
 			$c=false;
 			for($i=0;$i<count($id_empleado_institucion);$i++) {
@@ -1119,7 +1130,7 @@ class Acreditacion extends CI_Controller
 			switch($data['id_permiso']) {
 				case 1:
 					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
-					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,NULL,$fecha,$id_seccion['id_empleado']);
+					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,NULL,$fecha,NULL,$id_seccion['id_empleado']);
 					break;
 				case 3:
 					$data['tecnico']=$this->promocion_model->mostrar_tecnicos_disponibles_por_dia(NULL,1,$fecha);
