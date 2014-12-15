@@ -170,10 +170,14 @@ class Promocion_model extends CI_Model {
 					END AS activo
 					FROM
 					tcm_empleado
-					LEFT JOIN sac_capacitador ON sac_capacitador.id_empleado = tcm_empleado.id_empleado
-					LEFT JOIN sac_capacitacion ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion
+					LEFT JOIN (
+						SELECT id_empleado,fecha_capacitacion,sac_capacitacion.id_capacitacion
+						FROM sac_capacitador
+						LEFT JOIN sac_capacitacion ON sac_capacitador.id_capacitacion = sac_capacitacion.id_capacitacion 
+						WHERE sac_capacitacion.fecha_capacitacion='".$f."'
+					) AS sac_capacitacion ON tcm_empleado.id_empleado = sac_capacitacion.id_empleado
 					WHERE (funcional LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL' OR nominal LIKE 'TECNICO EN SEGURIDAD OCUPACIONAL') ".$where;
-		echo "<br><br><br><br><br><br><br><br><br><br><br><br>".$sentencia;
+		//echo "<br><br><br><br><br><br><br><br><br><br><br><br>".$sentencia;
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
@@ -910,7 +914,7 @@ class Promocion_model extends CI_Model {
 	{
 		$where="";
 		if($id_departamento!=NULL) {
-			$where.=" AND RP.id_departamento=".$id_departamento;
+			$where.=" AND id_departamento=".$id_departamento;
 		}		
 		$sentencia="SELECT 1 AS idp, 0 AS idh, 'COMITES DE SEGURIDAD E HIGIENE OCUPACIONAL' AS tipo, NULL AS 'subtotal', NULL AS 'total'
 					UNION
@@ -918,19 +922,172 @@ class Promocion_model extends CI_Model {
 					UNION
 					SELECT 1 AS idp, 2 AS idh, 'Verificación Art.10 del Decreto 86' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RV.id_promocion) AS total FROM sac_resultado_verificacion AS RV WHERE DATE_FORMAT(RV.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RV.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
 					UNION
-					SELECT 1 AS idp, 3 AS idh, 'Empresas Capacitadas' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_capacitacion) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where."
+					SELECT 1 AS idp, 3 AS idh, 'Empresas Capacitadas' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_lugar_trabajo) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."' AND RC.estado_capacitacion=0 ".$where."
 					UNION
-					SELECT 1 AS idp, 4 AS idh, 'Comités Acreditados' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RA.fecha_conformacion) AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where."
+					SELECT 1 AS idp, 4 AS idh, 'Comités Acreditados' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RA.id_lugar_trabajo, RA.fecha_conformacion) AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where."
 					UNION
-					SELECT 2 AS idp, 0 AS idh, 'CAPACITACIONES INTERNAS' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_capacitacion) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.id_lugar_trabajo_capacitacion IS NULL
+					SELECT 2 AS idp, 0 AS idh, 'CAPACITACIONES INTERNAS' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_capacitacion) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."' AND RC.estado_capacitacion=0 ".$where." AND RC.id_lugar_trabajo_capacitacion IS NULL
 					UNION
 					SELECT 3 AS idp, 0 AS idh, 'REUNIONES DE SECCIÓN' AS tipo, NULL AS 'subtotal', NULL AS total
 					UNION
-					SELECT 4 AS idp, 0 AS idh, 'REUNIONES INTERINSTITUCIONALES' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_capacitacion) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.id_lugar_trabajo_capacitacion IS NOT NULL
+					SELECT 4 AS idp, 0 AS idh, 'REUNIONES INTERINSTITUCIONALES' AS tipo, NULL AS 'subtotal', IFNULL(COUNT(DISTINCT RC.id_capacitacion),0) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."' AND RC.estado_capacitacion=0 ".$where." AND RC.id_lugar_trabajo_capacitacion IS NOT NULL
 					UNION
-					SELECT 5 AS idp, 0 AS idh, 'ASESORIAS ESTUDIANTILES' AS tipo, NULL AS 'subtotal', NULL AS total";
+					SELECT 5 AS idp, 0 AS idh, 'ASESORIAS ESTUDIANTILES' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 6 AS idp, 0 AS idh, 'TOTAL DE TRABAJADORES ACREDITADOS COMO MIEMBROS DE COMITES DE SEGURIDAD Y SALUD OCUPACIONAL (COMITES NUEVOS)' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RA.id_empleado_institucion, RA.asistio_empleado) AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where." AND RA.asistio_empleado=1
+					UNION
+					SELECT 6 AS idp, 1 AS idh, 'Mujeres' AS tipo, COUNT(DISTINCT RA.id_empleado_institucion, RA.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where." AND RA.asistio_empleado=1 AND RA.id_genero=2
+					UNION
+					SELECT 6 AS idp, 2 AS idh, 'Hombres' AS tipo, COUNT(DISTINCT RA.id_empleado_institucion, RA.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where." AND RA.asistio_empleado=1 AND RA.id_genero=1
+					UNION
+					SELECT DISTINCT 7 AS idp, 0 AS idh, 'TOTAL DE TRABAJADORES BENEFICIADOS' AS tipo, NULL AS 'subtotal', IFNULL(SUM(DISTINCT (SELECT IFNULL(SUM(IFNULL(RA.total_hombres,0)+IFNULL(RA.total_mujeres,0)),0) AS t FROM sac_lugar_trabajo AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where.")),0) AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where."
+					UNION
+					SELECT DISTINCT 7 AS idp, 1 AS idh, 'Mujeres' AS tipo, IFNULL(SUM(DISTINCT (SELECT IFNULL(SUM(IFNULL(RA.total_mujeres,0)),0) AS t FROM sac_lugar_trabajo AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where.")),0) AS 'subtotal', NULL AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where."
+					UNION
+					SELECT DISTINCT 7 AS idp, 2 AS idh, 'Hombres' AS tipo, IFNULL(SUM(DISTINCT (SELECT IFNULL(SUM(IFNULL(RA.total_hombres,0)),0) AS t FROM sac_lugar_trabajo AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where.")),0) AS 'subtotal', NULL AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where."
+					UNION
+					SELECT 8 AS idp, 0 AS idh, 'CAPACITACIONES EMPRESARIALES' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 9 AS idp, 0 AS idh, 'TOTAL DE TRABAJADORES CAPACITADOS EN EMPRESAS' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 9 AS idp, 1 AS idh, 'Mujeres' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 9 AS idp, 2 AS idh, 'Hombres' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 10 AS idp, 0 AS idh, 'CHARLAS A INSTITUCIONES SOBRE LA LEY GENERAL DE PREVENCION RIESGOS OCUPACIONALES EN LOS LUGARES DE TRABAJO' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 10 AS idp, 1 AS idh, 'Mujeres' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 10 AS idp, 2 AS idh, 'Hombres' AS tipo, NULL AS 'subtotal', NULL AS total";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
+	}
+
+	function resumen_informe_promocion($anio,$mes,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RP.id_departamento=".$id_departamento;
+		}		
+		$sentencia="SELECT DISTINCT
+					CONCAT(RP.nombre_institucion,' - ',RP.nombre_lugar,' (',RP.direccion_lugar,'. ',LOWER(RP.municipio),LOWER(RP.departamento),')') AS direccion_lugar,
+					RP.ciiu4,
+					SUBSTR(RP.codigo_clasificacion,1,2) AS codigo,
+					COUNT(DISTINCT RP.id_promocion) AS total
+					FROM sac_resultado_promocion AS RP 
+					WHERE DATE_FORMAT(RP.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RP.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
+					GROUP BY RP.id_lugar_trabajo";
+		$query=$this->db->query($sentencia);
+		//echo $sentencia;
+		return (array)$query->result_array();
+	}
+
+	function resumen_informe_verificacion($anio,$mes,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RV.id_departamento=".$id_departamento;
+		}		
+		$sentencia="SELECT DISTINCT
+					CONCAT(RV.nombre_institucion,' - ',RV.nombre_lugar,' (',RV.direccion_lugar, LOWER(RV.municipio),LOWER(RV.departamento),')') AS direccion_lugar,
+					RV.ciiu4,
+					SUBSTR(RV.codigo_clasificacion,1,2) AS codigo,
+					COUNT(DISTINCT RV.id_promocion) AS total_promciones_por_lugar_de_trabajo,
+					COUNT(DISTINCT RV.id_empleado_institucion) AS total_miembros_entrevistados_por_lugar_de_trabajo
+					FROM sac_resultado_verificacion AS RV 
+					WHERE DATE_FORMAT(RV.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RV.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
+					GROUP BY RV.id_lugar_trabajo";
+		echo $sentencia;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function resumen_informe_capacitacion($anio,$mes,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RC.id_departamento=".$id_departamento;
+		}		
+		$sentencia="SELECT 
+					CONCAT(RC.nombre_institucion,' - ',RC.nombre_lugar,' (',RC.direccion_lugar,'. ', LOWER(RC.municipio),', ',LOWER(RC.departamento),')') AS direccion_lugar,
+					RC.ciiu4,
+					SUBSTR(RC.codigo_clasificacion,1,2) AS codigo,
+					IFNULL(RCH.total_hombres_capacitados,0) AS total_hombres_capacitados,
+					IFNULL(RCM.total_mujeres_capacitados,0) AS total_mujeres_capacitados,
+					COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total_capacitados,
+					RC.total_hombres AS total_hombres_beneficiados,
+					RC.total_mujeres AS total_mujeres_beneficiados,
+					(RC.total_hombres+RC.total_mujeres) AS total_beneficiados
+					FROM sac_resultado_capacitacion AS RC 
+					LEFT JOIN (
+						SELECT 
+						RC.id_lugar_trabajo, 
+						COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total_hombres_capacitados
+						FROM sac_resultado_capacitacion AS RC 
+						WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=1
+						GROUP BY RC.id_lugar_trabajo
+					) AS RCH ON RCH.id_lugar_trabajo=RC.id_lugar_trabajo
+					LEFT JOIN (
+						SELECT 
+						RC.id_lugar_trabajo, 
+						COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total_mujeres_capacitados
+						FROM sac_resultado_capacitacion AS RC 
+						WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=2
+						GROUP BY RC.id_lugar_trabajo
+					) AS RCM ON RCM.id_lugar_trabajo=RC.id_lugar_trabajo
+					WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0
+					GROUP BY RC.id_lugar_trabajo";
+		//echo $sentencia;
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function resumen_informe_acreditacion($anio,$mes,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RA.id_departamento=".$id_departamento;
+		}		
+		$sentencia="SELECT 
+					CONCAT(RA.nombre_institucion,' - ',RA.nombre_lugar,' (',RA.direccion_lugar,'. ', LOWER(RA.municipio),', ',LOWER(RA.departamento),')') AS direccion_lugar,
+					RA.ciiu4,
+					SUBSTR(RA.codigo_clasificacion,1,2) AS codigo,
+					IFNULL(RAH.total_hombres_capacitados,0) AS total_hombres_capacitados,
+					IFNULL(RAM.total_mujeres_capacitados,0) AS total_mujeres_capacitados,
+					COUNT(DISTINCT RA.id_empleado_institucion, RA.asistio_empleado) AS total_capacitados,
+					RA.total_hombres AS total_hombres_beneficiados,
+					RA.total_mujeres AS total_mujeres_beneficiados,
+					(RA.total_hombres+RA.total_mujeres) AS total_beneficiados
+					FROM sac_resultado_acreditacion AS RA 
+					LEFT JOIN (
+						SELECT 
+						RA.id_lugar_trabajo, 
+						COUNT(DISTINCT RA.id_empleado_institucion, RA.asistio_empleado) AS total_hombres_capacitados
+						FROM sac_resultado_acreditacion AS RA 
+						WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where." AND RA.asistio_empleado=1 AND RA.id_genero=1
+						GROUP BY RA.id_lugar_trabajo
+					) AS RAH ON RAH.id_lugar_trabajo=RA.id_lugar_trabajo
+					LEFT JOIN (
+						SELECT 
+						RA.id_lugar_trabajo, 
+						COUNT(DISTINCT RA.id_empleado_institucion, RA.asistio_empleado) AS total_mujeres_capacitados
+						FROM sac_resultado_acreditacion AS RA 
+						WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where." AND RA.asistio_empleado=1 AND RA.id_genero=2
+						GROUP BY RA.id_lugar_trabajo
+					) AS RAM ON RAM.id_lugar_trabajo=RA.id_lugar_trabajo
+					WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where." AND RA.asistio_empleado=1
+					GROUP BY RA.id_lugar_trabajo";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function nombre_jefe()
+	{
+		$sentencia="SELECT TRIM(nombre) AS nombre_jefe
+					FROM tcm_empleado
+					WHERE nominal LIKE '%jefe del departamento seguridad e higiene ocupacional%' OR funcional LIKE '%jefe del departamento seguridad e higiene ocupacional%'";
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
 	}
 }
 ?>

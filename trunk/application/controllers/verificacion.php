@@ -831,6 +831,15 @@ class Verificacion extends CI_Controller
 				print_r($formuInfo);
 				echo "</pre>";*/
 			}
+
+			$formuInfo = array(
+				'id_lugar_trabajo'=>$id_lugar_trabajo,
+				'estado'=>3,
+				'fecha_modificacion'=>$fecha_modificacion,
+				'id_usuario_modifica'=>$id_usuario_modifica
+			);
+			$this->verificacion_model->guardar_verificacion_comite($formuInfo);
+
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;
 			ir_a("index.php/verificacion/ingreso/1/".$tr);

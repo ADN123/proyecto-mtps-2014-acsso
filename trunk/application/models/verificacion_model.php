@@ -199,16 +199,18 @@ class Verificacion_model extends CI_Model {
 	
 	function institucion_visita_nuevo($id_departamento=0)
 	{
+		//$where=" AND DATEDIFF(CURRENT_TIMESTAMP(),sac_lugar_trabajo.fecha_conformacion)>=180";
 		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre 
 					FROM sac_institucion
 					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
-					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado=2 AND org_departamento.id_departamento=".$id_departamento."
+					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado=2 AND org_departamento.id_departamento=".$id_departamento." ".$where."
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo,sac_lugar_trabajo.nombre_lugar
 					HAVING (MAX(sac_programacion_visita.estado_programacion)<>3 OR MAX(sac_programacion_visita.estado_programacion) IS NULL)";
 		$query=$this->db->query($sentencia);
+		echo $sentencia;
 		return (array)$query->result_array();
 	}
 	
@@ -719,6 +721,18 @@ class Verificacion_model extends CI_Model {
 		
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
+	}
+
+	function guardar_verificacion_comite($formuInfo)
+	{
+		extract($formuInfo);
+		$sentencia="UPDATE sac_lugar_trabajo SET
+					estado='$estado',
+					fecha_modificacion='$fecha_modificacion',
+					id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_lugar_trabajo=$id_lugar_trabajo";
+		$query=$this->db->query($sentencia);
+		return true;
 	}
 }
 ?>
