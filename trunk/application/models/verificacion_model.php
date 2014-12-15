@@ -210,7 +210,7 @@ class Verificacion_model extends CI_Model {
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo,sac_lugar_trabajo.nombre_lugar
 					HAVING (MAX(sac_programacion_visita.estado_programacion)<>3 OR MAX(sac_programacion_visita.estado_programacion) IS NULL)";
 		$query=$this->db->query($sentencia);
-		echo $sentencia;
+		//echo $sentencia;
 		return (array)$query->result_array();
 	}
 	
