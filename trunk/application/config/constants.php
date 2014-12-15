@@ -27,44 +27,44 @@ define('DIR_WRITE_MODE', 0777);
 |
 */
 
-define('FOPEN_READ',							'rb');
-define('FOPEN_READ_WRITE',						'r+b');
-define('FOPEN_WRITE_CREATE_DESTRUCTIVE',		'wb'); // truncates existing file data, use with care
-define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE',	'w+b'); // truncates existing file data, use with care
-define('FOPEN_WRITE_CREATE',					'ab');
-define('FOPEN_READ_WRITE_CREATE',				'a+b');
-define('FOPEN_WRITE_CREATE_STRICT',				'xb');
-define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
+define('FOPEN_READ',                            'rb');
+define('FOPEN_READ_WRITE',                      'r+b');
+define('FOPEN_WRITE_CREATE_DESTRUCTIVE',        'wb'); // truncates existing file data, use with care
+define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE',   'w+b'); // truncates existing file data, use with care
+define('FOPEN_WRITE_CREATE',                    'ab');
+define('FOPEN_READ_WRITE_CREATE',               'a+b');
+define('FOPEN_WRITE_CREATE_STRICT',             'xb');
+define('FOPEN_READ_WRITE_CREATE_STRICT',        'x+b');
 
 
-define('Dinicio', 								90);
-define('Dreportes', 							91);
-define('Dreportes_promociones',					92);
-define('Dpromocion_comites', 					93);
-define('Ddatos_generales', 						94);
-define('Dingreso_promocion', 					95);
-define('Dprogramar_visita_1', 					96);
-define('Dacreditacion', 						97);
-define('Dprogramar_capacitacion', 				98);
-define('Dcontrol_asistencia', 					99);
-define('Dacreditacion_comite', 					100);
-define('Dverificacion', 						101);
-define('Dprogramar_visita_2', 					102);
-define('Dcontrol_visita', 						103);
-define('Dusuario', 								104);
-define('Dcontrol_rol', 							105);
-define('Dcontrol_usuario', 						106);
-define('Dlugares_trabajo', 						107);
-define('Dparticipantes', 						108);
-define('Dasignaciones', 						109);
+define('Dinicio',                               90);
+define('Dreportes',                             91);
+define('Dreportes_promociones',                 92);
+define('Dpromocion_comites',                    93);
+define('Ddatos_generales',                      94);
+define('Dingreso_promocion',                    95);
+define('Dprogramar_visita_1',                   96);
+define('Dacreditacion',                         97);
+define('Dprogramar_capacitacion',               98);
+define('Dcontrol_asistencia',                   99);
+define('Dacreditacion_comite',                  100);
+define('Dverificacion',                         101);
+define('Dprogramar_visita_2',                   102);
+define('Dcontrol_visita',                       103);
+define('Dusuario',                              104);
+define('Dcontrol_rol',                          105);
+define('Dcontrol_usuario',                      106);
+define('Dlugares_trabajo',                      107);
+define('Dparticipantes',                        108);
+define('Dasignaciones',                         109);
 define('Dregistrar_comite', 					125);
 define('Daprobar_comite', 						126);
 define('Dimprimir_acreditacion',				127);
 define('Dreportes_capacitaciones', 				128);
 define('Dreportes_acreditaciones', 				129);
 define('Dreportes_verificaciones',				130);
-define('Dasigancion_visita_1', 					131);
-define('Dasigancion_visita_2', 					132);
+define('Dasigancion_visita_1', 					132);
+define('Dasigancion_visita_2', 					133);
 define('Dinforme_mensual', 						133);
 
 /* End of file constants.php */
