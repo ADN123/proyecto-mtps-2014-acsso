@@ -784,5 +784,153 @@ class Promocion_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
+
+	function consultas_anios()
+	{
+		$sentencia="SELECT DISTINCT 
+					Y.id, Y.nombre
+					FROM (
+						SELECT
+						DATE_FORMAT(R.fecha_promocion,'%Y') AS id,
+						DATE_FORMAT(R.fecha_promocion,'%Y') AS nombre
+						FROM sac_resultado_promocion AS R
+						WHERE R.id_promocion IS NOT NULL
+						UNION
+						SELECT 
+						DATE_FORMAT(R.fecha_promocion,'%Y') AS id,
+						DATE_FORMAT(R.fecha_promocion,'%Y') AS nombre
+						FROM sac_resultado_verificacion AS R
+						WHERE R.id_promocion IS NOT NULL
+						UNION
+						SELECT 
+						DATE_FORMAT(R.fecha_capacitacion,'%Y') AS id,
+						DATE_FORMAT(R.fecha_capacitacion,'%Y') AS nombre
+						FROM sac_resultado_capacitacion AS R
+						WHERE R.id_capacitacion IS NOT NULL
+						UNION
+						SELECT 
+						DATE_FORMAT(R.fecha_conformacion,'%Y') AS id,
+						DATE_FORMAT(R.fecha_conformacion,'%Y') AS nombre
+						FROM sac_resultado_acreditacion AS R
+						WHERE R.fecha_conformacion IS NOT NULL
+					) AS Y
+					ORDER BY Y.nombre DESC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function consultas_meses($anio)
+	{
+		$sentencia="SELECT DISTINCT 
+					M.id, M.nombre
+					FROM (
+						SELECT
+						DATE_FORMAT(R.fecha_promocion,'%Y') AS y,
+						DATE_FORMAT(R.fecha_promocion,'%m') AS id,
+						CASE
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '01' THEN 'Enero'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '02' THEN 'Febrero'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '03' THEN 'Marzo'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '04' THEN 'Abril'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '05' THEN 'Mayo'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '06' THEN 'Junio'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '07' THEN 'Julio'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '08' THEN 'Agosto'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '09' THEN 'Septiembre'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '10' THEN 'Octubre'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '11' THEN 'Noviembre'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '12' THEN 'Diciembre'
+						END AS nombre
+						FROM sac_resultado_promocion AS R
+						UNION
+						SELECT 
+						DATE_FORMAT(R.fecha_promocion,'%Y') AS y,
+						DATE_FORMAT(R.fecha_promocion,'%m') AS id,
+						CASE
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '01' THEN 'Enero'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '02' THEN 'Febrero'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '03' THEN 'Marzo'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '04' THEN 'Abril'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '05' THEN 'Mayo'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '06' THEN 'Junio'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '07' THEN 'Julio'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '08' THEN 'Agosto'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '09' THEN 'Septiembre'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '10' THEN 'Octubre'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '11' THEN 'Noviembre'
+							WHEN DATE_FORMAT(R.fecha_promocion,'%m') LIKE '12' THEN 'Diciembre'
+						END AS nombre
+						FROM sac_resultado_verificacion AS R
+						UNION
+						SELECT 
+						DATE_FORMAT(R.fecha_capacitacion,'%Y') AS y,
+						DATE_FORMAT(R.fecha_capacitacion,'%m') AS id,
+						CASE
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '01' THEN 'Enero'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '02' THEN 'Febrero'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '03' THEN 'Marzo'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '04' THEN 'Abril'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '05' THEN 'Mayo'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '06' THEN 'Junio'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '07' THEN 'Julio'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '08' THEN 'Agosto'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '09' THEN 'Septiembre'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '10' THEN 'Octubre'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '11' THEN 'Noviembre'
+							WHEN DATE_FORMAT(R.fecha_capacitacion,'%m') LIKE '12' THEN 'Diciembre'
+						END AS nombre
+						FROM sac_resultado_capacitacion AS R
+						UNION
+						SELECT 
+						DATE_FORMAT(R.fecha_conformacion,'%Y') AS y,
+						DATE_FORMAT(R.fecha_conformacion,'%m') AS id,
+						CASE
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '01' THEN 'Enero'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '02' THEN 'Febrero'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '03' THEN 'Marzo'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '04' THEN 'Abril'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '05' THEN 'Mayo'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '06' THEN 'Junio'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '07' THEN 'Julio'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '08' THEN 'Agosto'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '09' THEN 'Septiembre'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '10' THEN 'Octubre'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '11' THEN 'Noviembre'
+							WHEN DATE_FORMAT(R.fecha_conformacion,'%m') LIKE '12' THEN 'Diciembre'
+						END AS nombre
+						FROM sac_resultado_acreditacion AS R
+					) AS M
+					WHERE M.id IS NOT NULL AND M.y LIKE '".$anio."'
+					ORDER BY M.id ASC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+
+	function resumen_informe($anio,$mes,$id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND RP.id_departamento=".$id_departamento;
+		}		
+		$sentencia="SELECT 1 AS idp, 0 AS idh, 'COMITES DE SEGURIDAD E HIGIENE OCUPACIONAL' AS tipo, NULL AS 'subtotal', NULL AS 'total'
+					UNION
+					SELECT 1 AS idp, 1 AS idh, 'Promociones' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RP.id_promocion) AS total FROM sac_resultado_promocion AS RP WHERE DATE_FORMAT(RP.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RP.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
+					UNION
+					SELECT 1 AS idp, 2 AS idh, 'Verificación Art.10 del Decreto 86' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RV.id_promocion) AS total FROM sac_resultado_verificacion AS RV WHERE DATE_FORMAT(RV.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RV.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
+					UNION
+					SELECT 1 AS idp, 3 AS idh, 'Empresas Capacitadas' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_capacitacion) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where."
+					UNION
+					SELECT 1 AS idp, 4 AS idh, 'Comités Acreditados' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RA.fecha_conformacion) AS total FROM sac_resultado_acreditacion AS RA WHERE DATE_FORMAT(RA.fecha_conformacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RA.fecha_conformacion,'%Y') LIKE '".$anio."'".$where."
+					UNION
+					SELECT 2 AS idp, 0 AS idh, 'CAPACITACIONES INTERNAS' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_capacitacion) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.id_lugar_trabajo_capacitacion IS NULL
+					UNION
+					SELECT 3 AS idp, 0 AS idh, 'REUNIONES DE SECCIÓN' AS tipo, NULL AS 'subtotal', NULL AS total
+					UNION
+					SELECT 4 AS idp, 0 AS idh, 'REUNIONES INTERINSTITUCIONALES' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_capacitacion) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.id_lugar_trabajo_capacitacion IS NOT NULL
+					UNION
+					SELECT 5 AS idp, 0 AS idh, 'ASESORIAS ESTUDIANTILES' AS tipo, NULL AS 'subtotal', NULL AS total";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
 }
 ?>
