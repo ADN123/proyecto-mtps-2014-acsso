@@ -82,7 +82,7 @@
                             <div class="form-group">
                                 <label for="nombre_lugar" class="col-sm-3 control-label">Nombre lugar de trabajo <span class="asterisk">*</span></label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" data-req="true" data-tip="var" data-min="5" />
+                                    <input type="text" name="nombre_lugar" id="nombre_lugar" class="form-control" data-req="true" data-tip="x" data-min="5" />
                                 </div>
                             </div>
                             
