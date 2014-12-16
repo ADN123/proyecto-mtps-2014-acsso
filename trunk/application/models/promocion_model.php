@@ -427,7 +427,9 @@ class Promocion_model extends CI_Model {
     
     function actualizar_lugar_trabajo($formuInfo)
     {
-        extract($formuInfo);        
+        extract($formuInfo);     
+        if($necesita_comite=="")
+            $necesita_comite="necesita_comite";
         $sentencia="UPDATE sac_lugar_trabajo SET
                     id_institucion=$id_institucion, id_tipo_lugar_trabajo=$id_tipo_lugar_trabajo, nombre_lugar='$nombre_lugar', direccion_lugar='$direccion_lugar', id_municipio=$id_municipio, nombre_contacto='$nombre_contacto', telefono='$telefono', correo='$correo', total_hombres=$total_hombres, total_mujeres=$total_mujeres, necesita_comite=$necesita_comite,fecha_modificacion='$fecha_modificacion', id_usuario_modifica=$id_usuario_modifica 
                     WHERE id_lugar_trabajo=".$id_lugar_trabajo;
