@@ -8,6 +8,7 @@ class Sessiones extends CI_Controller {
 		date_default_timezone_set('America/El_Salvador');
 		$this->load->model('seguridad_model');
 		$this->load->helper('cookie');
+		$this->load->library("securimage/securimage");
     }
 
 	/*
@@ -108,6 +109,30 @@ class Sessiones extends CI_Controller {
 		 	sleep (1); //es nesesario pausar debido a que se tiene que crear la cookie
 			return $_COOKIE['contador'];
 		}//fin else de intentos
+	}
+
+
+	function cambiar_pass()
+	{
+		$this->load->view('cambiar_pass');
+	}
+
+	function capcha()
+	{
+		$img = new Securimage();
+		$img->show(); 
+	}
+
+	function sendmail()
+	{
+		header('Content-type: application/json');
+		$securimage = new Securimage();
+		if (!$securimage->check($_POST['captcha_code'])) {
+			echo json_encode(array('message' => 'Bien!'));
+		}
+		else {
+			echo json_encode(array('message' => 'Mal!'));
+		}
 	}
 }
 ?>

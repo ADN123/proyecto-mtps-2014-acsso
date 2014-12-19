@@ -12,7 +12,7 @@
                 <input type="hidden" name="ir" />
                 <input type="text" class="form-control uname" placeholder="Usuario" name="user" id="user"/>
                 <input type="password" class="form-control pword" placeholder="Contraseña" name="pass" id="pass"/>
-                <a href="#"><small>Olvidaste tu contraseña?</small></a>
+                <a href="#" id="cambiar-pass"><small>Olvidaste tu contraseña?</small></a>
                 <button class="btn btn-success btn-block boton_validador" id="entrar" name="entrar">Ingresar</button>                
         	</form>
     	</div>
@@ -39,3 +39,11 @@
     </div>
     
 </div>
+<script language="javascript" >
+    $(document).ready(function(){   
+        $("#cambiar-pass").click(function(){
+            modal("Cambiar Contraseña",base_url()+'index.php/sessiones/cambiar_pass');
+            return false;
+        });
+     });
+</script>
