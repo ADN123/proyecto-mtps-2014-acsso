@@ -243,27 +243,29 @@
 		<td valign="middle" align="center" width="50"><strong>N°</strong></td>
 		<td valign="middle" align="center" width="600"><strong>EMPRESA</strong></td>
 		<td valign="middle" align="center" width="140" colspan="2"><strong>CIIU</strong></td>
-		<td valign="middle" align="center" width="70"><strong>ENTREVISTAS</strong></td>
+		<td valign="middle" align="center" width="70"><strong>ESTADO</strong></td>
 	</tr>
 	<?php
 		$i=0;
+		$j=0;
 		$total=0;
         foreach($resumen_informe_verificacion as $val) {
-        	if($val['direccion_lugar']!="" && $val['ciiu4']!="" && $val['codigo']!="" && $val['total_miembros_entrevistados_por_lugar_de_trabajo']!="") {
+        	if($val['direccion_lugar']!="" && $val['ciiu4']!="" && $val['codigo']!="" && $val['nombre_estado_verificacion']!="") {
     			$i++;
-    			$total=$total+$val['total_promciones_por_lugar_de_trabajo'];
+    			$j++;
+    			$total=$total+$j;
     ?>
 			    <tr>
 					<td valign="middle" width="50" align="center"><?=$i?></td>
 					<td valign="middle"><?=$val['direccion_lugar']?></td>
 					<td valign="middle" width="70" align="center"><?=$val['ciiu4']?></td>
 					<td valign="middle" width="70" align="center"><?=$val['codigo']?></td>
-					<td valign="middle" width="70" align="center"><?=$val['total_promciones_por_lugar_de_trabajo']?></td>
+					<td valign="middle" width="70" align="center"><?=$val['nombre_estado_verificacion']?></td>
 				</tr>
     <?php
     		}
         }
-        if($i==0) {
+        if($j==0) {
     ?>
     		<tr>
 				<td colspan="5" align="center">

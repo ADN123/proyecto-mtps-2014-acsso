@@ -932,11 +932,11 @@ class Promocion_model extends CI_Model {
                     UNION
                     SELECT 1 AS idp, 6 AS idh, NULL AS tipo, NULL AS 'subtotal', NULL AS total
                     UNION
-                    SELECT 2 AS idp, 0 AS idh, 'TOTAL TRABAJADORES CAPACITADOS PARA FORMAR COMITES' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0
+                    SELECT 2 AS idp, 0 AS idh, 'TOTAL TRABAJADORES CAPACITADOS PARA FORMAR COMITES' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.asistio_empleado=1
                     UNION
-                    SELECT 2 AS idp, 1 AS idh, 'Hombres' AS tipo, COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=1
+                    SELECT 2 AS idp, 1 AS idh, 'Hombres' AS tipo, COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=1 AND RC.asistio_empleado=1
                     UNION
-                    SELECT 2 AS idp, 2 AS idh, 'Mujeres' AS tipo, COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=2
+                    SELECT 2 AS idp, 2 AS idh, 'Mujeres' AS tipo, COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=2 AND RC.asistio_empleado=1
                     UNION
                     SELECT 2 AS idp, 3 AS idh, NULL AS tipo, NULL AS 'subtotal', NULL AS total
                     UNION
@@ -1003,7 +1003,8 @@ class Promocion_model extends CI_Model {
                     SUBSTR(RV.codigo_clasificacion,1,2) AS codigo,
                     COUNT(DISTINCT RV.id_promocion) AS total_promciones_por_lugar_de_trabajo,
                     COUNT(DISTINCT RV.id_empleado_institucion) AS total_miembros_entrevistados_por_lugar_de_trabajo,
-                    MAX(RV.id_estado_verificacion) AS id_estado_verificacion
+                    MAX(RV.id_estado_verificacion) AS id_estado_verificacion,
+                    RV.nombre_estado_verificacion
                     FROM sac_resultado_verificacion AS RV 
                     WHERE DATE_FORMAT(RV.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RV.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
                     GROUP BY RV.id_lugar_trabajo";
@@ -1034,7 +1035,7 @@ class Promocion_model extends CI_Model {
                         RC.id_lugar_trabajo, 
                         COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total_hombres_capacitados
                         FROM sac_resultado_capacitacion AS RC 
-                        WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=1
+                        WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=1 AND RC.asistio_empleado=1
                         GROUP BY RC.id_lugar_trabajo
                     ) AS RCH ON RCH.id_lugar_trabajo=RC.id_lugar_trabajo
                     LEFT JOIN (
@@ -1042,10 +1043,10 @@ class Promocion_model extends CI_Model {
                         RC.id_lugar_trabajo, 
                         COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total_mujeres_capacitados
                         FROM sac_resultado_capacitacion AS RC 
-                        WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=2
+                        WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=2 AND RC.asistio_empleado=1
                         GROUP BY RC.id_lugar_trabajo
                     ) AS RCM ON RCM.id_lugar_trabajo=RC.id_lugar_trabajo
-                    WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0
+                    WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.asistio_empleado=1
                     GROUP BY RC.id_lugar_trabajo";
         //echo $sentencia;
         $query=$this->db->query($sentencia);
