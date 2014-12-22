@@ -607,10 +607,11 @@ class Inicio extends CI_Controller
 								$total_mujeres_beneficiados=$total_mujeres_beneficiados+$val['total_mujeres_beneficiados'];
 								$total_beneficiados=$total_beneficiados+$val['total_beneficiados'];
 
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $j)->setCellValue('B'.$i, $val['direccion_lugar'])->setCellValue('C'.$i, $val['ciiu4'])->setCellValue('D'.$i, $val['codigo'])->setCellValue('E'.$i, $val['total_hombres_capacitados'])->setCellValue('F'.$i, $val['total_mujeres_capacitados'])->setCellValue('G'.$i, $val['total_capacitados'])->setCellValue('H'.$i, $val['total_hombres_beneficiados'])->setCellValue('I'.$i, $val['total_mujeres_beneficiados'])->setCellValue('J'.$i, $val['total_beneficiados']);
+								$objPHPExcel->setActiveSheetIndex(1)->setCellValue('A'.$i, $j)->setCellValue('B'.$i, $val['direccion_lugar'])->setCellValue('C'.$i, $val['ciiu4'])->setCellValue('D'.$i, $val['codigo'])->setCellValue('E'.$i, $val['total_hombres_capacitados'])->setCellValue('F'.$i, $val['total_mujeres_capacitados'])->setCellValue('G'.$i, $val['total_capacitados'])->setCellValue('H'.$i, $val['total_hombres_beneficiados'])->setCellValue('I'.$i, $val['total_mujeres_beneficiados'])->setCellValue('J'.$i, $val['total_beneficiados']);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 								$objPHPExcel->getActiveSheet()->getStyle('B'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 								$objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getFont()->setBold(true);
 								$objPHPExcel->getActiveSheet()->getStyle('J'.$i)->getFont()->setBold(true);
 								$i++;
@@ -627,19 +628,20 @@ class Inicio extends CI_Controller
 
 					        }
 					        else {
+					        	$i--;
 					        	$objPHPExcel->getActiveSheet()->mergeCells('A'.($i+1).':D'.($i+1));
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.($i+1), 'TOTAL');
+					        	$objPHPExcel->setActiveSheetIndex(1)->setCellValue('A'.($i+1), 'TOTAL');
 
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.($i+1), $total_hombres_capacitados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.($i+1), $total_mujeres_capacitados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.($i+1), $total_capacitados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.($i+1), $total_hombres_beneficiados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.($i+1), $total_mujeres_beneficiados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.($i+1), $total_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(1)->setCellValue('E'.($i+1), $total_hombres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(1)->setCellValue('F'.($i+1), $total_mujeres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(1)->setCellValue('G'.($i+1), $total_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(1)->setCellValue('H'.($i+1), $total_hombres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(1)->setCellValue('I'.($i+1), $total_mujeres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(1)->setCellValue('J'.($i+1), $total_beneficiados);
 
 								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':J'.($i+1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':F'.($i+1))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-								$objPHPExcel->getActiveSheet()->getStyle('E'.($i+1).':F'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':J'.($i+1))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+								$objPHPExcel->getActiveSheet()->getStyle('E'.($i+1).':J'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':J'.($i+1))->getFont()->setBold(true);
 					        }
@@ -715,10 +717,11 @@ class Inicio extends CI_Controller
 								$total_mujeres_beneficiados=$total_mujeres_beneficiados+$val['total_mujeres_beneficiados'];
 								$total_beneficiados=$total_beneficiados+$val['total_beneficiados'];
 
-								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $j)->setCellValue('B'.$i, $val['nombre'])->setCellValue('C'.$i, $val['direccion'])->setCellValue('D'.$i, $val['departamento'])->setCellValue('E'.$i, $val['municipio'])->setCellValue('F'.$i, $val['ciiu4'])->setCellValue('G'.$i, $val['codigo'])->setCellValue('H'.$i, $val['total_hombres_capacitados'])->setCellValue('I'.$i, $val['total_mujeres_capacitados'])->setCellValue('J'.$i, $val['total_capacitados'])->setCellValue('K'.$i, $val['total_hombres_beneficiados'])->setCellValue('L'.$i, $val['total_mujeres_beneficiados'])->setCellValue('M'.$i, $val['total_beneficiados']);
+								$objPHPExcel->setActiveSheetIndex(2)->setCellValue('A'.$i, $j)->setCellValue('B'.$i, $val['nombre'])->setCellValue('C'.$i, $val['direccion'])->setCellValue('D'.$i, $val['departamento'])->setCellValue('E'.$i, $val['municipio'])->setCellValue('F'.$i, $val['ciiu4'])->setCellValue('G'.$i, $val['codigo'])->setCellValue('H'.$i, $val['total_hombres_capacitados'])->setCellValue('I'.$i, $val['total_mujeres_capacitados'])->setCellValue('J'.$i, $val['total_capacitados'])->setCellValue('K'.$i, $val['total_hombres_beneficiados'])->setCellValue('L'.$i, $val['total_mujeres_beneficiados'])->setCellValue('M'.$i, $val['total_beneficiados']);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':E'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 								$objPHPExcel->getActiveSheet()->getStyle('J'.$i)->getFont()->setBold(true);
 								$objPHPExcel->getActiveSheet()->getStyle('M'.$i)->getFont()->setBold(true);
 								$i++;
@@ -735,15 +738,16 @@ class Inicio extends CI_Controller
 
 					        }
 					        else {
+					        	$i--;
 					        	$objPHPExcel->getActiveSheet()->mergeCells('A'.($i+1).':G'.($i+1));
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.($i+1), 'TOTAL');
+					        	$objPHPExcel->setActiveSheetIndex(2)->setCellValue('A'.($i+1), 'TOTAL');
 
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.($i+1), $total_hombres_capacitados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.($i+1), $total_mujeres_capacitados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.($i+1), $total_capacitados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.($i+1), $total_hombres_beneficiados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.($i+1), $total_mujeres_beneficiados);
-					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.($i+1), $total_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(2)->setCellValue('H'.($i+1), $total_hombres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(2)->setCellValue('I'.($i+1), $total_mujeres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(2)->setCellValue('J'.($i+1), $total_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(2)->setCellValue('K'.($i+1), $total_hombres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(2)->setCellValue('L'.($i+1), $total_mujeres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(2)->setCellValue('M'.($i+1), $total_beneficiados);
 
 								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':M'.($i+1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':M'.($i+1))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -751,6 +755,8 @@ class Inicio extends CI_Controller
 								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':M'.($i+1))->getFont()->setBold(true);
 					        }
+
+					        $objPHPExcel->setActiveSheetIndex(0);
 
 							//Redirige la salida al navegador web de un cliente (Excel5)
 							header('Content-Type: application/vnd.ms-excel');
