@@ -440,7 +440,7 @@ class Inicio extends CI_Controller
 							$objPHPExcel->getActiveSheet()->setCellValue('E60', 'CODIGO');
 
 							$objPHPExcel->getActiveSheet()->getStyle('B58:F60')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-							$objPHPExcel->getActiveSheet()->getStyle('B58:F60')->getFill()->getStartColor()->setARGB('f5f5dcff');
+							$objPHPExcel->getActiveSheet()->getStyle('B58:F60')->getFill()->getStartColor()->setARGB('dddddddd');
 							$objPHPExcel->getActiveSheet()->getStyle('B58:F60')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 							$objPHPExcel->getActiveSheet()->getStyle('F59')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
 							$objPHPExcel->getActiveSheet()->getStyle('F59')->getFont()->setSize(10);
@@ -504,7 +504,7 @@ class Inicio extends CI_Controller
 							$objPHPExcel->getActiveSheet()->setCellValue('E'.($i+2), 'CODIGO');
 
 							$objPHPExcel->getActiveSheet()->getStyle('B'.($i).':F'.($i+2))->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
-							$objPHPExcel->getActiveSheet()->getStyle('B'.($i).':F'.($i+2))->getFill()->getStartColor()->setARGB('f5f5dcff');
+							$objPHPExcel->getActiveSheet()->getStyle('B'.($i).':F'.($i+2))->getFill()->getStartColor()->setARGB('dddddddd');
 							$objPHPExcel->getActiveSheet()->getStyle('B'.($i).':F'.($i+2))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 							$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
 							$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getFont()->setSize(10);
@@ -543,6 +543,213 @@ class Inicio extends CI_Controller
 								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 								$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1).':F'.($i+1))->getFont()->setBold(true);
+					        }
+
+							$objPHPExcel->setActiveSheetIndex(1);
+
+							$objPHPExcel->getActiveSheet()->getStyle('A:J')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+							$objPHPExcel->getActiveSheet()->getStyle('A:J')->getFill()->getStartColor()->setARGB('FFFFFFFF');
+
+							//Dimensionando celdas
+							$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth('6pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth('65pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth('9pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth('9pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth('14pt');							
+							$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth('12t');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth('12t');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth('12t');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth('12t');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth('12t');						
+
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J2')->getFont()->setBold(true);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J100')->getFont()->setName('Arial');
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J100')->getFont()->setSize(11);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J2')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J2')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:J2')->getFill()->getStartColor()->setARGB('dddddddd');
+							$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight('25pt');
+							$objPHPExcel->getActiveSheet()->getRowDimension(2)->setRowHeight('25pt');
+
+					        $objPHPExcel->getActiveSheet()->setCellValue('B1', 'EMPRESAS CAPACITADAS');
+							$objPHPExcel->getActiveSheet()->setCellValue('A1', 'No');
+							$objPHPExcel->getActiveSheet()->setCellValue('B2', 'LISTADO DE EMPRESAS');
+							$objPHPExcel->getActiveSheet()->setCellValue('C1', 'CIIU');
+							$objPHPExcel->getActiveSheet()->setCellValue('E1', 'TRABAJADORES CAPACITADOS');
+							$objPHPExcel->getActiveSheet()->setCellValue('E2', 'HOMBRES');
+							$objPHPExcel->getActiveSheet()->setCellValue('F2', 'MUJERES');
+							$objPHPExcel->getActiveSheet()->setCellValue('G2', 'TOTAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('H1', 'TRABAJADORES BENEFICIADOS');
+							$objPHPExcel->getActiveSheet()->setCellValue('H2', 'HOMBRES');
+							$objPHPExcel->getActiveSheet()->setCellValue('I2', 'MUJERES');
+							$objPHPExcel->getActiveSheet()->setCellValue('J2', 'TOTAL');
+
+							$objPHPExcel->getActiveSheet()->mergeCells('A1:A2');
+							$objPHPExcel->getActiveSheet()->mergeCells('C1:D2');
+							$objPHPExcel->getActiveSheet()->mergeCells('E1:G1');
+							$objPHPExcel->getActiveSheet()->mergeCells('H1:J1');
+
+							$i=3;
+							$j=1;
+							$total_hombres_capacitados=0;
+							$total_mujeres_capacitados=0;
+							$total_capacitados=0;
+							$total_hombres_beneficiados=0;
+							$total_mujeres_beneficiados=0;
+							$total_beneficiados=0;
+					        foreach($resumen_informe_capacitacion as $val) {
+					        	$total_hombres_capacitados=$total_hombres_capacitados+$val['total_hombres_capacitados'];
+								$total_mujeres_capacitados=$total_mujeres_capacitados+$val['total_mujeres_capacitados'];
+								$total_capacitados=$total_capacitados+$val['total_capacitados'];
+								$total_hombres_beneficiados=$total_hombres_beneficiados+$val['total_hombres_beneficiados'];
+								$total_mujeres_beneficiados=$total_mujeres_beneficiados+$val['total_mujeres_beneficiados'];
+								$total_beneficiados=$total_beneficiados+$val['total_beneficiados'];
+
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $j)->setCellValue('B'.$i, $val['direccion_lugar'])->setCellValue('C'.$i, $val['ciiu4'])->setCellValue('D'.$i, $val['codigo'])->setCellValue('E'.$i, $val['total_hombres_capacitados'])->setCellValue('F'.$i, $val['total_mujeres_capacitados'])->setCellValue('G'.$i, $val['total_capacitados'])->setCellValue('H'.$i, $val['total_hombres_beneficiados'])->setCellValue('I'.$i, $val['total_mujeres_beneficiados'])->setCellValue('J'.$i, $val['total_beneficiados']);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getFont()->setBold(true);
+								$objPHPExcel->getActiveSheet()->getStyle('J'.$i)->getFont()->setBold(true);
+								$i++;
+								$j++;
+							}
+
+							if($j==1) {
+					        	$objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':J'.$i);
+
+								$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, '(No se encontraron registros)');
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':J'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+					        }
+					        else {
+					        	$objPHPExcel->getActiveSheet()->mergeCells('A'.($i+1).':D'.($i+1));
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.($i+1), 'TOTAL');
+
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.($i+1), $total_hombres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.($i+1), $total_mujeres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.($i+1), $total_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.($i+1), $total_hombres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.($i+1), $total_mujeres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.($i+1), $total_beneficiados);
+
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':J'.($i+1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':F'.($i+1))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+								$objPHPExcel->getActiveSheet()->getStyle('E'.($i+1).':F'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':J'.($i+1))->getFont()->setBold(true);
+					        }
+
+					        $objPHPExcel->setActiveSheetIndex(2);
+
+							$objPHPExcel->getActiveSheet()->getStyle('A:M')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+							$objPHPExcel->getActiveSheet()->getStyle('A:M')->getFill()->getStartColor()->setARGB('FFFFFFFF');
+
+							//Dimensionando celdas
+							$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth('6pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth('43pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth('17pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth('16pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth('41pt');							
+							$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth('8pt');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth('8pt');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth('10pt');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth('10pt');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth('10pt');					
+							$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth('10pt');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth('10pt');						
+							$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth('10pt');							
+
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M2')->getFont()->setBold(true);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M100')->getFont()->setName('Arial');
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M100')->getFont()->setSize(10);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M2')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M2')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:M2')->getFill()->getStartColor()->setARGB('dddddddd');
+							$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight('25pt');
+							$objPHPExcel->getActiveSheet()->getRowDimension(2)->setRowHeight('25pt');
+
+					        $objPHPExcel->getActiveSheet()->setCellValue('B1', 'COMITÉS ACREDITADOS (NUEVOS)');
+							$objPHPExcel->getActiveSheet()->setCellValue('A1', 'No');
+							$objPHPExcel->getActiveSheet()->setCellValue('C1', 'DEPARTAMENTO');
+							$objPHPExcel->getActiveSheet()->setCellValue('D1', 'MUNICIPIO');
+							$objPHPExcel->getActiveSheet()->setCellValue('E1', 'DIRECCION');
+							$objPHPExcel->getActiveSheet()->setCellValue('F1', 'CIIU');
+							$objPHPExcel->getActiveSheet()->setCellValue('H1', 'TRABAJADORES CAPACITADOS');
+							$objPHPExcel->getActiveSheet()->setCellValue('H2', 'HOMBRES');
+							$objPHPExcel->getActiveSheet()->setCellValue('I2', 'MUJERES');
+							$objPHPExcel->getActiveSheet()->setCellValue('J2', 'TOTAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('K1', 'TRABAJADORES BENEFICIADOS');
+							$objPHPExcel->getActiveSheet()->setCellValue('K2', 'HOMBRES');
+							$objPHPExcel->getActiveSheet()->setCellValue('L2', 'MUJERES');
+							$objPHPExcel->getActiveSheet()->setCellValue('M2', 'TOTAL');
+
+							$objPHPExcel->getActiveSheet()->mergeCells('A1:A2');
+							$objPHPExcel->getActiveSheet()->mergeCells('B1:B2');
+							$objPHPExcel->getActiveSheet()->mergeCells('C1:C2');
+							$objPHPExcel->getActiveSheet()->mergeCells('D1:D2');
+							$objPHPExcel->getActiveSheet()->mergeCells('E1:E2');
+							$objPHPExcel->getActiveSheet()->mergeCells('F1:G2');
+							$objPHPExcel->getActiveSheet()->mergeCells('H1:J1');
+							$objPHPExcel->getActiveSheet()->mergeCells('K1:M1');
+
+							$i=3;
+							$j=1;
+							$total_hombres_capacitados=0;
+							$total_mujeres_capacitados=0;
+							$total_capacitados=0;
+							$total_hombres_beneficiados=0;
+							$total_mujeres_beneficiados=0;
+							$total_beneficiados=0;
+					       foreach($resumen_informe_acreditacion as $val) {
+					        	$total_hombres_capacitados=$total_hombres_capacitados+$val['total_hombres_capacitados'];
+								$total_mujeres_capacitados=$total_mujeres_capacitados+$val['total_mujeres_capacitados'];
+								$total_capacitados=$total_capacitados+$val['total_capacitados'];
+								$total_hombres_beneficiados=$total_hombres_beneficiados+$val['total_hombres_beneficiados'];
+								$total_mujeres_beneficiados=$total_mujeres_beneficiados+$val['total_mujeres_beneficiados'];
+								$total_beneficiados=$total_beneficiados+$val['total_beneficiados'];
+
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$i, $j)->setCellValue('B'.$i, $val['nombre'])->setCellValue('C'.$i, $val['direccion'])->setCellValue('D'.$i, $val['departamento'])->setCellValue('E'.$i, $val['municipio'])->setCellValue('F'.$i, $val['ciiu4'])->setCellValue('G'.$i, $val['codigo'])->setCellValue('H'.$i, $val['total_hombres_capacitados'])->setCellValue('I'.$i, $val['total_mujeres_capacitados'])->setCellValue('J'.$i, $val['total_capacitados'])->setCellValue('K'.$i, $val['total_hombres_beneficiados'])->setCellValue('L'.$i, $val['total_mujeres_beneficiados'])->setCellValue('M'.$i, $val['total_beneficiados']);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':E'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('J'.$i)->getFont()->setBold(true);
+								$objPHPExcel->getActiveSheet()->getStyle('M'.$i)->getFont()->setBold(true);
+								$i++;
+								$j++;
+							}
+
+							if($j==1) {
+					        	$objPHPExcel->getActiveSheet()->mergeCells('A'.$i.':M'.$i);
+
+								$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, '(No se encontraron registros)');
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i.':M'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+					        }
+					        else {
+					        	$objPHPExcel->getActiveSheet()->mergeCells('A'.($i+1).':G'.($i+1));
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.($i+1), 'TOTAL');
+
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.($i+1), $total_hombres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.($i+1), $total_mujeres_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.($i+1), $total_capacitados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.($i+1), $total_hombres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.($i+1), $total_mujeres_beneficiados);
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.($i+1), $total_beneficiados);
+
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':M'.($i+1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':M'.($i+1))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+								$objPHPExcel->getActiveSheet()->getStyle('H'.($i+1).':J'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.($i+1).':M'.($i+1))->getFont()->setBold(true);
 					        }
 
 							//Redirige la salida al navegador web de un cliente (Excel5)

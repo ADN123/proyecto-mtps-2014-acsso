@@ -1060,6 +1060,10 @@ class Promocion_model extends CI_Model {
         }       
         $sentencia="SELECT 
                     CONCAT(RA.nombre_institucion,' - ',RA.nombre_lugar,' (',RA.direccion_lugar,'. ', LOWER(RA.municipio),', ',LOWER(RA.departamento),')') AS direccion_lugar,
+                    CONCAT(RA.nombre_institucion,' - ',RA.nombre_lugar) AS nombre,
+                    RA.direccion_lugar AS direccion, 
+                    LOWER(RA.municipio) AS municipio,
+                    LOWER(RA.departamento) AS departamento,
                     RA.ciiu4,
                     SUBSTR(RA.codigo_clasificacion,1,2) AS codigo,
                     IFNULL(RAH.total_hombres_capacitados,0) AS total_hombres_capacitados,
