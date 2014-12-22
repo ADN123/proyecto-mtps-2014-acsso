@@ -932,11 +932,11 @@ class Promocion_model extends CI_Model {
                     UNION
                     SELECT 1 AS idp, 6 AS idh, NULL AS tipo, NULL AS 'subtotal', NULL AS total
                     UNION
-                    SELECT 2 AS idp, 0 AS idh, 'TOTAL TRABAJADORES CAPACITADOS PARA FORMAR COMITES' AS tipo, NULL AS 'subtotal', NULL AS total
+                    SELECT 2 AS idp, 0 AS idh, 'TOTAL TRABAJADORES CAPACITADOS PARA FORMAR COMITES' AS tipo, NULL AS 'subtotal', COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0
                     UNION
-                    SELECT 2 AS idp, 1 AS idh, 'Hombres' AS tipo, NULL AS 'subtotal', NULL AS total
+                    SELECT 2 AS idp, 1 AS idh, 'Hombres' AS tipo, COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=1
                     UNION
-                    SELECT 2 AS idp, 2 AS idh, 'Mujeres' AS tipo, NULL AS 'subtotal', NULL AS total
+                    SELECT 2 AS idp, 2 AS idh, 'Mujeres' AS tipo, COUNT(DISTINCT RC.id_empleado_institucion, RC.asistio_empleado) AS 'subtotal', NULL AS total FROM sac_resultado_capacitacion AS RC WHERE DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE '".$anio."'".$where." AND RC.estado_capacitacion=0 AND RC.id_genero=2
                     UNION
                     SELECT 2 AS idp, 3 AS idh, NULL AS tipo, NULL AS 'subtotal', NULL AS total
                     UNION
@@ -967,6 +967,7 @@ class Promocion_model extends CI_Model {
                     SELECT 6 AS idp, 0 AS idh, 'NOTAS (Detalle Otras Actividades)' AS tipo, NULL AS 'subtotal', NULL AS total
                     UNION
                     SELECT 6 AS idp, 1 AS idh, NULL AS tipo, NULL AS 'subtotal', NULL AS total";
+        //echo $sentencia;
         $query=$this->db->query($sentencia);
         return (array)$query->result_array();
     }
@@ -1001,7 +1002,8 @@ class Promocion_model extends CI_Model {
                     RV.ciiu4,
                     SUBSTR(RV.codigo_clasificacion,1,2) AS codigo,
                     COUNT(DISTINCT RV.id_promocion) AS total_promciones_por_lugar_de_trabajo,
-                    COUNT(DISTINCT RV.id_empleado_institucion) AS total_miembros_entrevistados_por_lugar_de_trabajo
+                    COUNT(DISTINCT RV.id_empleado_institucion) AS total_miembros_entrevistados_por_lugar_de_trabajo,
+                    MAX(RV.id_estado_verificacion) AS id_estado_verificacion
                     FROM sac_resultado_verificacion AS RV 
                     WHERE DATE_FORMAT(RV.fecha_promocion,'%m') LIKE '".$mes."' AND DATE_FORMAT(RV.fecha_promocion,'%Y') LIKE '".$anio."'".$where."
                     GROUP BY RV.id_lugar_trabajo";
