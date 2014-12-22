@@ -12,6 +12,7 @@ class Inicio extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->library("mpdf");
+		$this->load->library("PHPExcel");
 		$this->load->model('seguridad_model');
 		$this->load->model('promocion_model');
 		
@@ -135,11 +136,44 @@ class Inicio extends CI_Controller
 					$data['resumen_informe_verificacion']=$this->promocion_model->resumen_informe_verificacion($anio,$mes,$id_departamento);
 					$data['resumen_informe_capacitacion']=$this->promocion_model->resumen_informe_capacitacion($anio,$mes,$id_departamento);
 					$data['resumen_informe_acreditacion']=$this->promocion_model->resumen_informe_acreditacion($anio,$mes,$id_departamento);
-					$data['nombre_jefe']=$this->promocion_model->nombre_jefe();
+					$data['nombre_jefe']=$this->promocion_model->nombre_jefe();	
+
+					switch($data['id_seccion'])
+					{
+						case 52:$depto="Ahuachapán";break;
+						case 53:$depto="Cabañas";break;
+						case 54:$depto="Chalatenango";break;
+						case 55:$depto="Cuscatlán";break;
+						case 56:$depto="La Libertad";break;
+						case 57:$depto="La Unión";break;
+						case 58:$depto="Morazán";break;
+						case 59:$depto="San Vicente";break;
+						case 60:$depto="Sonsonate";break;
+						case 61:$depto="Usulután";break;
+						case 64:$depto="Zacatecoluca";break;
+						case 65:$depto="San Miguel";break;
+						case 66:$depto="Santa Ana";break;
+						default:$depto="San Salvador";break;
+					}
+
+					switch($mes) {
+						case 1: $mes="Enero";break;
+						case 2: $mes="Febreo";break;
+						case 3: $mes="Marzo";break;
+						case 4: $mes="Abril";break;
+						case 5: $mes="Mayo";break;
+						case 6: $mes="Junio";break;
+						case 7: $mes="Julio";break;
+						case 8: $mes="Agosto";break;
+						case 9: $mes="Septiembre";break;
+						case 10: $mes="Octubre";break;
+						case 11: $mes="Noviembre";break;
+						case 12: $mes="Diciembre";break;
+					}
 
 					$data['puesto']=$this->seguridad_model->info_empleado(NULL, $select="nominal, funcional", $this->session->userdata('id_usuario'));
-					$data['nombre']="Instituciones ".date('d-m-Y hisa');
-					if($data['exportacion']!=2) {
+					$data['nombre']="Informe ".$depto.", ".$mes." ".$anio." ".date('Ymdhisa');
+					if($data['exportacion']==1) {
 						$this->load->view('resumen_informe',$data);
 						/*echo "<pre>";
 						print_r($data['resumen_informe']);
@@ -157,17 +191,235 @@ class Inicio extends CI_Controller
 						print_r($data['resumen_informe_acreditacion']);
 						echo "</pre>";*/
 					}
-					else {						
-						$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
-						$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
-						$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
-						$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
-						
-						$html = $this->load->view('resumen_informe.php', $data, true);
-						//$data_cab['titulo']="PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO";
-						//$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
-						$this->mpdf->WriteHTML($html,2);
-						$this->mpdf->Output(); /*Salida del pdf*/
+					else {		
+						if($data['exportacion']==2) {				
+							$this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+							$stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+							$this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+							$this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+							
+							$html = $this->load->view('resumen_informe.php', $data, true);
+							//$data_cab['titulo']="PROMOCIONES REALIZADAS POR LUGAR DE TRABAJO";
+							//$this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+							$this->mpdf->WriteHTML($html,2);
+							$this->mpdf->Output(); /*Salida del pdf*/
+						}
+						else {
+							error_reporting(E_ALL);
+							ini_set('display_errors', TRUE);
+							ini_set('display_startup_errors', TRUE);
+
+							if (PHP_SAPI == 'cli')
+								die('Este archivo sólo se puede ejecutar desde un navegador Web');
+
+							extract($data);
+
+							switch(date('m')) {
+								case 1: $m="Enero";break;
+								case 2: $m="Febreo";break;
+								case 3: $m="Marzo";break;
+								case 4: $m="Abril";break;
+								case 5: $m="Mayo";break;
+								case 6: $m="Junio";break;
+								case 7: $m="Julio";break;
+								case 8: $m="Agosto";break;
+								case 9: $m="Septiembre";break;
+								case 10: $m="Octubre";break;
+								case 11: $m="Noviembre";break;
+								case 12: $m="Diciembre";break;
+							}
+
+							//Creando objeto
+							$objPHPExcel = new PHPExcel();
+
+							//Propiedades del documento
+							$objPHPExcel->getProperties()->setCreator(strtolower($this->session->userdata('nombre')))
+														 ->setLastModifiedBy(strtolower($this->session->userdata('nombre')))
+														 ->setTitle("Informe mensual de actividades realizadas en la Sección de Prevención de Riesgos Ocupacionales")
+														 ->setSubject("Oficina Departamental de San Salvador")
+														 ->setDescription("")
+														 ->setKeywords("Informe mensual San Salvador")
+														 ->setCategory("Informe");
+
+							$borde_suave = array(
+								'borders' => array(
+									'outline' => array(
+										'style' => PHPExcel_Style_Border::BORDER_THIN,
+										'color' => array('argb' => '00000000'),
+									),
+								),
+							);
+
+							$borde_duro = array(
+								'borders' => array(
+									'outline' => array(
+										'style' => PHPExcel_Style_Border::BORDER_THICK,
+										'color' => array('argb' => '00000000'),
+									),
+								),
+							);
+
+							$objPageSetup = new PHPExcel_Worksheet_PageSetup();
+						    $objPageSetup->setScale(70);	
+						    $objPHPExcel->getActiveSheet()->setPageSetup($objPageSetup);
+
+
+							//Creado otras dos pestañas
+							$objPHPExcel->createSheet();
+							$objPHPExcel->createSheet();
+
+							//Renombrando pestañas
+							$objPHPExcel->getActiveSheet()->setTitle('Resumen de Inf.');
+							$objPHPExcel->setActiveSheetIndex(1);
+							$objPHPExcel->getActiveSheet()->setTitle('Comités');
+							$objPHPExcel->setActiveSheetIndex(2);
+							$objPHPExcel->getActiveSheet()->setTitle('Noviembre 2014');
+
+							//Diseño de primera hoja
+							$objPHPExcel->setActiveSheetIndex(0);
+
+							$objPHPExcel->getActiveSheet()->getStyle('A:F')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+							$objPHPExcel->getActiveSheet()->getStyle('A:F')->getFill()->getStartColor()->setARGB('FFFFFFFF');
+
+							//Dimensionando celdas
+							$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth('5.5pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth('5.70pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth('70.15pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth('8.75pt');
+							$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth('13.75pt');							
+							$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth('17.6pt');
+
+
+							$objPHPExcel->getActiveSheet()->getStyle('A1:F13')->getFont()->setBold(true);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:F7')->getFont()->setName('Arial');
+							$objPHPExcel->getActiveSheet()->getStyle('A8:F100')->getFont()->setName('Tahoma');
+							$objPHPExcel->getActiveSheet()->getStyle('A:F')->getFont()->setSize(12);
+							$objPHPExcel->getActiveSheet()->getStyle('A:F')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A1:F7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A8')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+							//Agrupando celdas del encabezado
+							$objPHPExcel->getActiveSheet()->mergeCells('A1:F1');
+							$objPHPExcel->getActiveSheet()->mergeCells('A2:G2');
+							$objPHPExcel->getActiveSheet()->mergeCells('A3:G3');
+							$objPHPExcel->getActiveSheet()->mergeCells('A4:G4');
+							$objPHPExcel->getActiveSheet()->mergeCells('A5:G5');
+							$objPHPExcel->getActiveSheet()->mergeCells('A6:F6');
+							$objPHPExcel->getActiveSheet()->mergeCells('A7:F7');
+							$objPHPExcel->getActiveSheet()->mergeCells('A8:F8');
+							$objPHPExcel->getActiveSheet()->mergeCells('B10:F10');
+							$objPHPExcel->getActiveSheet()->mergeCells('B11:F11');
+							$objPHPExcel->getActiveSheet()->mergeCells('B12:F12');
+							$objPHPExcel->getActiveSheet()->mergeCells('B13:F13');
+							$objPHPExcel->getActiveSheet()->mergeCells('B16:F17');
+
+							$objPHPExcel->getActiveSheet()->setCellValue('A2', 'MINISTERIO DE TRABAJO Y PREVISION SOCIAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('A3', 'DIRECCION GENERAL DE PREVISION SOCIAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('A4', 'DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('A5', 'SECCIÓN DE PREVENCIÓN RIESGOS OCUPACIONALES');
+							$objPHPExcel->getActiveSheet()->setCellValue('A8', $depto.", ".date('d')." de ".$m." de ".date('Y'));
+							$objPHPExcel->getActiveSheet()->setCellValue('B10', 'Ingeniero');
+							$objPHPExcel->getActiveSheet()->setCellValue('B11', ltrim(ucwords($nombre_jefe['nombre_jefe'])));
+							$objPHPExcel->getActiveSheet()->setCellValue('B12', 'Jefe del Departamento de');
+							$objPHPExcel->getActiveSheet()->setCellValue('B13', 'Seguridad e Higiene Ocupacional');
+							$objPHPExcel->getActiveSheet()->getStyle('B10:B13')->getFont()->setSize(12);
+
+
+							$objRichText = new PHPExcel_RichText();
+							$objRichText->createText('Atentamente Informo de las Actividades Realizadas en la Sección de Prevención de Riesgos Ocupacionales de la Oficina Departamental de ');
+							$objPayable = $objRichText->createTextRun($depto);
+							$objPayable->getFont()->setBold(true);
+							$objRichText->createText(', Correspondiente al Mes de ');
+							$objPayable = $objRichText->createTextRun($mes);
+							$objPayable->getFont()->setBold(true);
+							$objRichText->createText(' del año ');
+							$objPayable = $objRichText->createTextRun($anio);
+							$objPayable->getFont()->setBold(true);
+							$objRichText->createText('.');
+							$objPHPExcel->getActiveSheet()->getCell('B16')->setValue($objRichText);
+							$objPHPExcel->getActiveSheet()->getStyle('B16')->getFont()->setSize(12);							
+
+							$objPHPExcel->getActiveSheet()->getStyle('B16')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+							$objPHPExcel->getActiveSheet()->getStyle('B16')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+							//Logo del MTPS
+							$objDrawing = new PHPExcel_Worksheet_Drawing();
+							$objDrawing->setName('PHPExcel logo');
+							$objDrawing->setDescription('PHPExcel logo');
+							$objDrawing->setPath('./img/mtps_report2.jpg');
+							$objDrawing->setHeight(110);
+							$objDrawing->setCoordinates('A1');
+							$objDrawing->setOffsetX(5);
+							$objDrawing->setOffsetY(10);
+							$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+
+
+							//Mostrando resumen de informe
+							$i=19;
+							foreach($resumen_informe_general as $val) {
+								if($val['idh']==0)
+									$v=$val['idp'].". ";
+								else
+									$v="";
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $v)->setCellValue('C'.$i, $val['tipo'])->setCellValue('D'.$i, "")->setCellValue('E'.$i, $val['subtotal'])->setCellValue('F'.$i, $val['total']);
+								if($val['idh']!=0) {
+									$objPHPExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+									$objPHPExcel->getActiveSheet()->getRowDimension($i)->setRowHeight('25pt');
+								}
+								else
+									$objPHPExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+								$objPHPExcel->getActiveSheet()->getStyle('D'.$i.':F'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+								$objPHPExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('D'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getFont()->setBold(true);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getFont()->setSize(12);
+								if($val['idp']==6 && $val['idh']==1) {
+									$objPHPExcel->getActiveSheet()->mergeCells('C'.$i.':F'.$i);
+									$objPHPExcel->getActiveSheet()->getRowDimension($i)->setRowHeight('60pt');
+									$objPHPExcel->getActiveSheet()->getStyle('C'.$i.':F'.$i)->applyFromArray($borde_suave);
+								}
+								if($val['subtotal']!="") {
+									$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->applyFromArray($borde_suave);
+								}
+								if(($val['total']!="" && $val['idh']==0) || $val['total']!="") {
+									$objPHPExcel->getActiveSheet()->getStyle('F'.$i)->applyFromArray($borde_duro);
+								}
+								$i++;
+							}
+
+							$objPHPExcel->getActiveSheet()->mergeCells('A'.($i+2).':F'.($i+2));
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.($i+2), ucwords(strtolower($this->session->userdata('nombre'))));
+							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+2))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+2))->getFont()->setBold(true);
+							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+2))->getFont()->setSize(12);
+
+							$objPHPExcel->getActiveSheet()->mergeCells('A'.($i+3).':F'.($i+3));
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.($i+3), ucwords($puesto['nominal']));
+							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+3))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+3))->getFont()->setBold(true);
+							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+3))->getFont()->setSize(12);
+
+							//Redirige la salida al navegador web de un cliente (Excel5)
+							header('Content-Type: application/vnd.ms-excel');
+							header('Content-Disposition: attachment;filename="'.$data['nombre'].'.xls"');
+							header('Cache-Control: max-age=0');
+
+							//Si se está utilizando IE 9 puede ser necesaria la siguiente línea
+							header('Cache-Control: max-age=1');
+
+							//Si se está utilizando IE a través de SSL, puede ser necesario hacer lo siguiente
+							header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+							header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+							header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+							header ('Pragma: public'); // HTTP/1.0
+
+							$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+							$objWriter->save('php://output');
+							exit;
+						}
 					}
 					break;
 //				case 2:
@@ -213,6 +465,73 @@ class Inicio extends CI_Controller
 		else {
 			pantalla_error();
 		}
+	}
+
+	function probar()
+	{
+		error_reporting(E_ALL);
+		ini_set('display_errors', TRUE);
+		ini_set('display_startup_errors', TRUE);
+
+		if (PHP_SAPI == 'cli')
+			die('Este archivo sólo se puede ejecutar desde un navegador Web');
+
+
+		//Creando objeto
+		$objPHPExcel = new PHPExcel();
+
+		//Propiedades del documento
+		$objPHPExcel->getProperties()->setCreator(strtolower($this->session->userdata('nombre')))
+									 ->setLastModifiedBy(strtolower($this->session->userdata('nombre')))
+									 ->setTitle("Informe mensual de actividades realizadas en la Sección de Prevención de Riesgos Ocupacionales")
+									 ->setSubject("Oficina Departamental de San Salvador")
+									 ->setDescription("")
+									 ->setKeywords("Informe mensual San Salvador")
+									 ->setCategory("Informe");
+
+		//Creado otras dos pestañas
+		$objPHPExcel->createSheet();
+		$objPHPExcel->createSheet();
+
+		//Renombrando pestañas
+		$objPHPExcel->getActiveSheet()->setTitle('Resumen de Inf.');
+		$objPHPExcel->setActiveSheetIndex(1);
+		$objPHPExcel->getActiveSheet()->setTitle('Comités');
+		$objPHPExcel->setActiveSheetIndex(2);
+		$objPHPExcel->getActiveSheet()->setTitle('Noviembre 2014');
+
+		/*$objPHPExcel->setActiveSheetIndex(0)
+		            ->setCellValue('A1', 'Hello')
+		            ->setCellValue('B2', 'world!')
+		            ->setCellValue('C1', 'Hello')
+		            ->setCellValue('D2', 'world!');
+
+		$objPHPExcel->setActiveSheetIndex(0)
+		            ->setCellValue('A4', 'Miscellaneous glyphs')
+		            ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');*/
+
+
+		//Cambiar el índice hoja activa a la primera hoja
+		$objPHPExcel->setActiveSheetIndex(0);
+
+		//Redirige la salida al navegador web de un cliente (Excel5)
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="prueba.xls"');
+		header('Cache-Control: max-age=0');
+
+		//Si se está utilizando IE 9 puede ser necesaria la siguiente línea
+		header('Cache-Control: max-age=1');
+
+		//Si se está utilizando IE a través de SSL, puede ser necesario hacer lo siguiente
+		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		header ('Pragma: public'); // HTTP/1.0
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+		$objWriter->save('php://output');
+		exit;
+
 	}
 }
 ?>
