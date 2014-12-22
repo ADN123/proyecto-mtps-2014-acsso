@@ -132,11 +132,22 @@
 ?>
 <table align="center">
 	<tr>
-		<td colspan="2" height="100"><img id="imagen" src="<?=base_url()?>img/mtps_report2.jpg" width="180" /></td>
-		<td colspan="3" align="right"><strong><?=$depto.", ".date('d')." de ".$m." de ".date('Y')?></strong></td>
+		<td width="50"></td>
+		<td width="130"></td>
+		<td width="470"></td>
+		<td width="70"></td>
+		<td width="70"></td>
+		<td width="70"></td>
 	</tr>
 	<tr>
-		<td colspan="5">
+		<td colspan="2" height="100" width="180"><img id="imagen" src="<?=base_url()?>img/mtps_report2.jpg" width="180" /></td>
+		<td colspan="4" width="760" align="right"><strong><?=$depto.", ".date('d')." de ".$m." de ".date('Y')?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="6" align="right"><strong><?=$depto.", ".date('d')." de ".$m." de ".date('Y')?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="6">
 			<strong>
 				Ingeniero<br>
 				<?=ltrim(ucwords($nombre_jefe['nombre_jefe']))?><br>				
@@ -146,8 +157,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="5" align="justify">
-			Atentamente informo de las actividades realizadas en el <strong>mes de <?=$mes?> de <?=$anio?></strong>, por la Sección de Prevención de Riesgos Ocupacionales.<br>&nbsp;
+		<td colspan="6" align="justify">
+			Atentamente Informo de las Actividades Realizadas en la Sección de Prevención de Riesgos Ocupacionales de la Oficina Departamental de <strong><?=$depto?></strong>, Correspondiente al Mes de <strong><?=$mes?></strong> del año <strong><?=$anio?></strong>.<br>&nbsp;
 		</td>
 	</tr>
 	<?php
@@ -155,16 +166,16 @@
     ?>
 		    <tr>
 				<td valign="middle" width="50"><?php if($val['idh']==0) echo '<strong>'.$val['idp'].'.</strong>';?></td>
-				<td valign="middle" width="600"><?php if($val['idh']==0) echo '<strong>'.$val['tipo'].'</strong>'; else echo $val['tipo']?></td>
-				<td valign="middle" width="70" align="center" <?php if($val['subtotal']!="") echo 'style="border:1px solid #CCC;"'?>><?='<strong>'.$val['subtotal'].'</strong>'?></td>
+				<td valign="middle" width="600" colspan="2"><?php if($val['idh']==0) echo '<strong>'.$val['tipo'].'</strong>'; else echo $val['tipo']?></td>
 				<td valign="middle" width="70"></td>
+				<td valign="middle" width="70" align="center" <?php if($val['subtotal']!="") echo 'style="border:1px solid #CCC;"'?>><?='<strong>'.$val['subtotal'].'</strong>'?></td>
 				<td valign="middle" width="70" align="center" <?php if($val['subtotal']=="" && $val['total']!="") echo 'style="border:1px solid #CCC;"'?>><?='<strong>'.$val['total'].'</strong>'?></td>
 			</tr>
     <?php
         }
     ?>
 	<tr>
-		<td colspan="5" align="center" height="60">
+		<td colspan="6" align="center" height="60">
 			<?='<strong style="text-transform: capitalize;">'.strtolower($this->session->userdata('nombre')).'</strong>'?><br>
 			<?=ucwords($puesto['nominal'])?>
 		</td>
