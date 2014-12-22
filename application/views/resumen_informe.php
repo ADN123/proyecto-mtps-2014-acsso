@@ -141,7 +141,13 @@
 	</tr>
 	<tr>
 		<td colspan="2" height="100" width="180"><img id="imagen" src="<?=base_url()?>img/mtps_report2.jpg" width="180" /></td>
-		<td colspan="4" width="760" align="right"><strong><?=$depto.", ".date('d')." de ".$m." de ".date('Y')?></strong></td>
+		<td colspan="2" width="760" align="center">
+			<strong>MINISTERIO DE TRABAJO Y PREVISION SOCIAL</strong><br>
+			<strong>DIRECCION GENERAL DE PREVISION SOCIAL</strong><br>
+			<strong>DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL</strong><br>
+			<strong>SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES</strong><br>
+		</td>
+		<td colspan="2"></td>
 	</tr>
 	<tr>
 		<td colspan="6" align="right"><strong><?=$depto.", ".date('d')." de ".$m." de ".date('Y')?></strong></td>

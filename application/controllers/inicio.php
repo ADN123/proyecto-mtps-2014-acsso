@@ -316,7 +316,7 @@ class Inicio extends CI_Controller
 							$objPHPExcel->getActiveSheet()->setCellValue('A2', 'MINISTERIO DE TRABAJO Y PREVISION SOCIAL');
 							$objPHPExcel->getActiveSheet()->setCellValue('A3', 'DIRECCION GENERAL DE PREVISION SOCIAL');
 							$objPHPExcel->getActiveSheet()->setCellValue('A4', 'DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL');
-							$objPHPExcel->getActiveSheet()->setCellValue('A5', 'SECCIÓN DE PREVENCIÓN RIESGOS OCUPACIONALES');
+							$objPHPExcel->getActiveSheet()->setCellValue('A5', 'SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES');
 							$objPHPExcel->getActiveSheet()->setCellValue('A8', $depto.", ".date('d')." de ".$m." de ".date('Y'));
 							$objPHPExcel->getActiveSheet()->setCellValue('B10', 'Ingeniero');
 							$objPHPExcel->getActiveSheet()->setCellValue('B11', ltrim(ucwords($nombre_jefe['nombre_jefe'])));
@@ -428,7 +428,7 @@ class Inicio extends CI_Controller
 							$objPHPExcel->getActiveSheet()->setCellValue('A51', 'MINISTERIO DE TRABAJO Y PREVISION SOCIAL');
 							$objPHPExcel->getActiveSheet()->setCellValue('A52', 'DIRECCION GENERAL DE PREVISION SOCIAL');
 							$objPHPExcel->getActiveSheet()->setCellValue('A53', 'DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL');
-							$objPHPExcel->getActiveSheet()->setCellValue('A54', 'SECCIÓN DE PREVENCIÓN RIESGOS OCUPACIONALES');
+							$objPHPExcel->getActiveSheet()->setCellValue('A54', 'SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES');
 							$objPHPExcel->getActiveSheet()->setCellValue('B56', 'Oficina Departamental de: '.$depto);
 							
 							$objPHPExcel->getActiveSheet()->setCellValue('B58', 'LISTADO VISITADAS DE PROMOCION');
