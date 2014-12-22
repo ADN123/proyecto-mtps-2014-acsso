@@ -402,6 +402,149 @@ class Inicio extends CI_Controller
 							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+3))->getFont()->setBold(true);
 							$objPHPExcel->getActiveSheet()->getStyle('A'.($i+3))->getFont()->setSize(12);
 
+							//LISTADO VISITADAS DE PROMOCION
+							$objPHPExcel->getActiveSheet()->getStyle('A51:F60')->getFont()->setBold(true);
+							$objPHPExcel->getActiveSheet()->getStyle('A51:F60')->getFont()->setName('Tahoma');
+							$objPHPExcel->getActiveSheet()->getStyle('A51:F57')->getFont()->setSize(12);
+							$objPHPExcel->getActiveSheet()->getStyle('A58:F60')->getFont()->setSize(11);
+							$objPHPExcel->getActiveSheet()->getStyle('A51:F60')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('A51:F60')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('B56')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+							$objPHPExcel->getActiveSheet()->mergeCells('A51:F51');
+							$objPHPExcel->getActiveSheet()->mergeCells('A52:F52');
+							$objPHPExcel->getActiveSheet()->mergeCells('A53:F53');
+							$objPHPExcel->getActiveSheet()->mergeCells('A54:F54');
+							$objPHPExcel->getActiveSheet()->mergeCells('A55:F55');
+							$objPHPExcel->getActiveSheet()->mergeCells('B56:F56');
+							$objPHPExcel->getActiveSheet()->mergeCells('A57:F57');
+							$objPHPExcel->getActiveSheet()->mergeCells('B58:F58');
+
+							$objPHPExcel->getActiveSheet()->mergeCells('B59:B60');
+							$objPHPExcel->getActiveSheet()->mergeCells('C59:C60');
+							$objPHPExcel->getActiveSheet()->mergeCells('D59:E59');
+							$objPHPExcel->getActiveSheet()->mergeCells('F59:F60');
+
+							$objPHPExcel->getActiveSheet()->setCellValue('A51', 'MINISTERIO DE TRABAJO Y PREVISION SOCIAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('A52', 'DIRECCION GENERAL DE PREVISION SOCIAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('A53', 'DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL');
+							$objPHPExcel->getActiveSheet()->setCellValue('A54', 'SECCIÓN DE PREVENCIÓN RIESGOS OCUPACIONALES');
+							$objPHPExcel->getActiveSheet()->setCellValue('B56', 'Oficina Departamental de: '.$depto);
+							
+							$objPHPExcel->getActiveSheet()->setCellValue('B58', 'LISTADO VISITADAS DE PROMOCION');
+							$objPHPExcel->getActiveSheet()->setCellValue('B59', 'No');
+							$objPHPExcel->getActiveSheet()->setCellValue('C59', 'LISTADO DE EMPRESAS');
+							$objPHPExcel->getActiveSheet()->setCellValue('D59', 'C I I U');
+							$objPHPExcel->getActiveSheet()->setCellValue('F59', 'N° DE VISITAS REALIZADAS');
+							$objPHPExcel->getActiveSheet()->setCellValue('D60', 'RAMA');
+							$objPHPExcel->getActiveSheet()->setCellValue('E60', 'CODIGO');
+
+							$objPHPExcel->getActiveSheet()->getStyle('B58:F60')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+							$objPHPExcel->getActiveSheet()->getStyle('B58:F60')->getFill()->getStartColor()->setARGB('f5f5dcff');
+							$objPHPExcel->getActiveSheet()->getStyle('B58:F60')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+							$objPHPExcel->getActiveSheet()->getStyle('F59')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+							$objPHPExcel->getActiveSheet()->getStyle('F59')->getFont()->setSize(10);
+
+							$i=60;
+							$j=0;
+							$total=0;
+					        foreach($resumen_informe_promocion as $val) {
+					        	if($val['direccion_lugar']!="" && $val['ciiu4']!="" && $val['codigo']!="" && $val['total']!="") {
+					    			$i++;
+					    			$j++;
+					    			$total=$total+$val['total'];
+					    			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $j)->setCellValue('C'.$i, $val['direccion_lugar'])->setCellValue('D'.$i, $val['ciiu4'])->setCellValue('E'.$i, $val['codigo'])->setCellValue('F'.$i, $val['total']);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+									$objPHPExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								}
+					        }
+					        if($j==0) {
+					        	$i++;
+					        	$objPHPExcel->getActiveSheet()->mergeCells('B'.$i.':F'.$i);
+
+								$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, '(No se encontraron registros)');
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+					        }
+					        else {
+					        	$objPHPExcel->getActiveSheet()->mergeCells('B'.($i+1).':E'.($i+1));
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.($i+1), 'TOTAL');
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.($i+1), $total);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1).':F'.($i+1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1).':F'.($i+1))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+								$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1).':F'.($i+1))->getFont()->setBold(true);
+					        }
+
+					        //VISITAS DE VERIFICACION ART. 10 - DECRETO 86
+					        $i=$i+3;
+			        		$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.($i+2))->getFont()->setBold(true);
+							$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.($i+2))->getFont()->setName('Tahoma');
+							$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.($i+2))->getFont()->setSize(11);
+							$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.($i+2))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+							$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.($i+2))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+							$objPHPExcel->getActiveSheet()->mergeCells('B'.$i.':F'.$i);
+							$objPHPExcel->getActiveSheet()->mergeCells('B'.($i+1).':B'.($i+2));
+							$objPHPExcel->getActiveSheet()->mergeCells('C'.($i+1).':C'.($i+2));
+							$objPHPExcel->getActiveSheet()->mergeCells('D'.($i+1).':E'.($i+1));
+							$objPHPExcel->getActiveSheet()->mergeCells('F'.($i+1).':F'.($i+2));
+
+					        $objPHPExcel->getActiveSheet()->setCellValue('B'.($i), 'VISITAS DE VERIFICACION ART. 10 - DECRETO 86');
+							$objPHPExcel->getActiveSheet()->setCellValue('B'.($i+1), 'No');
+							$objPHPExcel->getActiveSheet()->setCellValue('C'.($i+1), 'LISTADO DE EMPRESAS');
+							$objPHPExcel->getActiveSheet()->setCellValue('D'.($i+1), 'C I I U');
+							$objPHPExcel->getActiveSheet()->setCellValue('F'.($i+1), 'ESTADO DE CUMPLIMIENTO');
+							$objPHPExcel->getActiveSheet()->setCellValue('D'.($i+2), 'RAMA');
+							$objPHPExcel->getActiveSheet()->setCellValue('E'.($i+2), 'CODIGO');
+
+							$objPHPExcel->getActiveSheet()->getStyle('B'.($i).':F'.($i+2))->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+							$objPHPExcel->getActiveSheet()->getStyle('B'.($i).':F'.($i+2))->getFill()->getStartColor()->setARGB('f5f5dcff');
+							$objPHPExcel->getActiveSheet()->getStyle('B'.($i).':F'.($i+2))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+							$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+							$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getFont()->setSize(10);
+
+							$i=$i+2;
+							$j=0;
+							$total=0;
+					        foreach($resumen_informe_verificacion as $val) {
+					        	if($val['direccion_lugar']!="" && $val['ciiu4']!="" && $val['codigo']!="" && $val['id_estado_verificacion']!="") {
+					    			$i++;
+					    			$j++;
+					    			$total=$j;
+					    			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$i, $j)->setCellValue('C'.$i, $val['direccion_lugar'])->setCellValue('D'.$i, $val['ciiu4'])->setCellValue('E'.$i, $val['codigo'])->setCellValue('F'.$i, $val['id_estado_verificacion']);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+									$objPHPExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
+									$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								}
+					        }
+					        if($j==0) {
+					        	$i++;
+					        	$objPHPExcel->getActiveSheet()->mergeCells('B'.$i.':F'.$i);
+
+								$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, '(No se encontraron registros)');
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.$i.':F'.$i)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+					        }
+					        else {
+					        	$objPHPExcel->getActiveSheet()->mergeCells('B'.($i+1).':E'.($i+1));
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.($i+1), 'TOTAL');
+					        	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.($i+1), $total);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1).':F'.($i+1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1).':F'.($i+1))->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+								$objPHPExcel->getActiveSheet()->getStyle('F'.($i+1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+								$objPHPExcel->getActiveSheet()->getStyle('B'.($i+1).':F'.($i+1))->getFont()->setBold(true);
+					        }
+
 							//Redirige la salida al navegador web de un cliente (Excel5)
 							header('Content-Type: application/vnd.ms-excel');
 							header('Content-Disposition: attachment;filename="'.$data['nombre'].'.xls"');
