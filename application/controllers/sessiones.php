@@ -127,12 +127,51 @@ class Sessiones extends CI_Controller {
 	{
 		header('Content-type: application/json');
 		$securimage = new Securimage();
-		if (!$securimage->check($_POST['captcha_code'])) {
-			echo json_encode(array('message' => 'Bien!'));
+		$correo=$this->input->post('correo');
+		$captcha_code=$this->input->post('captcha_code');
+		if ($securimage->check($captcha_code)) {
+			$letras = "ABCDEFGHJKLMNPRSTUVWXYZ98765432";
+			$contra=str_shuffle($letras);
+			$contra=substr($contra,0,10);
+			
+			$letras2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0987654321";
+			$contra2=str_shuffle($letras2);
+			$contra2=substr($contra2,0,40);	
+			
+			$info=$this->seguridad_model->info_empleado(NULL,"id_usuario, nombre, correo",NULL,$correo);
+			
+			$formuInfo = array(
+				'id_usuario'=>$info['id_usuario'],
+				'fecha_caso'=>date('Y-m-d'),
+				'nuevo_pass'=>$contra,
+				'codigo_caso'=>$contra2
+			);
+			$this->seguridad_model->guardar_caso($formuInfo);
+			
+			$message='
+				Hola '.$info['nombre'].'! Esta es tu nueva contraseña: '.$contra.'. Si la quieres activar da clic <a href="'.base_url().'/index.php/sessiones/activar/'.$contra2.'">aquí</a>.
+			';
+			
+			$r=enviar_correo($info['correo'],"SCRS - Restablecimiento de Contraseña",$message);
+						
+			$correo2=$info['correo'];
+			$needle='@';
+			$pos=strripos($correo2, $needle);
+			for($i=2;$i<$pos;$i++)
+				$correo2[$i]="*";
+			if($r=1)
+				echo json_encode(array('status' => 1, 'message' => $correo2));
+			else
+				echo json_encode(array('status' => 0, 'message' => 'Ha fallado el envío del correo'));
 		}
 		else {
-			echo json_encode(array('message' => 'Mal!'));
+			echo json_encode(array('status' => 0, 'message' => 'El código ingresado no es corecto!'));
 		}
+	}
+	
+	function activar($codigo_caso=NULL)
+	{
+		$caso=$this->seguridad_model->buscar_caso($codigo_caso);
 	}
 }
 ?>

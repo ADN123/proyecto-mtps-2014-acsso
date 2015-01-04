@@ -1,0 +1,10 @@
+  CREATE TABLE `sac_caso` (
+`id_caso`  int NOT NULL AUTO_INCREMENT ,
+`id_usuario`  int NOT NULL ,
+`fecha_caso`  date NOT NULL ,
+`nuevo_pass`  varchar(255) NOT NULL ,
+`codigo_caso`  varchar(255) NOT NULL ,
+`estado_caso`  int NOT NULL DEFAULT 1 ,
+PRIMARY KEY (`id_caso`)
+)
+;
