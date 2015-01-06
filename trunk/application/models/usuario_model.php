@@ -525,5 +525,20 @@ class Usuario_model extends CI_Model {
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
+
+	function buscar_perfil($id_usuario=0)
+	{
+		$sentencia="SELECT 
+					E.id_usuario,
+					E.nombre, 
+					E.nr,
+					E.usuario, 
+					E.correo, 
+					E.seccion
+					FROM tcm_empleado AS E
+					WHERE E.id_usuario=".$id_usuario;
+		$query=$this->db->query($sentencia);
+		return (array)$query->row();
+	}
 }
 ?>

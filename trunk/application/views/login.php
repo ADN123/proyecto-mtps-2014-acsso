@@ -45,5 +45,13 @@
             modal("Cambiar Contraseña",base_url()+'index.php/sessiones/cambiar_pass');
             return false;
         });
+        <?php
+            if($est==1) {
+                echo 'alerta("Cambio de contraseña correcto", "Su contraseña ha sido actualizada exitosamente!")';
+            }
+            if($est==0) {
+                echo 'alerta("Problemas con el cambio de contraseña", "La contraseña no ha sido actualizada. El link de activación ya ha sido activado o sobrepasó su fecha de caducidad.")';
+            }
+        ?>
      });
 </script>

@@ -212,13 +212,14 @@ class Seguridad_model extends CI_Model {
                     WHERE estado_caso=1 AND DATEDIFF(CURDATE(),fecha_caso)<=3 AND codigo_caso LIKE '".$codigo_caso."'";
         $query=$this->db->query($sentencia);
 		$caso=(array)$query->row();
-		if($query->num_rows>0) {
+        $count=0+$query->num_rows;
+		if($count>0) {
 			$sentencia="UPDATE sac_caso SET estado_caso=0 WHERE codigo_caso LIKE '".$codigo_caso."'";
 			$this->db->query($sentencia);
 			$sentencia="UPDATE org_usuario SET password='".$caso['nuevo_pass']."' WHERE id_usuario=".$caso['id_usuario'];
-			echo $sentencia;
 			$this->db->query($sentencia);
 		}
+        return $count;
 	}
 }
 ?>
