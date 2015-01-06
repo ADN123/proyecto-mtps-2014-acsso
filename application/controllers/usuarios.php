@@ -8,6 +8,7 @@ class Usuarios extends CI_Controller
         date_default_timezone_set('America/El_Salvador');
         error_reporting(0);
         $this->load->model('usuario_model');
+        $this->load->model('seguridad_model');
         $this->load->model('transporte_model');
         $this->load->library("mpdf");
         if(!$this->session->userdata('id_usuario')) {
@@ -525,6 +526,56 @@ class Usuarios extends CI_Controller
         $data['buscar']=$buscar;
         $data['resultados']=$this->usuario_model->realizar_busqueda($this->session->userdata('id_usuario'),$buscar); 
         pantalla('resultados_busqueda',$data);
+    }
+
+    function mi_perfil($accion_transaccion=NULL, $estado_transaccion=NULL)
+    {
+        $data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dinicio); 
+        if($data['id_permiso']!=NULL) {
+            $data['usuario']=$this->usuario_model->buscar_perfil($this->session->userdata('id_usuario'));
+            $data['accion_transaccion']=$accion_transaccion;
+            $data['estado_transaccion']=$estado_transaccion;
+            pantalla('usuarios/formu_perfil',$data,2000);
+        }
+        else {
+            pantalla_error();
+        }
+    }
+
+    function actualizar_usuario()
+    {
+        $data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dinicio); 
+        if($data['id_permiso']!=NULL) {
+            $this->db->trans_start();
+            $id_usuario=$this->session->userdata('id_usuario');
+            $password=$this->input->post('password');
+            $new_password=md5($this->input->post('new_password'));
+            $new_password2=md5($this->input->post('new_password2'));
+
+            $u=$this->seguridad_model->consultar_usuario($this->session->userdata('usuario'),$password);
+
+            $formuInfo = array(
+                'password'=>$new_password,
+                'id_usuario'=>$id_usuario
+            );
+            if($new_password==$new_password2 && $new_password!="" && $u['id_usuario']!=0)
+                $this->usuario_model->actualizar_usuario($formuInfo);
+
+            $this->db->trans_complete();
+
+            if($new_password==$new_password2 && $u['id_usuario']!=0)
+                $tr=($this->db->trans_status()===FALSE)?0:1;
+            else
+                if($u['id_usuario']==0)
+                    $tr=3;
+                else
+                    $tr=4;
+
+            ir_a('index.php/usuarios/mi_perfil/2/'.$tr);
+        }
+        else {
+            pantalla_error();
+        }
     }
 }
 ?>

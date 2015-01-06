@@ -19,12 +19,13 @@ class Sessiones extends CI_Controller {
 	*	Ultima Modificacion: 03/07/2014
 	*	Observaciones: Ninguna
 	*/
-	function index()
+	function index($est=20000)
 	{
 		$in=$this->verificar();
 		if($in<=3){
+			$data['est']=$est;
 			$this->load->view('encabezado.php'); 
-			$this->load->view('login.php'); 
+			$this->load->view('login.php',$data); 
 			$this->load->view('piePagina.php');		
 		}
 		else {
@@ -149,7 +150,7 @@ class Sessiones extends CI_Controller {
 			$this->seguridad_model->guardar_caso($formuInfo);
 			
 			$message='
-				Hola '.$info['nombre'].'! Esta es tu nueva contraseña: '.$contra.'. Si la quieres activar da clic <a href="'.base_url().'/index.php/sessiones/activar/'.$contra2.'">aquí</a>.
+				Hola '.$info['nombre'].'! Esta es tu nueva contraseña: '.$contra.'. Si la quieres activar da clic <a href="'.base_url().'/index.php/sessiones/activar/'.$contra2.'" target="_blank">aquí</a>. Tiene 3 días para activar este código.
 			';
 			
 			$r=enviar_correo($info['correo'],"SCRS - Restablecimiento de Contraseña",$message);
@@ -171,7 +172,8 @@ class Sessiones extends CI_Controller {
 	
 	function activar($codigo_caso=NULL)
 	{
-		$caso=$this->seguridad_model->buscar_caso($codigo_caso);
+		$est=$caso=$this->seguridad_model->buscar_caso($codigo_caso);
+		$this->index($est);
 	}
 }
 ?>

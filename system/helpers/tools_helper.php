@@ -47,20 +47,33 @@
         $data['nick']=$CI->session->userdata('usuario');
         $data['nombre']=$CI->session->userdata('nombre');
         $data['menus']=$CI->seguridad_model->buscar_menus($CI->session->userdata('id_usuario'));
-        if($id_modulo!=0)
+        if($id_modulo>0 && $id_modulo!=2000)
             $data['menu_actual']=$CI->seguridad_model->descripcion_menu($id_modulo);
         else
-            $data['menu_actual']=array(
-                "id_modulo_padre"=> NULL, 
-                "img_modulo_padre"=> NULL, 
-                "nombre_modulo_padre"=> NULL, 
-                "url_modulo_padre"=> NULL, 
-                "id_modulo"=> 0, 
-                "nombre_modulo"=> "Búsqueda", 
-                "url_modulo"=> "usuarios/buscar", 
-                "img_modulo"=> "glyphicon glyphicon-search", 
-                "descripcion_modulo"=> "Listado de resultados obtenidos en el buscador"
-            );
+            if($id_modulo==0)
+                $data['menu_actual']=array(
+                    "id_modulo_padre"=> NULL, 
+                    "img_modulo_padre"=> NULL, 
+                    "nombre_modulo_padre"=> NULL, 
+                    "url_modulo_padre"=> NULL, 
+                    "id_modulo"=> 0, 
+                    "nombre_modulo"=> "Búsqueda", 
+                    "url_modulo"=> "usuarios/buscar", 
+                    "img_modulo"=> "glyphicon glyphicon-search", 
+                    "descripcion_modulo"=> "Listado de resultados obtenidos en el buscador"
+                );
+            else
+                $data['menu_actual']=array(
+                    "id_modulo_padre"=> NULL, 
+                    "img_modulo_padre"=> NULL, 
+                    "nombre_modulo_padre"=> NULL, 
+                    "url_modulo_padre"=> NULL, 
+                    "id_modulo"=> 0, 
+                    "nombre_modulo"=> "Mi perfil", 
+                    "url_modulo"=> "usuarios/mi_perfil", 
+                    "img_modulo"=> "glyphicon glyphicon-user", 
+                    "descripcion_modulo"=> "Mi registro de usuario"
+                );
         
         $CI->load->view('encabezado',$data);
         $CI->load->view('menu_izquierda');
