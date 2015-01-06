@@ -187,7 +187,7 @@ class Seguridad_model extends CI_Model {
             $where.=" AND id_empleado=".$id_empleado;
         if($id_usuario!=NULL)
             $where.=" AND id_usuario=".$id_usuario;
-        if($id_usuario!=NULL)
+        if($usuario!="")
             $where.=" AND usuario LIKE '".$usuario."'";
         $sentencia="SELECT ".$select." FROM tcm_empleado WHERE TRUE ".$where;
         $query=$this->db->query($sentencia);
@@ -214,6 +214,9 @@ class Seguridad_model extends CI_Model {
 		$caso=(array)$query->row();
 		if($query->num_rows>0) {
 			$sentencia="UPDATE sac_caso SET estado_caso=0 WHERE codigo_caso LIKE '".$codigo_caso."'";
+			$this->db->query($sentencia);
+			$sentencia="UPDATE org_usuario SET password='".$caso['nuevo_pass']."' WHERE id_usuario=".$caso['id_usuario'];
+			echo $sentencia;
 			$this->db->query($sentencia);
 		}
 	}

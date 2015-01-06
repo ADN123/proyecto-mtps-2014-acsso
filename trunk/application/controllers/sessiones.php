@@ -143,7 +143,7 @@ class Sessiones extends CI_Controller {
 			$formuInfo = array(
 				'id_usuario'=>$info['id_usuario'],
 				'fecha_caso'=>date('Y-m-d'),
-				'nuevo_pass'=>$contra,
+				'nuevo_pass'=>md5($contra),
 				'codigo_caso'=>$contra2
 			);
 			$this->seguridad_model->guardar_caso($formuInfo);
@@ -160,7 +160,7 @@ class Sessiones extends CI_Controller {
 			for($i=2;$i<$pos;$i++)
 				$correo2[$i]="*";
 			if($r=1)
-				echo json_encode(array('status' => 1, 'message' => $correo2));
+				echo json_encode(array('status' => 1, 'message' => $contra));
 			else
 				echo json_encode(array('status' => 0, 'message' => 'Ha fallado el envío del correo'));
 		}
