@@ -236,7 +236,7 @@ class Seguridad_model extends CI_Model {
                     (SELECT COUNT(DISTINCT id_programacion_visita) AS total FROM sac_resultado_promocion WHERE fecha_visita LIKE '0000-00-00' AND id_usuario=".$id_usuario.") AS AP,
                     (SELECT COUNT(DISTINCT id_programacion_visita) AS total FROM sac_resultado_verificacion WHERE fecha_visita LIKE '0000-00-00' AND id_usuario=".$id_usuario.") AS AV,
                     (SELECT COUNT(DISTINCT id_programacion_visita) AS total FROM sac_resultado_promocion WHERE id_promocion IS NULL AND fecha_visita BETWEEN CURRENT_DATE() AND ADDDATE(CURRENT_DATE(), INTERVAL 7 DAY) AND id_usuario=".$id_usuario.") AS PP,
-                    (SELECT COUNT(DISTINCT id_capacitacion)AS total FROM sac_resultado_capacitacion WHERE fecha_capacitacion BETWEEN CURRENT_DATE() AND ADDDATE(CURRENT_DATE(), INTERVAL 7 DAY) AND id_usuario=".$id_usuario.") AS PC,
+                    (SELECT COUNT(DISTINCT id_capacitacion)AS total FROM sac_resultado_capacitacion WHERE fecha_capacitacion BETWEEN CURRENT_DATE() AND ADDDATE(CURRENT_DATE(), INTERVAL 7 DAY) AND estado_capacitacion=1 AND id_usuario=".$id_usuario.") AS PC,
                     (SELECT COUNT(DISTINCT id_programacion_visita) AS total FROM sac_resultado_verificacion WHERE id_promocion IS NULL AND fecha_visita BETWEEN CURRENT_DATE() AND ADDDATE(CURRENT_DATE(), INTERVAL 7 DAY) AND id_usuario=".$id_usuario.") AS PV";
         $query=$this->db->query($sentencia);
         return (array)$query->row();
