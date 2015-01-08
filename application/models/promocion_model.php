@@ -688,8 +688,11 @@ class Promocion_model extends CI_Model {
         return (array)$query->result_array();
     }
     
-    function consultas_promociones_departamentos()
+    function consultas_promociones_departamentos($id_departamento=NULL)
     {
+        $where="";
+        if($id_departamento!=NULL)
+            $where=" AND org_departamento.id_departamento=".$id_departamento;
         $sentencia="SELECT 
                     CASE org_departamento.id_departamento
                         WHEN 1 THEN 'AHU' 
@@ -726,33 +729,41 @@ class Promocion_model extends CI_Model {
                     COUNT(id_promocion) AS total
                     FROM org_departamento
                     LEFT JOIN sac_resultado_promocion ON org_departamento.id_departamento=sac_resultado_promocion.id_departamento
-                    WHERE org_departamento.id_departamento<15
+                    WHERE org_departamento.id_departamento<15 ".$where."
                     GROUP BY org_departamento.departamento
                     ORDER BY org_departamento.departamento";
         $query=$this->db->query($sentencia);
         return (array)$query->result_array();
     }
     
-    function total_promociones_clasificacion()
+    function total_promociones_clasificacion($id_departamento=NULL)
     {
+        $where="";
+        if($id_departamento!=NULL)
+            $where=" WHERE id_departamento=".$id_departamento;
         $sentencia="SELECT 
                     sac_clasificacion_institucion.nombre_clasificacion,
                     COUNT(id_promocion) AS total
                     FROM sac_clasificacion_institucion
                     INNER JOIN sac_resultado_promocion ON sac_clasificacion_institucion.id_clasificacion=sac_resultado_promocion.id_clasificacion
+                    ".$where."
                     GROUP BY sac_clasificacion_institucion.nombre_clasificacion
                     ORDER BY COUNT(id_promocion) DESC LIMIT 0,5";
         $query=$this->db->query($sentencia);
         return (array)$query->result_array();
     }
     
-    function consultas_promociones_sector()
+    function consultas_promociones_sector($id_departamento=NULL)
     {
+        $where="";
+        if($id_departamento!=NULL)
+            $where=" WHERE id_departamento=".$id_departamento;
         $sentencia="SELECT 
                     sac_sector_institucion.nombre_sector,
                     COUNT(id_promocion) AS total
                     FROM sac_sector_institucion
                     INNER JOIN sac_resultado_promocion ON sac_sector_institucion.id_sector=sac_resultado_promocion.id_sector
+                    ".$where."
                     GROUP BY sac_sector_institucion.nombre_sector
                     ORDER BY sac_sector_institucion.nombre_sector";
         $query=$this->db->query($sentencia);

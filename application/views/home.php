@@ -20,7 +20,7 @@
         </div>
     </div>
     
-    <?php if($id_permiso==3) { ?>   
+    <?php if($id_permiso!=1) { ?>   
         <div class="col-sm-6 col-md-3">
             <div class="panel panel-danger panel-stat">
                 <div class="panel-heading">
@@ -43,18 +43,20 @@
         </div>
     <?php } ?>  
 </div>
-<?php if($id_permiso==3) { ?>   
+<?php if($id_permiso!=1) { ?>   
     <div class="row">
         <div class="col-sm-8 col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-7">
-                            <h5 class="subtitle mb5">Promociones por Departamento </h5>
-                            <p class="mb15">Cantidad de promociones de la ley realizadas en los diferentes departamentos de El Salvador</p>
-                            <div id="barchart" style="width: 100%; height: 300px"></div>
-                        </div>
-                        <div class="col-sm-5">
+                        <?php if($id_permiso==3) { $col=5;?> 
+                            <div class="col-sm-7">
+                                <h5 class="subtitle mb5">Promociones por Departamento </h5>
+                                <p class="mb15">Cantidad de promociones de la ley realizadas en los diferentes departamentos de El Salvador</p>
+                                <div id="barchart" style="width: 100%; height: 300px"></div>
+                            </div>
+                        <?php } else $col=12;?>
+                        <div class="col-sm-<?=$col?>">
                             <h5 class="subtitle mb5">Promociones por CLAEES </h5>
                             <p class="mb15">Clasificaciones CLAEES más utilizadas</p>
                             
@@ -222,7 +224,8 @@
                       previousPoint = null;            
                     }       
                 });
-            
+        <?php } ?>  
+        <?php if($id_permiso!=1) { ?> 
                 new Morris.Donut({
                     element: 'donut-chart2',
                     data: [
