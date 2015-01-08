@@ -47,6 +47,7 @@
         $data['nick']=$CI->session->userdata('usuario');
         $data['nombre']=$CI->session->userdata('nombre');
         $data['menus']=$CI->seguridad_model->buscar_menus($CI->session->userdata('id_usuario'));
+        $data['actividades']=$CI->seguridad_model->buscar_actividades($CI->session->userdata('id_usuario'));
         if($id_modulo>0 && $id_modulo!=2000)
             $data['menu_actual']=$CI->seguridad_model->descripcion_menu($id_modulo);
         else

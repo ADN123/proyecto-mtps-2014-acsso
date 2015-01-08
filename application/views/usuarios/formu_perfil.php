@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label for="password" class="col-sm-4 control-label">Contraseña actual <span class="asterisk">*</span></label>
                                 <div class="col-sm-6">
-                                    <input type="password" id="password" name="password" data-req="true" data-tip="pas" data-min="8" data-max="20"  class="form-control"/>
+                                    <input type="password" id="password" name="password" data-req="true" data-min="8" data-max="20"  class="form-control"/>
                                 </div>
                             </div>
                         </div>

@@ -31,14 +31,14 @@
 				url: "<?php echo base_url()?>/index.php/sessiones/sendmail",
 				data: $("#form").serialize(),
 				success: function(data) {
+					$("#cap").click();
 					if(data.status==1) {
 						$("#mensaje").html( '<div class="alert alert-success">'+
 							'	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
 							'	<span class="glyphicon glyphicon-exclamation-sign"></span> El <strong>envío solicitud de cambio de contraseña</strong> se ha realizado exitosamente al correo: '+data.message+
 							'</div>');
 						$("#correo").val("");
-						$("#captcha_code").val("");
-						$("#cap").click();
+						$("#captcha_code").val("");						
 					}
 					else
 						$("#mensaje").html( '<div class="alert alert-danger">'+
