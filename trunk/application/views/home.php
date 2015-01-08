@@ -8,12 +8,12 @@
                             <img src="<?php echo base_url()?>images/is-user.png" alt="" />
                         </div>
                         <div class="col-xs-8">
-                            <small class="stat-label">promociones realizadas</small>
+                            <small class="stat-label">promociones de ley realizadas</small>
                             <h1><?php echo $total_promociones[0]['total1']?></h1>
                         </div>
                     </div>
                     <div class="mb15"></div>
-                    <small class="stat-label">% del total de promociones asignadas</small>
+                    <small class="stat-label">% promociones asignadas</small>
                     <h4><?php echo number_format($total_promociones[0]['total2'], 2)."%" ?></h4>
                 </div>
             </div>
@@ -30,13 +30,13 @@
                                 <img src="<?php echo base_url()?>images/is-document.png" alt="" />
                             </div>
                             <div class="col-xs-8">
-                                <small class="stat-label">% lugares de trabajo sin visita programada</small>
-                                <h1><?php echo number_format(($total_sin_programaciones[0]['total']/$total_lugares_trabajo[0]['total']*100), 2)."%" ?></h1>
+                                <small class="stat-label">lugares de trabajo asingados</small>
+                                <h1><?php echo $total_lugares_trabajo[0]['total']?></h1>
                             </div>
                         </div>
                         <div class="mb15"></div>
-                        <small class="stat-label">total de lugares de trabajo asingados</small>
-                        <h4><?php echo $total_lugares_trabajo[0]['total']?></h4>
+                        <small class="stat-label">% lugares de trabajo no programados</small>
+                        <h4><?php echo number_format(($total_sin_programaciones[0]['total']/$total_lugares_trabajo[0]['total']*100), 2)."%" ?></h4>
                     </div>
                 </div>
             </div>
