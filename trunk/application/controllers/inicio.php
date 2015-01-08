@@ -34,12 +34,17 @@ class Inicio extends CI_Controller
 		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dinicio); 
 		if($data['id_permiso']!=NULL) {
 			switch($data['id_permiso']) {
+				case 1:
+					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(id_programacion_visita)*100) AS total2");
+					$where=array("AND id_usuario=".$this->session->userdata('id_usuario'));
+					$data['total_promociones']=$this->promocion_model->consultas_promociones($select,$where);
+					break;
 				case 3:
 					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(id_programacion_visita)*100) AS total2");
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select);
 			
 					$select=array("COUNT(id_lugar_trabajo) AS total");
-					$where=array("AND id_programacion_visita IS NULL");
+					$where=array("AND fecha_visita LIKE '0000-00-00' AND id_promocion IS NULL");
 					$data['total_sin_programaciones']=$this->promocion_model->consultas_promociones($select,$where);
 					
 					$select=array("COUNT(id_lugar_trabajo) AS total");
@@ -50,9 +55,23 @@ class Inicio extends CI_Controller
 					$data['total_promociones_sector']=$this->promocion_model->consultas_promociones_sector();
 					break;
 				case 4:
+					$id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+                    $dep=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
 					$select=array("COUNT(id_promocion) AS total1","(COUNT(id_promocion)/COUNT(id_programacion_visita)*100) AS total2");
-					$where=array("AND id_usuario=".$this->session->userdata('id_usuario'));
+					$where=array("AND id_departamento=".$dep);
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select,$where);
+
+					$select=array("COUNT(id_lugar_trabajo) AS total");
+					$where=array("AND fecha_visita LIKE '0000-00-00' AND id_promocion IS NULL AND id_departamento=".$dep);
+					$data['total_sin_programaciones']=$this->promocion_model->consultas_promociones($select,$where);
+					
+					$select=array("COUNT(id_lugar_trabajo) AS total");
+					$where=array("AND id_departamento=".$dep);
+					$data['total_lugares_trabajo']=$this->promocion_model->consultas_promociones($select);
+					
+					$data['total_promociones_departamento']=$this->promocion_model->consultas_promociones_departamentos($dep);
+					$data['total_promociones_clasificacion']=$this->promocion_model->total_promociones_clasificacion($dep);
+					$data['total_promociones_sector']=$this->promocion_model->consultas_promociones_sector($dep);
 					break;
 			}
 			pantalla('home',$data,Dinicio);
