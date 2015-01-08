@@ -44,7 +44,7 @@ class Inicio extends CI_Controller
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select);
 			
 					$select=array("COUNT(id_lugar_trabajo) AS total");
-					$where=array("AND fecha_visita LIKE '0000-00-00' AND id_promocion IS NULL");
+					$where=array("AND (fecha_visita LIKE '0000-00-00' OR fecha_visita IS NULL) AND id_promocion IS NULL");
 					$data['total_sin_programaciones']=$this->promocion_model->consultas_promociones($select,$where);
 					
 					$select=array("COUNT(id_lugar_trabajo) AS total");
@@ -62,12 +62,12 @@ class Inicio extends CI_Controller
 					$data['total_promociones']=$this->promocion_model->consultas_promociones($select,$where);
 
 					$select=array("COUNT(id_lugar_trabajo) AS total");
-					$where=array("AND fecha_visita LIKE '0000-00-00' AND id_promocion IS NULL AND id_departamento=".$dep);
+					$where=array("AND (fecha_visita LIKE '0000-00-00' OR fecha_visita IS NULL) AND id_promocion IS NULL AND id_departamento=".$dep);
 					$data['total_sin_programaciones']=$this->promocion_model->consultas_promociones($select,$where);
 					
 					$select=array("COUNT(id_lugar_trabajo) AS total");
 					$where=array("AND id_departamento=".$dep);
-					$data['total_lugares_trabajo']=$this->promocion_model->consultas_promociones($select);
+					$data['total_lugares_trabajo']=$this->promocion_model->consultas_promociones($select,$where);
 					
 					$data['total_promociones_departamento']=$this->promocion_model->consultas_promociones_departamentos($dep);
 					$data['total_promociones_clasificacion']=$this->promocion_model->total_promociones_clasificacion($dep);

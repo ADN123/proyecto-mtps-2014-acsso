@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="mb15"></div>
-                        <small class="stat-label">total de lugares de trabajo registrados</small>
+                        <small class="stat-label">total de lugares de trabajo asingados</small>
                         <h4><?php echo $total_lugares_trabajo[0]['total']?></h4>
                     </div>
                 </div>
