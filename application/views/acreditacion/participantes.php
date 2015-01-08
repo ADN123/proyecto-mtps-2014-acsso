@@ -137,9 +137,9 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="cargo_empleado" class="col-sm-3 control-label">Cargo funcional<span class="asterisk">*</span></label>
+                                <label for="cargo_empleado" class="col-sm-3 control-label">Cargo funcional </label>
                                 <div class="col-sm-7">
-                                    <input type="text" name="cargo_empleado" id="cargo_empleado" class="form-control" data-req="true" data-tip="var" data-min="5" />
+                                    <input type="text" name="cargo_empleado" id="cargo_empleado" class="form-control" data-tip="var" data-min="5" />
                                 </div>
                             </div>
                             
