@@ -12,7 +12,7 @@
                 <img alt="" src="<?php echo base_url();?>images/photos/loggeduser.png" class="media-object">
                 <div class="media-body">
                     <h4 style="text-transform: capitalize;"><?php echo strtolower($this->session->userdata('nombre')); ?></h4>
-                    <span>"Life is so..."</span>
+                    <!--<span>"Life is so..."</span>-->
                 </div>
             </div>
           
@@ -20,7 +20,7 @@
             <ul class="nav nav-pills nav-stacked nav-bracket mb30">
               <li><a href="<?php echo base_url();?>index.php/usuarios/mi_perfil"><i class="fa fa-user"></i> <span>Mi perfil</span></a></li>
               <!--<li><a href="#"><i class="fa fa-cog"></i> <span>Configuraciones</span></a></li>-->
-              <li><a href="#"><i class="fa fa-question-circle"></i> <span>Ayuda</span></a></li>
+              <li><a href="#"><i class="glyphicon glyphicon-book"></i> <span>Manual de Usuario</span></a></li>
               <li><a href="<?php echo base_url();?>index.php/sessiones/cerrar_session"><i class="fa fa-sign-out"></i> <span>Cerrar sesi&oacute;n</span></a></li>
             </ul>
         </div>

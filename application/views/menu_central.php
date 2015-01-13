@@ -151,7 +151,7 @@
               <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
                 <li><a href="<?php echo base_url();?>index.php/usuarios/mi_perfil"><i class="glyphicon glyphicon-user"></i> Mi perfil</a></li>
                 <!--<li><a href="#"><i class="glyphicon glyphicon-cog"></i> Configuraciones</a></li>-->
-                <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i> Ayuda</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-book"></i> Manual de Usuario</a></li>
                 <li><a href="<?php echo base_url();?>index.php/sessiones/cerrar_session"><i class="glyphicon glyphicon-log-out"></i> Cerrar sesi&oacute;n</a></li>
               </ul>
             </div>
