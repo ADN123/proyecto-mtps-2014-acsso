@@ -178,12 +178,13 @@ jQuery(document).ready(function() {
             
             body.removeClass('chat-view');
             
-            if(!jQuery('.menutoggle').hasClass('menu-collapsed')) {
+			/*Evitar que se extienda el menu principal cuando se cierre la ayuda*/
+            /*if(!jQuery('.menutoggle').hasClass('menu-collapsed')) {
                jQuery('body').removeClass('leftpanel-collapsed');
                jQuery('.nav-bracket li.active ul').css({display: 'block'});
             } else {
-               
-            }
+				
+            }*/
          }
          
       } else {

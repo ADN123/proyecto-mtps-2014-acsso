@@ -156,9 +156,9 @@
               </ul>
             </div>
           </li>
-          <li style="display:none;">
+          <li>
             <button id="chatview" class="btn btn-default tp-icon chat-icon">
-                <i class="glyphicon glyphicon-comment"></i>
+                <i class="glyphicon glyphicon-question-sign"></i>
             </button>
           </li>
         </ul>

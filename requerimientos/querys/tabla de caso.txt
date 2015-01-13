@@ -1,4 +1,4 @@
-  CREATE TABLE `sac_caso` (
+  CREATE TABLE `glb_caso` (
 `id_caso`  int NOT NULL AUTO_INCREMENT ,
 `id_usuario`  int NOT NULL ,
 `fecha_caso`  date NOT NULL ,
@@ -8,3 +8,37 @@
 PRIMARY KEY (`id_caso`)
 )
 ;
+
+CREATE TABLE `glb_ayuda` (
+`id_ayuda`  int(11) NOT NULL AUTO_INCREMENT ,
+`id_modulo`  int(11) NOT NULL ,
+`descripcion_ayuda`  text NOT NULL ,
+PRIMARY KEY (`id_ayuda`)
+)
+ENGINE=InnoDB
+;
+
+CREATE TABLE `glb_paso` (
+`id_paso`  int(11) NOT NULL AUTO_INCREMENT ,
+`id_ayuda`  int(11) NOT NULL ,
+`paso`  text NOT NULL ,
+`orden`  int(11) NOT NULL DEFAULT 0 ,
+PRIMARY KEY (`id_paso`),
+CONSTRAINT `fk_paso_ayuda` FOREIGN KEY (`id_ayuda`) REFERENCES `glb_ayuda` (`id_ayuda`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+ENGINE=InnoDB
+;
+
+CREATE TABLE `glb_problema` (
+`id_problema`  int NOT NULL AUTO_INCREMENT ,
+`id_ayuda`  int NOT NULL ,
+`problema`  text NOT NULL ,
+`solucion`  text NOT NULL ,
+PRIMARY KEY (`id_problema`),
+CONSTRAINT `fk_problema_ayuda` FOREIGN KEY (`id_ayuda`) REFERENCES `glb_ayuda` (`id_ayuda`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+ENGINE=InnoDB
+;
+
+
+
