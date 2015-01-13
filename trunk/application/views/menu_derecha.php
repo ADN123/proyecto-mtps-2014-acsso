@@ -17,16 +17,16 @@
 <div class="rightpanel">
 	<!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified">
-        <li class="active"><a href="#rp-alluser" data-toggle="tab"><i class="fa fa-users"></i></a></li>
-        <li><a href="#rp-favorites" data-toggle="tab"><i class="fa fa-heart"></i></a></li>
-        <li><a href="#rp-history" data-toggle="tab"><i class="fa fa-clock-o"></i></a></li>
-        <li><a href="#rp-settings" data-toggle="tab"><i class="fa fa-gear"></i></a></li>
+        <li class="active"><a href="#rp-alluser" data-toggle="tab"><i class="glyphicon glyphicon-file"></i></a></li>
+        <li><a href="#rp-favorites" data-toggle="tab"><i class="fa fa-play"></i></a></li>
+        <li><a href="#rp-history" data-toggle="tab"><i class="fa fa-exclamation-triangle"></i></a></li>
+        <!--<li><a href="#rp-settings" data-toggle="tab"><i class="fa fa-gear"></i></a></li>-->
     </ul>
         
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="rp-alluser">
-            <h5 class="sidebartitle">Online Users</h5>
+            <h5 class="sidebartitle">Descripción de la pantalla</h5>
             <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">
@@ -85,93 +85,10 @@
                     </div><!-- media -->
                 </li>
             </ul>
-            
-            <div class="mb30"></div>
-            
-            <h5 class="sidebartitle">Offline Users</h5>
-            <ul class="chatuserlist">
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user5.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Eileen Sideways</strong>
-                            <small>Los Angeles, CA</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user2.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Zaham Sindilmaca</strong>
-                            <small>San Francisco, CA</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user3.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Nusja Nawancali</strong>
-                            <small>Bangkok, Thailand</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user4.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Renov Leongal</strong>
-                            <small>Cebu City, Philippines</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user5.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Weno Carasbong</strong>
-                            <small>Tokyo, Japan</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user4.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Renov Leongal</strong>
-                            <small>Cebu City, Philippines</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user5.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Weno Carasbong</strong>
-                            <small>Tokyo, Japan</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-            </ul>
         </div>
         
         <div class="tab-pane" id="rp-favorites">
-            <h5 class="sidebartitle">Favorites</h5>
+            <h5 class="sidebartitle">Pasos a Seguir</h5>
             <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">
@@ -232,7 +149,7 @@
         </div>
         
         <div class="tab-pane" id="rp-history">
-            <h5 class="sidebartitle">History</h5>
+            <h5 class="sidebartitle">Problemas Frecuentes</h5>
             <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">
@@ -270,7 +187,7 @@
             </ul>
         </div>
         
-        <div class="tab-pane pane-settings" id="rp-settings">
+        <!--<div class="tab-pane pane-settings" id="rp-settings">
             <h5 class="sidebartitle mb20">Settings</h5>
             <div class="form-group">
                 <label class="col-xs-8 control-label">Show Offline Users</label>
@@ -299,6 +216,6 @@
                     <div class="toggle toggle-success"></div>
                 </div>
             </div>
-        </div><!-- tab-pane -->
+        </div>--><!-- tab-pane -->
     </div><!-- tab-content -->
 </div><!-- rightpanel -->
