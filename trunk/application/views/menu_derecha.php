@@ -14,32 +14,27 @@
         </div>
     </div><!-- contentpanel -->
 </div><!-- mainpanel -->
-<div class="rightpanel">
+<div class="rightpanel" style="background: #f7f7f7;border-left: 1px solid #d3d7db;">
 	<!-- Nav tabs -->
-    <ul class="nav nav-tabs nav-justified">
+    <ul class="nav nav-tabs nav-justified" style="padding-bottom: 3px;border-bottom: 1px solid #d3d7db;">
         <li class="active"><a href="#rp-alluser" data-toggle="tab"><i class="glyphicon glyphicon-file"></i></a></li>
         <li><a href="#rp-favorites" data-toggle="tab"><i class="fa fa-play"></i></a></li>
         <li><a href="#rp-history" data-toggle="tab"><i class="fa fa-exclamation-triangle"></i></a></li>
         <!--<li><a href="#rp-settings" data-toggle="tab"><i class="fa fa-gear"></i></a></li>-->
     </ul>
-        
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="rp-alluser">
-            <h5 class="sidebartitle">Descripción de la pantalla</h5>
+            <h5 class="sidebartitle sidebartitleAyuda">Descripción de la pantalla</h5>
             <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/userprofile.png" class="media-object">
-                        </a>
                         <div class="media-body">
-                            <strong>Eileen Sideways</strong>
-                            <small>Los Angeles, CA</small>
+                            <small style="font-size:12px;font-family: sans-serif;"><?=$ayuda[0]['descripcion_ayuda']?></small>
                         </div>
                     </div><!-- media -->
                 </li>
-                <li class="online">
+                <!--<li class="online">
                     <div class="media">
                         <a href="#" class="pull-left media-thumb">
                             <img alt="" src="<?php echo base_url()?>images/photos/user1.png" class="media-object">
@@ -49,107 +44,44 @@
                             <strong>Zaham Sindilmaca</strong>
                             <small>San Francisco, CA</small>
                         </div>
-                    </div><!-- media -->
-                </li>
+                    </div>
+                </li>-->
+            </ul>
+            <div class="mb30"></div>
+            <h5 class="sidebartitle sidebartitleAyuda">¿Para que necesita esta información?</h5>
+            <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user2.png" class="media-object">
-                        </a>
                         <div class="media-body">
-                            <strong>Nusja Nawancali</strong>
-                            <small>Bangkok, Thailand</small>
+                            <small style="font-size:12px;font-family: sans-serif;"><?=$ayuda[0]['para_que']?></small>
                         </div>
-                    </div><!-- media -->
-                </li>
-                <li class="online">
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user3.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Renov Leongal</strong>
-                            <small>Cebu City, Philippines</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li class="online">
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user4.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Weno Carasbong</strong>
-                            <small>Tokyo, Japan</small>
-                        </div>
-                    </div><!-- media -->
+                    </div>
                 </li>
             </ul>
         </div>
         
         <div class="tab-pane" id="rp-favorites">
-            <h5 class="sidebartitle">Pasos a Seguir</h5>
-            <ul class="chatuserlist">
-                <li class="online">
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user2.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Eileen Sideways</strong>
-                            <small>Los Angeles, CA</small>
+            <h5 class="sidebartitle sidebartitleAyuda">¿Qué podemos hacer aquí?</h5>
+            <ul class="chatuserlist">                
+                <?php
+                    foreach($ayuda as $val) {
+                ?>
+                    <li class="online">
+                        <div class="media">
+                            <div class="media-body">
+                                <strong><?=$val['titulo_paso']?></strong>
+                                <small style="font-size:12px;font-family: sans-serif;"><?=$val['paso']?></small>
+                            </div>
                         </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user1.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Zaham Sindilmaca</strong>
-                            <small>San Francisco, CA</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user3.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Nusja Nawancali</strong>
-                            <small>Bangkok, Thailand</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li class="online">
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user4.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Renov Leongal</strong>
-                            <small>Cebu City, Philippines</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li class="online">
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user5.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Weno Carasbong</strong>
-                            <small>Tokyo, Japan</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
+                    </li>
+                <?php
+                    }
+                ?>
             </ul>
         </div>
         
         <div class="tab-pane" id="rp-history">
-            <h5 class="sidebartitle">Problemas Frecuentes</h5>
+            <h5 class="sidebartitle sidebartitleAyuda">Problemas Frecuentes</h5>
             <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">

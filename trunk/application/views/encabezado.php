@@ -220,6 +220,13 @@
             text-align: right;
             font-size: 10px;
         }
+        .sidebartitleAyuda {
+            font-size:13px;
+            color: #428bca;
+        }
+        .chatuserlist .media {
+            margin: 0;
+        }
         @media screen and (max-width: 991px) {
             .logo, .dir {
                 text-align: center;

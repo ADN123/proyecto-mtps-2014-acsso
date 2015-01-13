@@ -241,5 +241,23 @@ class Seguridad_model extends CI_Model {
         $query=$this->db->query($sentencia);
         return (array)$query->row();
     }
+
+    function buscar_ayuda($id_modulo)
+    {
+        $sentencia="SELECT
+                    descripcion_ayuda,
+                    para_que,
+                    titulo_paso,
+                    paso,
+                    problema,
+                    solucion
+                    FROM glb_ayuda
+                    LEFT JOIN glb_paso ON glb_paso.id_ayuda = glb_ayuda.id_ayuda
+                    LEFT JOIN glb_problema ON glb_problema.id_ayuda = glb_ayuda.id_ayuda
+                    WHERE id_modulo=".$id_modulo."
+                    ORDER BY id_paso, orden";
+        $query=$this->db->query($sentencia);        
+        return (array)$query->result_array();
+    }
 }
 ?>
