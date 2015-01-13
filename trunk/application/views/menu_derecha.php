@@ -17,10 +17,10 @@
 <div class="rightpanel" style="background: #f7f7f7;border-left: 1px solid #d3d7db;">
 	<!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified" style="padding-bottom: 3px;border-bottom: 1px solid #d3d7db;">
-        <li class="active"><a href="#rp-alluser" data-toggle="tab"><i class="glyphicon glyphicon-file"></i></a></li>
-        <li><a href="#rp-favorites" data-toggle="tab"><i class="fa fa-play"></i></a></li>
+        <li class="active"><a href="#rp-alluser" data-toggle="tab"><i class="fa fa-file-text"></i></a></li>
+        <li><a href="#rp-favorites" data-toggle="tab"><i class="glyphicon glyphicon-flash"></i></a></li>
         <li><a href="#rp-history" data-toggle="tab"><i class="fa fa-exclamation-triangle"></i></a></li>
-        <!--<li><a href="#rp-settings" data-toggle="tab"><i class="fa fa-gear"></i></a></li>-->
+        <li><a href="#rp-settings" data-toggle="tab"><i class="fa fa-pencil-square-o"></i></a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -48,7 +48,7 @@
                 </li>-->
             </ul>
             <div class="mb30"></div>
-            <h5 class="sidebartitle sidebartitleAyuda">¿Para que necesita esta información?</h5>
+            <h5 class="sidebartitle sidebartitleAyuda">¿Para qué se necesita esta información?</h5>
             <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">
@@ -61,7 +61,7 @@
         </div>
         
         <div class="tab-pane" id="rp-favorites">
-            <h5 class="sidebartitle sidebartitleAyuda">¿Qué podemos hacer aquí?</h5>
+            <h5 class="sidebartitle sidebartitleAyuda">¿Qué opciones podemos realizar aquí?</h5>
             <ul class="chatuserlist">                
                 <?php
                     foreach($ayuda as $val) {
@@ -83,71 +83,34 @@
         <div class="tab-pane" id="rp-history">
             <h5 class="sidebartitle sidebartitleAyuda">Problemas Frecuentes</h5>
             <ul class="chatuserlist">
+                <?php
+                    foreach($ayuda as $val) {
+                ?>
+                    <li class="online">
+                        <div class="media">
+                            <div class="media-body">
+                                <strong><?=$val['problema']?></strong>
+                                <small style="font-size:12px;font-family: sans-serif;"><?=$val['solucion']?></small>
+                            </div>
+                        </div>
+                    </li>
+                <?php
+                    }
+                ?>
+            </ul>
+        </div>
+        
+        <div class="tab-pane pane-settings" id="rp-settings">
+            <h5 class="sidebartitle  sidebartitleAyuda">Forma correcta de llenado del formulario</h5>
+            <ul class="chatuserlist">
                 <li class="online">
                     <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user4.png" class="media-object">
-                        </a>
                         <div class="media-body">
-                            <strong>Eileen Sideways</strong>
-                            <small>Hi hello, ctc?... would you mind if I go to your...</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user2.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Zaham Sindilmaca</strong>
-                            <small>This is to inform you that your product that we...</small>
-                        </div>
-                    </div><!-- media -->
-                </li>
-                <li>
-                    <div class="media">
-                        <a href="#" class="pull-left media-thumb">
-                            <img alt="" src="<?php echo base_url()?>images/photos/user3.png" class="media-object">
-                        </a>
-                        <div class="media-body">
-                            <strong>Nusja Nawancali</strong>
-                            <small>Are you willing to have a long term relat...</small>
+                            <small style="font-size:12px;font-family: sans-serif;">Los formularios son el medio de interacción que existe entre los sitemas y los usuarios, para que se dé una buena comunicación debemos comprender lo que el sistema nos intenta decir por medio de los mensajes y alertas. A continuación se describen ciertos aspectos que hay que tener en cuenta al momento de llenar un formulario: </small>
                         </div>
                     </div><!-- media -->
                 </li>
             </ul>
-        </div>
-        
-        <!--<div class="tab-pane pane-settings" id="rp-settings">
-            <h5 class="sidebartitle mb20">Settings</h5>
-            <div class="form-group">
-                <label class="col-xs-8 control-label">Show Offline Users</label>
-                <div class="col-xs-4 control-label">
-                    <div class="toggle toggle-success"></div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="col-xs-8 control-label">Enable History</label>
-                <div class="col-xs-4 control-label">
-                    <div class="toggle toggle-success"></div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="col-xs-8 control-label">Show Full Name</label>
-                <div class="col-xs-4 control-label">
-                    <div class="toggle-chat1 toggle-success"></div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="col-xs-8 control-label">Show Location</label>
-                <div class="col-xs-4 control-label">
-                    <div class="toggle toggle-success"></div>
-                </div>
-            </div>
-        </div>--><!-- tab-pane -->
+        </div><!-- tab-pane -->
     </div><!-- tab-content -->
 </div><!-- rightpanel -->
