@@ -4189,7 +4189,7 @@ LEFT JOIN org_departamento ON org_municipio.id_departamento_pais = org_departame
 LEFT JOIN tcm_empleado ON tcm_empleado.id_empleado = sac_capacitador.id_empleado
 LEFT JOIN sac_lugar_trabajo AS sac_lugar_trabajo2 ON sac_capacitacion.id_lugar_trabajo = sac_lugar_trabajo2.id_lugar_trabajo
 LEFT JOIN sac_empleado_institucion AS sac_empleado_institucion2 ON sac_empleado_institucion.id_empleado_institucion_sustituye=sac_empleado_institucion2.id_empleado_institucion 
-LEFT JOIN org_genero ON org_genero.id_genero=sac_empleado_institucion.id_genero 
+LEFT JOIN org_genero ON org_genero.id_genero=sac_empleado_institucion.id_genero ;
 
 -- ----------------------------
 -- View structure for sac_resultado_promocion
@@ -4334,10 +4334,3 @@ LEFT JOIN sac_miembro_entrevistado ON sac_miembro_entrevistado.id_promocion=sac_
 LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_empleado_institucion=sac_miembro_entrevistado.id_empleado_institucion
 LEFT JOIN sac_cargo_comite ON sac_cargo_comite.id_cargo_comite=sac_empleado_institucion.id_cargo_comite
 WHERE sac_programacion_visita.estado_programacion>2 ; 
-
--- ----------------------------
--- View structure for sac_resultado_verificacion
--- ----------------------------
-DROP VIEW IF EXISTS sac_resultado_verificacion;
-CREATE VIEW sac_resultado_verificacion AS 
-
