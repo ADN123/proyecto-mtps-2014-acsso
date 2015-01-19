@@ -84,7 +84,7 @@
             <h5 class="sidebartitle sidebartitleAyuda">Problemas Frecuentes</h5>
             <ul class="chatuserlist">
                 <?php
-                    foreach($ayuda as $val) {
+                    foreach($ayuda2 as $val) {
                 ?>
                     <li class="online">
                         <div class="media">

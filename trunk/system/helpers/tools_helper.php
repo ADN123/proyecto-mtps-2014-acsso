@@ -51,6 +51,7 @@
         if($id_modulo>0 && $id_modulo!=2000) {
             $data['menu_actual']=$CI->seguridad_model->descripcion_menu($id_modulo);
             $data['ayuda']=$CI->seguridad_model->buscar_ayuda($id_modulo);
+			$data['ayuda2']=$CI->seguridad_model->buscar_ayuda2($id_modulo);
         }
         else
             if($id_modulo==0)
