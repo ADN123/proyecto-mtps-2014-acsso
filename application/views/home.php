@@ -105,12 +105,46 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h5 class="subtitle mb5">Promociones por Sector</h5>
-                    <p class="mb15">Cantidad de promociones de la ley realizadas en los diferentes sectores económicos</p>
+                    <p class="mb15">Cantidad de promociones de la ley realizadas por sector económico</p>
                     <div id="donut-chart2" style="text-align: center; height: 298px;"></div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h5 class="subtitle mb5">Promociones por Sector</h5>
+                    <p class="mb15">Cantidad de promociones de la ley realizadas por sector económico</p>
+                  <div id="basicflot" style="width: 100%; height: 300px; margin-bottom: 20px"></div>
+                </div>
+                <div class="panel-body">
+                    <div class="tinystat pull-left">
+                        <div id="sparkline" class="chart mt5"></div>
+                        <div class="datainfo">
+                            <span class="text-muted">Average Sales1</span>
+                            <h4>$630,201</h4>
+                        </div>
+                    </div>
+                    <div class="tinystat pull-left">
+                        <div id="sparkline" class="chart mt5"></div>
+                        <div class="datainfo">
+                            <span class="text-muted">Average Sales2</span>
+                            <h4>$630,201</h4>
+                        </div>
+                    </div>
+                    <div class="tinystat pull-right">
+                        <div id="sparkline2" class="chart mt5"></div>
+                        <div class="datainfo">
+                            <span class="text-muted">Total Sales</span>
+                            <h4>$139,201</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+      </div>
 <?php } ?>  
 <script>
     jQuery(document).ready(function(){
@@ -238,5 +272,133 @@
                     colors: ['#666666','#5BC0DE','#f0ad4e','#D9534F','#1CAF9A','#428BCA','#428BCA']
                 });
         <?php } ?> 
+
+        /*new Morris.Line({
+            // ID of the element in which to draw the chart.
+            element: 'line-chart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: [
+                { y: '2006', a: 50, b: 0 },
+                { y: '2007', a: 60,  b: 25 },
+                { y: '2008', a: 45,  b: 30 },
+                { y: '2009', a: 40,  b: 20 },
+                { y: '2010', a: 50,  b: 35 },
+                { y: '2011', a: 60,  b: 50 },
+                { y: '2012', a: 65, b: 55 }
+            ],
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Series A', 'Series B'],
+            gridTextColor: 'rgba(255,255,255,0.5)',
+            lineColors: ['#fff', '#fdd2a4'],
+            lineWidth: '2px',
+            hideHover: 'always',
+            smooth: false,
+            grid: false
+        });*/
+
+        var uploads = [["Sep 14", 13], ["Oct 14", 5], ["Nov 14", 2], ["Dic 14", 6], ["Ene 15",3], ["Feb 15", 8]];
+        var downloads = [["Sep 14", 5], ["Oct 14", 4], ["Nov 14",4], ["Dic 14", 1], ["Ene 15", 9], ["Feb 15", 10]];
+    
+        var plot = jQuery.plot(jQuery("#basicflot"),
+            [
+                { 
+                    data: uploads,
+                    label: "Uploads",
+                    color: "#1CAF9A"
+                },
+                { 
+                    data: downloads,
+                    label: "Downloads",
+                    color: "#428BCA"
+                }
+            ],
+            {
+                series: {
+                    lines: {
+                        show: true,
+                        fill: true,
+                        lineWidth: 1,
+                        fillColor: {
+                            colors: [ 
+                                { 
+                                    opacity: 0.5
+                                },
+                                { 
+                                    opacity: 0.5 
+                                }
+                            ]
+                        }
+                    },
+                    points: {
+                        //show: true
+                    },
+                    shadowSize: 0
+                },
+                legend: {
+                    position: 'nw'
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true,
+                    borderColor: '#ddd',
+                    borderWidth: 1,
+                    labelMargin: 10,
+                    backgroundColor: '#fff'
+                },
+                yaxis: {
+                    min: 0,
+                    max: 15,
+                    color: '#eee'
+                },
+                xaxis: {
+                    color: '#eee'
+                }
+            }
+        );
+
+        var previousPoint = null;
+     jQuery("#basicflot").bind("plothover", function (event, pos, item) {
+      jQuery("#x").text(pos.x.toFixed(2));
+      jQuery("#y").text(pos.y.toFixed(2));
+            
+        if(item) {
+          if (previousPoint != item.dataIndex) {
+             previousPoint = item.dataIndex;
+                        
+             jQuery("#tooltip").remove();
+             var x = item.datapoint[0].toFixed(2),
+             y = item.datapoint[1].toFixed(2);
+                
+             showTooltip(item.pageX, item.pageY,
+                  item.series.label + " of " + x + " = " + y);
+          }
+            
+        } else {
+          jQuery("#tooltip").remove();
+          previousPoint = null;            
+        }
+        
+     });
+        
+     jQuery("#basicflot").bind("plotclick", function (event, pos, item) {
+        if (item) {
+          plot.highlight(item.series, item.datapoint);
+        }
+     });
+
+        jQuery('#sparkline').sparkline([4,3,3,1,4,3,2,2,3,10,9,6], {
+            type: 'bar', 
+            height:'30px',
+            barColor: '#428BCA'
+        });    
+    
+        jQuery('#sparkline2').sparkline([9,8,8,6,9,10,6,5,6,3,4,2], {
+            type: 'bar', 
+            height:'30px',
+            barColor: '#999'
+        });
+
     });
 </script>
