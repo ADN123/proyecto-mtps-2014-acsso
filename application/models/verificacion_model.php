@@ -749,7 +749,7 @@ class Verificacion_model extends CI_Model {
 	{
 		$where="";
 		if($id_departamento!=NULL) {
-			$where.="WHERE id_departamento=".$id_departamento;
+			$where.=" AND id_departamento=".$id_departamento;
 		}
 		$sentencia="SELECT 
 					EV.nombre_estado_verificacion AS estado,
@@ -758,7 +758,7 @@ class Verificacion_model extends CI_Model {
 					LEFT JOIN (
 						SELECT RV.id_lugar_trabajo, RV.id_estado_verificacion
 						FROM sac_resultado_verificacion AS RV 
-						".$where."
+						WHERE (RV.fecha_promocion>=CONCAT_WS('-',YEAR(DATE_ADD(NOW(), INTERVAL -5 MONTH)),MONTH(DATE_ADD(NOW(), INTERVAL -5 MONTH)),'01') OR RV.id_promocion IS NULL) ".$where."
 						GROUP BY RV.id_lugar_trabajo
 						ORDER BY RV.id_promocion DESC
 					) AS RV ON RV.id_estado_verificacion=EV.id_estado_verificacion
