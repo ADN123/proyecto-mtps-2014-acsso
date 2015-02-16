@@ -199,14 +199,16 @@ class Verificacion_model extends CI_Model {
 	
 	function institucion_visita_nuevo($id_departamento=0)
 	{
-		//$where=" AND DATEDIFF(CURRENT_TIMESTAMP(),sac_lugar_trabajo.fecha_conformacion)>=180";
+		$dias=10;
+		$where="FALSE";
+		$where="sac_lugar_trabajo.estado=3 AND DATEDIFF(CURRENT_TIMESTAMP(),sac_lugar_trabajo.fecha_conformacion)>=".$dias;
 		$sentencia="SELECT DISTINCT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',sac_institucion.nombre_institucion, sac_lugar_trabajo.nombre_lugar) AS nombre 
 					FROM sac_institucion
 					INNER JOIN sac_lugar_trabajo ON sac_lugar_trabajo.id_institucion = sac_institucion.id_institucion
 					LEFT JOIN sac_programacion_visita ON sac_programacion_visita.id_lugar_trabajo = sac_lugar_trabajo.id_lugar_trabajo
 					INNER JOIN org_municipio ON org_municipio.id_municipio = sac_lugar_trabajo.id_municipio
 					INNER JOIN org_departamento ON org_departamento.id_departamento = org_municipio.id_departamento_pais
-					WHERE sac_institucion.estado=1 AND sac_lugar_trabajo.estado=2 AND org_departamento.id_departamento=".$id_departamento." ".$where."
+					WHERE sac_institucion.estado=1 AND (sac_lugar_trabajo.estado=2 OR (".$where.")) AND org_departamento.id_departamento=".$id_departamento." 
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo,sac_lugar_trabajo.nombre_lugar
 					HAVING (MAX(sac_programacion_visita.estado_programacion)<>3 OR MAX(sac_programacion_visita.estado_programacion) IS NULL)";
 		$query=$this->db->query($sentencia);
@@ -726,13 +728,43 @@ class Verificacion_model extends CI_Model {
 	function guardar_verificacion_comite($formuInfo)
 	{
 		extract($formuInfo);
-		$sentencia="UPDATE sac_lugar_trabajo SET
+		/*$sentencia="UPDATE sac_lugar_trabajo SET
 					estado='$estado',
+					fecha_modificacion='$fecha_modificacion',
+					id_usuario_modifica=$id_usuario_modifica 
+					WHERE id_lugar_trabajo=$id_lugar_trabajo";*/
+		/*
+		*	Hice esto para que un establecimiento solo pueda tener una sola verificación
+		*/
+		$sentencia="UPDATE sac_lugar_trabajo SET
+					estado=estado+1,
 					fecha_modificacion='$fecha_modificacion',
 					id_usuario_modifica=$id_usuario_modifica 
 					WHERE id_lugar_trabajo=$id_lugar_trabajo";
 		$query=$this->db->query($sentencia);
 		return true;
+	}
+
+	function consultas_verificaciones_ultimos_meses($id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.="WHERE id_departamento=".$id_departamento;
+		}
+		$sentencia="SELECT 
+					EV.nombre_estado_verificacion AS estado,
+					COUNT(RV.id_estado_verificacion) AS total
+					FROM sac_estado_verificacion AS EV
+					LEFT JOIN (
+						SELECT RV.id_lugar_trabajo, RV.id_estado_verificacion
+						FROM sac_resultado_verificacion AS RV 
+						".$where."
+						GROUP BY RV.id_lugar_trabajo
+						ORDER BY RV.id_promocion DESC
+					) AS RV ON RV.id_estado_verificacion=EV.id_estado_verificacion
+					GROUP BY EV.nombre_estado_verificacion";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
 	}
 }
 ?>

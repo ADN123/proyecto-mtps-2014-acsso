@@ -729,7 +729,7 @@ class Promocion_model extends CI_Model {
                     COUNT(id_promocion) AS total
                     FROM org_departamento
                     LEFT JOIN sac_resultado_promocion ON org_departamento.id_departamento=sac_resultado_promocion.id_departamento
-                    WHERE org_departamento.id_departamento<15 ".$where."
+                    WHERE org_departamento.id_departamento<15 ".$where." AND (fecha_promocion>=CONCAT_WS('-',YEAR(DATE_ADD(NOW(), INTERVAL -5 MONTH)),MONTH(DATE_ADD(NOW(), INTERVAL -5 MONTH)),'01') OR id_promocion IS NULL)
                     GROUP BY org_departamento.departamento
                     ORDER BY org_departamento.departamento";
         $query=$this->db->query($sentencia);
@@ -746,7 +746,7 @@ class Promocion_model extends CI_Model {
                     COUNT(id_promocion) AS total
                     FROM sac_clasificacion_institucion
                     INNER JOIN sac_resultado_promocion ON sac_clasificacion_institucion.id_clasificacion=sac_resultado_promocion.id_clasificacion
-                    ".$where."
+                    ".$where." AND fecha_promocion>=CONCAT_WS('-',YEAR(DATE_ADD(NOW(), INTERVAL -5 MONTH)),MONTH(DATE_ADD(NOW(), INTERVAL -5 MONTH)),'01')
                     GROUP BY sac_clasificacion_institucion.nombre_clasificacion
                     ORDER BY COUNT(id_promocion) DESC LIMIT 0,5";
         $query=$this->db->query($sentencia);
@@ -763,7 +763,7 @@ class Promocion_model extends CI_Model {
                     COUNT(id_promocion) AS total
                     FROM sac_sector_institucion
                     INNER JOIN sac_resultado_promocion ON sac_sector_institucion.id_sector=sac_resultado_promocion.id_sector
-                    ".$where."
+                    ".$where." AND fecha_promocion>=CONCAT_WS('-',YEAR(DATE_ADD(NOW(), INTERVAL -5 MONTH)),MONTH(DATE_ADD(NOW(), INTERVAL -5 MONTH)),'01')
                     GROUP BY sac_sector_institucion.nombre_sector
                     ORDER BY sac_sector_institucion.nombre_sector";
         $query=$this->db->query($sentencia);

@@ -415,7 +415,7 @@ class Acreditacion_model extends CI_Model {
 			$where.=" AND sac_lugar_trabajo.estado=1";
 		if($est==2)
 			//$where.=" AND sac_lugar_trabajo.fecha_conformacion IS NOT NULL AND sac_lugar_trabajo.estado=2";
-			$where.=" AND sac_lugar_trabajo.estado=2";
+			$where.=" AND sac_lugar_trabajo.estado>=2";
 		$sentencia="SELECT sac_lugar_trabajo.id_lugar_trabajo AS id, CONCAT_WS(' - ',nombre_institucion,nombre_lugar) AS nombre, t1.inscritos, t2.capacitados 
 					FROM sac_lugar_trabajo
 					INNER JOIN (SELECT
@@ -691,9 +691,113 @@ class Acreditacion_model extends CI_Model {
 					DATE_FORMAT(RA.fecha_entrega,'%d/%m/%Y') AS fecha_entrega,
 					GROUP_CONCAT(DISTINCT RA.nombre_empleado,' (',IF(RA.nombre_cargo_comite IS NULL, 'Sin Cargo', RA.nombre_cargo_comite),') - ',DATE_FORMAT(RA.fecha_capacitacion,'%d/%m/%Y')) AS empleados_acreditados
 					FROM sac_resultado_acreditacion AS RA
-					WHERE RA.fecha_conformacion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
+					WHERE RA.fecha_conformacion BETWEEN '$fecha_inicial' AND '$fecha_final' ".$where."
 					GROUP BY RA.id_lugar_trabajo, RA.fecha_entrega
 					ORDER BY RA.fecha_conformacion ASC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function consultas_capacitaciones_ultimos_meses($id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND id_departamento=".$id_departamento;
+		}
+		$sentencia="SELECT
+					F.A AS anio, 
+					F.M AS mes,
+					COUNT(DISTINCT RC.id_empleado_institucion) AS capacitados,
+					IFNULL(RC2.total,0) AS beneficiados
+					FROM (
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -5 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -5 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -4 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -4 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -3 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -3 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -2 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -2 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -1 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -1 MONTH)) AS A
+						UNION
+						SELECT
+						MONTH(DATE_ADD(NOW(), INTERVAL 0 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL 0 MONTH)) AS A
+					) AS F
+					LEFT JOIN (
+						SELECT DISTINCT RC.id_institucion, RC.fecha_capacitacion, RC.id_empleado_institucion, RC.total_hombres
+						FROM sac_resultado_capacitacion AS RC 
+						WHERE RC.estado_capacitacion=0 AND RC.asistio_empleado=1 ".$where."
+					) AS RC ON DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE F.M AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE F.A 
+					LEFT JOIN (
+						SELECT DISTINCT RC2.id_institucion, (RC2.total_hombres+RC2.total_mujeres) AS total
+						FROM sac_resultado_capacitacion AS RC2
+						WHERE RC2.estado_capacitacion=0 AND RC2.asistio_empleado=1 ".$where."
+					) AS RC2 ON RC2.id_institucion=RC.id_institucion
+					GROUP BY F.A, F.M
+					ORDER BY F.A ASC, F.M ASC";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+	
+	function consultas_acreditaciones_ultimos_meses($id_departamento=NULL)
+	{
+		$where="";
+		if($id_departamento!=NULL) {
+			$where.=" AND id_departamento=".$id_departamento;
+		}
+		$sentencia="SELECT
+					F.A AS anio, 
+					F.M AS mes,
+					COUNT(DISTINCT RC.id_empleado_institucion) AS acreditados_hombres,
+					COUNT(DISTINCT RC2.id_empleado_institucion) AS acreditados_mujeres
+					FROM (
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -5 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -5 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -4 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -4 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -3 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -3 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -2 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -2 MONTH)) AS A
+						UNION
+						SELECT 
+						MONTH(DATE_ADD(NOW(), INTERVAL -1 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL -1 MONTH)) AS A
+						UNION
+						SELECT
+						MONTH(DATE_ADD(NOW(), INTERVAL 0 MONTH)) AS M,
+						YEAR(DATE_ADD(NOW(), INTERVAL 0 MONTH)) AS A
+					) AS F
+					LEFT JOIN (
+						SELECT DISTINCT RC.id_institucion, RC.fecha_conformacion, RC.id_empleado_institucion
+						FROM sac_resultado_acreditacion AS RC 
+						WHERE RC.estado_capacitacion=0 AND RC.asistio_empleado=1 AND RC.id_genero=1 ".$where."
+					) AS RC ON DATE_FORMAT(RC.fecha_conformacion,'%m') LIKE F.M AND DATE_FORMAT(RC.fecha_conformacion,'%Y') LIKE F.A 
+					LEFT JOIN (
+						SELECT DISTINCT RC2.id_institucion, RC2.fecha_conformacion, RC2.id_empleado_institucion
+						FROM sac_resultado_acreditacion AS RC2
+						WHERE RC2.estado_capacitacion=0 AND RC2.asistio_empleado=1 AND RC2.id_genero=2 ".$where."
+					) AS RC2 ON DATE_FORMAT(RC2.fecha_conformacion,'%m') LIKE F.M AND DATE_FORMAT(RC2.fecha_conformacion,'%Y') LIKE F.A 
+					GROUP BY F.A, F.M
+					ORDER BY F.A ASC, F.M ASC";
 		$query=$this->db->query($sentencia);
 		return (array)$query->result_array();
 	}
