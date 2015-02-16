@@ -498,7 +498,7 @@
 			xkey: 'y',
 			ykeys: ['a', 'b'],
 			labels: ['Hombres', 'Mujeres'],
-			barColors: ['#1CAF9A', '#428BCA'],
+			barColors: ['#428BCA', '#F0AD4E'],
 			lineWidth: '1px',
 			fillOpacity: 0.8,
 			smooth: false,
@@ -506,10 +506,20 @@
 			hideHover: true
 		});
 		
+		<?php
+			$cant5='';
+			$col=0;
+			$color[]='#F0AD4E';
+			$color[]='#5BC0DE';
+			$color[]='#D9534F';
+			foreach($total_verifcaciones_ultimos_meses as $val) {
+				$cant5.='{ label: "'.$val['estado'].'", data: '.$val['total'].', color: "'.$color[$col].'"},';
+				$col++;
+			}
+		?>
+		
 		var piedata = [
-			{ label: "Series 1", data: [[1,30]], color: '#D9534F'},
-			{ label: "Series 2", data: [[1,30]], color: '#1CAF9A'},
-			{ label: "Series 3", data: [[1,90]], color: '#F0AD4E'}
+			<?=$cant5?>
 		];
 		
 		jQuery.plot('#piechart', piedata, {
