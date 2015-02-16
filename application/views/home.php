@@ -52,13 +52,13 @@
                         <?php if($id_permiso==3) { $col=5;?> 
                             <div class="col-sm-7">
                                 <h5 class="subtitle mb5">Promociones por Departamento </h5>
-                                <p class="mb15">Cantidad de promociones de la ley realizadas en los diferentes departamentos de El Salvador</p>
+                                <p class="mb15">Cantidad de promociones de la ley realizadas en los diferentes departamentos de El Salvador en los últimos 6 meses</p>
                                 <div id="barchart" style="width: 100%; height: 300px"></div>
                             </div>
                         <?php } else $col=12;?>
                         <div class="col-sm-<?=$col?>">
                             <h5 class="subtitle mb5">Promociones por CLAEES </h5>
-                            <p class="mb15">Clasificaciones CLAEES más utilizadas</p>
+                            <p class="mb15">Clasificaciones CLAEES más utilizadas en los últimos 6 meses</p>
                             
                             <?php 
                                 $i=1;
@@ -105,7 +105,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h5 class="subtitle mb5">Promociones por Sector</h5>
-                    <p class="mb15">Cantidad de promociones de la ley realizadas por sector económico</p>
+                    <p class="mb15">Cantidad de promociones de la ley realizadas por sector económico en los últimos 6 meses</p>
                     <div id="donut-chart2" style="text-align: center; height: 298px;"></div>
                 </div>
             </div>
@@ -115,36 +115,50 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h5 class="subtitle mb5">Promociones por Sector</h5>
-                    <p class="mb15">Cantidad de promociones de la ley realizadas por sector económico</p>
-                  <div id="basicflot" style="width: 100%; height: 300px; margin-bottom: 20px"></div>
+                    <h5 class="subtitle mb5">Capacitaciones</h5>
+                    <p class="mb15">Estadísticas de capacitaciones realizadas en los últimos 6 meses</p>
+                  	<div id="basicflot" style="width: 100%; height: 300px; margin-bottom: 20px"></div>
                 </div>
                 <div class="panel-body">
                     <div class="tinystat pull-left">
                         <div id="sparkline" class="chart mt5"></div>
                         <div class="datainfo">
-                            <span class="text-muted">Average Sales1</span>
-                            <h4>$630,201</h4>
-                        </div>
-                    </div>
-                    <div class="tinystat pull-left">
-                        <div id="sparkline" class="chart mt5"></div>
-                        <div class="datainfo">
-                            <span class="text-muted">Average Sales2</span>
-                            <h4>$630,201</h4>
+                            <span class="text-muted">Capacitados</span>
+                            <h4 id="tc">33 Trabajadores</h4>
                         </div>
                     </div>
                     <div class="tinystat pull-right">
                         <div id="sparkline2" class="chart mt5"></div>
                         <div class="datainfo">
-                            <span class="text-muted">Total Sales</span>
-                            <h4>$139,201</h4>
+                            <span class="text-muted">Beneficiados</span>
+                            <h4 id="tb">127 Trabajadores</h4>
                         </div>
                     </div>
                 </div>
             </div>          
         </div>
-      </div>
+ 	</div>
+    
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h5 class="subtitle mb5">Acreditaciones</h5>
+                    <p class="mb15">Acreditaciones entregas en los últimos 6 meses según sexo</p>
+                  	<div id="stacked-chart" style="height: 300px;"></div>
+                </div>
+            </div>          
+        </div>
+        <div class="col-sm-5">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h5 class="subtitle mb5">Verificaciones</h5>
+                    <p class="mb15">Estado de las verificaciones hechas en los últimos 6 meses</p>
+                  	<div id="piechart" style="width: 100%; height: 300px"></div>
+                </div>
+            </div>          
+        </div>
+  	</div>
 <?php } ?>  
 <script>
     jQuery(document).ready(function(){
@@ -273,132 +287,252 @@
                 });
         <?php } ?> 
 
-        /*new Morris.Line({
-            // ID of the element in which to draw the chart.
-            element: 'line-chart',
-            // Chart data records -- each entry in this array corresponds to a point on
-            // the chart.
-            data: [
-                { y: '2006', a: 50, b: 0 },
-                { y: '2007', a: 60,  b: 25 },
-                { y: '2008', a: 45,  b: 30 },
-                { y: '2009', a: 40,  b: 20 },
-                { y: '2010', a: 50,  b: 35 },
-                { y: '2011', a: 60,  b: 50 },
-                { y: '2012', a: 65, b: 55 }
-            ],
-            xkey: 'y',
-            ykeys: ['a', 'b'],
-            labels: ['Series A', 'Series B'],
-            gridTextColor: 'rgba(255,255,255,0.5)',
-            lineColors: ['#fff', '#fdd2a4'],
-            lineWidth: '2px',
-            hideHover: 'always',
-            smooth: false,
-            grid: false
-        });*/
-
-        var uploads = [["Sep 14", 13], ["Oct 14", 5], ["Nov 14", 2], ["Dic 14", 6], ["Ene 15",3], ["Feb 15", 8]];
-        var downloads = [["Sep 14", 5], ["Oct 14", 4], ["Nov 14",4], ["Dic 14", 1], ["Ene 15", 9], ["Feb 15", 10]];
+		<?php
+			$cant3='';
+			$cant2='';
+			$cant32='';
+			$cant22='';
+			$stc=0;
+			$stb=0;
+			foreach($total_capacitaciones_ultimos_meses as $val) {
+				switch($val['mes']) {
+					case 1: 
+						$mes="Enero";
+						break;
+					case 2:
+						$mes="Febreo";
+						break;
+					case 3: 
+						$mes="Marzo";
+						break;
+					case 4: 
+						$mes="Abril";
+						break;
+					case 5: 
+						$mes="Mayo";
+						break;
+					case 6: 
+						$mes="Junio";
+						break;
+					case 7: 
+						$mes="Julio";
+						break;
+					case 8: 
+						$mes="Agosto";
+						break;
+					case 9: 
+						$mes="Septiembre";
+						break;
+					case 10: 
+						$mes="Octubre";
+						break;
+					case 11: 
+						$mes="Noviembre";
+						break;
+					case 12: 
+						$mes="Diciembre";
+						break;
+				}
+				$cant3.='["'.$mes." ".$val['anio'].'", '.$val['capacitados'].'],';
+				$cant2.='["'.$mes." ".$val['anio'].'", '.$val['beneficiados'].'],';
+				$cant32.=''.$val['capacitados'].',';
+				$cant22.=''.$val['beneficiados'].',';
+				$stc=$stc+$val['capacitados'];
+				$stb=$stb+$val['beneficiados'];
+			}
+		?>
+		$("#tc").text("<?=$stc?> Trabajadores");
+		$("#tb").text("<?=$stb?> Trabajadores");
+        var trabajadores_beneficiados = [<?=$cant2?>];
+        var trabajadores_capacitados = [<?=$cant3?>];
     
         var plot = jQuery.plot(jQuery("#basicflot"),
             [
                 { 
-                    data: uploads,
-                    label: "Uploads",
-                    color: "#1CAF9A"
+                    data: trabajadores_beneficiados,
+                    label: "Trabajadores Beneficiados",
+                    color: "#D9534F",
+					points: {
+						symbol: "square"
+					}
                 },
                 { 
-                    data: downloads,
-                    label: "Downloads",
-                    color: "#428BCA"
+                    data: trabajadores_capacitados,
+                    label: "Trabajadores Capacitados",
+                    color: "#428BCA",
+					lines: {
+						fill: true
+					},
+					points: {
+						symbol: 'diamond',
+						lineWidth: 2
+					}
                 }
             ],
-            {
-                series: {
-                    lines: {
-                        show: true,
-                        fill: true,
-                        lineWidth: 1,
-                        fillColor: {
-                            colors: [ 
-                                { 
-                                    opacity: 0.5
-                                },
-                                { 
-                                    opacity: 0.5 
-                                }
-                            ]
-                        }
-                    },
-                    points: {
-                        //show: true
-                    },
-                    shadowSize: 0
-                },
-                legend: {
-                    position: 'nw'
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true,
-                    borderColor: '#ddd',
-                    borderWidth: 1,
-                    labelMargin: 10,
-                    backgroundColor: '#fff'
-                },
-                yaxis: {
-                    min: 0,
-                    max: 15,
-                    color: '#eee'
-                },
-                xaxis: {
-                    color: '#eee'
-                }
+      		{
+				series: {
+					lines: {
+						show: true,
+						lineWidth: 2
+					},
+					points: {
+						show: true
+					},
+					shadowSize: 0
+				},
+				legend: {
+					position: 'nw'
+				},
+				grid: {
+					hoverable: true,
+					clickable: true,
+					borderColor: '#ddd',
+					borderWidth: 1,
+					labelMargin: 10,
+					backgroundColor: '#fff'
+				},
+				yaxis: {
+					min: 0,
+					color: '#eee'
+				},
+				xaxis: {
+					color: '#eee',
+					mode: "categories",
+					tickLength: 0
+				}
             }
         );
 
         var previousPoint = null;
-     jQuery("#basicflot").bind("plothover", function (event, pos, item) {
-      jQuery("#x").text(pos.x.toFixed(2));
-      jQuery("#y").text(pos.y.toFixed(2));
+     	jQuery("#basicflot").bind("plothover", function (event, pos, item) {
+      		jQuery("#x").text(pos.x.toFixed(2));
+      		jQuery("#y").text(pos.y.toFixed(2));
             
-        if(item) {
-          if (previousPoint != item.dataIndex) {
-             previousPoint = item.dataIndex;
+        	if(item) {
+          		if(previousPoint != item.dataIndex) {
+             		previousPoint = item.dataIndex;
                         
-             jQuery("#tooltip").remove();
-             var x = item.datapoint[0].toFixed(2),
-             y = item.datapoint[1].toFixed(2);
+             		jQuery("#tooltip").remove();
+             		var x = item.datapoint[0].toFixed(0),
+             		y = item.datapoint[1].toFixed(0);
                 
-             showTooltip(item.pageX, item.pageY,
-                  item.series.label + " of " + x + " = " + y);
-          }
-            
-        } else {
-          jQuery("#tooltip").remove();
-          previousPoint = null;            
-        }
+             		showTooltip(item.pageX, item.pageY,
+                  	item.series.label + ": " + y);
+          		}
+        	} 
+			else {
+          		jQuery("#tooltip").remove();
+          		previousPoint = null;            
+        	}
+		});
         
-     });
-        
-     jQuery("#basicflot").bind("plotclick", function (event, pos, item) {
-        if (item) {
-          plot.highlight(item.series, item.datapoint);
-        }
-     });
+		jQuery("#basicflot").bind("plotclick", function (event, pos, item) {
+			if (item) {
+				plot.highlight(item.series, item.datapoint);
+			}
+		});
 
-        jQuery('#sparkline').sparkline([4,3,3,1,4,3,2,2,3,10,9,6], {
+        jQuery('#sparkline').sparkline([<?=$cant32?>], {
             type: 'bar', 
             height:'30px',
             barColor: '#428BCA'
         });    
     
-        jQuery('#sparkline2').sparkline([9,8,8,6,9,10,6,5,6,3,4,2], {
+        jQuery('#sparkline2').sparkline([<?=$cant22?>], {
             type: 'bar', 
             height:'30px',
-            barColor: '#999'
+            barColor: '#1CAF9A'
         });
-
+		
+		
+		
+		<?php
+			$cant4='';
+			foreach($total_acreditaciones_ultimos_meses as $val) {
+				switch($val['mes']) {
+					case 1: 
+						$mes="Ene";
+						break;
+					case 2:
+						$mes="Feb";
+						break;
+					case 3: 
+						$mes="Mar";
+						break;
+					case 4: 
+						$mes="Abr";
+						break;
+					case 5: 
+						$mes="May";
+						break;
+					case 6: 
+						$mes="Jun";
+						break;
+					case 7: 
+						$mes="Jul";
+						break;
+					case 8: 
+						$mes="Ago";
+						break;
+					case 9: 
+						$mes="Sep";
+						break;
+					case 10: 
+						$mes="Oct";
+						break;
+					case 11: 
+						$mes="Nov";
+						break;
+					case 12: 
+						$mes="Dic";
+						break;
+				}
+				$cant4.='{ y: "'.$mes." ".substr($val['anio'],2,2).'", a: '.$val['acreditados_hombres'].', b: '.$val['acreditados_mujeres'].'},';
+			}
+		?>
+		
+		new Morris.Bar({
+			element: 'stacked-chart',
+			data: [<?=$cant4?>
+			],
+			xkey: 'y',
+			ykeys: ['a', 'b'],
+			labels: ['Hombres', 'Mujeres'],
+			barColors: ['#1CAF9A', '#428BCA'],
+			lineWidth: '1px',
+			fillOpacity: 0.8,
+			smooth: false,
+			stacked: true,
+			hideHover: true
+		});
+		
+		var piedata = [
+			{ label: "Series 1", data: [[1,30]], color: '#D9534F'},
+			{ label: "Series 2", data: [[1,30]], color: '#1CAF9A'},
+			{ label: "Series 3", data: [[1,90]], color: '#F0AD4E'}
+		];
+		
+		jQuery.plot('#piechart', piedata, {
+			series: {
+				pie: {
+					show: true,
+					radius: 1,
+					label: {
+						show: true,
+						radius: 2/3,
+						formatter: labelFormatter,
+						threshold: 0.1
+					}
+				}
+			},
+			grid: {
+				hoverable: true,
+				clickable: true
+			}
+		});
+		
+		function labelFormatter(label, series) {
+			return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
+		}
     });
 </script>

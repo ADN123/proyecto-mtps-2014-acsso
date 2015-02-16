@@ -17,6 +17,7 @@
     <link href="<?php echo base_url();?>css/bootstrap-timepicker.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/style.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>css/jquery.gritter.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>css/morris.css" rel="stylesheet">
       
     <script src="<?php echo base_url();?>js/jquery-1.10.2.min.js"></script>
     <script src="<?php echo base_url();?>js/jquery-migrate-1.2.1.min.js"></script>

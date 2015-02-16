@@ -143,7 +143,11 @@
                 <p id="memoria">
                     Atentamente,
                 </p><br />
-                    <img src="img/firma_jefatura.JPG" /><br />
+                	<br style="display:block;"/>
+                    <br style="display:block;"/>
+                    <br style="display:block;"/>
+                    <img src="img/firma_jefatura.JPG" style="display:none;" />
+                    <br />
                 <p id="pie">
                 	<strong>
                         Ing. Juan Carlos Serrano<br />

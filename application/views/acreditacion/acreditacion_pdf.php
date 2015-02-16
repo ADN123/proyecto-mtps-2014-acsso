@@ -133,7 +133,10 @@
     <table align="center">
     	<tr>
         	<td align="center">
-            	<img src="img/firma_gerencia.png" /><br />
+                	<br style="display:block;"/>
+                    <br style="display:block;"/>
+                    <br style="display:block;"/>
+            	<img src="img/firma_gerencia.png" style="display:none;"/><br />
                 <p>
 	                f. _______________________________________<br />
 	                LICDA. NORA DEL CARMEN LÓPEZ LAÍNEZ<br />
