@@ -980,7 +980,7 @@ class Inicio extends CI_Controller
             switch($reporte) {
                 case 1:
                     $data['info']=$this->promocion_model->resultados_incumplimiento_instituciones($fecha_inicial,$fecha_final,$id_departamento);
-                    $data['nombre']="Instituciones ".date('d-m-Y hisa');
+                    $data['nombre']="Incumplimiento por instituciones ".date('d-m-Y hisa');
                     if($data['exportacion']!=2) {
                         $this->load->view('resultados_incumplimiento_instituciones',$data);
                     }
@@ -999,7 +999,7 @@ class Inicio extends CI_Controller
                     break;
                 case 2:
                     $data['info']=$this->promocion_model->resultados_incumplimiento_tecnicos($fecha_inicial,$fecha_final,$id_departamento);
-                    $data['nombre']="Técnicos ".date('d-m-Y hisa');
+                    $data['nombre']="Incumplimiento por técnicos ".date('d-m-Y hisa');
                     if($data['exportacion']!=2)
                         $this->load->view('resultados_incumplimiento_tecnicos',$data);
                     else {
@@ -1018,7 +1018,7 @@ class Inicio extends CI_Controller
                     break;
                 case 3:
                     $data['info']=$this->promocion_model->resultados_incumplimiento_tipo($fecha_inicial,$fecha_final,$id_departamento);
-                    $data['nombre']="Sectores ".date('d-m-Y hisa');
+                    $data['nombre']="Incumplimiento por tipo ".date('d-m-Y hisa');
                     if($data['exportacion']!=2)
                         $this->load->view('resultados_incumplimiento_tipo',$data);
                     else {
