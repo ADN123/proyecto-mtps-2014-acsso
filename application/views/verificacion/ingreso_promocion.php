@@ -30,7 +30,7 @@
 	.ckbox input[type="checkbox"]:checked + label::after {
 		top: 3px;
 	}
-    .ckbox #sel-todo:checked + label::after {
+    .ckbox #sel-todo:checked + label::after, .ckbox #sel-todo2:checked + label::after {
         top: 0px;
     }
 </style>
@@ -52,6 +52,7 @@
                     <ul class="nav nav-pills nav-justified">
                         <li><a href="#ptab1" data-toggle="tab"><span>Paso 1:</span> Información de la verificación</a></li>
                         <li><a href="#ptab2" data-toggle="tab"><span>Paso 2:</span> Información de las capacitaciones</a></li>
+                        <li><a href="#ptab3" data-toggle="tab"><span>Paso 3:</span> Condiciones de incumplimiento</a></li>
                     </ul>
                       
                     <div class="tab-content">
@@ -199,6 +200,41 @@
                             </table>
                             <div class="ckbox ckbox-success"><input type="checkbox" name="sel-todo" id="sel-todo"  /><label for="sel-todo">Seleccionar/Deseleccionar todo</label></div> 
                       	</div>  
+                		<div class="tab-pane" id="ptab3">
+                            <table class="table table-hover mb30">
+                                <thead>
+                                    <tr>
+                                        <th class="all">Condiciones de incumplimiento</th>
+                                        <th class="desktop tablet-l tablet-p" style="width:150px">Cumplimiento</th>
+                                        <th class="desktop tablet-l tablet-p" style="width:200px">Base legal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        foreach($incumplimientos as $val) {
+                                            echo '<tr class="tr">
+													<td>'.$val['nombre'].'</td>
+													<td>
+														<div class="ckbox ckbox-success">
+															<input type="checkbox" class="chk2" name="id_incumplimiento[]" id="id_incumplimiento_'.$val['id'].'" value="'.$val['id'].'"/>
+															<label for="id_incumplimiento_'.$val['id'].'"></label>
+														</div>
+                                                    	<input type="hidden" class="incumplimiento_real" value="'.$val['id'].'" name="id_incumplimiento_real[]" id="id_incumplimiento_real_'.$val['id'].'">
+													</td>
+													<td>'.$val['base_legal'].'</td>
+												</tr>';
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
+                            <div class="ckbox ckbox-success"><input type="checkbox" name="sel-todo2" id="sel-todo2"  /><label for="sel-todo2">Seleccionar/Deseleccionar todo</label></div> 
+                      		<div class="form-group">
+                                <label for="observacion_adicional" class="col-sm-3 control-label">Otros incumplimientos </label>
+                                <div class="col-sm-7">
+                                    <textarea data-tip="x" data-min="10" class="form-control" id="observacion_adicional" name="observacion_adicional" ></textarea>
+                                </div>
+                            </div>
+                        </div>  
                     </div><!-- tab-content -->
                     
                     <ul class="pager wizard">
@@ -227,6 +263,10 @@
         $('#sel-todo').click(function(){
             $('.chk').prop('checked', $(this).prop('checked'));
             $('.chk').change();
+        });
+        $('#sel-todo2').click(function(){
+            $('.chk2').prop('checked', $(this).prop('checked'));
+            $('.chk2').change();
         });
 	  	$('#progressWizard').bootstrapWizard({
 			'nextSelector': '.next',

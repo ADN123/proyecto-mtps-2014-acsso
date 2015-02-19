@@ -1,0 +1,3 @@
+UPDATE `mtps`.`org_modulo` SET `id_modulo`='134', `id_sistema`='7', `nombre_modulo`='Informe mensual', `descripcion_modulo`='Resumen del informe mensual de las actividades realizadas', `orden`='6', `dependencia`='91', `url_modulo`='inicio/informe_mensual', `img_modulo`='fa fa-caret-right', `opciones_modulo`='2' WHERE (`id_modulo`='134');
+
+INSERT INTO `mtps`.`org_modulo` (`id_sistema`, `nombre_modulo`, `descripcion_modulo`, `orden`, `dependencia`, `url_modulo`, `img_modulo`, `opciones_modulo`) VALUES ('7', 'Incumplimiento de LGPRLT', 'Reporte de incumplimientos de LGPRLT', '5', '91', 'inicio/incumplimiento_LGPRLT', 'fa fa-caret-right', '2');

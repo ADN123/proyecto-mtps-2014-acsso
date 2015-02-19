@@ -1027,6 +1027,7 @@ class Promocion extends CI_Controller
                         $data['tecnico']=$this->promocion_model->mostrar_tecnicos($id_seccion['id_seccion'],1);
                     break;
             }
+			$data['incumplimientos']=$this->promocion_model->ver_incumplimientos();
             $data['estado_transaccion']=$estado_transaccion;
             $data['accion_transaccion']=$accion_transaccion;
             pantalla('promocion/ingreso_promocion',$data,Dingreso_promocion);
@@ -1164,6 +1165,9 @@ class Promocion extends CI_Controller
             $correo=$this->input->post('correo');
             $total_hombres=($this->input->post('total_hombres')=="")?0:$this->input->post('total_hombres');
             $total_mujeres=($this->input->post('total_mujeres')=="")?0:$this->input->post('total_mujeres');
+			
+			$id_incumplimiento=$this->input->post('id_incumplimiento');	
+			$observacion_adicional=$this->input->post('observacion_adicional');
             
             $fecha_creacion=date('Y-m-d H:i:s');
             $id_usuario_crea=$this->session->userdata('id_usuario');
@@ -1189,7 +1193,7 @@ class Promocion extends CI_Controller
                 'fecha_creacion'=>$fecha_creacion,
                 'id_usuario_crea'=>$id_usuario_crea
             );
-            $this->promocion_model->guardar_ingreso_promocion($formuInfo);
+            $id_promocion=$this->promocion_model->guardar_ingreso_promocion($formuInfo);
             
             $formuInfo = array(
                 'id_institucion'=>$id_institucion,
@@ -1221,6 +1225,28 @@ class Promocion extends CI_Controller
                 'id_usuario_modifica'=>$id_usuario_modifica,
             );
             $this->promocion_model->actualizar_lugar_trabajo($formuInfo);
+			
+			/*echo "guardar_ingreso_tematica";*/
+			for($i=0;$i<count($id_incumplimiento);$i++) {
+				$formuInfo = array(
+					'id_promocion'=>$id_promocion,
+					'id_incumplimiento'=>$id_incumplimiento[$i],
+					'observacion_adicional'=>""
+				);
+				$this->promocion_model->guardar_ingreso_incumplimiento($formuInfo);
+				/*echo "<pre>";
+				print_r($formuInfo);
+				echo "</pre>";*/
+			}
+			
+			if($observacion_adicional!="") {
+				$formuInfo = array(
+					'id_promocion'=>$id_promocion,
+					'id_incumplimiento'=>"NULL",
+					'observacion_adicional'=>$observacion_adicional
+				);
+				$this->promocion_model->guardar_ingreso_incumplimiento($formuInfo);
+			}
             
             $this->db->trans_complete();
             $tr=($this->db->trans_status()===FALSE)?0:1;
