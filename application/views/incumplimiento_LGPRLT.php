@@ -40,11 +40,11 @@
                         	<label for="ins">Lugares de trabajo</label>
                       	</div>
                       	<div class="rdio rdio-success">
-                        	<input type="radio" name="radio" value="2" id="tec" disabled="disabled" />
+                        	<input type="radio" name="radio" value="2" id="tec" />
                         	<label for="tec">Técnicos educadores</label>
                       	</div>
                       	<div class="rdio rdio-success">
-                        	<input type="radio" name="radio" value="3" id="sec" disabled="disabled" />
+                        	<input type="radio" name="radio" value="3" id="sec" />
                         	<label for="sec">Incumplimientos LGPRLT</label>
                       	</div>
                 	</div>
