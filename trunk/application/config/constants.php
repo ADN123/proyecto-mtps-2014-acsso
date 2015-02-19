@@ -66,7 +66,7 @@ define('Dreportes_verificaciones',				130);
 define('Dasigancion_visita_1', 					132);
 define('Dasigancion_visita_2', 					133);
 define('Dinforme_mensual', 						134);
-define('Dincumplimiento_LGPRLT', 				136);
+define('Dincumplimiento_LGPRLT', 				145);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
