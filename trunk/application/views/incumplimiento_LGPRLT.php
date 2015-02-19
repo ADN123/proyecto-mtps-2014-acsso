@@ -40,7 +40,7 @@
                         	<label for="ins">Lugares de trabajo</label>
                       	</div>
                       	<div class="rdio rdio-success">
-                        	<input type="radio" name="radio" value="2" id="tec" />
+                        	<input type="radio" name="radio" value="2" id="tec" disabled="disabled" />
                         	<label for="tec">Técnicos educadores</label>
                       	</div>
                       	<div class="rdio rdio-success">
