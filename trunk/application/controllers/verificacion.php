@@ -674,6 +674,7 @@ class Verificacion extends CI_Controller
 			}
 			$data['estado_verificacion']=$this->verificacion_model->ver_estados_verificacion();
 			$data['tematicas']=$this->verificacion_model->ver_tematicas();
+			$data['incumplimientos']=$this->promocion_model->ver_incumplimientos();
 			$data['estado_transaccion']=$estado_transaccion;
 			$data['accion_transaccion']=$accion_transaccion;
 			pantalla('verificacion/ingreso_promocion',$data,Dcontrol_visita);
@@ -772,6 +773,9 @@ class Verificacion extends CI_Controller
 			$fecha_capacitacion=$this->input->post('fecha_capacitacion');
 			$facilitador=$this->input->post('facilitador');
 			
+			$id_incumplimiento=$this->input->post('id_incumplimiento');	
+			$observacion_adicional=$this->input->post('observacion_adicional');
+			
 			$fecha_creacion=date('Y-m-d H:i:s');
 			$id_usuario_crea=$this->session->userdata('id_usuario');
 			$fecha_modificacion=date('Y-m-d H:i:s');
@@ -839,6 +843,28 @@ class Verificacion extends CI_Controller
 				'id_usuario_modifica'=>$id_usuario_modifica
 			);
 			$this->verificacion_model->guardar_verificacion_comite($formuInfo);
+			
+			/*echo "guardar_ingreso_tematica";*/
+			for($i=0;$i<count($id_incumplimiento);$i++) {
+				$formuInfo = array(
+					'id_promocion'=>$id_promocion,
+					'id_incumplimiento'=>$id_incumplimiento[$i],
+					'observacion_adicional'=>""
+				);
+				$this->promocion_model->guardar_ingreso_incumplimiento($formuInfo);
+				/*echo "<pre>";
+				print_r($formuInfo);
+				echo "</pre>";*/
+			}
+			
+			if($observacion_adicional!="") {
+				$formuInfo = array(
+					'id_promocion'=>$id_promocion,
+					'id_incumplimiento'=>"NULL",
+					'observacion_adicional'=>$observacion_adicional
+				);
+				$this->promocion_model->guardar_ingreso_incumplimiento($formuInfo);
+			}
 
 			$this->db->trans_complete();
 			$tr=($this->db->trans_status()===FALSE)?0:1;

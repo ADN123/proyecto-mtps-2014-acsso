@@ -85,7 +85,7 @@ class Inicio extends CI_Controller
 					
 					$data['total_capacitaciones_ultimos_meses']=$this->acreditacion_model->consultas_capacitaciones_ultimos_meses($dep);
 					
-					$data['total_acreditaciones_ultimos_meses']=$this->verificacion_model->consultas_acreditaciones_ultimos_meses($dep);
+					$data['total_acreditaciones_ultimos_meses']=$this->acreditacion_model->consultas_acreditaciones_ultimos_meses($dep);
 					
 					$data['total_verifcaciones_ultimos_meses']=$this->verificacion_model->consultas_verificaciones_ultimos_meses($dep);
 					break;
@@ -924,5 +924,122 @@ class Inicio extends CI_Controller
 		exit;
 
 	}
+
+	function incumplimiento_LGPRLT()
+	{	
+		$data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dincumplimiento_LGPRLT); 
+		if($data['id_permiso']!=NULL) {
+			switch($data['id_permiso']) {
+				case 3:
+
+					break;
+				case 4:
+
+					break;
+			}
+			$data['anios']=$this->promocion_model->consultas_anios();
+			$data['meses']=$this->promocion_model->consultas_meses($data['anios'][0]['id']);
+			pantalla('incumplimiento_LGPRLT',$data,Dincumplimiento_LGPRLT);
+		}
+		else {
+			pantalla_error();
+		}
+	}
+	
+	function resultados2($fecha_iniciale=NULL,$fecha_finale=NULL,$reportee=NULL,$exportacione=NULL)
+    {
+        $data=$this->seguridad_model->consultar_permiso($this->session->userdata('id_usuario'),Dreportes_promociones); 
+        if($data['id_permiso']==3 || $data['id_permiso']==4) {
+            if($fecha_iniciale==NULL) {
+                $fec=str_replace("/","-",$this->input->post('fecha_inicial'));
+                $fecha_inicial=date("Y-m-d", strtotime($fec));
+            }
+            else {
+                $fecha_inicial=date("Y-m-d", strtotime($fecha_iniciale));
+            }
+            if($fecha_finale==NULL) {
+                $fec=str_replace("/","-",$this->input->post('fecha_final'));
+                $fecha_final=date("Y-m-d", strtotime($fec));
+            }
+            else {
+                $fecha_final=date("Y-m-d", strtotime($fecha_finale));
+            }
+            if($reportee==NULL)
+                $reporte=$this->input->post('radio');
+            else
+                $reporte=$reportee;
+            if($exportacione==NULL)
+                $data['exportacion']=$this->input->post('radio2');
+            else
+                $data['exportacion']=$exportacione;
+            $id_seccion=$this->seguridad_model->consultar_seccion_usuario($this->session->userdata('nr'));
+            if($data['id_permiso']==4)
+                $id_departamento=$this->promocion_model->ubicacion_departamento($id_seccion['id_seccion']);
+            else
+                $id_departamento=NULL;
+            switch($reporte) {
+                case 1:
+                    $data['info']=$this->promocion_model->resultados_incumplimiento_instituciones($fecha_inicial,$fecha_final,$id_departamento);
+                    $data['nombre']="Instituciones ".date('d-m-Y hisa');
+                    if($data['exportacion']!=2) {
+                        $this->load->view('resultados_incumplimiento_instituciones',$data);
+                    }
+                    else {                      
+                        $this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+                        $stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+                        $this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+                        $this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+                        
+                        $html = $this->load->view('resultados_incumplimiento_instituciones.php', $data, true);
+                        $data_cab['titulo']="INCUMPLIMIENTO DE LGPRLT POR LUGAR DE TRABAJO";
+                        $this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+                        $this->mpdf->WriteHTML($html,2);
+                        $this->mpdf->Output(); /*Salida del pdf*/
+                    }
+                    break;
+                case 2:
+                    $data['info']=$this->promocion_model->resultados_incumplimiento_tecnicos($fecha_inicial,$fecha_final,$id_departamento);
+                    $data['nombre']="Técnicos ".date('d-m-Y hisa');
+                    if($data['exportacion']!=2)
+                        $this->load->view('resultados_incumplimiento_tecnicos',$data);
+                    else {
+                        $this->mpdf->mPDF('utf-8','letter-L'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+                        $stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+                        $this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+                        //$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+                        $this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+                        
+                        $html = $this->load->view('resultados_incumplimiento_tecnicos.php', $data, true);
+                        $data_cab['titulo']="PROMOCIONES REALIZADAS POR TÉCNICO EDUCADOR";
+                        $this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+                        $this->mpdf->WriteHTML($html,2);
+                        $this->mpdf->Output(); /*Salida del pdf*/
+                    }
+                    break;
+                case 3:
+                    $data['info']=$this->promocion_model->resultados_incumplimiento_tipo($fecha_inicial,$fecha_final,$id_departamento);
+                    $data['nombre']="Sectores ".date('d-m-Y hisa');
+                    if($data['exportacion']!=2)
+                        $this->load->view('resultados_incumplimiento_tipo',$data);
+                    else {
+                        $this->mpdf->mPDF('utf-8','letter'); /*Creacion de objeto mPDF con configuracion de pagina y margenes*/
+                        $stylesheet = file_get_contents('css/pdf/acreditacion.css'); /*Selecionamos la hoja de estilo del pdf*/
+                        $this->mpdf->WriteHTML($stylesheet,1); /*lo escribimos en el pdf*/
+                        //$this->mpdf->SetHTMLHeader($this->load->view('cabecera_pdf.php', $data, true),1);
+                        $this->mpdf->SetFooter('Fecha y hora de generación: '.date('d/m/Y H:i:s A').'||Página {PAGENO}/{nbpg}');
+                        
+                        $html = $this->load->view('resultados_incumplimiento_tipo.php', $data, true);
+                        $data_cab['titulo']="PROMOCIONES POR SECTOR ECONÓMICO";
+                        $this->mpdf->WriteHTML($this->load->view('cabecera_pdf.php', $data_cab, true),2);
+                        $this->mpdf->WriteHTML($html,2);
+                        $this->mpdf->Output(); /*Salida del pdf*/
+                    }
+                    break;
+            }
+        }
+        else {
+            pantalla_error();
+        }
+    }
 }
 ?>

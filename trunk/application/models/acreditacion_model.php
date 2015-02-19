@@ -738,7 +738,7 @@ class Acreditacion_model extends CI_Model {
 						SELECT DISTINCT RC.id_institucion, RC.fecha_capacitacion, RC.id_empleado_institucion, RC.total_hombres
 						FROM sac_resultado_capacitacion AS RC 
 						WHERE RC.estado_capacitacion=0 AND RC.asistio_empleado=1 ".$where."
-					) AS RC ON DATE_FORMAT(RC.fecha_capacitacion,'%m') LIKE F.M AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE F.A 
+					) AS RC ON DATE_FORMAT(RC.fecha_capacitacion,'%c') LIKE F.M AND DATE_FORMAT(RC.fecha_capacitacion,'%Y') LIKE F.A 
 					LEFT JOIN (
 						SELECT DISTINCT RC2.id_institucion, (RC2.total_hombres+RC2.total_mujeres) AS total
 						FROM sac_resultado_capacitacion AS RC2
@@ -790,12 +790,12 @@ class Acreditacion_model extends CI_Model {
 						SELECT DISTINCT RC.id_institucion, RC.fecha_conformacion, RC.id_empleado_institucion
 						FROM sac_resultado_acreditacion AS RC 
 						WHERE RC.estado_capacitacion=0 AND RC.asistio_empleado=1 AND RC.id_genero=1 ".$where."
-					) AS RC ON DATE_FORMAT(RC.fecha_conformacion,'%m') LIKE F.M AND DATE_FORMAT(RC.fecha_conformacion,'%Y') LIKE F.A 
+					) AS RC ON DATE_FORMAT(RC.fecha_conformacion,'%c') LIKE F.M AND DATE_FORMAT(RC.fecha_conformacion,'%Y') LIKE F.A 
 					LEFT JOIN (
 						SELECT DISTINCT RC2.id_institucion, RC2.fecha_conformacion, RC2.id_empleado_institucion
 						FROM sac_resultado_acreditacion AS RC2
 						WHERE RC2.estado_capacitacion=0 AND RC2.asistio_empleado=1 AND RC2.id_genero=2 ".$where."
-					) AS RC2 ON DATE_FORMAT(RC2.fecha_conformacion,'%m') LIKE F.M AND DATE_FORMAT(RC2.fecha_conformacion,'%Y') LIKE F.A 
+					) AS RC2 ON DATE_FORMAT(RC2.fecha_conformacion,'%c') LIKE F.M AND DATE_FORMAT(RC2.fecha_conformacion,'%Y') LIKE F.A 
 					GROUP BY F.A, F.M
 					ORDER BY F.A ASC, F.M ASC";
 		$query=$this->db->query($sentencia);

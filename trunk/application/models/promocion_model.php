@@ -523,6 +523,7 @@ class Promocion_model extends CI_Model {
                     VALUES 
                     ($id_programacion_visita,'$fecha_promocion','$hora_inicio','$hora_final','$nombre_recibio','$observaciones','$fecha_creacion',$id_usuario_crea)";
         $this->db->query($sentencia);
+		return $this->db->insert_id();
     }
     
     function resultados_instituciones($fecha_inicial,$fecha_final,$id_departamento=NULL)
@@ -1114,6 +1115,70 @@ class Promocion_model extends CI_Model {
                     WHERE nominal LIKE '%jefe del departamento seguridad e higiene ocupacional%' OR funcional LIKE '%jefe del departamento seguridad e higiene ocupacional%'";
         $query=$this->db->query($sentencia);
         return (array)$query->row();
+    }
+	
+	function ver_incumplimientos()
+	{
+		$sentencia="SELECT I.id_incumplimiento AS id, I.nombre_incumplimiento AS nombre, I.base_legal_incumplimiento AS base_legal FROM sac_incumplimiento AS I";
+		$query=$this->db->query($sentencia);
+		return (array)$query->result_array();
+	}
+    
+    function guardar_ingreso_incumplimiento($formuInfo)
+    {
+        extract($formuInfo);
+        $sentencia="INSERT INTO sac_incumplimiento_promocion 
+                    (id_promocion,id_incumplimiento,observacion_adicional)
+                    VALUES 
+                    ($id_promocion,$id_incumplimiento,'$observacion_adicional')";
+        $this->db->query($sentencia);
+    }
+	
+	function resultados_incumplimiento_instituciones($fecha_inicial,$fecha_final,$id_departamento=NULL)
+    {
+        $where="";
+        if($id_departamento!=NULL) {
+            $where.=" AND id_departamento=".$id_departamento;
+        }
+		$sentencia="SET SESSION group_concat_max_len = 100000000";
+        $query=$this->db->query($sentencia);
+        $sentencia="
+					SELECT 
+					@s:=@s+1 AS numero,
+					I.fecha_promocion,
+					I.hora_promocion,
+					I.nombre_lugar,
+					GROUP_CONCAT('***',I.incumplimiento) AS incumplimientos
+					FROM (
+						SELECT 
+						DATE_FORMAT(RP.fecha_promocion, '%d/%m/%Y') AS fecha_promocion,
+						DATE_FORMAT(RP.hora_inicio,'%h:%i %p') AS hora_promocion,
+						RP.id_lugar_trabajo,
+						CONCAT_WS(' - ',RP.nombre_institucion,RP.nombre_lugar) AS nombre_lugar,
+						IP.id_incumplimiento,
+						CASE WHEN IP.id_incumplimiento IS NULL THEN IP.observacion_adicional ELSE I.nombre_incumplimiento END AS incumplimiento
+						FROM sac_resultado_promocion AS RP
+						INNER JOIN sac_incumplimiento_promocion AS IP ON IP.id_promocion=RP.id_promocion
+						LEFT JOIN sac_incumplimiento AS I ON I.id_incumplimiento=IP.id_incumplimiento
+						WHERE RP.id_promocion IS NOT NULL AND RP.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
+						UNION
+						SELECT
+						DATE_FORMAT(RV.fecha_promocion, '%d/%m/%Y') AS fecha_promocion,
+						DATE_FORMAT(RV.hora_inicio,'%h:%i %p') AS hora_promocion,
+						RV.id_lugar_trabajo,
+						CONCAT_WS(' - ',RV.nombre_institucion,RV.nombre_lugar) AS nombre_lugar,
+						IP.id_incumplimiento,
+						CASE WHEN IP.id_incumplimiento IS NULL THEN IP.observacion_adicional ELSE I.nombre_incumplimiento END AS incumplimiento
+						FROM sac_resultado_verificacion AS RV
+						INNER JOIN sac_incumplimiento_promocion AS IP ON IP.id_promocion=RV.id_promocion
+						LEFT JOIN sac_incumplimiento AS I ON I.id_incumplimiento=IP.id_incumplimiento
+						WHERE RV.id_promocion IS NOT NULL AND RV.fecha_promocion BETWEEN '$fecha_inicial' AND '$fecha_final'".$where."
+						GROUP BY RV.id_lugar_trabajo,IP.id_incumplimiento
+					) AS I, (SELECT @s:=0) AS S
+					GROUP BY I.id_lugar_trabajo
+					ORDER BY I.fecha_promocion ASC";
+        $query=$this->db->query($sentencia);
+        return (array)$query->result_array();
     }
 }
 ?>

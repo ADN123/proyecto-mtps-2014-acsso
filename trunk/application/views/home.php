@@ -285,7 +285,6 @@
                     ],
                     colors: ['#666666','#5BC0DE','#f0ad4e','#D9534F','#1CAF9A','#428BCA','#428BCA']
                 });
-        <?php } ?> 
 
 		<?php
 			$cant3='';
@@ -442,9 +441,7 @@
             type: 'bar', 
             height:'30px',
             barColor: '#1CAF9A'
-        });
-		
-		
+        });		
 		
 		<?php
 			$cant4='';
@@ -544,5 +541,6 @@
 		function labelFormatter(label, series) {
 			return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
 		}
+        <?php } ?> 
     });
 </script>
