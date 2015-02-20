@@ -1,29 +1,29 @@
 <?php
 if($exportacion==3) {
-	header("Content-type: application/octet-stream");
-	header("Content-Disposition: attachment; filename=".$nombre.".xls");
-	header("Pragma: no-cache");
-	header("Expires: 0");
+    header("Content-type: application/octet-stream");
+    header("Content-Disposition: attachment; filename=".$nombre.".xls");
+    header("Pragma: no-cache");
+    header("Expires: 0");
 }
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php 
-	if($exportacion==2 || $exportacion==3) {
-		if($exportacion==3) {
+    if($exportacion==2 || $exportacion==3) {
+        if($exportacion==3) {
 ?>
     <table align="center" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
-    	 <thead>
+         <thead>
             <tr>
-                <th align="left" id="imagen" colspan="2" height="110">
+                <th align="left" id="imagen" height="110" colspan="2">
                     <img src="<?=base_url()?>img/mtps_report.jpg" />
                 </th>
-                <th align="center" colspan="12">
+                <th align="center">
                     <strong class="ti">
                         MINISTERIO DE TRABAJO Y PREVISIÓN SOCIAL<br />
                         DIRECCIÓN GENERAL DE PREVISIÓN SOCIAL Y EMPLEO<br />
                         DEPARTAMENTO DE SEGURIDAD E HIGIENE OCUPACIONAL<br />
                         SECCIÓN DE PREVENCIÓN DE RIESGOS OCUPACIONALES<br /><br />
-                        INCUMPLIMIENTO DE LGPRLT POR LUGAR DE TRABAJO
+                        INCUMPLIMIENTOS DE LGPRLT POR TÉCNICO EDUCADOR
                     </strong>
                 </th>
                 <th align="right">
@@ -31,64 +31,62 @@ if($exportacion==3) {
                 </th>
             </tr>
             <tr>
-            	<th colspan="8" align="center">&nbsp;</th>
+                <th colspan="4" align="center">&nbsp;</th>
             </tr>
 <?php
-		}
-		else {
+        }
+        else {
 ?>
-	<table align="center" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
-    	 <thead>
+    <table align="center" border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+         <thead>
 <?php
-		}
+        }
 ?>
             <tr>
-            	<?php
-					$css='';
-					if($exportacion==2 || $exportacion==3) {
-						$css='background-color: #CCC; border: 1px solid #CCC;';
-					}
-				?>
-               	<th style="<?php echo $css;?>" width="25" valign="middle">N°</th>
-               	<th style="<?php echo $css;?>" width="80" valign="middle">FECHA</th>
-               	<th style="<?php echo $css;?>" width="80" valign="middle">HORA</th>
-                <th style="<?php echo $css;?>" width="200" valign="middle">LUGAR DE TRABAJO</th>
-                <th style="<?php echo $css;?>" valign="middle">INCUMPLIMIENTOS</th>
+                <?php
+                    $css='';
+                    if($exportacion==2 || $exportacion==3) {
+                        $css='background-color: #CCC; border: 1px solid #CCC;';
+                    }
+                ?>
+                <th style="<?php echo $css;?>" width="25" valign="middle">N°</th>
+                <th style="<?php echo $css;?>" width="200" valign="middle">TÉCNICO EDUCADOR</th>
+                <th style="<?php echo $css;?>" width="340" valign="middle">INCUMPLIMIENTO DE LGPRLT</th>
+                <th style="<?php echo $css;?>" width="100" valign="middle">TOTAL</th>
             </tr>
         </thead>
 <?php 
-	}
-	if($exportacion!=2 && $exportacion!=3) {
-?>   
+    }
+    if($exportacion!=2 && $exportacion!=3) {
+?>  
     <table class="display table responsive no-wrap" style="width: 100%;">
         <thead>
-        	<tr>
-               	<th class="all" width="50">N°</th>
-               	<th class="desktop">FECHA DE PROMOCIÓN</th>
-               	<th class="none">HORA DE PROMOCIÓN</th>
-                <th class="all">LUGAR DE TRABAJO</th>
-                <th class="none">INCUMPLIMIENTOS</th>
+            <tr>
+                <th class="all" width="50">N°</th>
+                <th class="desktop" width="200">TÉCNICO EDUCADOR</th>
+                <th class="all">INCUMPLIMIENTO DE LGPRLT</th>
+                <th class="desktop tablet-l tablet-p" style="width:95px;">TOTAL</th>
             </tr>
         </thead>
-<?php
-	}
-?>
+<?php 
+    }
+?> 
         <tbody>
             <?php
                 foreach($info as $val) {
-			?>
-            	<tr valign="middle" style="cursor: pointer;" class="ver_promociones" data-id="<?php echo $val['id_promocion']?>">
-					<?php
-						$css="";
+                    
+            ?>
+                <tr>
+                    <?php
+                        $css="";
                         if($exportacion==2 || $exportacion==3) {
-							$css='border: 1px solid #CCC;';
+                            $css='border: 1px solid #CCC;';
                         }
                     ?>
-                 	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
-                 	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo $val['fecha_promocion']?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="center"><?php echo $val['hora_promocion']?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['nombre_lugar']?></td>
-                	<td valign="middle" style="<?php echo $css;?>" align="left"><?php echo str_replace(",***","<br>*",",".$val['incumplimientos'])?></td>
+                    <td valign="middle" style="<?php echo $css;?>" align="left"><?php echo $val['numero']?></td>
+                    <td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['nombre_empleado'])?></td>
+                    <td valign="middle" style="<?php echo $css;?>" align="left"><?php echo ucwords($val['nombre'])?></td>
+                    <td valign="middle" style="<?php echo $css;?>" align="right"><?php echo $val['total']?></td>
                 </tr>
             <?php
                 }
@@ -97,15 +95,15 @@ if($exportacion==3) {
     </table>
 <?php if($exportacion==1) { ?>
 <script>
-	$('.table').DataTable({
-		"sPaginationType": "simple",
-		responsive: true
-	});
-	$("select").chosen({
-		'width': '100%',
-		'min-width': '100px',
-		'white-space': 'nowrap',
-		no_results_text: "Sin resultados!"
-	});
+    $('.table').DataTable({
+        "sPaginationType": "simple",
+        responsive: true
+    });
+    $("select").chosen({
+        'width': '100%',
+        'min-width': '100px',
+        'white-space': 'nowrap',
+        no_results_text: "Sin resultados!"
+    });
 </script>
 <?php } ?>
