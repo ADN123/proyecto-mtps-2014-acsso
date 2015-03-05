@@ -102,6 +102,7 @@ class Acreditacion_model extends CI_Model {
 					sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres AS total_empleados,
 					sac_lugar_trabajo.total_hombres AS total_empleados_hombres,
 					sac_lugar_trabajo.total_mujeres AS total_empleados_mujeres,
+					sac_institucion.sindicato,
 					COUNT(sac_empleado_institucion.id_empleado_institucion) AS total_comite,
 					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=1 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1) AS total_comite_hombres,
 					(SELECT COUNT(sac_empleado_institucion.id_genero) FROM sac_empleado_institucion WHERE sac_empleado_institucion.id_genero=2 AND sac_empleado_institucion.id_lugar_trabajo=".$id_lugar_trabajo." AND sac_empleado_institucion.estado_empleado=1) AS total_comite_mujeres,
@@ -129,6 +130,7 @@ class Acreditacion_model extends CI_Model {
 						WHEN (sac_lugar_trabajo.total_hombres+sac_lugar_trabajo.total_mujeres)>=4001 THEN 8
 					END AS total_empleados_delegados
 					FROM sac_lugar_trabajo
+					INNER JOIN sac_institucion ON sac_institucion.id_institucion=sac_lugar_trabajo.id_institucion
 					LEFT JOIN sac_empleado_institucion ON sac_empleado_institucion.id_lugar_trabajo=sac_lugar_trabajo.id_lugar_trabajo
 					WHERE sac_lugar_trabajo.estado<>0 AND sac_lugar_trabajo.id_lugar_trabajo=".$id_lugar_trabajo." AND (sac_empleado_institucion.estado_empleado=1 OR sac_empleado_institucion.estado_empleado IS NULL)
 					GROUP BY sac_lugar_trabajo.id_lugar_trabajo";
