@@ -63,8 +63,8 @@
     	<tr>
         	<td>Miembros del sindicato</td>
         	<td align="right"><?=$total_comite_sindicato?></td>
-        	<td align="right">1</td>
-            <td align="center"><?php if($total_comite_sindicato>=1) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
+        	<td align="right"><?=$sindicato?></td>
+            <td align="center"><?php if($total_comite_sindicato>=$sindicato) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
         </tr>
     </tbody>
 </table>

@@ -85,7 +85,7 @@
                     </tr>
                     <tr>
                         <td>Representantes de trabajadores</td>
-                        <td align="right"><?=$lugar_trabajo['total_comite_representantes_trabajadores']+$lugar_trabajo['total_comite_sindicato']?></td>
+                        <td align="right"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="") echo $lugar_trabajo['total_comite_representantes_trabajadores']+$lugar_trabajo['total_comite_sindicato']?></td>
                         <td align="right"><?=$lugar_trabajo['total_empleados_representantes']?></td>
                         <td align="center"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="")if($lugar_trabajo['total_comite_representantes_trabajadores']+$lugar_trabajo['total_comite_sindicato']>=$lugar_trabajo['total_empleados_representantes']) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
                     </tr>
@@ -98,8 +98,8 @@
                     <tr>
                         <td>Miembros del sindicato</td>
                         <td align="right"><?=$lugar_trabajo['total_comite_sindicato']?></td>
-                        <td align="right"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="") echo "1";?></td>
-                        <td align="center"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="")if($lugar_trabajo['total_comite_sindicato']>=1) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
+                        <td align="right"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="") echo $lugar_trabajo['sindicato'];?></td>
+                        <td align="center"><?php if(isset($id_lugar_trabajo) && $id_lugar_trabajo!="")if($lugar_trabajo['total_comite_sindicato']>=$lugar_trabajo['sindicato']) echo '<span class="fa fa-check" style="color:#1caf9a;" title="Cumple requisito"></span>'; else echo '<span class="glyphicon glyphicon-remove" style="color:#F00;" title="No cumple requisito"></span>';?></td>
                     </tr>
                 </tbody>
             </table>

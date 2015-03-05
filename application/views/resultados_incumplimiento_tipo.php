@@ -50,7 +50,7 @@ if($exportacion==3) {
                     }
                 ?>
                 <th style="<?php echo $css;?>" width="25" valign="middle">N°</th>
-                <th colspan="2" style="<?php echo $css;?>" width="520">CASIFICACIÓN</th>
+                <th colspan="2" style="<?php echo $css;?>" width="520">CLASIFICACIÓN</th>
                 <th style="<?php echo $css;?>" width="100">TOTAL</th>
             </tr>
         </thead>
@@ -62,7 +62,7 @@ if($exportacion==3) {
         <thead>
             <tr>
                 <th class="all" width="50">N°</th>
-                <th class="all">CASIFICACIÓN</th>
+                <th class="all">CLASIFICACIÓN</th>
                 <th class="desktop tablet-l tablet-p" style="width:95px;">TOTAL</th>
             </tr>
         </thead>

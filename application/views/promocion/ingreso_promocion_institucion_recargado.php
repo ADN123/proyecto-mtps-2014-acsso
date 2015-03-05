@@ -53,7 +53,7 @@
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">Posee sindicato</label>
+    <label class="col-sm-3 control-label">¿Existe sindicato?</label>
     <div class="col-sm-4" style="margin-top: 7px;">
         <div class="ckbox ckbox-default">
             <input type="checkbox" value="1" name="sindicato" id="sindicato" <?php echo ($institucion['sindicato']==1)?'checked':'';?> />
